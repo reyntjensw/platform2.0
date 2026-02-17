@@ -1,0 +1,481 @@
+/* ═══════════════════════════════════════════════════
+   Factor Fifty — Style Guide
+   ═══════════════════════════════════════════════════
+   Shared design tokens and utility classes used across
+   the entire application (main app + canvas).
+
+   Fonts:
+     Sans:  Outfit (main app), DM Sans (canvas)
+     Mono:  JetBrains Mono
+
+   Brand:
+     Primary accent: Cloudsisters Green #2ecc71
+     Canvas accent:  Blue #3b82f6
+
+   Usage:
+     - Main app pages use application.css (Outfit, green accent)
+     - Canvas uses canvas.css (DM Sans, blue accent)
+     - Both share these tokens via CSS custom properties
+     - Use .f50-* classes for shared components
+   ═══════════════════════════════════════════════════ */
+
+/* ── 1. Design Tokens (shared across all contexts) ── */
+:root {
+    /* Brand */
+    --f50-green: #2ecc71;
+    --f50-green-dark: #27ae60;
+    --f50-green-dim: rgba(46, 204, 113, 0.08);
+    --f50-blue: #3b82f6;
+    --f50-blue-dark: #2563eb;
+    --f50-blue-dim: rgba(59, 130, 246, 0.08);
+
+    /* Semantic */
+    --f50-success: #10b981;
+    --f50-warning: #f59e0b;
+    --f50-danger: #ef4444;
+    --f50-info: #3498db;
+
+    /* Cloud providers */
+    --f50-aws: #ff9900;
+    --f50-aws-dim: rgba(255, 153, 0, 0.1);
+    --f50-azure: #0078d4;
+    --f50-azure-dim: rgba(0, 120, 212, 0.1);
+    --f50-gcp: #4285f4;
+    --f50-gcp-dim: rgba(66, 133, 244, 0.1);
+
+    /* Module categories */
+    --f50-cat-compute: var(--f50-aws);
+    --f50-cat-database: var(--f50-blue);
+    --f50-cat-networking: #8b5cf6;
+    --f50-cat-storage: var(--f50-success);
+    --f50-cat-security: var(--f50-danger);
+    --f50-cat-monitoring: #22d3ee;
+
+    /* Spacing scale (4px base) */
+    --f50-space-1: 4px;
+    --f50-space-2: 8px;
+    --f50-space-3: 12px;
+    --f50-space-4: 16px;
+    --f50-space-5: 20px;
+    --f50-space-6: 24px;
+    --f50-space-8: 32px;
+    --f50-space-10: 40px;
+
+    /* Border radius */
+    --f50-radius-sm: 6px;
+    --f50-radius: 10px;
+    --f50-radius-lg: 14px;
+    --f50-radius-full: 9999px;
+
+    /* Typography */
+    --f50-font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --f50-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Font sizes */
+    --f50-text-xs: 10px;
+    --f50-text-sm: 12px;
+    --f50-text-base: 13px;
+    --f50-text-md: 14px;
+    --f50-text-lg: 16px;
+    --f50-text-xl: 20px;
+    --f50-text-2xl: 24px;
+
+    /* Transitions */
+    --f50-transition: 0.15s ease;
+    --f50-transition-slow: 0.25s ease;
+}
+
+/* ── 2. Dark Theme Tokens ── */
+/* These are the shared dark palette. Both application.css and
+   canvas.css define their own :root overrides, but these serve
+   as the canonical reference. */
+
+/* Main app dark theme */
+.theme-app {
+    --f50-bg-body: #080b12;
+    --f50-bg-surface: #0e1219;
+    --f50-bg-card: #131a26;
+    --f50-bg-card-hover: #1a2438;
+    --f50-bg-input: #151b28;
+    --f50-border: #1e2a3d;
+    --f50-border-light: #283a54;
+    --f50-text-primary: #eef1f6;
+    --f50-text-secondary: #8494b2;
+    --f50-text-muted: #4d5f7a;
+    --f50-accent: var(--f50-green);
+    --f50-accent-hover: var(--f50-green-dark);
+}
+
+/* Canvas dark theme */
+.theme-canvas {
+    --f50-bg-body: #0a0e1a;
+    --f50-bg-surface: #111827;
+    --f50-bg-card: #151d2e;
+    --f50-bg-card-hover: #1c2740;
+    --f50-bg-input: #1a2235;
+    --f50-border: #243049;
+    --f50-border-light: #2a3a58;
+    --f50-text-primary: #e8ecf4;
+    --f50-text-secondary: #8b99b5;
+    --f50-text-muted: #5a6a8a;
+    --f50-accent: var(--f50-blue);
+    --f50-accent-hover: var(--f50-blue-dark);
+}
+
+/* ── 3. Shared Component Classes (.f50-*) ── */
+
+/* Buttons */
+.f50-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    font-size: var(--f50-text-base);
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: var(--f50-radius);
+    cursor: pointer;
+    border: none;
+    transition: all var(--f50-transition);
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.f50-btn--primary {
+    background: var(--f50-blue);
+    color: white;
+}
+
+.f50-btn--primary:hover {
+    background: var(--f50-blue-dark);
+    transform: translateY(-1px);
+}
+
+.f50-btn--secondary {
+    background: transparent;
+    color: var(--text-secondary, #8494b2);
+    border: 1px solid var(--border, #1e2a3d);
+}
+
+.f50-btn--secondary:hover {
+    color: var(--text-primary, #eef1f6);
+    border-color: var(--border-light, #283a54);
+    background: var(--bg-card, #131a26);
+}
+
+.f50-btn--ghost {
+    background: transparent;
+    color: var(--text-secondary, #8494b2);
+    border: none;
+    padding: 8px 12px;
+}
+
+.f50-btn--ghost:hover {
+    color: var(--text-primary, #eef1f6);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.f50-btn--danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--f50-danger);
+    border: 1px solid var(--f50-danger);
+}
+
+.f50-btn--danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.f50-btn--warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--f50-warning);
+    border: 1px solid var(--f50-warning);
+}
+
+.f50-btn--sm {
+    padding: 6px 12px;
+    font-size: var(--f50-text-sm);
+}
+
+.f50-btn--lg {
+    padding: 14px 28px;
+    font-size: var(--f50-text-md);
+}
+
+/* Inputs */
+.f50-input {
+    padding: 10px 14px;
+    background: var(--bg-input, #151b28);
+    border: 1px solid var(--border, #1e2a3d);
+    border-radius: var(--f50-radius);
+    color: var(--text-primary, #eef1f6);
+    font-size: var(--f50-text-base);
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    transition: border-color var(--f50-transition);
+}
+
+.f50-input:focus {
+    border-color: var(--f50-blue);
+    box-shadow: 0 0 0 3px var(--f50-blue-dim);
+}
+
+.f50-input::placeholder {
+    color: var(--text-muted, #4d5f7a);
+}
+
+/* Select */
+.f50-select {
+    padding: 10px 14px;
+    background: var(--bg-input, #151b28);
+    border: 1px solid var(--border, #1e2a3d);
+    border-radius: var(--f50-radius);
+    color: var(--text-primary, #eef1f6);
+    font-size: var(--f50-text-base);
+    font-family: inherit;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234d5f7a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+.f50-select:focus {
+    border-color: var(--f50-blue);
+    box-shadow: 0 0 0 3px var(--f50-blue-dim);
+}
+
+/* Tags / Badges */
+.f50-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: 9px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.f50-tag--green {
+    background: var(--f50-green-dim);
+    color: var(--f50-green);
+}
+
+.f50-tag--blue {
+    background: var(--f50-blue-dim);
+    color: var(--f50-blue);
+}
+
+.f50-tag--danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--f50-danger);
+}
+
+.f50-tag--warn {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--f50-warning);
+}
+
+.f50-tag--aws {
+    background: var(--f50-aws-dim);
+    color: var(--f50-aws);
+}
+
+.f50-tag--azure {
+    background: var(--f50-azure-dim);
+    color: var(--f50-azure);
+}
+
+/* Cards */
+.f50-card {
+    background: var(--bg-card, #131a26);
+    border: 1px solid var(--border, #1e2a3d);
+    border-radius: var(--f50-radius-lg);
+    padding: 20px;
+    transition: all 0.2s;
+}
+
+.f50-card:hover {
+    border-color: var(--border-light, #283a54);
+}
+
+.f50-card--clickable {
+    cursor: pointer;
+}
+
+.f50-card--clickable:hover {
+    border-color: var(--f50-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Status dots */
+.f50-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+.f50-dot--sm {
+    width: 6px;
+    height: 6px;
+}
+
+.f50-dot--green {
+    background: var(--f50-success);
+}
+
+.f50-dot--red {
+    background: var(--f50-danger);
+}
+
+.f50-dot--orange {
+    background: var(--f50-warning);
+}
+
+.f50-dot--blue {
+    background: var(--f50-info);
+}
+
+.f50-dot--muted {
+    background: var(--text-muted, #4d5f7a);
+}
+
+/* ── 4. Layout Utilities ── */
+.f50-flex {
+    display: flex;
+}
+
+.f50-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.f50-items-center {
+    align-items: center;
+}
+
+.f50-justify-between {
+    justify-content: space-between;
+}
+
+.f50-gap-1 {
+    gap: var(--f50-space-1);
+}
+
+.f50-gap-2 {
+    gap: var(--f50-space-2);
+}
+
+.f50-gap-3 {
+    gap: var(--f50-space-3);
+}
+
+.f50-gap-4 {
+    gap: var(--f50-space-4);
+}
+
+.f50-gap-6 {
+    gap: var(--f50-space-6);
+}
+
+/* ── 5. Typography Utilities ── */
+.f50-text-xs {
+    font-size: var(--f50-text-xs);
+}
+
+.f50-text-sm {
+    font-size: var(--f50-text-sm);
+}
+
+.f50-text-base {
+    font-size: var(--f50-text-base);
+}
+
+.f50-text-lg {
+    font-size: var(--f50-text-lg);
+}
+
+.f50-text-xl {
+    font-size: var(--f50-text-xl);
+}
+
+.f50-text-2xl {
+    font-size: var(--f50-text-2xl);
+}
+
+.f50-font-mono {
+    font-family: var(--f50-font-mono);
+}
+
+.f50-font-bold {
+    font-weight: 700;
+}
+
+.f50-font-semi {
+    font-weight: 600;
+}
+
+.f50-text-muted {
+    color: var(--text-muted, #4d5f7a);
+}
+
+.f50-text-secondary {
+    color: var(--text-secondary, #8494b2);
+}
+
+.f50-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── 6. Module Category Colors ── */
+.f50-cat-compute {
+    color: var(--f50-cat-compute);
+}
+
+.f50-cat-database {
+    color: var(--f50-cat-database);
+}
+
+.f50-cat-networking {
+    color: var(--f50-cat-networking);
+}
+
+.f50-cat-storage {
+    color: var(--f50-cat-storage);
+}
+
+.f50-cat-security {
+    color: var(--f50-cat-security);
+}
+
+.f50-cat-monitoring {
+    color: var(--f50-cat-monitoring);
+}
+
+.f50-cat-bg-compute {
+    background: rgba(255, 153, 0, 0.12);
+}
+
+.f50-cat-bg-database {
+    background: rgba(59, 130, 246, 0.12);
+}
+
+.f50-cat-bg-networking {
+    background: rgba(139, 92, 246, 0.12);
+}
+
+.f50-cat-bg-storage {
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.f50-cat-bg-security {
+    background: rgba(239, 68, 68, 0.12);
+}
+
+.f50-cat-bg-monitoring {
+    background: rgba(34, 211, 238, 0.12);
+}

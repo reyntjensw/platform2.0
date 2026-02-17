@@ -1,0 +1,113 @@
+<div class="page-content">
+  <div class="page-header">
+    <h1 class="page-title">Import Module</h1>
+    <p class="page-subtitle">Add a new infrastructure module to Factor Fifty</p>
+  </div>
+
+  <%= render "module_imports/steps/wizard_nav" %>
+
+  <div class="wizard-body">
+    <h2 class="section-title">Step 1: Source</h2>
+
+    <%= form_with url: save_source_module_import_path(@draft), method: :patch, local: true, class: "wizard-form", data: { controller: "import-source" } do |f| %>
+
+      <%# Import method selector %>
+      <div class="import-methods">
+        <% [
+          { id: "git_url", icon: "🔗", label: "Git URL", desc: "Clone from a Git repository" },
+          { id: "registry", icon: "📦", label: "Terraform Registry", desc: "Import from registry.terraform.io" },
+          { id: "upload", icon: "📁", label: "File Upload", desc: "Upload .tf files directly" }
+        ].each do |method| %>
+          <label class="imp-method" data-action="click->import-source#selectMethod" data-import-source-method-param="<%= method[:id] %>">
+            <input type="radio" name="import_method" value="<%= method[:id] %>"
+                   <%= "checked" if (@draft.import_method || "git_url") == method[:id] %>
+                   class="sr-only">
+            <div class="imp-icon"><%= method[:icon] %></div>
+            <div class="imp-title"><%= method[:label] %></div>
+            <div class="imp-desc"><%= method[:desc] %></div>
+          </label>
+        <% end %>
+      </div>
+
+      <%# Git URL fields %>
+      <div class="source-fields" data-import-source-target="gitFields">
+        <div class="form-group">
+          <label class="form-label" for="source_url">Git URL</label>
+          <input type="url" name="source_url" id="source_url" class="f50-input"
+                 placeholder="https://github.com/acme-corp/terraform-aws-kafka.git"
+                 value="<%= @draft.source_url %>">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="source_ref">Version / Ref</label>
+            <input type="text" name="source_ref" id="source_ref" class="f50-input"
+                   placeholder="v1.0.0 or main" value="<%= @draft.source_ref %>">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="engine">IaC Engine</label>
+            <select name="engine" id="engine" class="f50-select">
+              <option value="opentofu" <%= "selected" if @draft.engine == "opentofu" %>>OpenTofu</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cloud_provider">Cloud Provider</label>
+            <select name="cloud_provider" id="cloud_provider" class="f50-select">
+              <% ModuleDefinition::CLOUD_PROVIDERS.each do |cp| %>
+                <option value="<%= cp %>" <%= "selected" if @draft.cloud_provider == cp %>><%= cp.upcase %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="source_subpath">Subpath (monorepo, optional)</label>
+          <input type="text" name="source_subpath" id="source_subpath" class="f50-input"
+                 placeholder="modules/kafka" value="<%= @draft.source_subpath %>">
+        </div>
+      </div>
+
+      <%# Registry fields %>
+      <div class="source-fields" data-import-source-target="registryFields" style="display:none">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="registry_namespace">Namespace</label>
+            <input type="text" name="registry_namespace" class="f50-input" placeholder="hashicorp"
+                   value="<%= @draft.registry_namespace %>">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="registry_name">Module Name</label>
+            <input type="text" name="registry_name" class="f50-input" placeholder="consul"
+                   value="<%= @draft.registry_name %>">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="registry_provider">Provider</label>
+            <input type="text" name="registry_provider" class="f50-input" placeholder="aws"
+                   value="<%= @draft.registry_provider %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cloud_provider">Cloud Provider</label>
+          <select name="cloud_provider" class="f50-select">
+            <% ModuleDefinition::CLOUD_PROVIDERS.each do |cp| %>
+              <option value="<%= cp %>" <%= "selected" if @draft.cloud_provider == cp %>><%= cp.upcase %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <%# Upload fields %>
+      <div class="source-fields" data-import-source-target="uploadFields" style="display:none">
+        <div class="upload-zone">
+          <p>Drag and drop .tf files, .zip, or .tar.gz here</p>
+          <input type="file" name="files[]" multiple accept=".tf,.zip,.tar.gz" class="upload-input">
+        </div>
+        <p class="form-hint">⚠ This module will not be version-controlled. Consider using a Git repository for better version management.</p>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="submit" class="f50-btn f50-btn--primary">Next →</button>
+      </div>
+    <% end %>
+  </div>
+</div>

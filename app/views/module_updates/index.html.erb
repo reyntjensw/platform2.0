@@ -1,0 +1,105 @@
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-header__breadcrumb">
+      <%= link_to "← #{@module_definition.display_name}", module_path(@module_definition), class: "back-link" %>
+    </div>
+    <h1 class="page-title">Module Updates</h1>
+    <p class="page-subtitle">Version history and upgrade management for <%= @module_definition.display_name %></p>
+  </div>
+
+  <%# Check for updates %>
+  <div class="update-actions">
+    <%= form_with url: check_updates_module_updates_path(@module_definition), method: :post, local: true, class: "inline-form" do %>
+      <div class="form-row">
+        <div class="form-group">
+          <input type="text" name="new_ref" class="f50-input" placeholder="v2.0.0 or main" value="main">
+        </div>
+        <button type="submit" class="f50-btn f50-btn--secondary">Check for Updates</button>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Version list %>
+  <% @versions.each do |version| %>
+    <div class="version-card version-card--<%= version.breaking? ? 'breaking' : 'compatible' %>">
+      <div class="version-card__header">
+        <span class="version-card__ref"><%= version.version_ref %></span>
+        <% if version.breaking? %>
+          <span class="meta-tag meta-tag--error">⚠ BREAKING</span>
+        <% else %>
+          <span class="meta-tag meta-tag--ready">Non-breaking</span>
+        <% end %>
+        <span class="version-card__date">Scanned <%= time_ago_in_words(version.scanned_at) %> ago</span>
+      </div>
+
+      <% report = version.compatibility_report %>
+      <% if report.present? %>
+        <div class="version-card__changes">
+          <% (report["added"] || []).each do |v| %>
+            <div class="change-line change-line--added">
+              + <%= v["name"] %> (<%= v["type"] %><%= ", default: #{v["default"]}" if v["default"] %>)
+              <% if v["breaking"] %>
+                <span class="meta-tag meta-tag--error">required, no default</span>
+              <% else %>
+                — new field
+              <% end %>
+            </div>
+          <% end %>
+
+          <% (report["removed"] || []).each do |v| %>
+            <div class="change-line change-line--removed">
+              ✕ Removed: <%= v["name"] %>
+            </div>
+          <% end %>
+
+          <% (report["changed"] || []).each do |v| %>
+            <div class="change-line change-line--changed">
+              ~ <%= v["name"] %>:
+              <% (v["changes"] || {}).each do |key, change| %>
+                <%= key %> <%= change["from"] %> → <%= change["to"] %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Affected resources %>
+        <% affected = @affected_resources.select(&:upgrade_available?) %>
+        <% if affected.any? %>
+          <div class="version-card__resources">
+            <h4>Affected resources (<%= affected.size %>):</h4>
+            <% affected.each do |resource| %>
+              <div class="affected-resource">
+                <span>● <%= resource.local_environment.env_type %> / <%= resource.name %></span>
+                <% if resource.local_environment.upgrade_policy == "locked" %>
+                  <span class="meta-tag">🔒 Locked</span>
+                <% elsif version.breaking? %>
+                  <span class="meta-tag meta-tag--warning">⚠ Manual review required</span>
+                <% else %>
+                  <span class="meta-tag meta-tag--ready">Can upgrade</span>
+                  <%= form_with url: upgrade_resource_module_update_path(@module_definition, version), method: :post, local: true, style: "display:inline" do %>
+                    <input type="hidden" name="resource_id" value="<%= resource.id %>">
+                    <button type="submit" class="f50-btn f50-btn--primary f50-btn--sm">Upgrade</button>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <% unless version.breaking? %>
+              <div class="upgrade-all-action">
+                <%= form_with url: upgrade_all_module_updates_path(@module_definition), method: :post, local: true do %>
+                  <button type="submit" class="f50-btn f50-btn--primary">Upgrade All Compatible</button>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @versions.empty? %>
+    <div class="empty-state">
+      <p>No version history yet. Use "Check for Updates" to scan a new version.</p>
+    </div>
+  <% end %>
+</div>

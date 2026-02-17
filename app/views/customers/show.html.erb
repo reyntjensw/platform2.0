@@ -1,0 +1,104 @@
+<% content_for(:title) { "#{@customer.name} — Factor Fifty" } %>
+
+<div class="page-header">
+  <h2><%= @customer.name %></h2>
+</div>
+
+<div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
+  <div class="section-header" style="display: flex; align-items: center; justify-content: space-between;">
+    <h3>Projects</h3>
+    <button class="btn btn-green btn-sm" data-action="click->modal#open">+ New Project</button>
+  </div>
+
+  <%# ── New Project Modal ── %>
+  <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
+    <div class="modal-panel" data-controller="project-form"
+         data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
+      <div class="modal-header">
+        <h3 class="modal-title">New Project</h3>
+        <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+      </div>
+
+      <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="project_name">Project name *</label>
+            <input type="text" name="project[name]" id="project_name"
+                   class="form-input" placeholder="Enter project name" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="project_provider">Cloud provider *</label>
+              <select name="project[provider]" id="project_provider" class="form-input" required
+                      data-project-form-target="provider"
+                      data-action="change->project-form#providerChanged">
+                <option value="">Select a provider...</option>
+                <option value="AWS">AWS</option>
+                <option value="Azure">Azure</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="project_region">Project region *</label>
+              <select name="project[region]" id="project_region" class="form-input" required
+                      data-project-form-target="region">
+                <option value="">Select a provider first</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+          <%= f.submit "Create", class: "btn btn-green" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div data-controller="project-list">
+  <% if @projects.any? %>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
+      <input type="text" class="form-input" placeholder="Search projects…"
+             data-project-list-target="search" data-action="input->project-list#filter"
+             style="flex:1;max-width:320px;">
+      <select class="form-input" style="width:auto;"
+              data-project-list-target="sort" data-action="change->project-list#sort">
+        <option value="name">Sort by name</option>
+        <option value="provider">Sort by provider</option>
+      </select>
+      <span style="font-size:12px;color:var(--text-muted);white-space:nowrap;">
+        <span data-project-list-target="count"><%= @projects.size %></span> projects
+      </span>
+    </div>
+
+    <div class="card-grid" data-project-list-target="grid">
+      <% @projects.sort_by { |p| p.name.to_s.downcase }.each do |project| %>
+        <%= link_to customer_project_path(@customer.uuid, project.uuid),
+              class: "card card-clickable card-gradient-hover",
+              data: { project_list_target: "card", name: project.name, provider: project.provider } do %>
+          <div class="card-header-row">
+            <div class="card-title"><%= project.name %></div>
+            <% if project.provider.present? %>
+              <%= render "shared/provider_icon", provider: project.provider %>
+            <% end %>
+          </div>
+          <% if project.status.present? %>
+            <div class="card-meta"><%= project.status %></div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div data-project-list-target="empty" style="display:none;">
+      <%= render "shared/empty_state", icon: "🔍", title: "No matches", description: "No projects match your search." %>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state",
+      icon: "📁",
+      title: "No projects yet",
+      description: "This customer doesn't have any projects." %>
+  <% end %>
+</div>

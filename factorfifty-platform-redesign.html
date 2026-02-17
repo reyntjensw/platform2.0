@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factor Fifty — Platform Redesign Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1a2235;
+  --bg-card: #151d2e;
+  --bg-card-hover: #1c2740;
+  --border: #243049;
+  --border-light: #2a3a58;
+  --text-primary: #e8ecf4;
+  --text-secondary: #8b99b5;
+  --text-muted: #5a6a8a;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #22d3ee;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+  --aws-orange: #ff9900;
+  --azure-blue: #0078d4;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; }
+
+/* Top Nav */
+.top-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+.logo-mark { width: 28px; height: 28px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: white; }
+.nav-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+.nav-breadcrumb span { opacity: 0.4; }
+.nav-breadcrumb .current { color: var(--text-primary); font-weight: 500; }
+.flex { display: flex; } .items-center { align-items: center; } .gap-8 { gap: 8px; } .gap-12 { gap: 12px; }
+
+/* Buttons */
+.btn { padding: 8px 16px; font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif; border-radius: var(--radius); cursor: pointer; transition: all 0.15s; border: none; display: inline-flex; align-items: center; gap: 6px; }
+.btn-primary { background: var(--accent-blue); color: white; }
+.btn-primary:hover { background: #2563eb; }
+.btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border); }
+.btn-sm { padding: 6px 10px; font-size: 11px; }
+
+/* Screen selector */
+.screen-selector { display: flex; justify-content: center; gap: 6px; padding: 14px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.screen-btn { padding: 7px 14px; font-size: 11px; font-weight: 600; font-family: 'DM Sans', sans-serif; background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+.screen-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+.screen-btn.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+
+.screen { display: none; min-height: calc(100vh - 120px); }
+.screen.active { display: block; }
+
+/* ============ CANVAS SCREEN ============ */
+.canvas-layout { display: grid; grid-template-columns: 260px 1fr 300px; height: calc(100vh - 120px); }
+.catalog-panel { background: var(--bg-secondary); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.catalog-header { padding: 14px; border-bottom: 1px solid var(--border); }
+.catalog-header h3 { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.search-input { width: 100%; padding: 7px 10px; background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; }
+.search-input:focus { border-color: var(--accent-blue); }
+.cloud-toggle { display: flex; gap: 4px; margin-top: 8px; }
+.cloud-chip { padding: 3px 8px; font-size: 10px; font-weight: 600; border-radius: 10px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); }
+.cloud-chip.aws-on { background: rgba(255,153,0,0.15); border-color: var(--aws-orange); color: var(--aws-orange); }
+.cloud-chip.azure-on { background: rgba(0,120,212,0.15); border-color: var(--azure-blue); color: var(--azure-blue); }
+.catalog-modules { flex: 1; overflow-y: auto; padding: 10px; }
+.cat-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); padding: 6px 8px 4px; }
+.mod-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; cursor: grab; margin-bottom: 1px; transition: background 0.15s; }
+.mod-item:hover { background: var(--bg-card-hover); }
+.mod-icon { width: 28px; height: 28px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.mod-icon.c { background: rgba(255,153,0,0.12); color: var(--aws-orange); }
+.mod-icon.d { background: rgba(59,130,246,0.12); color: var(--accent-blue); }
+.mod-icon.n { background: rgba(139,92,246,0.12); color: var(--accent-purple); }
+.mod-icon.s { background: rgba(16,185,129,0.12); color: var(--accent-green); }
+.mod-icon.k { background: rgba(34,211,238,0.12); color: var(--accent-cyan); }
+.mod-icon.x { background: rgba(239,68,68,0.12); color: var(--accent-red); }
+.mod-name { font-size: 11px; font-weight: 600; }
+.mod-desc { font-size: 9px; color: var(--text-muted); }
+.engine-dots { display: flex; gap: 2px; margin-left: auto; }
+.engine-dots i { width: 5px; height: 5px; border-radius: 50%; display: block; }
+.engine-dots .tf { background: var(--accent-purple); }
+.engine-dots .cf { background: var(--aws-orange); }
+.engine-dots .bi { background: var(--azure-blue); }
+
+/* Canvas */
+.canvas-area { background: var(--bg-primary); position: relative; overflow: hidden; }
+.canvas-grid { position: absolute; inset: 0; background-image: radial-gradient(circle, var(--border) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.25; }
+.env-tabs-bar { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); display: flex; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; z-index: 10; }
+.env-tab { padding: 7px 14px; font-size: 11px; font-weight: 500; color: var(--text-secondary); cursor: pointer; border-right: 1px solid var(--border); display: flex; align-items: center; gap: 5px; }
+.env-tab:last-child { border-right: none; }
+.env-tab.active { color: var(--accent-blue); background: rgba(59,130,246,0.08); }
+.env-dot { width: 7px; height: 7px; border-radius: 50%; }
+.toolbar { position: absolute; top: 12px; left: 12px; display: flex; gap: 4px; z-index: 10; }
+.tool-btn { width: 32px; height: 32px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+/* Subnet zones */
+.subnet { position: absolute; border: 2px dashed; border-radius: var(--radius-lg); }
+.subnet-label { position: absolute; top: -11px; left: 14px; background: var(--bg-primary); padding: 1px 8px; font-size: 10px; font-weight: 600; border-radius: 3px; }
+.subnet.pub { left: 30px; top: 70px; width: 280px; height: 340px; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.02); }
+.subnet.pub .subnet-label { color: var(--accent-green); }
+.subnet.prv { left: 340px; top: 70px; width: 380px; height: 340px; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.02); }
+.subnet.prv .subnet-label { color: var(--accent-blue); }
+
+/* Resource blocks */
+.res { position: absolute; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; font-size: 11px; }
+.res:hover { border-color: var(--accent-blue); }
+.res .ri { width: 24px; height: 24px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; }
+.res .rn { font-weight: 600; font-size: 11px; }
+.res .rt { font-size: 9px; color: var(--text-muted); }
+
+/* Validation warning badge */
+.warn-badge { position: absolute; top: -6px; right: -6px; width: 16px; height: 16px; background: var(--accent-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: white; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); } 50% { box-shadow: 0 0 0 5px rgba(239,68,68,0); } }
+
+/* Cross-env ref tag */
+.xref { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); background: var(--accent-purple); color: white; font-size: 8px; font-weight: 700; padding: 1px 6px; border-radius: 6px; white-space: nowrap; }
+
+/* Guide callout */
+.callout { position: absolute; background: var(--accent-blue); color: white; padding: 10px 12px; border-radius: var(--radius); font-size: 11px; line-height: 1.4; max-width: 220px; z-index: 50; box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
+.callout strong { display: block; margin-bottom: 3px; font-size: 12px; }
+.callout::before { content: ''; position: absolute; width: 8px; height: 8px; background: var(--accent-blue); transform: rotate(45deg); left: -4px; top: 12px; }
+
+/* Right panel */
+.props-panel { background: var(--bg-secondary); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.ptabs { display: flex; border-bottom: 1px solid var(--border); }
+.ptab { flex: 1; padding: 9px; font-size: 10px; font-weight: 600; text-align: center; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; }
+.ptab.active { color: var(--accent-blue); border-bottom-color: var(--accent-blue); }
+.pcontent { flex: 1; overflow-y: auto; padding: 14px; }
+.pcontent[data-tab] { display: none; }
+.pcontent.active { display: block; }
+.psection-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; margin-top: 14px; }
+.psection-title:first-child { margin-top: 0; }
+.prow { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(36,48,73,0.4); font-size: 12px; }
+.prow .pl { color: var(--text-secondary); }
+.prow .pv { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--bg-tertiary); padding: 3px 6px; border-radius: 3px; border: 1px solid var(--border); }
+.prow select { font-size: 11px; font-family: 'DM Sans', sans-serif; background: var(--bg-tertiary); color: var(--text-primary); padding: 3px 6px; border-radius: 3px; border: 1px solid var(--border); }
+.toggle { width: 32px; height: 17px; background: var(--bg-tertiary); border-radius: 9px; position: relative; cursor: pointer; border: 1px solid var(--border); }
+.toggle.on { background: var(--accent-blue); border-color: var(--accent-blue); }
+.toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; background: white; border-radius: 50%; transition: all 0.2s; }
+.toggle.on::after { left: 17px; }
+
+/* Validation items */
+.vitem { display: flex; gap: 8px; padding: 8px; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 6px; border-left: 3px solid; font-size: 11px; line-height: 1.4; }
+.vitem.err { border-left-color: var(--accent-red); }
+.vitem.wrn { border-left-color: var(--accent-orange); }
+.vitem.ok { border-left-color: var(--accent-green); }
+.vi { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; flex-shrink: 0; color: white; }
+.vitem.err .vi { background: var(--accent-red); }
+.vitem.wrn .vi { background: var(--accent-orange); }
+.vitem.ok .vi { background: var(--accent-green); }
+.vitem strong { display: block; margin-bottom: 1px; font-size: 11px; }
+.vitem span { color: var(--text-secondary); font-size: 10px; }
+
+/* Cross-env ref panel */
+.xref-card { background: var(--bg-tertiary); border-radius: 6px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
+.xref-card .xdir { font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+.xref-card .xlink { font-size: 11px; color: var(--text-secondary); }
+.xref-card .xlink strong { color: var(--text-primary); }
+.xref-card .xval { font-size: 9px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
+
+/* ============ BUSINESS RULES SCREEN ============ */
+.rules-layout { display: grid; grid-template-columns: 260px 1fr; height: calc(100vh - 120px); }
+.rules-sidebar { background: var(--bg-secondary); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; }
+.rcat-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin: 14px 0 6px; }
+.rcat-title:first-child { margin-top: 0; }
+.rnav { padding: 7px 10px; font-size: 12px; color: var(--text-secondary); border-radius: 6px; cursor: pointer; margin-bottom: 2px; display: flex; justify-content: space-between; }
+.rnav:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+.rnav.active { background: rgba(59,130,246,0.1); color: var(--accent-blue); }
+.rnav .rc { font-size: 9px; font-weight: 600; background: var(--bg-tertiary); padding: 1px 5px; border-radius: 6px; color: var(--text-muted); }
+.rules-main { padding: 24px; overflow-y: auto; }
+.rules-main h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.rules-main .subtitle { font-size: 12px; color: var(--text-secondary); margin-bottom: 20px; }
+
+.rule-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 12px; }
+.rule-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.sev { padding: 2px 7px; font-size: 9px; font-weight: 700; border-radius: 3px; text-transform: uppercase; }
+.sev.block { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+.sev.warn { background: rgba(245,158,11,0.15); color: var(--accent-orange); }
+.sev.info { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+.rule-name { font-size: 14px; font-weight: 600; flex: 1; }
+.rule-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px; }
+.rule-code { background: var(--bg-tertiary); border-radius: 6px; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-cyan); border: 1px solid var(--border); margin-bottom: 10px; line-height: 1.6; }
+.rule-meta { display: flex; gap: 14px; font-size: 10px; color: var(--text-muted); }
+
+/* ============ PROMOTE SCREEN ============ */
+.promote-layout { padding: 28px; max-width: 1100px; margin: 0 auto; }
+.promote-layout h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+.promote-layout > p { color: var(--text-secondary); font-size: 13px; margin-bottom: 28px; }
+.pipeline { display: flex; align-items: center; margin-bottom: 32px; gap: 0; }
+.stage { flex: 1; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; }
+.stage.active-s { border-color: var(--accent-blue); }
+.stage-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.stage-name { font-size: 13px; font-weight: 600; }
+.stage-ver { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-left: auto; }
+.stage-meta { font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; }
+.stage-chips { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 10px; }
+.chip { padding: 2px 6px; font-size: 9px; font-weight: 600; background: var(--bg-tertiary); border-radius: 3px; color: var(--text-secondary); border: 1px solid var(--border); }
+.chip.new { border-color: var(--accent-green); color: var(--accent-green); }
+.arrow-col { width: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; flex-shrink: 0; }
+.arrow-line { width: 30px; height: 2px; background: var(--border); position: relative; }
+.arrow-line::after { content: '▶'; position: absolute; right: -7px; top: -7px; font-size: 10px; color: var(--accent-blue); }
+.promote-btn2 { padding: 3px 8px; font-size: 9px; font-weight: 700; background: var(--accent-blue); color: white; border: none; border-radius: 3px; cursor: pointer; white-space: nowrap; }
+.arrow-note { font-size: 8px; color: var(--text-muted); }
+
+/* Diff */
+.diff-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.diff-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.diff-head h3 { font-size: 13px; font-weight: 600; }
+.diff-stats { display: flex; gap: 10px; font-size: 11px; }
+.diff-stats .a { color: var(--accent-green); }
+.diff-stats .m { color: var(--accent-orange); }
+.diff-stats .r { color: var(--accent-red); }
+.diff-body { padding: 14px 18px; }
+.ditem { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 6px; margin-bottom: 3px; font-size: 12px; }
+.ditem.da { background: rgba(16,185,129,0.07); }
+.ditem.dm { background: rgba(245,158,11,0.07); }
+.ditem.dr { background: rgba(239,68,68,0.07); }
+.dbadge { font-size: 8px; font-weight: 700; padding: 1px 5px; border-radius: 2px; text-transform: uppercase; }
+.ditem.da .dbadge { background: rgba(16,185,129,0.2); color: var(--accent-green); }
+.ditem.dm .dbadge { background: rgba(245,158,11,0.2); color: var(--accent-orange); }
+
+/* ============ TEMPLATES SCREEN ============ */
+.tpl-layout { padding: 28px; max-width: 1200px; margin: 0 auto; }
+.tpl-layout h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.tpl-filters { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.fchip { padding: 5px 12px; font-size: 11px; font-weight: 500; background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 16px; cursor: pointer; }
+.fchip.active { background: rgba(59,130,246,0.1); border-color: var(--accent-blue); color: var(--accent-blue); }
+.tpl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.tpl-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.2s; }
+.tpl-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
+.tpl-preview { height: 110px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; padding: 14px; position: relative; }
+.tpl-block { width: 34px; height: 34px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+.tpl-badge { position: absolute; top: 8px; right: 8px; padding: 2px 6px; font-size: 9px; font-weight: 700; border-radius: 3px; background: rgba(0,0,0,0.5); }
+.tpl-badge.aws { color: var(--aws-orange); }
+.tpl-badge.azure { color: var(--azure-blue); }
+.tpl-badge.multi { color: var(--accent-cyan); }
+.tpl-body { padding: 14px; }
+.tpl-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.tpl-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 10px; }
+.tpl-foot { display: flex; justify-content: space-between; align-items: center; }
+.tpl-tags { display: flex; gap: 3px; }
+.tpl-tag { padding: 1px 5px; font-size: 9px; background: var(--bg-tertiary); border-radius: 2px; color: var(--text-muted); }
+.tpl-uses { font-size: 10px; color: var(--text-muted); }
+
+/* ============ IMPORT SCREEN ============ */
+.import-layout { padding: 28px; max-width: 900px; margin: 0 auto; text-align: center; }
+.import-layout h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+.import-layout > p { color: var(--text-secondary); font-size: 13px; margin-bottom: 32px; }
+.import-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 32px; text-align: center; }
+.imp-method { background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 20px; cursor: pointer; transition: all 0.2s; }
+.imp-method:hover { border-color: var(--border-light); }
+.imp-method.sel { border-color: var(--accent-blue); }
+.imp-icon { width: 44px; height: 44px; border-radius: 10px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.imp-icon.scan { background: rgba(34,211,238,0.12); color: var(--accent-cyan); }
+.imp-icon.upload { background: rgba(139,92,246,0.12); color: var(--accent-purple); }
+.imp-icon.connect { background: rgba(16,185,129,0.12); color: var(--accent-green); }
+.imp-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.imp-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+
+.import-steps { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; text-align: left; }
+.import-steps h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+.istep { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(36,48,73,0.4); }
+.istep:last-child { border-bottom: none; }
+.snum { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; background: var(--bg-tertiary); color: var(--text-muted); border: 1px solid var(--border); }
+.istep.done .snum { background: var(--accent-green); color: white; border-color: var(--accent-green); }
+.istep.now .snum { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+.istep h4 { font-size: 12px; font-weight: 600; margin-bottom: 1px; }
+.istep p { font-size: 11px; color: var(--text-secondary); }
+
+/* ============ DEPLOY SCREEN ============ */
+.deploy-layout { padding: 28px; max-width: 1000px; margin: 0 auto; }
+.deploy-layout h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+.deploy-layout > p { color: var(--text-secondary); font-size: 13px; margin-bottom: 24px; }
+
+.engine-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+.eng-opt { background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
+.eng-opt:hover { border-color: var(--border-light); }
+.eng-opt.sel { border-color: var(--accent-blue); background: rgba(59,130,246,0.04); }
+.eng-logo { width: 36px; height: 36px; border-radius: 8px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; }
+.eng-logo.tofu { background: rgba(139,92,246,0.12); color: var(--accent-purple); }
+.eng-logo.cfn { background: rgba(255,153,0,0.12); color: var(--aws-orange); }
+.eng-logo.bicep { background: rgba(0,120,212,0.12); color: var(--azure-blue); }
+.eng-logo.cdk { background: rgba(34,211,238,0.12); color: var(--accent-cyan); }
+.eng-name { font-size: 12px; font-weight: 600; margin-bottom: 1px; }
+.eng-desc { font-size: 10px; color: var(--text-muted); }
+
+.pipe-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px; }
+.pipe-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.pipe-head h3 { font-size: 13px; font-weight: 600; }
+.pipe-steps { display: flex; align-items: center; padding: 18px; gap: 0; }
+.pstep { flex: 1; text-align: center; }
+.pstep-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-tertiary); border: 2px solid var(--border); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-secondary); }
+.pstep-name { font-size: 11px; font-weight: 500; }
+.pstep-detail { font-size: 9px; color: var(--text-muted); }
+.pconnector { width: 30px; height: 2px; background: var(--border); flex-shrink: 0; }
+
+.checks-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+.checks-box h3 { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+.chk { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(36,48,73,0.4); font-size: 12px; }
+.chk:last-child { border-bottom: none; }
+.chk-s { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.chk-s.pass { background: rgba(16,185,129,0.12); color: var(--accent-green); }
+.chk-s.fail { background: rgba(239,68,68,0.12); color: var(--accent-red); }
+.chk-s.pend { background: rgba(245,158,11,0.12); color: var(--accent-orange); }
+.chk span { color: var(--text-secondary); }
+
+/* Wizard overlay */
+.wizard-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; }
+.wizard-overlay.vis { display: flex; }
+.wizard { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 16px; width: 580px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+.wizard-head { padding: 20px; border-bottom: 1px solid var(--border); }
+.wizard-head h2 { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+.wizard-head p { font-size: 12px; color: var(--text-secondary); }
+.wizard-bar { display: flex; gap: 3px; padding: 12px 20px; background: var(--bg-tertiary); }
+.wbar-seg { flex: 1; height: 3px; border-radius: 2px; background: var(--border); }
+.wbar-seg.done { background: var(--accent-green); }
+.wbar-seg.cur { background: var(--accent-blue); }
+.wizard-body { padding: 20px; }
+.wopt { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s; }
+.wopt:hover { border-color: var(--accent-blue); }
+.wopt.sel { border-color: var(--accent-blue); background: rgba(59,130,246,0.04); }
+.wradio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wopt.sel .wradio { border-color: var(--accent-blue); }
+.wopt.sel .wradio::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-blue); }
+.wopt h4 { font-size: 12px; font-weight: 600; margin-bottom: 1px; }
+.wopt p { font-size: 10px; color: var(--text-secondary); }
+.wizard-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav class="top-nav">
+  <div class="flex items-center gap-12">
+    <div class="logo"><div class="logo-mark">F50</div>Factor Fifty</div>
+    <div class="nav-breadcrumb">
+      <span>Cloudsisters</span> <span>›</span> <span>Acme Corp</span> <span>›</span> <span>Platform Project</span> <span>›</span> <span class="current">production</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-8">
+    <button class="btn btn-secondary btn-sm" onclick="toggleWizard()">✦ New Environment</button>
+    <button class="btn btn-primary btn-sm" onclick="showScreen('deploy')">▶ Deploy</button>
+  </div>
+</nav>
+
+<!-- Screen Selector -->
+<div class="screen-selector">
+  <button class="screen-btn active" onclick="showScreen('canvas')" data-screen="canvas">① Canvas & Guardrails</button>
+  <button class="screen-btn" onclick="showScreen('rules')" data-screen="rules">② Business Rules</button>
+  <button class="screen-btn" onclick="showScreen('promote')" data-screen="promote">③ Promote & Sync</button>
+  <button class="screen-btn" onclick="showScreen('templates')" data-screen="templates">④ Templates</button>
+  <button class="screen-btn" onclick="showScreen('import')" data-screen="import">⑤ Import</button>
+  <button class="screen-btn" onclick="showScreen('deploy')" data-screen="deploy">⑥ Deploy & IaC Engine</button>
+</div>
+
+<!-- ============ SCREEN 1: CANVAS ============ -->
+<div class="screen active" id="screen-canvas">
+  <div class="canvas-layout">
+    <!-- Left catalog -->
+    <div class="catalog-panel">
+      <div class="catalog-header">
+        <h3>Module Catalog</h3>
+        <input class="search-input" placeholder="Search modules...">
+        <div class="cloud-toggle">
+          <div class="cloud-chip aws-on">AWS</div>
+          <div class="cloud-chip">Azure</div>
+        </div>
+      </div>
+      <div class="catalog-modules">
+        <div class="cat-title">Compute</div>
+        <div class="mod-item"><div class="mod-icon k">EKS</div><div><div class="mod-name">EKS Cluster</div><div class="mod-desc">Managed Kubernetes</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon c">EC2</div><div><div class="mod-name">EC2 Instance</div><div class="mod-desc">Virtual server</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon c">λ</div><div><div class="mod-name">Lambda</div><div class="mod-desc">Serverless compute</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon c">ECS</div><div><div class="mod-name">ECS Service</div><div class="mod-desc">Container service</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="cat-title">Database</div>
+        <div class="mod-item"><div class="mod-icon d">RDS</div><div><div class="mod-name">RDS PostgreSQL</div><div class="mod-desc">Managed database</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon d">DDB</div><div><div class="mod-name">DynamoDB</div><div class="mod-desc">NoSQL key-value</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon d">ES</div><div><div class="mod-name">OpenSearch</div><div class="mod-desc">Search & analytics</div></div><div class="engine-dots"><i class="tf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon d">EC</div><div><div class="mod-name">ElastiCache</div><div class="mod-desc">In-memory cache</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="cat-title">Networking</div>
+        <div class="mod-item"><div class="mod-icon n">VPC</div><div><div class="mod-name">VPC</div><div class="mod-desc">Virtual network</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon n">ALB</div><div><div class="mod-name">ALB / NLB</div><div class="mod-desc">Load balancer</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon n">CF</div><div><div class="mod-name">CloudFront</div><div class="mod-desc">CDN distribution</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="cat-title">Storage</div>
+        <div class="mod-item"><div class="mod-icon s">S3</div><div><div class="mod-name">S3 Bucket</div><div class="mod-desc">Object storage</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon s">EFS</div><div><div class="mod-name">EFS</div><div class="mod-desc">Elastic file system</div></div><div class="engine-dots"><i class="tf"></i></div></div>
+        <div class="cat-title">Security</div>
+        <div class="mod-item"><div class="mod-icon x">IAM</div><div><div class="mod-name">IAM Role</div><div class="mod-desc">Access management</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+        <div class="mod-item"><div class="mod-icon x">SG</div><div><div class="mod-name">Security Group</div><div class="mod-desc">Firewall rules</div></div><div class="engine-dots"><i class="tf"></i><i class="cf"></i></div></div>
+      </div>
+    </div>
+
+    <!-- Center canvas -->
+    <div class="canvas-area">
+      <div class="canvas-grid"></div>
+      <div class="toolbar">
+        <div class="tool-btn">↖</div><div class="tool-btn">⤳</div><div class="tool-btn">▢</div><div class="tool-btn">↩</div>
+      </div>
+      <div class="env-tabs-bar">
+        <div class="env-tab"><div class="env-dot" style="background:var(--accent-green)"></div>dev</div>
+        <div class="env-tab"><div class="env-dot" style="background:var(--accent-orange)"></div>acceptance</div>
+        <div class="env-tab active"><div class="env-dot" style="background:var(--accent-red)"></div>production</div>
+        <div class="env-tab" style="color:var(--text-muted)">+</div>
+      </div>
+
+      <div class="subnet pub"><div class="subnet-label">Public Subnet</div>
+        <div class="res" style="left:16px;top:40px"><div class="ri" style="background:rgba(139,92,246,0.12);color:var(--accent-purple)">ALB</div><div><div class="rn">app-alb</div><div class="rt">Application Load Balancer</div></div></div>
+        <div class="res" style="left:16px;top:110px"><div class="ri" style="background:rgba(139,92,246,0.12);color:var(--accent-purple)">CF</div><div><div class="rn">cdn-dist</div><div class="rt">CloudFront Distribution</div></div></div>
+        <div class="res" style="left:16px;top:180px"><div class="ri" style="background:rgba(16,185,129,0.12);color:var(--accent-green)">S3</div><div><div class="rn">static-assets</div><div class="rt">S3 Bucket</div></div><div class="warn-badge">!</div></div>
+      </div>
+
+      <div class="subnet prv"><div class="subnet-label">Private Subnet</div>
+        <div class="res" style="left:16px;top:40px"><div class="ri" style="background:rgba(34,211,238,0.12);color:var(--accent-cyan)">EKS</div><div><div class="rn">platform-eks</div><div class="rt">EKS Cluster v1.29</div></div><div class="xref">↗ refs shared-services VPC</div></div>
+        <div class="res" style="left:16px;top:120px"><div class="ri" style="background:rgba(59,130,246,0.12);color:var(--accent-blue)">RDS</div><div><div class="rn">app-postgres</div><div class="rt">PostgreSQL 15</div></div></div>
+        <div class="res" style="left:210px;top:120px"><div class="ri" style="background:rgba(59,130,246,0.12);color:var(--accent-blue)">EC</div><div><div class="rn">redis-cache</div><div class="rt">ElastiCache Redis</div></div></div>
+        <div class="res" style="left:16px;top:200px"><div class="ri" style="background:rgba(59,130,246,0.12);color:var(--accent-blue)">ES</div><div><div class="rn">opensearch-01</div><div class="rt">OpenSearch 2.x</div></div></div>
+        <div class="res" style="left:210px;top:200px"><div class="ri" style="background:rgba(16,185,129,0.12);color:var(--accent-green)">EFS</div><div><div class="rn">shared-storage</div><div class="rt">EFS File System</div></div></div>
+      </div>
+
+      <div class="callout" style="right:320px;top:280px;">
+        <strong>💡 Smart placement</strong>
+        RDS auto-placed in private subnet. Databases cannot be in public subnets per your business rules.
+      </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="props-panel">
+      <div class="ptabs">
+        <div class="ptab active" onclick="showTab('props')">Properties</div>
+        <div class="ptab" onclick="showTab('valid')">Validation <span style="color:var(--accent-red);font-size:9px">● 2</span></div>
+        <div class="ptab" onclick="showTab('xrefs')">Cross-Env</div>
+      </div>
+
+      <div class="pcontent active" id="tab-props">
+        <div class="psection-title">Selected: platform-eks</div>
+        <div class="prow"><span class="pl">Cluster Version</span><select><option>1.29</option><option>1.28</option></select></div>
+        <div class="prow"><span class="pl">Node Instance</span><span class="pv">m6i.xlarge</span></div>
+        <div class="prow"><span class="pl">Min Nodes</span><span class="pv">3</span></div>
+        <div class="prow"><span class="pl">Max Nodes</span><span class="pv">12</span></div>
+        <div class="prow"><span class="pl">Subnet</span><span class="pv" style="color:var(--accent-blue)">private</span></div>
+        <div class="psection-title">Add-ons</div>
+        <div class="prow"><span class="pl">Karpenter</span><div class="toggle on"></div></div>
+        <div class="prow"><span class="pl">ALB Controller</span><div class="toggle on"></div></div>
+        <div class="prow"><span class="pl">Metrics Server</span><div class="toggle on"></div></div>
+        <div class="prow"><span class="pl">External DNS</span><div class="toggle on"></div></div>
+        <div class="psection-title">IaC Engine</div>
+        <div class="prow"><span class="pl">Engine</span><select><option>OpenTofu</option><option>CloudFormation</option></select></div>
+        <div class="prow"><span class="pl">State</span><span class="pv" style="font-size:9px">s3://f50-state/prd/eks</span></div>
+      </div>
+
+      <div class="pcontent" id="tab-valid">
+        <div class="psection-title">Real-time Validation</div>
+        <div class="vitem err"><div class="vi">!</div><div><strong>Missing encryption</strong><span>S3 "static-assets" needs SSE enabled. Rule: data-encryption-at-rest</span></div></div>
+        <div class="vitem wrn"><div class="vi">⚠</div><div><strong>Single-AZ database</strong><span>RDS "app-postgres" needs Multi-AZ for production per business rule.</span></div></div>
+        <div class="vitem ok"><div class="vi">✓</div><div><strong>No public databases</strong><span>All databases in private subnets.</span></div></div>
+        <div class="vitem ok"><div class="vi">✓</div><div><strong>VPC peering valid</strong><span>Cross-env ref to shared-services reachable.</span></div></div>
+        <div class="vitem ok"><div class="vi">✓</div><div><strong>Security groups defined</strong><span>All resources have associated SGs.</span></div></div>
+        <div class="vitem ok"><div class="vi">✓</div><div><strong>Tagging compliance</strong><span>Required tags: env, team, cost-center present.</span></div></div>
+      </div>
+
+      <div class="pcontent" id="tab-xrefs">
+        <div class="psection-title">Cross-Environment References</div>
+        <div class="xref-card">
+          <div class="xdir" style="color:var(--accent-purple)">↗ Outgoing</div>
+          <div class="xlink"><strong>platform-eks</strong> → shared-services.vpc_id</div>
+          <div class="xval">Resolved: vpc-0a1b2c3d4e5f6g7h8</div>
+        </div>
+        <div class="xref-card">
+          <div class="xdir" style="color:var(--accent-cyan)">↙ Incoming</div>
+          <div class="xlink"><strong>monitoring-env</strong> → this.eks_endpoint</div>
+          <div class="xval">Used by: prometheus scrape config</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:12px">+ Add Cross-Env Reference</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 2: BUSINESS RULES ============ -->
+<div class="screen" id="screen-rules">
+  <div class="rules-layout">
+    <div class="rules-sidebar">
+      <div class="rcat-title">🛡 Security</div>
+      <div class="rnav active">Network Isolation <span class="rc">4</span></div>
+      <div class="rnav">Encryption <span class="rc">3</span></div>
+      <div class="rnav">IAM & Access <span class="rc">5</span></div>
+      <div class="rnav">Logging <span class="rc">2</span></div>
+      <div class="rcat-title">💰 Cost</div>
+      <div class="rnav">Instance Sizing <span class="rc">3</span></div>
+      <div class="rnav">Reserved Capacity <span class="rc">2</span></div>
+      <div class="rnav">Tagging <span class="rc">2</span></div>
+      <div class="rcat-title">🏗 Architecture</div>
+      <div class="rnav">High Availability <span class="rc">3</span></div>
+      <div class="rnav">Naming Convention <span class="rc">1</span></div>
+      <div class="rnav">Region Constraints <span class="rc">2</span></div>
+      <div class="rcat-title">📋 Compliance</div>
+      <div class="rnav">GDPR <span class="rc">4</span></div>
+      <div class="rnav">SOC2 <span class="rc">3</span></div>
+      <div class="rnav">Custom <span class="rc">1</span></div>
+    </div>
+    <div class="rules-main">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+        <div><h2>Network Isolation Rules</h2><div class="subtitle">4 rules · Applied to: All environments</div></div>
+        <button class="btn btn-primary">+ Create Rule</button>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-head"><span class="sev block">BLOCKS DEPLOY</span><span class="rule-name">No public databases</span><div class="toggle on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
+        <div class="rule-desc">Database resources (RDS, DynamoDB, ElastiCache, OpenSearch) must never be placed in a public subnet. The platform auto-redirects to private subnet and shows a warning.</div>
+        <div class="rule-code">IF resource.type IN ["rds", "dynamodb", "elasticache", "opensearch"]<br>THEN resource.subnet.type MUST BE "private"<br>ACTION: auto_move_to_private + notify_user</div>
+        <div class="rule-meta"><span>📎 All envs</span><span>👤 admin</span><span>☁️ AWS + Azure</span></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-head"><span class="sev block">BLOCKS DEPLOY</span><span class="rule-name">Encryption at rest required</span><div class="toggle on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
+        <div class="rule-desc">All storage resources (S3, EBS, RDS, EFS) must have encryption enabled. Deployment blocked if disabled.</div>
+        <div class="rule-code">IF resource.type IN ["s3", "ebs", "rds", "efs"]<br>THEN resource.encryption MUST BE true<br>ACTION: block_deploy + show_validation_error</div>
+        <div class="rule-meta"><span>📎 acc, prd</span><span>👤 admin</span><span>☁️ AWS + Azure</span></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-head"><span class="sev warn">WARNING</span><span class="rule-name">Production requires Multi-AZ</span><div class="toggle on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
+        <div class="rule-desc">Production stateful resources should be Multi-AZ. Warns on canvas, blocks during deploy review.</div>
+        <div class="rule-code">IF env.type == "production" AND resource.stateful == true<br>THEN resource.multi_az MUST BE true<br>ACTION: warn_on_canvas + block_deploy_review</div>
+        <div class="rule-meta"><span>📎 prd only</span><span>👤 admin</span><span>☁️ AWS</span></div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-head"><span class="sev info">INFO</span><span class="rule-name">VPC CIDR range constraints</span><div class="toggle on" style="margin-left:auto" onclick="this.classList.toggle('on')"></div></div>
+        <div class="rule-desc">VPCs must use pre-approved CIDR ranges. Cross-env peering must not overlap. Platform auto-assigns non-conflicting ranges.</div>
+        <div class="rule-code">IF resource.type == "vpc"<br>THEN resource.cidr IN approved_cidr_pool<br>AND NO overlap WITH other_envs.vpc.cidr<br>ACTION: auto_assign_cidr</div>
+        <div class="rule-meta"><span>📎 All envs</span><span>👤 admin</span><span>☁️ AWS + Azure</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 3: PROMOTE ============ -->
+<div class="screen" id="screen-promote">
+  <div class="promote-layout">
+    <h2>Environment Promotion Pipeline</h2>
+    <p>Compare, diff, and promote infrastructure changes across environments.</p>
+
+    <div class="pipeline">
+      <div class="stage">
+        <div class="stage-head"><div class="env-dot" style="background:var(--accent-green)"></div><div class="stage-name">Development</div><div class="stage-ver">v2.14.0</div></div>
+        <div class="stage-meta">Last deployed: 2h ago</div>
+        <div class="stage-meta">12 resources · OpenTofu</div>
+        <div class="stage-chips"><span class="chip">EKS 1.29</span><span class="chip">RDS</span><span class="chip">Redis</span><span class="chip">S3 ×3</span><span class="chip new">+2 new</span></div>
+      </div>
+      <div class="arrow-col"><button class="promote-btn2">Promote →</button><div class="arrow-line"></div><span class="arrow-note">3 changes</span></div>
+      <div class="stage active-s">
+        <div class="stage-head"><div class="env-dot" style="background:var(--accent-orange)"></div><div class="stage-name">Acceptance</div><div class="stage-ver">v2.13.1</div></div>
+        <div class="stage-meta">Last deployed: 3 days ago</div>
+        <div class="stage-meta">10 resources · OpenTofu</div>
+        <div class="stage-chips"><span class="chip">EKS 1.28</span><span class="chip">RDS</span><span class="chip">Redis</span><span class="chip">S3 ×2</span></div>
+      </div>
+      <div class="arrow-col"><button class="promote-btn2" style="opacity:0.5;cursor:not-allowed">Promote →</button><div class="arrow-line"></div><span class="arrow-note" style="color:var(--accent-orange)">needs approval</span></div>
+      <div class="stage">
+        <div class="stage-head"><div class="env-dot" style="background:var(--accent-red)"></div><div class="stage-name">Production</div><div class="stage-ver">v2.13.0</div></div>
+        <div class="stage-meta">Last deployed: 1 week ago</div>
+        <div class="stage-meta">10 resources · OpenTofu</div>
+        <div class="stage-chips"><span class="chip">EKS 1.28</span><span class="chip">RDS</span><span class="chip">Redis</span><span class="chip">S3 ×2</span></div>
+      </div>
+    </div>
+
+    <div class="diff-box">
+      <div class="diff-head"><h3>Diff: Development → Acceptance</h3><div class="diff-stats"><span class="a">+2 added</span><span class="m">~1 modified</span><span class="r">-0 removed</span></div></div>
+      <div class="diff-body">
+        <div class="ditem da"><span class="dbadge">add</span><span><strong>opensearch-01</strong> — OpenSearch 2.x cluster (r6g.large × 3)</span></div>
+        <div class="ditem da"><span class="dbadge">add</span><span><strong>shared-storage</strong> — EFS file system with lifecycle policy</span></div>
+        <div class="ditem dm"><span class="dbadge">mod</span><span><strong>platform-eks</strong> — Cluster 1.28→1.29, max nodes 8→12</span></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-secondary">Preview Plan</button>
+      <button class="btn btn-primary">Approve & Promote to Acceptance</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 4: TEMPLATES ============ -->
+<div class="screen" id="screen-templates">
+  <div class="tpl-layout">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h2>Environment Templates</h2><button class="btn btn-primary">+ Create Template</button></div>
+    <div class="tpl-filters">
+      <div class="fchip active">All</div><div class="fchip">AWS</div><div class="fchip">Azure</div><div class="fchip">Multi-Cloud</div><div class="fchip">Starter</div><div class="fchip">Production-Ready</div><div class="fchip">My Templates</div>
+    </div>
+    <div class="tpl-grid">
+      <div class="tpl-card">
+        <div class="tpl-preview">
+          <div class="tpl-block" style="background:rgba(34,211,238,0.12);color:var(--accent-cyan)">EKS</div>
+          <div class="tpl-block" style="background:rgba(59,130,246,0.12);color:var(--accent-blue)">RDS</div>
+          <div class="tpl-block" style="background:rgba(59,130,246,0.12);color:var(--accent-blue)">EC</div>
+          <div class="tpl-block" style="background:rgba(139,92,246,0.12);color:var(--accent-purple)">ALB</div>
+          <div class="tpl-block" style="background:rgba(16,185,129,0.12);color:var(--accent-green)">S3</div>
+          <div class="tpl-block" style="background:rgba(239,68,68,0.12);color:var(--accent-red)">IAM</div>
+          <div class="tpl-badge aws">AWS</div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-title">Production Web Platform</div>
+          <div class="tpl-desc">EKS + RDS PostgreSQL + ElastiCache Redis + ALB + S3. Includes Karpenter, monitoring, security best practices.</div>
+          <div class="tpl-foot"><div class="tpl-tags"><span class="tpl-tag">EKS</span><span class="tpl-tag">HA</span><span class="tpl-tag">Production</span></div><span class="tpl-uses">Used 47×</span></div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview">
+          <div class="tpl-block" style="background:rgba(255,153,0,0.12);color:var(--aws-orange)">λ</div>
+          <div class="tpl-block" style="background:rgba(59,130,246,0.12);color:var(--accent-blue)">DDB</div>
+          <div class="tpl-block" style="background:rgba(139,92,246,0.12);color:var(--accent-purple)">API</div>
+          <div class="tpl-block" style="background:rgba(16,185,129,0.12);color:var(--accent-green)">S3</div>
+          <div class="tpl-badge aws">AWS</div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-title">Serverless API Backend</div>
+          <div class="tpl-desc">Lambda + API Gateway + DynamoDB + S3. Event-driven, auto-scaling, pay-per-use architecture.</div>
+          <div class="tpl-foot"><div class="tpl-tags"><span class="tpl-tag">Serverless</span><span class="tpl-tag">API</span><span class="tpl-tag">Starter</span></div><span class="tpl-uses">Used 31×</span></div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview">
+          <div class="tpl-block" style="background:rgba(0,120,212,0.12);color:var(--azure-blue)">AKS</div>
+          <div class="tpl-block" style="background:rgba(0,120,212,0.12);color:var(--azure-blue)">SQL</div>
+          <div class="tpl-block" style="background:rgba(0,120,212,0.12);color:var(--azure-blue)">KV</div>
+          <div class="tpl-block" style="background:rgba(0,120,212,0.12);color:var(--azure-blue)">AG</div>
+          <div class="tpl-badge azure">Azure</div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-title">Azure Microservices</div>
+          <div class="tpl-desc">AKS + Azure SQL + Key Vault + Application Gateway. Enterprise-grade with AAD integration.</div>
+          <div class="tpl-foot"><div class="tpl-tags"><span class="tpl-tag">AKS</span><span class="tpl-tag">Enterprise</span></div><span class="tpl-uses">Used 18×</span></div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview">
+          <div class="tpl-block" style="background:rgba(34,211,238,0.12);color:var(--accent-cyan)">EKS</div>
+          <div class="tpl-block" style="background:rgba(16,185,129,0.12);color:var(--accent-green)">S3</div>
+          <div class="tpl-block" style="background:rgba(0,120,212,0.12);color:var(--azure-blue)">Blob</div>
+          <div class="tpl-block" style="background:rgba(0,120,212,0.12);color:var(--azure-blue)">AKS</div>
+          <div class="tpl-badge multi">Multi</div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-title">Multi-Cloud DR Setup</div>
+          <div class="tpl-desc">AWS primary + Azure failover. Cross-cloud replication for S3/Blob, coordinated DNS failover.</div>
+          <div class="tpl-foot"><div class="tpl-tags"><span class="tpl-tag">DR</span><span class="tpl-tag">Multi-Cloud</span></div><span class="tpl-uses">Used 8×</span></div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview">
+          <div class="tpl-block" style="background:rgba(139,92,246,0.12);color:var(--accent-purple)">VPC</div>
+          <div class="tpl-block" style="background:rgba(239,68,68,0.12);color:var(--accent-red)">FW</div>
+          <div class="tpl-block" style="background:rgba(239,68,68,0.12);color:var(--accent-red)">WAF</div>
+          <div class="tpl-block" style="background:rgba(255,153,0,0.12);color:var(--aws-orange)">CT</div>
+          <div class="tpl-badge aws">AWS</div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-title">Shared Services / Landing Zone</div>
+          <div class="tpl-desc">VPC + Network Firewall + WAF + CloudTrail + GuardDuty. Foundation layer for multi-env setups.</div>
+          <div class="tpl-foot"><div class="tpl-tags"><span class="tpl-tag">Security</span><span class="tpl-tag">Foundation</span></div><span class="tpl-uses">Used 23×</span></div>
+        </div>
+      </div>
+      <div class="tpl-card" style="border-style:dashed;display:flex;align-items:center;justify-content:center;min-height:240px">
+        <div style="text-align:center;padding:20px">
+          <div style="font-size:24px;margin-bottom:8px;opacity:0.3">+</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-secondary)">Save current environment as template</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Share with your team or across customers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 5: IMPORT ============ -->
+<div class="screen" id="screen-import">
+  <div class="import-layout">
+    <h2>Import Existing Infrastructure</h2>
+    <p>Bring your existing cloud resources into Factor Fifty for management and visualization.</p>
+
+    <div class="import-methods">
+      <div class="imp-method sel">
+        <div class="imp-icon scan">☁</div>
+        <div class="imp-title">Cloud Account Scan</div>
+        <div class="imp-desc">Connect your AWS or Azure account and auto-discover all resources. Generates diagram and IaC code.</div>
+      </div>
+      <div class="imp-method">
+        <div class="imp-icon upload">⬆</div>
+        <div class="imp-title">Upload IaC Files</div>
+        <div class="imp-desc">Upload existing Terraform, CloudFormation, or Bicep files. We'll parse and visualize them.</div>
+      </div>
+      <div class="imp-method">
+        <div class="imp-icon connect">⟳</div>
+        <div class="imp-title">State File Import</div>
+        <div class="imp-desc">Import from existing Terraform/OpenTofu state. Full resource mapping with drift detection.</div>
+      </div>
+    </div>
+
+    <div class="import-steps">
+      <h3>Cloud Account Scan — Progress</h3>
+      <div class="istep done"><div class="snum">✓</div><div><h4>Connect AWS Account</h4><p>Cross-account role assumed via arn:aws:iam::123456789:role/f50-scanner</p></div></div>
+      <div class="istep done"><div class="snum">✓</div><div><h4>Discover Resources</h4><p>Found 47 resources across 3 regions (eu-west-1, eu-central-1, us-east-1)</p></div></div>
+      <div class="istep now"><div class="snum">3</div><div><h4>Map Dependencies</h4><p>Analyzing VPC peering, security groups, IAM roles, and resource references...</p></div></div>
+      <div class="istep"><div class="snum">4</div><div><h4>Generate Diagram</h4><p>Create visual layout with subnet zones, connections, and resource grouping</p></div></div>
+      <div class="istep"><div class="snum">5</div><div><h4>Generate IaC Code</h4><p>Produce OpenTofu/CloudFormation code matching discovered infrastructure</p></div></div>
+      <div class="istep"><div class="snum">6</div><div><h4>Review & Adopt</h4><p>Review generated code, run plan to verify zero-diff, then adopt into F50 management</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREEN 6: DEPLOY ============ -->
+<div class="screen" id="screen-deploy">
+  <div class="deploy-layout">
+    <h2>Deploy Configuration</h2>
+    <p>Select your IaC engine and review the deployment pipeline. The engine is decoupled from your diagram.</p>
+
+    <div class="engine-grid">
+      <div class="eng-opt sel">
+        <div class="eng-logo tofu">OT</div>
+        <div class="eng-name">OpenTofu</div>
+        <div class="eng-desc">Open-source IaC</div>
+      </div>
+      <div class="eng-opt">
+        <div class="eng-logo cfn">CF</div>
+        <div class="eng-name">CloudFormation</div>
+        <div class="eng-desc">AWS-native stacks</div>
+      </div>
+      <div class="eng-opt">
+        <div class="eng-logo bicep">Bi</div>
+        <div class="eng-name">Bicep / ARM</div>
+        <div class="eng-desc">Azure-native IaC</div>
+      </div>
+      <div class="eng-opt">
+        <div class="eng-logo cdk">CDK</div>
+        <div class="eng-name">AWS CDK</div>
+        <div class="eng-desc">Programmatic IaC</div>
+      </div>
+    </div>
+
+    <div class="pipe-box">
+      <div class="pipe-head"><h3>Deployment Pipeline</h3><span style="font-size:11px;color:var(--text-muted)">Engine-agnostic orchestration</span></div>
+      <div class="pipe-steps">
+        <div class="pstep"><div class="pstep-icon">📋</div><div class="pstep-name">Validate</div><div class="pstep-detail">Business rules</div></div>
+        <div class="pconnector"></div>
+        <div class="pstep"><div class="pstep-icon">⚙</div><div class="pstep-name">Generate</div><div class="pstep-detail">IR → IaC code</div></div>
+        <div class="pconnector"></div>
+        <div class="pstep"><div class="pstep-icon">📦</div><div class="pstep-name">Plan</div><div class="pstep-detail">tofu plan / cfn changeset</div></div>
+        <div class="pconnector"></div>
+        <div class="pstep"><div class="pstep-icon">👁</div><div class="pstep-name">Review</div><div class="pstep-detail">Manual approval</div></div>
+        <div class="pconnector"></div>
+        <div class="pstep"><div class="pstep-icon">🚀</div><div class="pstep-name">Apply</div><div class="pstep-detail">tofu apply / deploy stack</div></div>
+        <div class="pconnector"></div>
+        <div class="pstep"><div class="pstep-icon">✅</div><div class="pstep-name">Verify</div><div class="pstep-detail">Drift detection</div></div>
+      </div>
+    </div>
+
+    <div class="checks-box">
+      <h3>Pre-Deploy Checks</h3>
+      <div class="chk"><div class="chk-s pass">✓</div><div>Business rules validation <span>— 14/14 rules passed</span></div></div>
+      <div class="chk"><div class="chk-s pass">✓</div><div>Cross-env references <span>— All outputs resolvable</span></div></div>
+      <div class="chk"><div class="chk-s fail">✗</div><div>Encryption compliance <span>— S3 "static-assets" missing encryption</span></div></div>
+      <div class="chk"><div class="chk-s pass">✓</div><div>IAM least privilege <span>— No wildcard permissions detected</span></div></div>
+      <div class="chk"><div class="chk-s pass">✓</div><div>Cost estimation <span>— ~$2,340/mo (within budget of $3,000)</span></div></div>
+      <div class="chk"><div class="chk-s pend">◌</div><div>Manual approval <span>— Waiting for project owner sign-off</span></div></div>
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-secondary">Download Generated Code</button>
+      <button class="btn btn-primary" style="opacity:0.5;cursor:not-allowed">▶ Deploy (1 blocker remaining)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WIZARD OVERLAY ============ -->
+<div class="wizard-overlay" id="wizard">
+  <div class="wizard">
+    <div class="wizard-head">
+      <h2>✦ Create New Environment</h2>
+      <p>We'll guide you through setting up a new environment step by step.</p>
+    </div>
+    <div class="wizard-bar">
+      <div class="wbar-seg done"></div>
+      <div class="wbar-seg cur"></div>
+      <div class="wbar-seg"></div>
+      <div class="wbar-seg"></div>
+      <div class="wbar-seg"></div>
+    </div>
+    <div class="wizard-body">
+      <p style="font-size:13px;font-weight:600;margin-bottom:14px">Step 2: Choose a starting point</p>
+
+      <div class="wopt sel">
+        <div class="wradio"></div>
+        <div><h4>Start from template</h4><p>Pick a pre-built architecture template and customize it</p></div>
+      </div>
+      <div class="wopt">
+        <div class="wradio"></div>
+        <div><h4>Clone existing environment</h4><p>Copy dev/acc/prd and modify — great for promotion pipelines</p></div>
+      </div>
+      <div class="wopt">
+        <div class="wradio"></div>
+        <div><h4>Import from cloud account</h4><p>Scan AWS or Azure and import existing resources</p></div>
+      </div>
+      <div class="wopt">
+        <div class="wradio"></div>
+        <div><h4>Blank canvas</h4><p>Start from scratch with an empty diagram</p></div>
+      </div>
+    </div>
+    <div class="wizard-foot">
+      <button class="btn btn-secondary" onclick="toggleWizard()">Cancel</button>
+      <div class="flex gap-8">
+        <button class="btn btn-secondary">← Back</button>
+        <button class="btn btn-primary">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.querySelectorAll('.screen-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-screen="${id}"]`).classList.add('active');
+}
+
+function showTab(id) {
+  document.querySelectorAll('.pcontent').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('tab-' + id).style.display = 'block';
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function toggleWizard() {
+  document.getElementById('wizard').classList.toggle('vis');
+}
+</script>
+</body>
+</html>

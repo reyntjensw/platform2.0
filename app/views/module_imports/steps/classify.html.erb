@@ -1,0 +1,82 @@
+<div class="page-content">
+  <div class="page-header">
+    <h1 class="page-title">Import Module</h1>
+  </div>
+
+  <%= render "module_imports/steps/wizard_nav" %>
+
+  <div class="wizard-body">
+    <h2 class="section-title">Step 4: Review & Classify Variables</h2>
+
+    <%= form_with url: save_classifications_module_import_path(@draft), method: :patch, local: true, class: "wizard-form" do %>
+      <div class="table-wrap">
+        <table class="f50-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>TF Type</th>
+              <th>Default</th>
+              <th>Required</th>
+              <th>Classification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @draft.variables.each do |var| %>
+              <tr>
+                <td class="mono"><%= var["name"] %></td>
+                <td><span class="type-badge"><%= var["type"] %></span></td>
+                <td class="mono"><%= var["default"].nil? ? "—" : var["default"].to_json %></td>
+                <td><%= var["required"] ? "✓" : "—" %></td>
+                <td>
+                  <select name="classifications[<%= var["name"] %>]" class="f50-select f50-select--sm">
+                    <% %w[user_config dependency platform_managed hidden].each do |cls| %>
+                      <option value="<%= cls %>"
+                              <%= "selected" if (@draft.classifications[var["name"]] || var["suggested_classification"]) == cls %>>
+                        <%= cls.humanize %>
+                      </option>
+                    <% end %>
+                  </select>
+                  <% if var["classification_reason"] %>
+                    <span class="classification-hint" title="<%= var["classification_reason"] %>">ⓘ</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if @draft.outputs.any? %>
+        <h3 class="subsection-title">Outputs (<%= @draft.outputs.size %>)</h3>
+        <div class="table-wrap">
+          <table class="f50-table">
+            <thead>
+              <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <% @draft.outputs.each do |out| %>
+                <tr>
+                  <td class="mono"><%= out["name"] %></td>
+                  <td><span class="type-badge"><%= out["type"] %></span></td>
+                  <td><%= out["description"] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+
+      <div class="classification-guide">
+        <p>🟢 <strong>user_config</strong> — User configures in properties panel</p>
+        <p>🔵 <strong>dependency</strong> — Auto-resolved from canvas connections</p>
+        <p>🟣 <strong>platform_managed</strong> — Injected automatically by F50</p>
+        <p>⚫ <strong>hidden</strong> — Excluded from F50</p>
+      </div>
+
+      <div class="wizard-actions">
+        <%= link_to "← Back", step_module_import_path(@draft, step: "scan"), class: "f50-btn f50-btn--ghost" %>
+        <button type="submit" class="f50-btn f50-btn--primary">Next →</button>
+      </div>
+    <% end %>
+  </div>
+</div>

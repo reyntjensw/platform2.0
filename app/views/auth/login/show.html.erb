@@ -1,0 +1,61 @@
+<div class="login-screen">
+  <%# Background effects %>
+  <div class="login-bg"></div>
+  <div class="login-pattern">
+    <div class="login-glow"></div>
+  </div>
+
+  <%# Left side: login form %>
+  <div class="login-content">
+    <div class="login-card">
+      <%# Green bars logo + brand name %>
+      <div class="login-logo">
+        <div class="login-logo-mark">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="login-logo-text">Cloudsisters</div>
+      </div>
+
+      <div class="login-subtitle">Sign in to Factor Fifty</div>
+
+      <% if flash[:alert].present? %>
+        <div class="login-alert">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%# SSO button — triggers Keycloak OIDC flow %>
+      <div class="login-sso-primary">
+        <%= link_to "/auth/keycloak", method: :post, class: "login-btn", data: { turbo: false } do %>
+          🔐 Sign in with SSO
+        <% end %>
+      </div>
+
+      <div class="login-sso-divider">
+        <span>Secured by Keycloak</span>
+      </div>
+    </div>
+  </div>
+
+  <%# Right side: hero text + stats %>
+  <div class="login-right-content">
+    <div class="login-hero-text">
+      <h2>Infrastructure,<br>visualized.</h2>
+      <p>Deploy and manage multi-cloud environments with confidence. Drag, drop, validate, and ship — all from one platform.</p>
+    </div>
+    <div class="login-stats">
+      <div class="login-stat">
+        <div class="num">247</div>
+        <div class="label">Environments</div>
+      </div>
+      <div class="login-stat">
+        <div class="num">1.2k</div>
+        <div class="label">Resources</div>
+      </div>
+      <div class="login-stat">
+        <div class="num">99.9%</div>
+        <div class="label">Uptime</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,176 @@
+<div class="page-content">
+  <div class="page-header">
+    <div class="page-header__breadcrumb">
+      <%= link_to "← Module Registry", modules_path, class: "back-link" %>
+    </div>
+    <div class="page-header__title-row">
+      <span class="module-icon-lg"><%= @module_definition.icon %></span>
+      <div>
+        <h1 class="page-title"><%= @module_definition.display_name %></h1>
+        <p class="page-subtitle"><%= @module_definition.description %></p>
+      </div>
+      <span class="cloud-badge cloud-badge--<%= @module_definition.cloud_provider %> cloud-badge--lg">
+        <%= @module_definition.cloud_provider.upcase %>
+      </span>
+    </div>
+    <div class="module-meta">
+      <span class="meta-tag">v<%= @module_definition.version %></span>
+      <span class="meta-tag"><%= @module_definition.category.capitalize %></span>
+      <span class="meta-tag meta-tag--<%= @module_definition.status %>"><%= @module_definition.status.capitalize %></span>
+      <span class="meta-tag"><%= @module_definition.ownership.capitalize %></span>
+      <% unless @module_definition.deployable? %>
+        <span class="meta-tag meta-tag--warning">Canvas only — deploy not available</span>
+      <% end %>
+    </div>
+
+    <%# Action buttons %>
+    <div class="module-actions">
+      <%= link_to "Edit", edit_module_path(@module_definition), class: "f50-btn f50-btn--secondary f50-btn--sm" %>
+      <%= link_to "Updates", module_updates_path(@module_definition), class: "f50-btn f50-btn--secondary f50-btn--sm" %>
+      <% if @module_definition.deployable? %>
+        <%= button_to "Re-scan", rescan_module_path(@module_definition), method: :post, class: "f50-btn f50-btn--secondary f50-btn--sm" %>
+      <% end %>
+      <% if @module_definition.status != "deprecated" %>
+        <%= button_to "Deprecate", deprecate_module_path(@module_definition), method: :post, class: "f50-btn f50-btn--warning f50-btn--sm",
+            data: { turbo_confirm: "Deprecate #{@module_definition.display_name}? This will show a warning on the canvas and block new instances." } %>
+      <% end %>
+      <% if @usage_count == 0 %>
+        <%= button_to "Delete", module_path(@module_definition), method: :delete, class: "f50-btn f50-btn--danger f50-btn--sm",
+            data: { turbo_confirm: "Permanently delete #{@module_definition.display_name}?" } %>
+      <% else %>
+        <span class="meta-tag">Used by <%= @usage_count %> resource(s) — cannot delete</span>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Fields table %>
+  <section class="detail-section">
+    <h2 class="section-title">Fields (<%= @module_definition.module_fields.size %>)</h2>
+    <div class="table-wrap">
+      <table class="f50-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Label</th>
+            <th>Type</th>
+            <th>Classification</th>
+            <th>Required</th>
+            <th>Default</th>
+            <th>Group</th>
+            <th>Validation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @module_definition.module_fields.ordered.each do |field| %>
+            <tr>
+              <td class="mono"><%= field.name %></td>
+              <td><%= field.label %></td>
+              <td><span class="type-badge"><%= field.field_type %></span></td>
+              <td><span class="classification-badge classification-badge--<%= field.classification %>"><%= field.classification.humanize %></span></td>
+              <td><%= field.required? ? "✓" : "—" %></td>
+              <td class="mono"><%= field.default_value.present? ? field.default_value.to_json : "—" %></td>
+              <td><%= field.group || "—" %></td>
+              <td class="mono"><%= field.validation.present? ? field.validation.to_json : "—" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <%# Outputs table %>
+  <section class="detail-section">
+    <h2 class="section-title">Outputs (<%= @module_definition.module_outputs.size %>)</h2>
+    <div class="table-wrap">
+      <table class="f50-table">
+        <thead>
+          <tr><th>Name</th><th>Description</th><th>Type</th></tr>
+        </thead>
+        <tbody>
+          <% @module_definition.module_outputs.each do |output| %>
+            <tr>
+              <td class="mono"><%= output.name %></td>
+              <td><%= output.description %></td>
+              <td><span class="type-badge"><%= output.output_type %></span></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <%# Renderers %>
+  <% if @module_definition.module_renderers.any? %>
+    <section class="detail-section">
+      <h2 class="section-title">Renderers</h2>
+      <% @module_definition.module_renderers.each do |renderer| %>
+        <div class="renderer-card">
+          <div class="renderer-card__header">
+            <span class="meta-tag"><%= renderer.engine.capitalize %></span>
+            <span class="meta-tag"><%= renderer.source_type %></span>
+            <span class="meta-tag meta-tag--<%= renderer.scan_status %>"><%= renderer.scan_status %></span>
+            <% if renderer.last_scanned_at %>
+              <span class="renderer-card__scanned">Scanned <%= time_ago_in_words(renderer.last_scanned_at) %> ago</span>
+            <% end %>
+          </div>
+          <div class="renderer-card__source">
+            <span class="mono"><%= renderer.source_url %></span>
+            <span class="meta-tag">ref: <%= renderer.source_ref %></span>
+          </div>
+
+          <% if renderer.field_mappings.any? %>
+            <h3 class="subsection-title">Field Mappings</h3>
+            <table class="f50-table f50-table--compact">
+              <thead>
+                <tr><th>Platform Field</th><th>→</th><th>Renderer Variable</th><th>Type</th></tr>
+              </thead>
+              <tbody>
+                <% renderer.field_mappings.each do |mapping| %>
+                  <tr>
+                    <td class="mono"><%= mapping.platform_field %></td>
+                    <td>→</td>
+                    <td class="mono"><%= mapping.renderer_variable %></td>
+                    <td><span class="type-badge"><%= mapping.mapping_type %></span></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+
+          <%# Version history %>
+          <% if renderer.module_versions.any? %>
+            <h3 class="subsection-title">Versions (<%= renderer.module_versions.size %>)</h3>
+            <div class="version-list">
+              <% renderer.module_versions.recent.limit(5).each do |v| %>
+                <div class="version-item">
+                  <span class="mono"><%= v.version_ref %></span>
+                  <% if v.breaking? %>
+                    <span class="meta-tag meta-tag--error">Breaking</span>
+                  <% end %>
+                  <span class="version-item__date"><%= v.scanned_at&.strftime("%Y-%m-%d") %></span>
+                </div>
+              <% end %>
+            </div>
+            <%= link_to "View all versions →", module_updates_path(@module_definition), class: "link-subtle" %>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
+
+  <%# Usage %>
+  <% if @affected_environments.any? %>
+    <section class="detail-section">
+      <h2 class="section-title">Usage (<%= @usage_count %> resources)</h2>
+      <div class="usage-list">
+        <% @affected_environments.each do |env| %>
+          <div class="usage-item">
+            <span><%= env.local_project.name %> / <%= env.name %></span>
+            <span class="meta-tag"><%= env.env_type %></span>
+            <span class="meta-tag"><%= env.cloud_provider.upcase %></span>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</div>

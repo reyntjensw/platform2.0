@@ -1,0 +1,79 @@
+<div class="page-content">
+  <div class="page-header">
+    <h1 class="page-title">Import Module</h1>
+  </div>
+
+  <%= render "module_imports/steps/wizard_nav" %>
+
+  <div class="wizard-body">
+    <h2 class="section-title">Step 3: Scanning</h2>
+
+    <% if @draft.scan_result.present? && @draft.scan_result["status"] == "success" %>
+      <%# Scan already completed — show results %>
+      <div class="scan-results">
+        <div class="scan-summary">
+          <span class="scan-stat">✓ Found <%= @draft.variables.size %> variables, <%= @draft.outputs.size %> outputs</span>
+          <span class="scan-stat">✓ Module structure valid</span>
+          <% classifications = @draft.variables.group_by { |v| v["suggested_classification"] } %>
+          <span class="scan-stat">✓ Auto-classified: <%= classifications.map { |k, v| "#{v.size} #{k}" }.join(", ") %></span>
+        </div>
+
+        <% if @draft.scan_result["files_detected"].present? %>
+          <div class="scan-files">
+            <span class="scan-files__label">Files detected:</span>
+            <span class="mono"><%= @draft.scan_result["files_detected"].join(" · ") %></span>
+          </div>
+        <% end %>
+
+        <% if @draft.scan_result["scan_duration_ms"] %>
+          <p class="scan-timing">Scanned in <%= @draft.scan_result["scan_duration_ms"] %>ms</p>
+        <% end %>
+      </div>
+
+      <div class="wizard-actions">
+        <%= link_to "← Back", step_module_import_path(@draft, step: @draft.needs_auth? ? "auth" : "source"), class: "f50-btn f50-btn--ghost" %>
+        <%= link_to "Next →", step_module_import_path(@draft, step: "classify"), class: "f50-btn f50-btn--primary" %>
+      </div>
+
+    <% else %>
+      <%# Trigger scan %>
+      <div class="scan-trigger" data-controller="scan-progress">
+        <div class="scan-progress">
+          <div class="scan-step">
+            <span class="scan-step__icon">○</span>
+            <span>Cloning repository...</span>
+          </div>
+          <div class="scan-step">
+            <span class="scan-step__icon">○</span>
+            <span>Checking out <%= @draft.source_ref %>...</span>
+          </div>
+          <div class="scan-step">
+            <span class="scan-step__icon">○</span>
+            <span>Detecting module structure...</span>
+          </div>
+          <div class="scan-step">
+            <span class="scan-step__icon">○</span>
+            <span>Parsing variables & outputs...</span>
+          </div>
+          <div class="scan-step">
+            <span class="scan-step__icon">○</span>
+            <span>Auto-classifying variables...</span>
+          </div>
+        </div>
+
+        <% if flash[:alert] %>
+          <div class="scan-error">
+            <p class="error-message"><%= flash[:alert] %></p>
+          </div>
+        <% end %>
+
+        <div class="wizard-actions">
+          <%= link_to "← Back", step_module_import_path(@draft, step: @draft.needs_auth? ? "auth" : "source"), class: "f50-btn f50-btn--ghost" %>
+          <%= form_with url: run_scan_module_import_path(@draft), method: :post, local: true, style: "display:inline" do %>
+            <button type="submit" class="f50-btn f50-btn--primary">Start Scan</button>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

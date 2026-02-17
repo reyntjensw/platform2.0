@@ -1,0 +1,50 @@
+<%# Left Sidebar — contextual navigation %>
+<aside class="sidebar" data-controller="sidebar" data-sidebar-target="sidebar" role="navigation" aria-label="Sidebar navigation">
+  <div class="sidebar-top">
+    <%# Primary navigation %>
+    <% sidebar_app_items.each do |item| %>
+      <a href="<%= item[:path] %>"
+         class="sidebar-app-item<%= ' active' if item[:active] %>"
+         title="<%= item[:label] %>"
+         aria-label="<%= item[:label] %>"
+         aria-current="<%= 'page' if item[:active] %>">
+        <span class="sidebar-icon" aria-hidden="true"><%= item[:icon] %></span>
+        <span class="sidebar-label"><%= item[:label] %></span>
+      </a>
+    <% end %>
+
+    <%# Customer context %>
+    <% if defined?(@customer) && @customer.present? %>
+      <div class="sidebar-sep"></div>
+      <a href="<%= customer_path(@customer.uuid) %>"
+         class="sidebar-app-item<%= ' active' if controller_name == 'customers' && action_name == 'show' %>"
+         title="<%= @customer.name %>"
+         aria-label="<%= @customer.name %>">
+        <span class="sidebar-icon" aria-hidden="true">🏢</span>
+        <span class="sidebar-label"><%= @customer.name.to_s.truncate(20) %></span>
+      </a>
+    <% end %>
+
+    <%# Project section navigation %>
+    <% if sidebar_project_sections.any? %>
+      <div class="sidebar-sep"></div>
+      <% sidebar_project_sections.each do |section| %>
+        <% if section[:type] == :heading %>
+          <div class="sidebar-section-title"><%= section[:label] %></div>
+        <% else %>
+          <a href="<%= section[:path] %>"
+             class="sidebar-app-item<%= ' active' if section[:active] %>"
+             title="<%= section[:label] %>"
+             aria-label="<%= section[:label] %>"
+             aria-current="<%= 'page' if section[:active] %>">
+            <span class="sidebar-icon" aria-hidden="true"><%= section[:icon] %></span>
+            <span class="sidebar-label"><%= section[:label] %></span>
+          </a>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="sidebar-bottom">
+  </div>
+</aside>

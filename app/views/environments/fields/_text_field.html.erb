@@ -1,0 +1,4 @@
+<input type="text" class="rp-input" id="field_<%= field.name %>"
+       name="config[<%= field.name %>]" value="<%= value %>"
+       <%= "required" if field.required? %>
+       aria-label="<%= field.label %>">

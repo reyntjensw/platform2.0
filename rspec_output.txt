@@ -1,0 +1,30 @@
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=websocket-driver version=0.7.7 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=stringio version=3.1.5 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=rbs version=3.9.2 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=rbs version=3.9.3 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=rbs version=3.9.4 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=puma version=6.6.0 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=prism version=1.5.1 platform=ruby> because it is missing extensions
+Source locally installed gems is ignoring #<Bundler::StubSpecification name=nio4r version=2.7.4 platform=ruby> because it is missing extensions
+
+RSpec is shutting down and will print the summary report... Interrupt again to force quit (warning: at_exit hooks will be skipped if you force quit).
+/Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/dsl.rb:4:in 'Kernel#require_relative': Interrupt
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/dsl.rb:4:in '<top (required)>'
+	from <internal:/Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+	from <internal:/Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/definition.rb:39:in 'Bundler::Definition.build'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler.rb:238:in 'Bundler.definition'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler.rb:161:in 'Bundler.setup'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/setup.rb:32:in 'block in <top (required)>'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/ui/shell.rb:173:in 'Bundler::UI::Shell#with_level'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/ui/shell.rb:119:in 'Bundler::UI::Shell#silence'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/bundler/setup.rb:32:in '<top (required)>'
+	from <internal:/Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+	from <internal:/Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+	from /Users/reyntjensw/.rbenv/versions/3.4.2/lib/ruby/3.4.0/rubygems.rb:1407:in '<top (required)>'
+	from <internal:gem_prelude>:2:in 'Kernel#require'
+	from <internal:gem_prelude>:2:in '<internal:gem_prelude>'
+
+Finished in 0.00391 seconds (files took 3.04 seconds to load)
+0 examples, 0 failures
+

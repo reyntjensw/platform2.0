@@ -1,0 +1,163 @@
+<div class="page-content">
+  <div class="page-header">
+    <h1 class="page-title">Import Module</h1>
+  </div>
+
+  <%= render "module_imports/steps/wizard_nav" %>
+
+  <div class="wizard-body">
+    <h2 class="section-title">Step 5: Configure Fields</h2>
+
+    <%= form_with url: save_field_configs_module_import_path(@draft), method: :patch, local: true, class: "wizard-form" do %>
+
+      <% if @user_config_vars.any? %>
+        <h3 class="subsection-title">User-Configurable Fields (<%= @user_config_vars.size %>)</h3>
+
+        <% @user_config_vars.each do |var| %>
+          <% name = var["name"] %>
+          <% config = (@draft.field_configs[name] || {}) %>
+          <div class="field-config-card">
+            <div class="field-config-card__header">
+              <span class="mono"><%= name %></span>
+              <span class="type-badge"><%= var["type"] %></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Display Label</label>
+                <input type="text" name="field_configs[<%= name %>][label]" class="f50-input"
+                       value="<%= config["label"] || name.titleize %>" placeholder="<%= name.titleize %>">
+              </div>
+              <div class="form-group">
+                <label class="form-label">UI Group</label>
+                <input type="text" name="field_configs[<%= name %>][group]" class="f50-input"
+                       value="<%= config["group"] || var["suggested_group"] || "General" %>"
+                       placeholder="General" list="group-suggestions">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Field Type</label>
+                <select name="field_configs[<%= name %>][field_type]" class="f50-select">
+                  <% ModuleField::FIELD_TYPES.each do |ft| %>
+                    <option value="<%= ft %>" <%= "selected" if (config["field_type"] || var["suggested_field_type"]) == ft %>><%= ft.capitalize %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Default Value</label>
+                <input type="text" name="field_configs[<%= name %>][default_value]" class="f50-input"
+                       value="<%= config["default_value"] || var["default"] %>" placeholder="(none)">
+              </div>
+              <div class="form-group form-group--checkbox">
+                <label>
+                  <input type="checkbox" name="field_configs[<%= name %>][required]" value="true"
+                         <%= "checked" if var["required"] %>>
+                  Required
+                </label>
+              </div>
+            </div>
+
+            <% if %w[integer number].include?(var["type"]) %>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Min</label>
+                  <input type="number" name="field_configs[<%= name %>][min]" class="f50-input f50-input--sm"
+                         value="<%= config["min"] %>">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Max</label>
+                  <input type="number" name="field_configs[<%= name %>][max]" class="f50-input f50-input--sm"
+                         value="<%= config["max"] %>">
+                </div>
+              </div>
+            <% end %>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Help Text</label>
+                <input type="text" name="field_configs[<%= name %>][help_text]" class="f50-input"
+                       value="<%= config["help_text"] || var["description"] %>" placeholder="<%= var["description"] %>">
+              </div>
+            </div>
+
+            <%# Environment-specific defaults %>
+            <details class="env-defaults-section">
+              <summary>Environment Defaults & Locks</summary>
+              <div class="form-row">
+                <% %w[dev acc prd].each do |env| %>
+                  <div class="form-group">
+                    <label class="form-label"><%= env %> default</label>
+                    <input type="text" name="field_configs[<%= name %>][defaults_by_env][<%= env %>]" class="f50-input f50-input--sm"
+                           value="<%= config.dig("defaults_by_env", env) %>">
+                  </div>
+                <% end %>
+              </div>
+              <div class="form-row">
+                <% %w[dev acc prd].each do |env| %>
+                  <div class="form-group form-group--checkbox">
+                    <label>
+                      <input type="checkbox" name="field_configs[<%= name %>][locked_in_envs][<%= env %>]" value="true"
+                             <%= "checked" if config.dig("locked_in_envs", env) == "true" %>>
+                      Locked in <%= env %>
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+            </details>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if @dependency_vars.any? %>
+        <h3 class="subsection-title">Dependency Fields (<%= @dependency_vars.size %>)</h3>
+
+        <% @dependency_vars.each do |var| %>
+          <% name = var["name"] %>
+          <% dep = var["suggested_dependency"] || {} %>
+          <div class="field-config-card field-config-card--dependency">
+            <div class="field-config-card__header">
+              <span class="mono"><%= name %></span>
+              <span class="classification-badge classification-badge--dependency">Dependency</span>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Connects to module type</label>
+                <select name="field_configs[<%= name %>][dependency_module]" class="f50-select">
+                  <option value="">— Select —</option>
+                  <% @available_modules.each do |m| %>
+                    <option value="<%= m.name %>" <%= "selected" if dep["source_module_name"] == m.name %>><%= m.display_name %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Uses output</label>
+                <input type="text" name="field_configs[<%= name %>][dependency_output]" class="f50-input"
+                       value="<%= dep["source_output"] %>" placeholder="e.g. vpc_id">
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <datalist id="group-suggestions">
+        <option value="General">
+        <option value="Cluster Config">
+        <option value="Networking">
+        <option value="Security">
+        <option value="Sizing">
+        <option value="Monitoring">
+        <option value="Backup & Recovery">
+        <option value="Add-ons">
+        <option value="Version & Engine">
+        <option value="Storage">
+      </datalist>
+
+      <div class="wizard-actions">
+        <%= link_to "← Back", step_module_import_path(@draft, step: "classify"), class: "f50-btn f50-btn--ghost" %>
+        <button type="submit" class="f50-btn f50-btn--primary">Next →</button>
+      </div>
+    <% end %>
+  </div>
+</div>

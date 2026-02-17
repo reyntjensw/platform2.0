@@ -1,0 +1,19 @@
+<%= link_to module_path(mod), class: "module-card", data: { category: mod.category, cloud: mod.cloud_provider, name: mod.display_name.downcase } do %>
+  <div class="module-card__header">
+    <span class="module-card__icon"><%= mod.icon %></span>
+    <span class="cloud-badge cloud-badge--<%= mod.cloud_provider %>"><%= mod.cloud_provider.upcase %></span>
+  </div>
+  <div class="module-card__body">
+    <h3 class="module-card__name"><%= mod.display_name %></h3>
+    <p class="module-card__desc"><%= truncate(mod.description, length: 80) %></p>
+  </div>
+  <div class="module-card__footer">
+    <span class="module-card__category"><%= mod.category.capitalize %></span>
+    <span class="module-card__fields"><%= mod.module_fields.size %> fields</span>
+    <% if mod.deployable? %>
+      <span class="module-card__engine">OpenTofu</span>
+    <% else %>
+      <span class="module-card__canvas-only">Canvas only</span>
+    <% end %>
+  </div>
+<% end %>

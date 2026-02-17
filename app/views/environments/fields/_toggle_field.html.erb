@@ -1,0 +1,11 @@
+<label style="display:flex;align-items:center;gap:8px;" aria-label="<%= field.label %>">
+  <input type="hidden" name="config[<%= field.name %>]" value="false">
+  <input type="checkbox" name="config[<%= field.name %>]" value="true"
+         id="field_<%= field.name %>" <%= "checked" if value == true || value == "true" %>
+         style="display:none;"
+         onchange="this.parentElement.querySelector('.rp-toggle').classList.toggle('on', this.checked)">
+  <div class="rp-toggle<%= ' on' if value == true || value == 'true' %>"
+       onclick="const cb = this.parentElement.querySelector('input[type=checkbox]'); cb.checked = !cb.checked; cb.dispatchEvent(new Event('change')); this.classList.toggle('on', cb.checked);">
+  </div>
+  <span style="font-size:9px;color:var(--t2);"><%= value == true || value == "true" ? "ON" : "OFF" %></span>
+</label>

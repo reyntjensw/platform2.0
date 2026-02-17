@@ -1,0 +1,32 @@
+<% content_for(:title) { "Canvas — #{@environment.name} — Factor Fifty" } %>
+
+<%
+  canvas_props = {
+    initialResources: JSON.parse(@resources_json),
+    initialConnections: JSON.parse(@connections_json),
+    catalogModules: @catalog_modules.map { |m| {
+      id: m.id, name: m.name, display_name: m.display_name,
+      icon: m.icon, category: m.category, cloud_provider: m.cloud_provider,
+      description: m.description, allowed_zones: m.allowed_zones
+    }},
+    apiUrl: api_environment_resources_path(@environment),
+    connectionsApiUrl: api_environment_connections_path(@environment),
+    businessRulesApiUrl: api_environment_business_rules_path(@environment),
+    applicationGroupsApiUrl: api_environment_application_groups_path(@environment),
+    environmentId: @environment.id,
+    environment: { id: @environment.id, name: @environment.name, env_type: @environment.env_type },
+    project: { name: @project.name },
+    customer: { name: @customer.name },
+    siblingEnvs: @sibling_envs.map { |e| { id: e.id, name: e.name, env_type: e.env_type } },
+    currentUser: current_user&.name&.split(' ')&.map(&:first)&.join || 'U',
+    canvasPath: canvas_path('__ID__'),
+    rootPath: root_path
+  }
+%>
+
+<div data-controller="react"
+     data-react-component-value="CanvasApp"
+     data-react-props-value="<%= canvas_props.to_json %>">
+</div>
+
+<%= turbo_stream_from "environment_#{@environment.id}" %>

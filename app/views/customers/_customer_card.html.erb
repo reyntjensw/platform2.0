@@ -1,0 +1,18 @@
+<%# Customer card partial — used in the index grid %>
+<%# Locals: customer (Customer value object) %>
+<%= link_to customer_path(customer.uuid), class: "card card-clickable card-gradient-hover" do %>
+  <div class="card-header-row">
+    <div class="card-title"><%= customer.name %></div>
+    <% if customer.inactive? %>
+      <span class="badge badge-inactive">Inactive</span>
+    <% else %>
+      <span class="badge badge-active">Active</span>
+    <% end %>
+  </div>
+
+  <div class="card-meta">
+    <% if customer.vat_number.present? %>
+      <span class="mono"><%= customer.vat_number %></span>
+    <% end %>
+  </div>
+<% end %>

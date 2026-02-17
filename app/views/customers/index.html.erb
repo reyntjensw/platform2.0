@@ -1,0 +1,31 @@
+<% content_for(:title) { "Customers — Factor Fifty" } %>
+
+<div class="section-header" style="display: flex; align-items: center; justify-content: space-between;">
+  <h3>Customers</h3>
+  <% if current_user.platform_admin? %>
+    <%= link_to "← Back to Resellers", resellers_path, class: "btn btn-ghost btn-sm" %>
+  <% end %>
+</div>
+
+<% if @customers.any? %>
+  <div class="card-grid">
+    <% @customers.each do |customer| %>
+      <%= link_to customer_path(customer.uuid), class: "card card-clickable card-gradient-hover" do %>
+        <div class="card-header-row">
+          <div class="card-title"><%= customer.name %></div>
+          <% if customer.inactive? %>
+            <span class="badge badge-inactive">Inactive</span>
+          <% end %>
+        </div>
+        <% if customer.vat_number.present? %>
+          <div class="card-meta mono"><%= customer.vat_number %></div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <%= render "shared/empty_state",
+    icon: "👥",
+    title: "No customers yet",
+    description: "No customers found for this reseller." %>
+<% end %>

@@ -1,0 +1,53 @@
+<div class="properties-form" data-resource-id="<%= resource.id %>">
+  <div style="margin-bottom:10px;">
+    <div style="font-size:12px;font-weight:700;margin-bottom:2px;"><%= resource.name %></div>
+    <div style="font-size:10px;color:var(--t3);"><%= resource.module_definition.display_name %></div>
+  </div>
+
+  <form data-action="submit->canvas-main#saveProperties" data-resource-id="<%= resource.id %>">
+
+    <% user_fields = resource.module_definition.module_fields.user_config.ordered %>
+    <% if user_fields.any? %>
+      <div class="rp-section">Configuration</div>
+      <% user_fields.each do |field| %>
+        <div class="rp-field">
+          <label class="rp-field-label">
+            <%= field.label %> <% if field.required? %><span class="req">*</span><% end %>
+          </label>
+          <%= render partial: "environments/fields/#{field_partial(field)}", locals: { field: field, value: resource.config&.dig(field.name) || field.default_value } %>
+          <% if resource.validation_errors&.dig(field.name) %>
+            <span class="field-error"><%= resource.validation_errors[field.name].join(", ") %></span>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% dep_fields = resource.module_definition.module_fields.dependency.ordered %>
+    <% if dep_fields.any? %>
+      <div class="rp-section">Dependencies</div>
+      <% dep_fields.each do |field| %>
+        <div class="rp-field">
+          <label class="rp-field-label"><%= field.label %></label>
+          <div class="rp-dep">
+            <% val = resource.config&.dig(field.name) %>
+            <% if val.present? %>
+              ← <%= val %> <span class="resolved">✓</span>
+            <% else %>
+              Not connected <span class="unresolved">⚠</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="rp-actions">
+      <button type="submit" class="rp-btn rp-btn-save">Save</button>
+      <button type="button" class="rp-btn rp-btn-connect"
+              data-action="click->canvas-main#startConnect"
+              data-canvas-main-resource-id-param="<%= resource.id %>">Connect</button>
+      <button type="button" class="rp-btn rp-btn-del"
+              data-action="click->canvas-main#deleteResource"
+              data-resource-id="<%= resource.id %>">Delete</button>
+    </div>
+  </form>
+</div>

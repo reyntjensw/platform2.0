@@ -1,0 +1,68 @@
+<%# Top Navigation Bar — canvas-style layout %>
+<%# Logo + breadcrumb on left, nav links + avatar on right %>
+<nav class="topnav" role="navigation" aria-label="Top navigation">
+  <div class="topnav-left">
+    <%# Logo: 8 ascending bars + "FACTOR FIFTY" text %>
+    <%= link_to root_path, class: "topnav-logo", aria: { label: "Factor Fifty home" } do %>
+      <div class="topnav-logo-bars" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="topnav-logo-text">Factor Fifty</div>
+    <% end %>
+
+    <%# Breadcrumb trail %>
+    <%= render "shared/breadcrumb" %>
+  </div>
+
+  <div class="topnav-right">
+    <%# Inline nav links — replaces sidebar %>
+    <% sidebar_app_items.each do |item| %>
+      <a href="<%= item[:path] %>"
+         class="topnav-link<%= ' active' if item[:active] %>"
+         aria-current="<%= 'page' if item[:active] %>">
+        <span aria-hidden="true"><%= item[:icon] %></span>
+        <%= item[:label] %>
+      </a>
+    <% end %>
+
+    <div class="topnav-sep"></div>
+
+    <%# User avatar dropdown %>
+    <div class="user-dropdown" data-controller="dropdown">
+      <button class="avatar"
+              type="button"
+              data-action="click->dropdown#toggle"
+              data-dropdown-target="trigger"
+              aria-haspopup="true"
+              aria-expanded="false"
+              title="User menu">
+        <% if defined?(current_user) && current_user.present? %>
+          <%= current_user.name.to_s.split.map(&:first).join.upcase.first(2) %>
+        <% else %>
+          F5
+        <% end %>
+      </button>
+
+      <div class="user-dropdown-menu"
+           data-dropdown-target="menu"
+           role="menu"
+           aria-label="User menu">
+        <% if defined?(current_user) && current_user.present? %>
+          <div class="user-dropdown-header">
+            <div class="user-dropdown-name"><%= current_user.name %></div>
+            <div class="user-dropdown-email"><%= current_user.email %></div>
+          </div>
+          <div class="user-dropdown-sep"></div>
+        <% end %>
+        <a href="#" class="user-dropdown-item" role="menuitem">Settings</a>
+        <a href="#" class="user-dropdown-item" role="menuitem">Audit Log</a>
+        <div class="user-dropdown-sep"></div>
+        <% if defined?(auth_logout_path) %>
+          <%= link_to "Logout", auth_logout_path, class: "user-dropdown-item user-dropdown-item-danger", role: "menuitem" %>
+        <% else %>
+          <a href="#" class="user-dropdown-item user-dropdown-item-danger" role="menuitem">Logout</a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

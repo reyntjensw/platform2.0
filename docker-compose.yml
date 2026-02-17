@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  pipeline:
+    build:
+      context: ./f50-pipeline
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      REDIS_URL: redis://redis:6379/1
+      PIPELINE_SERVICE_TOKEN: ${PIPELINE_SERVICE_TOKEN:-dev-token}
+    depends_on:
+      - redis
+    volumes:
+      - ./f50-pipeline:/app
+
+  pipeline-worker:
+    build:
+      context: ./f50-pipeline
+      dockerfile: Dockerfile
+    command: celery -A workers.celery_app worker --loglevel=info --concurrency=2
+    environment:
+      REDIS_URL: redis://redis:6379/1
+      PIPELINE_SERVICE_TOKEN: ${PIPELINE_SERVICE_TOKEN:-dev-token}
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,87 @@
+<div class="page-content" data-controller="filter" style="max-width:1200px;margin:0 auto">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
+    <div>
+      <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Module Registry</h2>
+      <p style="font-size:12px;color:var(--text-secondary)">All registered modules with their renderers, versions, and field mappings.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="search" class="f50-input" placeholder="Search modules..."
+             data-action="input->filter#search" data-filter-target="searchInput"
+             aria-label="Search modules" style="width:200px">
+      <select class="f50-select" data-action="change->filter#setProvider" data-filter-target="providerSelect" style="width:120px">
+        <option value="">All Clouds</option>
+        <% @cloud_providers.each do |cp| %>
+          <option value="<%= cp %>" <%= 'selected' if params[:cloud_provider] == cp %>><%= cp.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
+  <div class="mod-panel" data-filter-target="grid">
+    <% if @modules.any? %>
+      <table class="mod-tbl">
+        <thead>
+          <tr>
+            <th style="width:30px"></th>
+            <th>Module</th>
+            <th>Cloud</th>
+            <th>Category</th>
+            <th>Renderers</th>
+            <th>Fields</th>
+            <th>Version</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @modules.each do |mod| %>
+            <tr class="mod-tbl__row" data-category="<%= mod.category %>" data-cloud="<%= mod.cloud_provider %>" data-name="<%= mod.display_name.downcase %>">
+              <td>
+                <div class="mod-icon mod-icon--<%= mod.category %>"><%= mod.icon %></div>
+              </td>
+              <td>
+                <%= link_to module_path(mod), class: "mod-name-link" do %>
+                  <strong><%= mod.display_name %></strong>
+                  <span class="mod-desc"><%= truncate(mod.description, length: 60) %></span>
+                <% end %>
+              </td>
+              <td><span class="mtag mtag--<%= mod.cloud_provider %>"><%= mod.cloud_provider.upcase %></span></td>
+              <td class="mod-cat"><%= mod.category.capitalize %></td>
+              <td>
+                <% if mod.module_renderers.any? %>
+                  <% mod.module_renderers.each do |r| %>
+                    <span class="mtag mtag--tf"><%= r.engine == "opentofu" ? "OpenTofu" : r.engine.capitalize %></span>
+                  <% end %>
+                <% else %>
+                  <span class="mtag mtag--warn">Canvas only</span>
+                <% end %>
+              </td>
+              <td class="mod-fields">
+                <% inputs = mod.module_fields.select { |f| f.classification == "user_config" }.size %>
+                <% outputs = mod.module_outputs.size rescue 0 %>
+                <%= inputs %> inputs · <%= outputs %> outputs
+              </td>
+              <td class="mod-version">v<%= mod.version || "0.0.0" %></td>
+              <td>
+                <% case mod.status %>
+                <% when "live" %>
+                  <span class="mtag mtag--ok">● Live</span>
+                <% when "draft" %>
+                  <span class="mtag mtag--warn">● Draft</span>
+                <% when "deprecated" %>
+                  <span class="mtag mtag--err">● Deprecated</span>
+                <% end %>
+              </td>
+              <td><%= link_to "Edit", edit_module_path(mod), class: "mod-edit-btn" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div style="padding:40px;text-align:center;color:var(--text-secondary)">
+        <p>No modules found matching your filters.</p>
+        <%= link_to "Import a module →", new_module_import_path, style: "color:var(--accent)" %>
+      </div>
+    <% end %>
+  </div>
+</div>

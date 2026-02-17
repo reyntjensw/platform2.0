@@ -1,0 +1,63 @@
+# frozen_string_literal: true
+
+module Api
+  class ApplicationGroupsController < BaseController
+    before_action :set_application_group, only: [:update, :destroy]
+
+    # GET /api/environments/:environment_id/application_groups
+    def index
+      groups = @environment.application_groups.includes(:resources)
+      render json: groups.map { |g| serialize_group(g) }
+    end
+
+    # POST /api/environments/:environment_id/application_groups
+    def create
+      group = @environment.application_groups.build(application_group_params)
+
+      if group.save
+        render json: serialize_group(group), status: :created
+      else
+        render_error(group.errors.full_messages.join(", "))
+      end
+    end
+
+    # PATCH /api/environments/:environment_id/application_groups/:id
+    def update
+      if @application_group.update(application_group_params)
+        render json: serialize_group(@application_group)
+      else
+        render_error(@application_group.errors.full_messages.join(", "))
+      end
+    end
+
+    # DELETE /api/environments/:environment_id/application_groups/:id
+    def destroy
+      @application_group.destroy!
+      head :no_content
+    end
+
+    private
+
+    def set_application_group
+      @application_group = @environment.application_groups.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render_error("Application group not found", status: :not_found)
+    end
+
+    def application_group_params
+      params.permit(:name, :color)
+    end
+
+    def serialize_group(group)
+      {
+        id: group.id,
+        name: group.name,
+        color: group.color,
+        local_environment_id: group.local_environment_id,
+        resource_ids: group.resources.pluck(:id),
+        created_at: group.created_at,
+        updated_at: group.updated_at
+      }
+    end
+  end
+end

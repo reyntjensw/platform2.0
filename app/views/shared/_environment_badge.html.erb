@@ -1,0 +1,9 @@
+<%# Environment Badge — renders dev/acc/prd colored pill %>
+<%# Locals: environment_type (string: "dev", "acc", "prd") %>
+<% badge_class = case environment_type.to_s.downcase
+                 when "dev" then "badge-dev"
+                 when "acc" then "badge-acc"
+                 when "prd" then "badge-prd"
+                 else "badge-dev"
+                 end %>
+<span class="badge <%= badge_class %>"><%= environment_type.to_s.upcase %></span>

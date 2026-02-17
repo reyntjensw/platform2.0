@@ -1,0 +1,30 @@
+<div class="wizard-nav">
+  <% steps = [
+    { num: 1, key: "source", label: "Source" },
+    { num: 2, key: "auth", label: "Authentication" },
+    { num: 3, key: "scan", label: "Scanning" },
+    { num: 4, key: "classify", label: "Classify" },
+    { num: 5, key: "configure", label: "Configure" },
+    { num: 6, key: "metadata", label: "Metadata" }
+  ] %>
+  <% steps.each do |s| %>
+    <% status = if @draft.current_step > s[:num] then "done"
+                elsif @draft.current_step == s[:num] then "active"
+                else "" end %>
+    <% clickable = s[:num] <= @draft.current_step %>
+    <% if clickable %>
+      <a href="<%= step_module_import_path(@draft, step: s[:key]) %>" class="wizard-step <%= status %>">
+        <span class="wizard-step__num"><%= status == "done" ? "✓" : s[:num] %></span>
+        <span class="wizard-step__label"><%= s[:label] %></span>
+      </a>
+    <% else %>
+      <div class="wizard-step <%= status %>">
+        <span class="wizard-step__num"><%= s[:num] %></span>
+        <span class="wizard-step__label"><%= s[:label] %></span>
+      </div>
+    <% end %>
+    <% unless s[:num] == 6 %>
+      <div class="wizard-step__connector <%= 'done' if @draft.current_step > s[:num] %>"></div>
+    <% end %>
+  <% end %>
+</div>

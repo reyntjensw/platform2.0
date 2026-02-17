@@ -1,0 +1,18 @@
+<%# Empty State — centered component with icon, title, description, and optional action button %>
+<%# Locals: icon (emoji/text), title (string), description (string), %>
+<%#         action_label (string, optional), action_path (string, optional) %>
+<div class="empty-state">
+  <% if local_assigns[:icon] %>
+    <div class="empty-icon"><%= icon %></div>
+  <% end %>
+
+  <h3><%= title %></h3>
+
+  <% if local_assigns[:description] %>
+    <p><%= description %></p>
+  <% end %>
+
+  <% if local_assigns[:action_label] && local_assigns[:action_path] %>
+    <%= link_to action_label, action_path, class: "btn btn-green" %>
+  <% end %>
+</div>

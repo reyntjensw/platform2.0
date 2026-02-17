@@ -1,0 +1,92 @@
+<div class="page-content">
+  <div class="page-header">
+    <h1 class="page-title">Import Module</h1>
+  </div>
+
+  <%= render "module_imports/steps/wizard_nav" %>
+
+  <div class="wizard-body">
+    <h2 class="section-title">Step 6: Module Metadata</h2>
+
+    <%= form_with url: finalize_module_import_path(@draft), method: :post, local: true, class: "wizard-form", data: { controller: "module-preview" } do %>
+
+      <div class="form-row">
+        <div class="form-group form-group--wide">
+          <label class="form-label" for="display_name">Display Name</label>
+          <input type="text" name="display_name" id="display_name" class="f50-input"
+                 value="<%= @draft.metadata["display_name"] %>" placeholder="MSK Kafka Cluster"
+                 data-action="input->module-preview#update" data-module-preview-target="displayName" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="internal_name">Internal Name</label>
+          <input type="text" name="internal_name" id="internal_name" class="f50-input"
+                 value="<%= @draft.metadata["internal_name"] %>" placeholder="msk-kafka"
+                 data-module-preview-target="internalName">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <textarea name="description" id="description" class="f50-input" rows="2"
+                  placeholder="Managed Kafka streaming with MSK"><%= @draft.metadata["description"] %></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="category">Category</label>
+          <select name="category" id="category" class="f50-select">
+            <% ModuleDefinition::CATEGORIES.each do |cat| %>
+              <option value="<%= cat %>" <%= "selected" if @draft.metadata["category"] == cat %>><%= cat.capitalize %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cloud Provider</label>
+          <input type="text" class="f50-input" value="<%= @draft.cloud_provider&.upcase %>" disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="icon">Icon (3 letters)</label>
+          <input type="text" name="icon" id="icon" class="f50-input f50-input--sm" maxlength="3"
+                 value="<%= @draft.metadata["icon"] %>" placeholder="MSK"
+                 data-action="input->module-preview#update" data-module-preview-target="icon">
+        </div>
+      </div>
+
+      <%# Live preview %>
+      <div class="module-preview-section">
+        <h3 class="subsection-title">Canvas Preview</h3>
+        <div class="module-preview-card" data-module-preview-target="preview">
+          <div class="module-preview-card__icon" data-module-preview-target="previewIcon">
+            <%= @draft.metadata["icon"] || "MOD" %>
+          </div>
+          <div class="module-preview-card__info">
+            <div class="module-preview-card__name" data-module-preview-target="previewName">
+              <%= @draft.metadata["display_name"] || "Module Name" %>
+            </div>
+            <div class="module-preview-card__desc" data-module-preview-target="previewDesc">
+              <%= @draft.metadata["description"] || "Module description" %>
+            </div>
+          </div>
+        </div>
+        <p class="preview-stats">
+          <% user_count = @draft.variables.count { |v| @draft.classifications[v["name"]] == "user_config" } %>
+          <% dep_count = @draft.variables.count { |v| @draft.classifications[v["name"]] == "dependency" } %>
+          <%= user_count %> configurable fields · <%= dep_count %> dependencies · <%= @draft.outputs.size %> outputs
+        </p>
+      </div>
+
+      <div class="module-ownership-info">
+        <% ownership = if current_user.platform_admin? then "Platform Module (global)"
+                       elsif current_user.reseller_admin? then "Reseller Module"
+                       else "Customer Module (private)" end %>
+        <p>Ownership: <strong><%= ownership %></strong></p>
+      </div>
+
+      <div class="wizard-actions">
+        <%= link_to "← Back", step_module_import_path(@draft, step: "configure"), class: "f50-btn f50-btn--ghost" %>
+        <button type="submit" name="publish" value="false" class="f50-btn f50-btn--secondary">Save as Draft</button>
+        <button type="submit" name="publish" value="true" class="f50-btn f50-btn--primary">Publish</button>
+      </div>
+    <% end %>
+  </div>
+</div>

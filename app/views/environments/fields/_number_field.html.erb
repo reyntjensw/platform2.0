@@ -1,0 +1,6 @@
+<input type="number" class="rp-input" id="field_<%= field.name %>"
+       name="config[<%= field.name %>]" value="<%= value %>"
+       <%= "min=#{field.validation['min']}" if field.validation&.dig('min') %>
+       <%= "max=#{field.validation['max']}" if field.validation&.dig('max') %>
+       <%= "required" if field.required? %>
+       aria-label="<%= field.label %>">

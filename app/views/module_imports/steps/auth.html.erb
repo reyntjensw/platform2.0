@@ -1,0 +1,75 @@
+<div class="page-content">
+  <div class="page-header">
+    <h1 class="page-title">Import Module</h1>
+  </div>
+
+  <%= render "module_imports/steps/wizard_nav" %>
+
+  <div class="wizard-body">
+    <h2 class="section-title">Step 2: Authentication</h2>
+
+    <% if @credentials.any? %>
+      <div class="credential-list">
+        <h3 class="subsection-title">Existing credentials</h3>
+        <% @credentials.each do |cred| %>
+          <div class="credential-card">
+            <div class="credential-card__info">
+              <span class="credential-card__name"><%= cred.name %></span>
+              <span class="credential-card__host"><%= cred.host %></span>
+              <span class="credential-card__type meta-tag"><%= cred.credential_type %></span>
+              <% if cred.expires_at && cred.expires_at < 30.days.from_now %>
+                <span class="meta-tag meta-tag--warning">Expires <%= distance_of_time_in_words_to_now(cred.expires_at) %></span>
+              <% end %>
+              <% if cred.last_verified_at %>
+                <span class="meta-tag meta-tag--ready">Verified <%= time_ago_in_words(cred.last_verified_at) %> ago</span>
+              <% end %>
+            </div>
+            <%= form_with url: save_auth_module_import_path(@draft), method: :patch, local: true do %>
+              <input type="hidden" name="git_credential_id" value="<%= cred.id %>">
+              <button type="submit" class="f50-btn f50-btn--secondary f50-btn--sm">Use</button>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="divider-or">— or —</div>
+    <% end %>
+
+    <div class="credential-form-section" data-controller="credential-form">
+      <h3 class="subsection-title">Add new credential</h3>
+      <div class="credential-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" data-credential-form-target="name" class="f50-input" placeholder="Acme Corp GitHub">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select data-credential-form-target="credType" class="f50-select">
+              <% GitCredential::CREDENTIAL_TYPES.each do |ct| %>
+                <option value="<%= ct %>"><%= ct.titleize %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Token</label>
+          <input type="password" data-credential-form-target="token" class="f50-input" placeholder="ghp_****">
+        </div>
+        <p class="form-hint">ⓘ Token is encrypted at rest. F50 only needs read access (read_repository scope).</p>
+        <button type="button" class="f50-btn f50-btn--primary" data-action="credential-form#verifyAndSave"
+                data-credential-form-url-value="<%= create_credential_module_import_path(@draft) %>">
+          Verify & Save
+        </button>
+        <div data-credential-form-target="result" class="credential-result"></div>
+      </div>
+    </div>
+
+    <div class="wizard-actions">
+      <%= link_to "← Back", step_module_import_path(@draft, step: "source"), class: "f50-btn f50-btn--ghost" %>
+      <%= form_with url: save_auth_module_import_path(@draft), method: :patch, local: true, style: "display:inline" do %>
+        <button type="submit" class="f50-btn f50-btn--secondary">Skip (public repo)</button>
+      <% end %>
+    </div>
+  </div>
+</div>

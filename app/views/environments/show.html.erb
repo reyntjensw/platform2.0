@@ -1,0 +1,86 @@
+<div class="canvas-layout" data-controller="canvas catalog connect properties"
+     data-canvas-api-url-value="<%= api_v1_environment_resources_path(@environment) %>"
+     data-canvas-connections-url-value="<%= api_v1_environment_connections_path(@environment) %>"
+     data-canvas-environment-id-value="<%= @environment.id %>">
+
+  <%# ═══ Left: Catalog Sidebar ═══ %>
+  <aside class="canvas-catalog" data-catalog-target="panel">
+    <div class="catalog-header">
+      <h3 class="catalog-title">Modules</h3>
+      <input type="search" class="f50-input f50-input--sm" placeholder="Search..."
+             data-action="input->catalog#search" data-catalog-target="searchInput"
+             aria-label="Search modules">
+    </div>
+
+    <% ModuleDefinition::CATEGORIES.each do |category| %>
+      <% modules_in_cat = @catalog_modules.select { |m| m.category == category } %>
+      <% next if modules_in_cat.empty? %>
+
+      <div class="catalog-category" data-catalog-target="category">
+        <button class="catalog-category__header" data-action="catalog#toggleCategory" aria-expanded="true">
+          <span><%= category.capitalize %></span>
+          <span class="catalog-category__count"><%= modules_in_cat.size %></span>
+        </button>
+        <div class="catalog-category__items">
+          <% modules_in_cat.each do |mod| %>
+            <button class="catalog-item" data-action="catalog#addModule"
+                    data-catalog-module-id-param="<%= mod.id %>"
+                    data-catalog-module-name-param="<%= mod.display_name %>"
+                    data-name="<%= mod.display_name.downcase %>">
+              <span class="catalog-item__icon"><%= mod.icon %></span>
+              <span class="catalog-item__name"><%= mod.display_name %></span>
+              <% unless mod.deployable? %>
+                <span class="catalog-item__badge">Canvas</span>
+              <% end %>
+            </button>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </aside>
+
+  <%# ═══ Center: Canvas Area ═══ %>
+  <main class="canvas-area" data-canvas-target="area" data-action="click->canvas#deselect">
+    <%# Env type tabs %>
+    <div class="canvas-tabs">
+      <% %w[dev acc prd].each do |env_type| %>
+        <span class="canvas-tab <%= 'canvas-tab--active' if @environment.env_type == env_type %>">
+          <%= env_type.upcase %>
+        </span>
+      <% end %>
+      <div class="canvas-tabs__spacer"></div>
+      <div class="connect-indicator" data-connect-target="indicator" hidden>
+        🔗 Connect mode — click a target resource
+        <button class="connect-cancel" data-action="connect#cancel">Cancel</button>
+      </div>
+    </div>
+
+    <%# Canvas surface %>
+    <div class="canvas-surface" data-canvas-target="surface">
+      <svg class="canvas-connections" data-canvas-target="svg" data-connect-target="svg"></svg>
+      <div class="canvas-blocks" data-canvas-target="blocks"></div>
+
+      <div class="canvas-empty" data-canvas-target="empty">
+        <p>Click a module from the catalog to add it to the canvas</p>
+      </div>
+    </div>
+  </main>
+
+  <%# ═══ Right: Properties Panel ═══ %>
+  <aside class="canvas-properties" data-properties-target="panel">
+    <div class="properties-empty" data-properties-target="empty">
+      <p>Select a resource to view its properties</p>
+    </div>
+    <div data-properties-target="content" hidden>
+      <turbo-frame id="resource-properties" data-properties-target="frame">
+      </turbo-frame>
+    </div>
+
+    <%# Deploy panel %>
+    <div class="properties-deploy">
+      <h4 class="properties-group__title">Deploy</h4>
+      <%= turbo_stream_from "environment_#{@environment.id}" %>
+      <%= render "environments/deploy_status", deployment: @environment.deployments.recent.first %>
+    </div>
+  </aside>
+</div>

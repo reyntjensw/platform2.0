@@ -1,0 +1,391 @@
+<% content_for(:title) { "#{@project.name} — Factor Fifty" } %>
+
+<% current_tab = params[:tab].to_s %>
+<% current_tab = "environments" if current_tab.blank? %>
+<% provider = @project.provider&.downcase %>
+<% base_path = customer_project_path(params[:customer_uuid], @project.uuid) %>
+
+<% if current_tab == "credentials" && provider == "azure" %>
+  <%# ═══════════════════════════════════════════════════
+      Azure Credentials
+      ═══════════════════════════════════════════════════ %>
+  <div data-controller="azure-credentials"
+       data-action="keydown@document->azure-credentials#closeOnEscape"
+       data-azure-credentials-list-url-value="<%= customer_project_azure_credentials_path(params[:customer_uuid], @project.uuid) %>"
+       data-azure-credentials-test-url-value="<%= test_customer_project_azure_credentials_path(params[:customer_uuid], @project.uuid) %>"
+       data-azure-credentials-create-url-value="<%= customer_project_azure_credentials_path(params[:customer_uuid], @project.uuid) %>"
+       data-azure-credentials-customer-uuid-value="<%= @customer.uuid %>"
+       data-azure-credentials-project-uuid-value="<%= @project.uuid %>">
+
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">Azure Credentials</h2>
+    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">Manage Azure service principal credentials for this project.</p>
+
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+      <button class="btn btn-green btn-sm" data-action="click->azure-credentials#openAdd">+ Add Credential</button>
+    </div>
+
+    <div data-azure-credentials-target="list"></div>
+
+    <%# ═══ Add Credential Modal ═══ %>
+    <div class="modal-overlay" data-azure-credentials-target="addOverlay" data-action="click->azure-credentials#backdropClose">
+      <div class="modal-panel" style="max-width:520px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Add Azure Credential</h3>
+          <button class="modal-close" data-action="click->azure-credentials#closeAdd" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" placeholder="e.g. Production Read-Only" data-azure-credentials-target="addName">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tenant ID *</label>
+            <input type="text" class="form-input" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" data-azure-credentials-target="addTenantId">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Client ID *</label>
+            <input type="text" class="form-input" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" data-azure-credentials-target="addClientId">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Client Secret *</label>
+            <input type="password" class="form-input" placeholder="Client secret value" data-azure-credentials-target="addClientSecret">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Credential Type</label>
+            <div style="display:flex;gap:16px;margin-top:4px;">
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+                <input type="radio" name="credential_type" value="read_only" checked style="accent-color:var(--green);"> Read-only
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+                <input type="radio" name="credential_type" value="admin" style="accent-color:var(--green);"> Admin
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiration Date</label>
+            <input type="date" class="form-input" data-azure-credentials-target="addExpDate">
+          </div>
+          <p data-azure-credentials-target="addError" style="color:var(--red);font-size:12px;min-height:16px;"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-action="click->azure-credentials#closeAdd">Cancel</button>
+          <button type="button" class="btn btn-ghost" data-action="click->azure-credentials#testCredentials">Test</button>
+          <button type="button" class="btn btn-green" data-action="click->azure-credentials#saveCredential" data-azure-credentials-target="addSaveBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <%# ═══ Test Results Modal ═══ %>
+    <div class="modal-overlay" data-azure-credentials-target="testOverlay" data-action="click->azure-credentials#backdropClose">
+      <div class="modal-panel" style="max-width:480px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Test Results</h3>
+          <button class="modal-close" data-action="click->azure-credentials#closeTest" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" data-azure-credentials-target="testBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-action="click->azure-credentials#closeTest">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <%# ═══ Delete Confirmation Modal ═══ %>
+    <div class="modal-overlay" data-azure-credentials-target="deleteOverlay" data-action="click->azure-credentials#backdropClose">
+      <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-header">
+          <h3 class="modal-title" style="color:var(--red);">Delete Credential</h3>
+          <button class="modal-close" data-action="click->azure-credentials#closeDelete" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size:13px;color:var(--text-secondary);">
+            Are you sure you want to delete <span style="font-weight:600;color:var(--text-primary);" data-azure-credentials-target="deleteCredName"></span>? This action cannot be undone.
+          </p>
+          <input type="hidden" data-azure-credentials-target="deleteCredId">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-action="click->azure-credentials#closeDelete">Cancel</button>
+          <button type="button" class="btn btn-danger" data-action="click->azure-credentials#confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% elsif current_tab == "integrations" %>
+  <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">Integrations</h2>
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">Manage FinOps, SecOps, and Monitoring integrations.</p>
+  <%= render "shared/empty_state", icon: "🔌", title: "Coming soon", description: "Integration management will be available here." %>
+
+<% elsif current_tab == "general" %>
+  <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">General</h2>
+  <p style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">Project settings and configuration.</p>
+  <div class="card" style="max-width:560px;">
+    <div class="detail-grid">
+      <div class="detail-item">
+        <span class="detail-label">Project Name</span>
+        <span class="detail-value"><%= @project.name %></span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Provider</span>
+        <span class="detail-value"><%= @project.provider&.upcase || "—" %></span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">UUID</span>
+        <span class="detail-value mono"><%= @project.uuid %></span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Environments</span>
+        <span class="detail-value"><%= @environments.size %></span>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+  <%# ═══════════════════════════════════════════════════
+      Environments (default)
+      ═══════════════════════════════════════════════════ %>
+  <% if provider == "aws" %>
+    <div data-controller="aws-onboard"
+         data-action="keydown@document->aws-onboard#closeOnEscape"
+         data-aws-onboard-validate-url-value="<%= validate_customer_project_environments_path(params[:customer_uuid], @project.uuid) %>"
+         data-aws-onboard-customer-uuid-value="<%= @customer.uuid %>"
+         data-aws-onboard-project-uuid-value="<%= @project.uuid %>">
+  <% elsif provider == "azure" %>
+    <div data-controller="azure-onboard"
+         data-action="keydown@document->azure-onboard#closeOnEscape"
+         data-azure-onboard-credentials-url-value="<%= customer_project_azure_credentials_path(params[:customer_uuid], @project.uuid) %>"
+         data-azure-onboard-test-url-value="<%= test_customer_project_azure_credentials_path(params[:customer_uuid], @project.uuid) %>"
+         data-azure-onboard-create-url-value="<%= customer_project_environments_path(params[:customer_uuid], @project.uuid) %>"
+         data-azure-onboard-customer-uuid-value="<%= @customer.uuid %>"
+         data-azure-onboard-project-uuid-value="<%= @project.uuid %>">
+  <% else %>
+    <div>
+  <% end %>
+
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">Environments</h2>
+    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">Manage cloud environments linked to this project.</p>
+
+    <% if provider == "aws" || provider == "azure" %>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <% if provider == "aws" %>
+          <button class="btn btn-green btn-sm" data-action="click->aws-onboard#open">+ Add Environment</button>
+        <% else %>
+          <button class="btn btn-green btn-sm" data-action="click->azure-onboard#open">+ Add Environment</button>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @environments.any? %>
+      <div class="card-grid">
+        <% @environments.each do |env| %>
+          <div class="card">
+            <div class="card-header-row">
+              <div class="card-title"><%= env.name %></div>
+              <% if env.environment_type.present? %>
+                <span class="badge badge-<%= env.environment_type == 'production' ? 'prd' : 'dev' %>"><%= env.environment_type.humanize %></span>
+              <% end %>
+            </div>
+            <% if env.account_id.present? %>
+              <div class="card-meta mono"><%= env.account_id %></div>
+            <% end %>
+            <% local_env = LocalEnvironment.find_by(aws_account_id: env.account_id) || LocalEnvironment.find_by(azure_subscription_id: env.account_id) %>
+            <% if local_env %>
+              <div style="margin-top:10px;">
+                <%= link_to "🎨 Open Canvas", canvas_path(local_env), class: "btn btn-green btn-sm", style: "text-decoration:none;" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%= render "shared/empty_state", icon: "🌍", title: "No environments yet", description: "Add an environment to get started." %>
+    <% end %>
+
+    <%# ═══ Canvas Environments (from local DB) ═══ %>
+    <% canvas_envs = LocalEnvironment.includes(local_project: :local_customer).order(:env_type) %>
+    <% if canvas_envs.any? %>
+      <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:24px;">
+        <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">🎨 Canvas Environments</h2>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Infrastructure-as-Code canvas for designing and deploying resources.</p>
+        <div class="card-grid">
+          <% canvas_envs.each do |cenv| %>
+            <div class="card">
+              <div class="card-header-row">
+                <div class="card-title"><%= cenv.name.capitalize %></div>
+                <span class="badge badge-<%= cenv.env_type == 'prd' ? 'prd' : 'dev' %>"><%= cenv.env_type.upcase %></span>
+              </div>
+              <div class="card-meta"><%= cenv.local_project.name %> · <%= cenv.cloud_provider.upcase %> · <%= cenv.region %></div>
+              <div style="margin-top:10px;">
+                <%= link_to "Open Canvas →", canvas_path(cenv), class: "btn btn-green btn-sm", style: "text-decoration:none;" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if provider == "aws" %>
+      <%# ── AWS Create Environment Modal (2-step) ── %>
+      <div class="modal-overlay" data-aws-onboard-target="overlay" data-action="click->aws-onboard#backdropClose">
+        <div class="modal-panel" style="max-width:560px;">
+          <div class="modal-header">
+            <h3 class="modal-title">Create environment</h3>
+            <button class="modal-close" data-action="click->aws-onboard#close" aria-label="Close">&times;</button>
+          </div>
+          <div data-aws-onboard-target="stepIndicator"></div>
+          <%= form_with url: customer_project_environments_path(params[:customer_uuid], @project.uuid), method: :post, id: "env-onboard-form" do %>
+            <%# STEP 1 %>
+            <div data-aws-onboard-target="step1">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-label">Environment name *</label>
+                  <input type="text" name="environment_name" class="form-input" placeholder="My AWS Environment" required data-aws-onboard-target="environmentName">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Account ID *</label>
+                  <input type="text" name="account_id" class="form-input" placeholder="123456789012" required data-aws-onboard-target="accountId">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Role Name *</label>
+                  <input type="text" name="role_name" class="form-input" placeholder="FactorFifty-Admin" required data-aws-onboard-target="roleName">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">External ID</label>
+                  <div style="display:flex;gap:8px;">
+                    <input type="text" name="external_id" class="form-input" readonly style="background:var(--bg-elevated);flex:1;" data-aws-onboard-target="externalId">
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="click->aws-onboard#copyExternalId" title="Copy to clipboard">📋</button>
+                  </div>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);margin-top:-8px;">
+                  <a href="https://docs.factorfifty.com/environments/create-a-new-environment/aws" target="_blank" style="color:var(--green);">Read the docs →</a>
+                </div>
+                <p data-aws-onboard-target="validateError" style="color:var(--red);font-size:12px;margin-top:8px;min-height:16px;"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" data-action="click->aws-onboard#close">Cancel</button>
+                <button type="button" class="btn btn-green" data-action="click->aws-onboard#validate" data-aws-onboard-target="validateBtn">Validate</button>
+              </div>
+            </div>
+            <%# STEP 2 %>
+            <div data-aws-onboard-target="step2" style="display:none;">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-label">SLA *</label>
+                  <select name="sla" class="form-input" required data-aws-onboard-target="sla" data-action="change->aws-onboard#slaChanged">
+                    <option value="production">Production</option>
+                    <option value="non_production">Non-Production</option>
+                    <option value="unmanaged">Unmanaged</option>
+                  </select>
+                </div>
+                <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:8px;">
+                  <label class="form-label" style="margin-bottom:12px;">Enable Integrations</label>
+                  <label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;cursor:pointer;">
+                    <input type="checkbox" name="finops_enabled" value="1" data-aws-onboard-target="finops" style="width:16px;height:16px;accent-color:var(--green);"> FinOps
+                  </label>
+                  <label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;cursor:pointer;">
+                    <input type="checkbox" name="secops_enabled" value="1" data-aws-onboard-target="secops" style="width:16px;height:16px;accent-color:var(--green);"> SecOps
+                  </label>
+                  <label style="display:flex;align-items:center;gap:10px;margin-bottom:4px;font-size:13px;">
+                    <input type="checkbox" name="monitoring_enabled" value="1" data-aws-onboard-target="monitoring" disabled checked style="width:16px;height:16px;accent-color:var(--green);"> Monitoring
+                  </label>
+                  <p data-aws-onboard-target="monitoringNote" style="font-size:11px;color:var(--text-muted);margin-left:26px;">
+                    <span class="badge" style="background:var(--green-dim);color:var(--green);font-size:10px;">Monitoring</span>
+                    will be configured for <span style="font-weight:600;">Production</span>
+                  </p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" data-action="click->aws-onboard#goBack">Back</button>
+                <input type="submit" class="btn btn-green" value="Save">
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if provider == "azure" %>
+      <%# ── Azure Create Environment Modal (2-step) ── %>
+      <div class="modal-overlay" data-azure-onboard-target="overlay" data-action="click->azure-onboard#backdropClose">
+        <div class="modal-panel" style="max-width:560px;">
+          <div class="modal-header">
+            <h3 class="modal-title">Create environment</h3>
+            <button class="modal-close" data-action="click->azure-onboard#close" aria-label="Close">&times;</button>
+          </div>
+          <div data-azure-onboard-target="stepIndicator"></div>
+
+          <%# No credentials message %>
+          <div data-azure-onboard-target="noCreds" style="display:none;"></div>
+
+          <%# STEP 1 — Credentials + Subscription %>
+          <div data-azure-onboard-target="credsForm" style="display:none;">
+            <div data-azure-onboard-target="step1">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-label">Environment name *</label>
+                  <input type="text" class="form-input" placeholder="My Azure Environment" data-azure-onboard-target="environmentName">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Admin Credential</label>
+                  <select class="form-input" data-azure-onboard-target="adminCred" data-action="change->azure-onboard#adminCredChanged">
+                    <option value="">Loading…</option>
+                  </select>
+                  <span style="font-size:11px;color:var(--text-muted);">Optional — only needed for write operations.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Read-only Credential *</label>
+                  <select class="form-input" data-azure-onboard-target="readOnlyCred" data-action="change->azure-onboard#readOnlyCredChanged">
+                    <option value="">Loading…</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subscription ID *</label>
+                  <input type="text" class="form-input" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" data-azure-onboard-target="subscription">
+                </div>
+                <p data-azure-onboard-target="validateError" style="color:var(--red);font-size:12px;min-height:16px;"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" data-action="click->azure-onboard#close">Cancel</button>
+                <button type="button" class="btn btn-green" data-action="click->azure-onboard#validate" data-azure-onboard-target="validateBtn">Validate</button>
+              </div>
+            </div>
+
+            <%# STEP 2 — SLA + Integrations %>
+            <div data-azure-onboard-target="step2" style="display:none;">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-label">SLA *</label>
+                  <select class="form-input" data-azure-onboard-target="sla" data-action="change->azure-onboard#slaChanged">
+                    <option value="production">Production</option>
+                    <option value="non_production">Non-Production</option>
+                    <option value="unmanaged">Unmanaged</option>
+                  </select>
+                </div>
+                <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:8px;">
+                  <label class="form-label" style="margin-bottom:12px;">Enable Integrations</label>
+                  <label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;cursor:pointer;">
+                    <input type="checkbox" value="1" data-azure-onboard-target="finops" style="width:16px;height:16px;accent-color:var(--green);"> FinOps
+                  </label>
+                  <label style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;cursor:pointer;">
+                    <input type="checkbox" value="1" data-azure-onboard-target="secops" style="width:16px;height:16px;accent-color:var(--green);"> SecOps
+                  </label>
+                  <label style="display:flex;align-items:center;gap:10px;margin-bottom:4px;font-size:13px;">
+                    <input type="checkbox" value="1" data-azure-onboard-target="monitoring" disabled checked style="width:16px;height:16px;accent-color:var(--green);"> Monitoring
+                  </label>
+                  <p data-azure-onboard-target="monitoringNote" style="font-size:11px;color:var(--text-muted);margin-left:26px;">
+                    <span class="badge" style="background:var(--green-dim);color:var(--green);font-size:10px;">Monitoring</span>
+                    will be configured for <span style="font-weight:600;">Production</span>
+                  </p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" data-action="click->azure-onboard#goBack">Back</button>
+                <button type="button" class="btn btn-green" data-action="click->azure-onboard#save">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+<% end %>

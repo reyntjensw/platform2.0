@@ -1,0 +1,35 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  port: 5433
+  username: postgres
+  password: postgres
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: factorfifty_development
+
+test:
+  <<: *default
+  database: factorfifty_test
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: factorfifty_production
+    username: factorfifty
+    password: <%= ENV["FACTORFIFTY_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: factorfifty_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: factorfifty_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: factorfifty_production_cable
+    migrations_paths: db/cable_migrate

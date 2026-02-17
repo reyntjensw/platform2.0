@@ -1,0 +1,17 @@
+<%# Breadcrumb trail — dynamically built from controller context %>
+<%# Each ancestor is a clickable link, current level is white/bold %>
+<% crumbs = breadcrumb_trail %>
+<% if crumbs.any? %>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <% crumbs.each_with_index do |crumb, index| %>
+      <% if index > 0 %>
+        <span class="sep" aria-hidden="true">›</span>
+      <% end %>
+      <% if crumb[:current] %>
+        <span class="current" aria-current="page"><%= crumb[:label] %></span>
+      <% else %>
+        <%= link_to crumb[:label], crumb[:path] %>
+      <% end %>
+    <% end %>
+  </nav>
+<% end %>

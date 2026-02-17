@@ -1,0 +1,28 @@
+<% content_for(:title) { "Select Reseller — Factor Fifty" } %>
+
+<div class="section-header">
+  <h3>Resellers</h3>
+</div>
+
+<% if @resellers.any? %>
+  <div class="reseller-grid">
+    <% @resellers.each do |reseller| %>
+      <%= link_to customers_path(reseller_uuid: reseller.uuid), class: "card card-clickable card-gradient-hover" do %>
+        <div class="card-header-row">
+          <div class="card-title"><%= reseller.name %></div>
+          <% if reseller.inactive? %>
+            <span class="badge badge-inactive">Inactive</span>
+          <% end %>
+        </div>
+        <% if reseller.vat_number.present? %>
+          <div class="card-meta mono"><%= reseller.vat_number %></div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <%= render "shared/empty_state",
+    icon: "🏢",
+    title: "No resellers found",
+    description: "There are no resellers available." %>
+<% end %>

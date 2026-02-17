@@ -1,0 +1,101 @@
+<div class="page-content" style="max-width:1200px;margin:0 auto">
+  <div style="margin-bottom:20px">
+    <%= link_to "← Back to #{@module_definition.display_name}", module_path(@module_definition), class: "back-link" %>
+    <h2 style="font-size:18px;font-weight:600;margin-top:8px;margin-bottom:4px">Edit <%= @module_definition.display_name %></h2>
+    <p style="font-size:12px;color:var(--text-secondary)">Update module metadata, constraints, and allowed zones.</p>
+  </div>
+
+  <% if @module_definition.errors.any? %>
+    <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:14px;margin-bottom:16px">
+      <div style="font-size:12px;font-weight:600;color:#ef4444;margin-bottom:6px">
+        <%= pluralize(@module_definition.errors.count, "error") %> prevented this module from being saved:
+      </div>
+      <ul style="margin:0;padding-left:18px;font-size:11px;color:#f87171;line-height:1.6">
+        <% @module_definition.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with(model: @module_definition, url: module_path(@module_definition), method: :patch) do |f| %>
+    <div class="mod-panel">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <h3 style="font-size:13px;font-weight:600">Module Details</h3>
+        <span class="mtag mtag--<%= @module_definition.cloud_provider %>"><%= @module_definition.cloud_provider.upcase %></span>
+      </div>
+      <div style="padding:18px">
+        <div class="mod-field mod-field--req">
+          <%= f.label :display_name, "Display Name", class: "mod-field__label" %>
+          <%= f.text_field :display_name, class: "mod-input" %>
+        </div>
+
+        <div class="mod-field">
+          <%= f.label :description, "Description", class: "mod-field__label" %>
+          <%= f.textarea :description, class: "mod-textarea", rows: 3 %>
+        </div>
+
+        <div class="mod-field-row">
+          <div class="mod-field">
+            <%= f.label :version, "Version", class: "mod-field__label" %>
+            <%= f.text_field :version, class: "mod-input mod-input--mono", placeholder: "e.g. 1.0.0" %>
+          </div>
+          <div class="mod-field">
+            <%= f.label :icon, "Icon", class: "mod-field__label" %>
+            <%= f.text_field :icon, class: "mod-input", placeholder: "e.g. EKS" %>
+          </div>
+        </div>
+
+        <div class="mod-field-row">
+          <div class="mod-field">
+            <%= f.label :category, "Category", class: "mod-field__label" %>
+            <%= f.select :category, ModuleDefinition::CATEGORIES.map { |c| [c.capitalize, c] }, {}, class: "mod-select" %>
+          </div>
+          <div class="mod-field">
+            <%= f.label :status, "Status", class: "mod-field__label" %>
+            <%= f.select :status, ModuleDefinition::STATUSES.map { |s| [s.capitalize, s] }, {}, class: "mod-select" %>
+          </div>
+        </div>
+
+        <div class="mod-field-row">
+          <div class="mod-field">
+            <%= f.label :ownership, "Ownership", class: "mod-field__label" %>
+            <%= f.select :ownership, ModuleDefinition::OWNERSHIPS.map { |o| [o.capitalize, o] }, {}, class: "mod-select" %>
+          </div>
+          <div class="mod-field">
+            <%= f.label :visibility, "Visibility", class: "mod-field__label" %>
+            <%= f.select :visibility, ModuleDefinition::VISIBILITIES.map { |v| [v.capitalize, v] }, {}, class: "mod-select" %>
+          </div>
+        </div>
+
+        <div class="mod-field">
+          <span class="mod-field__label">Allowed Zones</span>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:2px">
+            <% ModuleDefinition::VALID_ZONES.each do |zone| %>
+              <label class="checkbox-label">
+                <%= check_box_tag "module_definition[allowed_zones][]", zone, @module_definition.allowed_zones&.include?(zone) %>
+                <%= zone.capitalize %>
+              </label>
+            <% end %>
+            <%= hidden_field_tag "module_definition[allowed_zones][]", "" %>
+          </div>
+        </div>
+
+        <div class="mod-field">
+          <%= f.label :constraints, "Constraints (JSON)", class: "mod-field__label" %>
+          <%= f.textarea :constraints, value: @module_definition.constraints.to_json, class: "mod-textarea mod-input--mono", rows: 3 %>
+        </div>
+
+        <div class="mod-field">
+          <%= f.label :supported_engines, "Supported Engines (JSON array)", class: "mod-field__label" %>
+          <%= f.textarea :supported_engines, value: @module_definition.supported_engines.to_json, class: "mod-textarea mod-input--mono", rows: 2 %>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+          <%= link_to "Cancel", module_path(@module_definition), class: "mod-edit-btn" %>
+          <%= f.submit "Save Changes", class: "mod-btn-primary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

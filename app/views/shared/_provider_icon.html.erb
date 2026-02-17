@@ -1,0 +1,8 @@
+<%# Provider Icon — renders AWS (orange) or Azure (blue) tag %>
+<%# Locals: provider (string: "aws" or "azure") %>
+<% tag_class = case provider.to_s.downcase
+               when "aws" then "tag-aws"
+               when "azure" then "tag-azure"
+               else "tag-aws"
+               end %>
+<span class="tag <%= tag_class %>"><%= provider.to_s.upcase %></span>

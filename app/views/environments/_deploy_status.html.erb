@@ -1,0 +1,20 @@
+<div id="deploy-status" class="deploy-panel">
+  <% if deployment %>
+    <div class="deploy-status deploy-status--<%= deployment.status %>">
+      <span class="deploy-status__dot"></span>
+      <span class="deploy-status__label"><%= deployment.status.humanize %></span>
+      <% if deployment.completed_at %>
+        <span class="deploy-status__time"><%= time_ago_in_words(deployment.completed_at) %> ago</span>
+      <% end %>
+    </div>
+
+    <% if deployment.plan_output.present? %>
+      <details class="deploy-output" open>
+        <summary>Plan Output</summary>
+        <pre class="deploy-output__pre"><%= deployment.plan_output %></pre>
+      </details>
+    <% end %>
+  <% else %>
+    <p class="deploy-empty">No deployments yet</p>
+  <% end %>
+</div>

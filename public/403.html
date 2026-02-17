@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 — Forbidden | Factor Fifty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0a0e1a;
+            --bg-surface: #111827;
+            --bg-card: #151d2e;
+            --border: #243049;
+            --text-primary: #e8ecf4;
+            --text-secondary: #8b99b5;
+            --text-muted: #5a6a8a;
+            --green: #2ecc71;
+            --green-hover: #27ae60;
+            --green-dim: rgba(46, 204, 113, 0.15);
+            --red: #e74c3c;
+            --red-dim: rgba(231, 76, 60, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 440px;
+            padding: 40px 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .logo-mark {
+            display: flex;
+            gap: 2px;
+        }
+
+        .logo-mark span {
+            width: 3px;
+            height: 18px;
+            background: var(--green);
+            border-radius: 2px;
+        }
+
+        .logo-mark span:nth-child(2) {
+            height: 22px;
+        }
+
+        .logo-mark span:nth-child(3) {
+            height: 26px;
+        }
+
+        .logo-mark span:nth-child(4) {
+            height: 22px;
+        }
+
+        .logo-mark span:nth-child(5) {
+            height: 18px;
+        }
+
+        .logo-text {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .error-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 36px 32px;
+        }
+
+        .code {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--red);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 12px;
+            color: var(--text-primary);
+        }
+
+        p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0 0 28px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.15s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--green-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+            background: var(--bg-surface);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-mark">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="logo-text">Factor Fifty</div>
+        </div>
+
+        <div class="error-card">
+            <div class="code">403</div>
+            <h1>Access Denied</h1>
+            <p>You don't have permission to view this page. If you believe this is a mistake, contact your
+                administrator.</p>
+            <div class="actions">
+                <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+                <a href="/" class="btn btn-primary">Go Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

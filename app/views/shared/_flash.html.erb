@@ -1,0 +1,10 @@
+<%# Flash Messages — auto-dismiss after 5s, slide-in animation %>
+<%# Types: success (green), error (red), warning (orange), info (blue) %>
+<%# Uses data-controller="flash" for Stimulus auto-dismiss behavior %>
+<% flash.each do |type, message| %>
+  <% next if message.blank? %>
+  <div class="flash flash-<%= type %>" data-controller="flash" data-flash-auto-dismiss-value="5000" role="alert">
+    <span class="flash-message"><%= message %></span>
+    <button class="flash-dismiss" data-action="flash#dismiss" aria-label="Dismiss">&times;</button>
+  </div>
+<% end %>
