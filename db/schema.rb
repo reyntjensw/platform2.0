@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_18_400001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -61,6 +61,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.index ["scope_type"], name: "index_business_rules_on_scope_type"
   end
 
+  create_table "canvas_locks", force: :cascade do |t|
+    t.uuid "environment_id", null: false
+    t.string "device_id", null: false
+    t.string "user_email", null: false
+    t.string "user_name"
+    t.datetime "locked_at", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["environment_id"], name: "index_canvas_locks_on_environment_id", unique: true
+  end
+
   create_table "connections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "from_resource_id", null: false
     t.uuid "to_resource_id", null: false
@@ -70,6 +82,29 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.index ["from_resource_id", "to_resource_id"], name: "index_connections_on_from_resource_id_and_to_resource_id", unique: true
     t.index ["from_resource_id"], name: "index_connections_on_from_resource_id"
     t.index ["to_resource_id"], name: "index_connections_on_to_resource_id"
+  end
+
+  create_table "deployment_layers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "deployment_id", null: false
+    t.integer "index", null: false
+    t.jsonb "resource_ids", default: [], null: false
+    t.jsonb "required_providers", default: [], null: false
+    t.jsonb "remote_state_refs", default: [], null: false
+    t.string "state_key", null: false
+    t.string "status", default: "pending", null: false
+    t.uuid "job_id"
+    t.text "plan_output"
+    t.jsonb "cost_estimate", default: {}
+    t.text "error_details"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "step_details", default: [], null: false
+    t.index ["deployment_id", "index"], name: "index_deployment_layers_on_deployment_id_and_index", unique: true
+    t.index ["deployment_id"], name: "index_deployment_layers_on_deployment_id"
+    t.index ["job_id"], name: "index_deployment_layers_on_job_id"
+    t.index ["status"], name: "index_deployment_layers_on_status"
   end
 
   create_table "deployments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -82,9 +117,30 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "total_layers", default: 1
+    t.integer "current_layer", default: 0
+    t.jsonb "cost_estimate", default: {}
+    t.uuid "approved_by_uuid"
+    t.datetime "approved_at"
+    t.string "approval_status"
+    t.integer "version", default: 1, null: false
+    t.index ["approval_status"], name: "index_deployments_on_approval_status"
+    t.index ["local_environment_id", "version"], name: "index_deployments_on_local_environment_id_and_version", unique: true
     t.index ["local_environment_id"], name: "index_deployments_on_local_environment_id"
     t.index ["status"], name: "index_deployments_on_status"
     t.index ["triggered_by_uuid"], name: "index_deployments_on_triggered_by_uuid"
+  end
+
+  create_table "environment_snapshots", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "local_environment_id", null: false
+    t.string "version", null: false
+    t.jsonb "snapshot_data", default: {}, null: false
+    t.integer "resource_count", default: 0, null: false
+    t.jsonb "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.index ["created_at"], name: "index_environment_snapshots_on_created_at"
+    t.index ["local_environment_id", "version"], name: "idx_on_local_environment_id_version_54cfa5cbd4", unique: true
+    t.index ["local_environment_id"], name: "index_environment_snapshots_on_local_environment_id"
   end
 
   create_table "field_mappings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -117,6 +173,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.index ["owner_type", "owner_id"], name: "index_git_credentials_on_owner_type_and_owner_id"
   end
 
+  create_table "global_tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "key", null: false
+    t.string "value", null: false
+    t.text "description"
+    t.boolean "enabled", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enabled"], name: "index_global_tags_on_enabled"
+    t.index ["key"], name: "index_global_tags_on_key", unique: true
+  end
+
   create_table "local_customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "local_reseller_id", null: false
     t.string "name", null: false
@@ -147,6 +214,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "upgrade_policy", default: "manual"
+    t.string "current_version", default: "0.0.0"
+    t.string "gcp_project_id"
+    t.string "execution_mode", default: "platform", null: false
     t.index ["cloud_provider"], name: "index_local_environments_on_cloud_provider"
     t.index ["env_type"], name: "index_local_environments_on_env_type"
     t.index ["local_project_id"], name: "index_local_environments_on_local_project_id"
@@ -195,6 +265,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "allowed_zones", default: ["public", "private"], null: false
+    t.jsonb "provider_dependencies", default: [], null: false
     t.index ["category"], name: "index_module_definitions_on_category"
     t.index ["cloud_provider"], name: "index_module_definitions_on_cloud_provider"
     t.index ["name", "cloud_provider"], name: "index_module_definitions_on_name_and_cloud_provider", unique: true
@@ -300,6 +371,34 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
     t.index ["module_renderer_id"], name: "index_module_versions_on_module_renderer_id"
   end
 
+  create_table "promotion_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "source_environment_id", null: false
+    t.uuid "target_environment_id", null: false
+    t.uuid "source_snapshot_id", null: false
+    t.uuid "target_snapshot_id"
+    t.uuid "user_uuid", null: false
+    t.uuid "approver_uuid"
+    t.string "status", default: "pending", null: false
+    t.jsonb "diff_summary", default: {}
+    t.jsonb "diff_detail", default: {}
+    t.text "plan_output"
+    t.jsonb "excluded_resource_ids", default: []
+    t.uuid "app_group_id"
+    t.text "rejection_reason"
+    t.text "error_details"
+    t.datetime "approved_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_group_id"], name: "index_promotion_records_on_app_group_id"
+    t.index ["source_environment_id"], name: "index_promotion_records_on_source_environment_id"
+    t.index ["source_snapshot_id"], name: "index_promotion_records_on_source_snapshot_id"
+    t.index ["status"], name: "index_promotion_records_on_status"
+    t.index ["target_environment_id"], name: "index_promotion_records_on_target_environment_id"
+    t.index ["target_snapshot_id"], name: "index_promotion_records_on_target_snapshot_id"
+    t.index ["user_uuid"], name: "index_promotion_records_on_user_uuid"
+  end
+
   create_table "resources", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "local_environment_id", null: false
     t.uuid "module_definition_id", null: false
@@ -322,9 +421,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
   end
 
   add_foreign_key "application_groups", "local_environments"
+  add_foreign_key "canvas_locks", "local_environments", column: "environment_id"
   add_foreign_key "connections", "resources", column: "from_resource_id", on_delete: :cascade
   add_foreign_key "connections", "resources", column: "to_resource_id", on_delete: :cascade
+  add_foreign_key "deployment_layers", "deployments", on_delete: :cascade
   add_foreign_key "deployments", "local_environments"
+  add_foreign_key "environment_snapshots", "local_environments"
   add_foreign_key "field_mappings", "module_renderers"
   add_foreign_key "local_customers", "local_resellers"
   add_foreign_key "local_environments", "local_projects"
@@ -335,6 +437,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_200003) do
   add_foreign_key "module_renderers", "git_credentials"
   add_foreign_key "module_renderers", "module_definitions"
   add_foreign_key "module_versions", "module_renderers"
+  add_foreign_key "promotion_records", "environment_snapshots", column: "source_snapshot_id"
+  add_foreign_key "promotion_records", "environment_snapshots", column: "target_snapshot_id"
+  add_foreign_key "promotion_records", "local_environments", column: "source_environment_id"
+  add_foreign_key "promotion_records", "local_environments", column: "target_environment_id"
   add_foreign_key "resources", "application_groups"
   add_foreign_key "resources", "local_environments"
   add_foreign_key "resources", "module_definitions"

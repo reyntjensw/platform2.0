@@ -5,7 +5,7 @@ export default function CanvasArea({
   resources, connections, selectedId, selectResource, deselectAll,
   updateResourcePosition, addResource,
   connectMode, connectFromId, completeConnect, cancelConnect, startConnect,
-  onOpenCmd, siblingEnvs, environment, canvasPath, appGroups
+  onOpenCmd, siblingEnvs, environment, canvasPath, appGroups, readOnly
 }) {
   const [zoom, setZoomState] = useState(1.0)
   const [pan, setPan] = useState({ x: 0, y: 0 })
@@ -70,7 +70,7 @@ export default function CanvasArea({
 
   // Drag resource block
   const onBlockMouseDown = useCallback((e, resource) => {
-    if (e.button !== 0 || connectMode) return
+    if (e.button !== 0 || connectMode || readOnly) return
     e.preventDefault()
     e.stopPropagation()
     const el = e.currentTarget
@@ -125,7 +125,7 @@ export default function CanvasArea({
     }
     document.addEventListener("mousemove", onMove)
     document.addEventListener("mouseup", onUp)
-  }, [connectMode, zoom, connections, updateResourcePosition])
+  }, [connectMode, zoom, connections, updateResourcePosition, readOnly])
 
   const onBlockClick = useCallback((e, resource) => {
     e.stopPropagation()
@@ -140,6 +140,7 @@ export default function CanvasArea({
   const onDragOver = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy" }
   const onDrop = (e) => {
     e.preventDefault()
+    if (readOnly) return
     const moduleId = e.dataTransfer.getData("text/plain")
     if (!moduleId || !viewportRef.current) return
     const vpRect = viewportRef.current.getBoundingClientRect()
@@ -356,13 +357,14 @@ export default function CanvasArea({
       </div>
 
       {/* Minimap */}
-      <Minimap resources={resources} zoom={zoom} pan={pan} transformRef={transformRef} />
+      <Minimap resources={resources} zoom={zoom} pan={pan} setPan={setPan} transformRef={transformRef} />
     </div>
   )
 }
 
-function Minimap({ resources, zoom, pan, transformRef }) {
+function Minimap({ resources, zoom, pan, setPan, transformRef }) {
   const mmW = 168, mmH = 96
+  const mmCanvasRef = useRef(null)
 
   // Compute which zones have resources
   const zoneFlags = useMemo(() => {
@@ -373,10 +375,55 @@ function Minimap({ resources, zoom, pan, transformRef }) {
     return flags
   }, [resources])
 
-  const hasPublic = zoneFlags.public
-  const hasPrivate = zoneFlags.private
-  const hasGlobal = zoneFlags.global
+  // Compute layout metrics (safe defaults when empty)
+  const { maxX, maxY, scaleX, scaleY } = useMemo(() => {
+    let mx = 800, my = 500
+    resources.forEach(r => {
+      mx = Math.max(mx, (r.position_x || 0) + 150)
+      my = Math.max(my, (r.position_y || 0) + 50)
+    })
+    return { maxX: mx, maxY: my, scaleX: mmW / mx, scaleY: mmH / my }
+  }, [resources])
 
+  // Convert a minimap pixel position to canvas pan coordinates
+  const mmToPan = useCallback((mmX, mmY) => {
+    const tRect = transformRef.current?.getBoundingClientRect()
+    const canvasX = mmX / scaleX
+    const canvasY = mmY / scaleY
+    const viewW = tRect ? tRect.width / zoom : 800
+    const viewH = tRect ? tRect.height / zoom : 500
+    return {
+      x: -(canvasX - viewW / 2) * zoom,
+      y: -(canvasY - viewH / 2) * zoom
+    }
+  }, [scaleX, scaleY, zoom, transformRef])
+
+  // Click on minimap to jump to that position
+  const onMinimapMouseDown = useCallback((e) => {
+    const rect = mmCanvasRef.current?.getBoundingClientRect()
+    if (!rect) return
+    e.preventDefault()
+
+    const update = (ev) => {
+      const mx = Math.max(0, Math.min(mmW, ev.clientX - rect.left))
+      const my = Math.max(0, Math.min(mmH, ev.clientY - rect.top))
+      setPan(mmToPan(mx, my))
+    }
+
+    // Immediate jump
+    update(e)
+
+    // Drag to pan
+    const onMove = (ev) => update(ev)
+    const onUp = () => {
+      document.removeEventListener("mousemove", onMove)
+      document.removeEventListener("mouseup", onUp)
+    }
+    document.addEventListener("mousemove", onMove)
+    document.addEventListener("mouseup", onUp)
+  }, [mmToPan, setPan])
+
+  // All hooks above — safe to early-return now
   if (resources.length === 0) return (
     <div className="minimap">
       <div className="mm-label">Minimap</div>
@@ -386,12 +433,9 @@ function Minimap({ resources, zoom, pan, transformRef }) {
     </div>
   )
 
-  let maxX = 800, maxY = 500
-  resources.forEach(r => {
-    maxX = Math.max(maxX, (r.position_x || 0) + 150)
-    maxY = Math.max(maxY, (r.position_y || 0) + 50)
-  })
-  const scaleX = mmW / maxX, scaleY = mmH / maxY
+  const hasPublic = zoneFlags.public
+  const hasPrivate = zoneFlags.private
+  const hasGlobal = zoneFlags.global
 
   const tRect = transformRef.current?.getBoundingClientRect()
   const vpW = tRect ? (tRect.width / zoom) * scaleX : mmW
@@ -402,7 +446,7 @@ function Minimap({ resources, zoom, pan, transformRef }) {
   return (
     <div className="minimap">
       <div className="mm-label">Minimap · {resources.length} resources</div>
-      <div className="mm-canvas">
+      <div className="mm-canvas" ref={mmCanvasRef} onMouseDown={onMinimapMouseDown} style={{ cursor: "pointer" }}>
         {hasPublic && <div className="mm-zone pub" />}
         {hasPrivate && <div className="mm-zone prv" />}
         {hasGlobal && <div className="mm-zone global" />}
@@ -418,7 +462,8 @@ function Minimap({ resources, zoom, pan, transformRef }) {
         })}
         <div className="mm-viewport" style={{
           left: Math.max(0, vpX), top: Math.max(0, vpY),
-          width: Math.min(mmW, vpW), height: Math.min(mmH, vpH)
+          width: Math.min(mmW, vpW), height: Math.min(mmH, vpH),
+          pointerEvents: "none"
         }} />
       </div>
     </div>

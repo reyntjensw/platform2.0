@@ -10,6 +10,8 @@ class ModuleRenderer < ApplicationRecord
   has_many :field_mappings, dependent: :destroy
   has_many :module_versions, dependent: :destroy
 
+  accepts_nested_attributes_for :field_mappings, allow_destroy: true, reject_if: :all_blank
+
   validates :engine, presence: true, inclusion: { in: ENGINES },
             uniqueness: { scope: :module_definition_id }
   validates :source_type, presence: true, inclusion: { in: SOURCE_TYPES }

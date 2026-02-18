@@ -3707,6 +3707,45 @@ textarea.form-input {
     font-size: 11px;
 }
 
+/* Small variants for nested inline editing */
+.mod-input--sm,
+.mod-select--sm {
+    padding: 5px 8px;
+    font-size: 11px;
+    border-radius: 6px;
+}
+
+/* Nested editable rows (fields, outputs, renderers) */
+.nested-row {
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: rgba(26, 34, 53, 0.25);
+}
+
+.nested-row--compact {
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    background: rgba(26, 34, 53, 0.15);
+}
+
+.nested-row--renderer {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    background: rgba(26, 34, 53, 0.3);
+}
+
+.destroy-check {
+    margin-right: 4px;
+}
+
+.nested-row:has(.destroy-check:checked) {
+    opacity: 0.4;
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.04);
+}
+
 .mod-textarea {
     resize: vertical;
     min-height: 60px;

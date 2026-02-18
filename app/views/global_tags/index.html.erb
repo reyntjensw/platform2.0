@@ -1,0 +1,110 @@
+<div class="page-content" style="max-width:900px;margin:0 auto">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
+    <div>
+      <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Global Tags</h2>
+      <p style="font-size:12px;color:var(--text-secondary)">Tags applied to every deployed resource across all environments.</p>
+    </div>
+    <div style="font-size:11px;color:var(--text-secondary)">
+      <%= GlobalTag.enabled.count %> active / <%= GlobalTag.count %> total
+    </div>
+  </div>
+
+  <%# Existing tags table %>
+  <div class="mod-panel">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
+      <h3 style="font-size:13px;font-weight:600">Configured Tags</h3>
+    </div>
+
+    <% if @tags.any? %>
+      <table class="mod-tbl">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Description</th>
+            <th style="width:70px">Status</th>
+            <th style="width:160px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tags.each do |tag| %>
+            <tr class="mod-tbl__row">
+              <td>
+                <code style="font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg-secondary);padding:2px 6px;border-radius:4px"><%= tag.key %></code>
+              </td>
+              <td>
+                <code style="font-size:12px;font-family:'JetBrains Mono',monospace"><%= tag.value %></code>
+              </td>
+              <td style="font-size:11px;color:var(--text-secondary)"><%= tag.description %></td>
+              <td>
+                <% if tag.enabled? %>
+                  <span class="meta-tag meta-tag--ready">Active</span>
+                <% else %>
+                  <span class="meta-tag meta-tag--error">Disabled</span>
+                <% end %>
+              </td>
+              <td style="display:flex;gap:4px;justify-content:flex-end">
+                <%= button_to tag.enabled? ? "Disable" : "Enable",
+                    toggle_global_tag_path(tag), method: :patch,
+                    class: "f50-btn f50-btn--secondary f50-btn--sm" %>
+                <%= button_to "Delete", global_tag_path(tag),
+                    method: :delete, class: "f50-btn f50-btn--danger f50-btn--sm",
+                    data: { turbo_confirm: "Delete tag '#{tag.key}'? This will remove it from all future deployments." } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div style="padding:40px;text-align:center;color:var(--text-secondary);font-size:13px">
+        No global tags configured yet. Add one below.
+      </div>
+    <% end %>
+  </div>
+
+  <%# Add new tag form %>
+  <div class="mod-panel" style="margin-top:20px">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
+      <h3 style="font-size:13px;font-weight:600">Add Tag</h3>
+    </div>
+    <div style="padding:18px">
+      <%= form_with url: global_tags_path, method: :post, local: true do %>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="mod-field mod-field--req">
+            <label class="mod-field__label" for="tag_key">Key</label>
+            <input type="text" name="key" id="tag_key" class="mod-input mod-input--mono"
+                   placeholder="e.g. managed-by" required
+                   pattern="[a-zA-Z0-9_\-:\/\.]+"
+                   title="Only alphanumeric, hyphens, underscores, colons, slashes, and dots">
+          </div>
+          <div class="mod-field mod-field--req">
+            <label class="mod-field__label" for="tag_value">Value</label>
+            <input type="text" name="value" id="tag_value" class="mod-input mod-input--mono"
+                   placeholder="e.g. factorfifty" required>
+          </div>
+        </div>
+        <div class="mod-field" style="margin-bottom:16px">
+          <label class="mod-field__label" for="tag_description">Description</label>
+          <input type="text" name="description" id="tag_description" class="mod-input"
+                 placeholder="Optional — why this tag exists">
+        </div>
+        <button type="submit" class="f50-btn f50-btn--primary">Add Tag</button>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Preview %>
+  <% if @tags.select(&:enabled?).any? %>
+    <div class="mod-panel" style="margin-top:20px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
+        <h3 style="font-size:13px;font-weight:600">Preview</h3>
+        <p style="font-size:11px;color:var(--text-secondary);margin-top:2px">These tags will be merged into every resource during deployment.</p>
+      </div>
+      <div style="padding:18px">
+        <pre style="font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg-secondary);padding:12px;border-radius:6px;margin:0;line-height:1.6;overflow-x:auto"><% @tags.select(&:enabled?).each do |tag| %><span style="color:var(--text-secondary)"># <%= tag.description %></span>
+<%= tag.key %> = "<%= tag.value %>"
+<% end %></pre>
+      </div>
+    </div>
+  <% end %>
+</div>

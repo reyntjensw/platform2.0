@@ -2,7 +2,7 @@
   <div style="margin-bottom:20px">
     <%= link_to "← Back to #{@module_definition.display_name}", module_path(@module_definition), class: "back-link" %>
     <h2 style="font-size:18px;font-weight:600;margin-top:8px;margin-bottom:4px">Edit <%= @module_definition.display_name %></h2>
-    <p style="font-size:12px;color:var(--text-secondary)">Update module metadata, constraints, and allowed zones.</p>
+    <p style="font-size:12px;color:var(--text-secondary)">Update module metadata, fields, outputs, and renderers.</p>
   </div>
 
   <% if @module_definition.errors.any? %>
@@ -19,6 +19,8 @@
   <% end %>
 
   <%= form_with(model: @module_definition, url: module_path(@module_definition), method: :patch) do |f| %>
+
+    <%# ── Module Details ── %>
     <div class="mod-panel">
       <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
         <h3 style="font-size:13px;font-weight:600">Module Details</h3>
@@ -29,12 +31,10 @@
           <%= f.label :display_name, "Display Name", class: "mod-field__label" %>
           <%= f.text_field :display_name, class: "mod-input" %>
         </div>
-
         <div class="mod-field">
           <%= f.label :description, "Description", class: "mod-field__label" %>
           <%= f.textarea :description, class: "mod-textarea", rows: 3 %>
         </div>
-
         <div class="mod-field-row">
           <div class="mod-field">
             <%= f.label :version, "Version", class: "mod-field__label" %>
@@ -45,7 +45,6 @@
             <%= f.text_field :icon, class: "mod-input", placeholder: "e.g. EKS" %>
           </div>
         </div>
-
         <div class="mod-field-row">
           <div class="mod-field">
             <%= f.label :category, "Category", class: "mod-field__label" %>
@@ -56,7 +55,6 @@
             <%= f.select :status, ModuleDefinition::STATUSES.map { |s| [s.capitalize, s] }, {}, class: "mod-select" %>
           </div>
         </div>
-
         <div class="mod-field-row">
           <div class="mod-field">
             <%= f.label :ownership, "Ownership", class: "mod-field__label" %>
@@ -67,7 +65,6 @@
             <%= f.select :visibility, ModuleDefinition::VISIBILITIES.map { |v| [v.capitalize, v] }, {}, class: "mod-select" %>
           </div>
         </div>
-
         <div class="mod-field">
           <span class="mod-field__label">Allowed Zones</span>
           <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:2px">
@@ -80,22 +77,269 @@
             <%= hidden_field_tag "module_definition[allowed_zones][]", "" %>
           </div>
         </div>
-
         <div class="mod-field">
           <%= f.label :constraints, "Constraints (JSON)", class: "mod-field__label" %>
           <%= f.textarea :constraints, value: @module_definition.constraints.to_json, class: "mod-textarea mod-input--mono", rows: 3 %>
         </div>
-
         <div class="mod-field">
           <%= f.label :supported_engines, "Supported Engines (JSON array)", class: "mod-field__label" %>
           <%= f.textarea :supported_engines, value: @module_definition.supported_engines.to_json, class: "mod-textarea mod-input--mono", rows: 2 %>
         </div>
-
-        <div style="display:flex;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
-          <%= link_to "Cancel", module_path(@module_definition), class: "mod-edit-btn" %>
-          <%= f.submit "Save Changes", class: "mod-btn-primary" %>
-        </div>
       </div>
+    </div>
+
+    <%# ── Fields ── %>
+    <div class="mod-panel" style="margin-top:16px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <h3 style="font-size:13px;font-weight:600">Fields (<%= @module_definition.module_fields.size %>)</h3>
+      </div>
+      <div style="padding:18px" id="fields-container">
+        <%= f.fields_for :module_fields, @module_definition.module_fields.ordered do |ff| %>
+          <div class="nested-row" data-nested-type="field">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:11px;font-weight:600;color:var(--text-secondary)">
+                <%= ff.object.persisted? ? ff.object.name : "New Field" %>
+              </span>
+              <label class="checkbox-label" style="color:var(--accent-red);font-size:11px">
+                <%= ff.check_box :_destroy, class: "destroy-check" %> Remove
+              </label>
+            </div>
+            <%= ff.hidden_field :id %>
+            <div class="mod-field-row">
+              <div class="mod-field">
+                <%= ff.label :name, "Name", class: "mod-field__label" %>
+                <%= ff.text_field :name, class: "mod-input mod-input--mono mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= ff.label :label, "Label", class: "mod-field__label" %>
+                <%= ff.text_field :label, class: "mod-input mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= ff.label :field_type, "Type", class: "mod-field__label" %>
+                <%= ff.select :field_type, ModuleField::FIELD_TYPES.map { |t| [t, t] }, {}, class: "mod-select mod-select--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= ff.label :classification, "Classification", class: "mod-field__label" %>
+                <%= ff.select :classification, ModuleField::CLASSIFICATIONS.map { |c| [c.humanize, c] }, {}, class: "mod-select mod-select--sm" %>
+              </div>
+            </div>
+            <div class="mod-field-row">
+              <div class="mod-field">
+                <label class="checkbox-label" style="margin-top:18px">
+                  <%= ff.check_box :required %> Required
+                </label>
+              </div>
+              <div class="mod-field">
+                <%= ff.label :default_value, "Default", class: "mod-field__label" %>
+                <%= ff.text_field :default_value, class: "mod-input mod-input--mono mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= ff.label :group, "Group", class: "mod-field__label" %>
+                <%= ff.text_field :group, class: "mod-input mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= ff.label :position, "Position", class: "mod-field__label" %>
+                <%= ff.number_field :position, class: "mod-input mod-input--sm", style: "width:70px" %>
+              </div>
+            </div>
+            <div class="mod-field">
+              <%= ff.label :validation, "Validation (JSON)", class: "mod-field__label" %>
+              <%= ff.text_field :validation, value: ff.object.validation.present? ? ff.object.validation.to_json : "", class: "mod-input mod-input--mono mod-input--sm" %>
+            </div>
+          </div>
+        <% end %>
+        <button type="button" class="f50-btn f50-btn--secondary f50-btn--sm" style="margin-top:8px"
+                onclick="addNestedField(this)" data-association="module_fields">
+          + Add Field
+        </button>
+      </div>
+    </div>
+
+    <%# ── Outputs ── %>
+    <div class="mod-panel" style="margin-top:16px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <h3 style="font-size:13px;font-weight:600">Outputs (<%= @module_definition.module_outputs.size %>)</h3>
+      </div>
+      <div style="padding:18px" id="outputs-container">
+        <%= f.fields_for :module_outputs do |of| %>
+          <div class="nested-row" data-nested-type="output">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:11px;font-weight:600;color:var(--text-secondary)">
+                <%= of.object.persisted? ? of.object.name : "New Output" %>
+              </span>
+              <label class="checkbox-label" style="color:var(--accent-red);font-size:11px">
+                <%= of.check_box :_destroy, class: "destroy-check" %> Remove
+              </label>
+            </div>
+            <%= of.hidden_field :id %>
+            <div class="mod-field-row">
+              <div class="mod-field">
+                <%= of.label :name, "Name", class: "mod-field__label" %>
+                <%= of.text_field :name, class: "mod-input mod-input--mono mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= of.label :description, "Description", class: "mod-field__label" %>
+                <%= of.text_field :description, class: "mod-input mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= of.label :output_type, "Type", class: "mod-field__label" %>
+                <%= of.text_field :output_type, class: "mod-input mod-input--sm", placeholder: "e.g. string" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <button type="button" class="f50-btn f50-btn--secondary f50-btn--sm" style="margin-top:8px"
+                onclick="addNestedOutput(this)" data-association="module_outputs">
+          + Add Output
+        </button>
+      </div>
+    </div>
+
+    <%# ── Renderers ── %>
+    <div class="mod-panel" style="margin-top:16px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <h3 style="font-size:13px;font-weight:600">Renderers (<%= @module_definition.module_renderers.size %>)</h3>
+      </div>
+      <div style="padding:18px" id="renderers-container">
+        <%= f.fields_for :module_renderers do |rf| %>
+          <div class="nested-row nested-row--renderer" data-nested-type="renderer">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:11px;font-weight:600;color:var(--text-secondary)">
+                <%= rf.object.persisted? ? "#{rf.object.engine.capitalize} — #{rf.object.source_type}" : "New Renderer" %>
+              </span>
+              <label class="checkbox-label" style="color:var(--accent-red);font-size:11px">
+                <%= rf.check_box :_destroy, class: "destroy-check" %> Remove
+              </label>
+            </div>
+            <%= rf.hidden_field :id %>
+            <div class="mod-field-row">
+              <div class="mod-field">
+                <%= rf.label :engine, "Engine", class: "mod-field__label" %>
+                <%= rf.select :engine, ModuleRenderer::ENGINES.map { |e| [e.capitalize, e] }, {}, class: "mod-select mod-select--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= rf.label :source_type, "Source Type", class: "mod-field__label" %>
+                <%= rf.select :source_type, ModuleRenderer::SOURCE_TYPES.map { |s| [s, s] }, {}, class: "mod-select mod-select--sm" %>
+              </div>
+            </div>
+            <div class="mod-field-row">
+              <div class="mod-field" style="flex:2">
+                <%= rf.label :source_url, "Source URL", class: "mod-field__label" %>
+                <%= rf.text_field :source_url, class: "mod-input mod-input--mono mod-input--sm" %>
+              </div>
+              <div class="mod-field">
+                <%= rf.label :source_ref, "Ref / Branch", class: "mod-field__label" %>
+                <%= rf.text_field :source_ref, class: "mod-input mod-input--mono mod-input--sm", placeholder: "main" %>
+              </div>
+            </div>
+            <div class="mod-field">
+              <%= rf.label :source_subpath, "Subpath", class: "mod-field__label" %>
+              <%= rf.text_field :source_subpath, class: "mod-input mod-input--mono mod-input--sm", placeholder: "e.g. modules/vpc" %>
+            </div>
+
+            <%# Field Mappings within this renderer %>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+              <h4 style="font-size:11px;font-weight:600;color:var(--text-secondary);margin-bottom:8px">Field Mappings</h4>
+              <div class="field-mappings-container">
+                <%= rf.fields_for :field_mappings do |mf| %>
+                  <div class="nested-row nested-row--compact" data-nested-type="mapping">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                      <span style="font-size:10px;color:var(--text-muted)">
+                        <%= mf.object.persisted? ? "#{mf.object.platform_field} → #{mf.object.renderer_variable}" : "New Mapping" %>
+                      </span>
+                      <label class="checkbox-label" style="color:var(--accent-red);font-size:10px">
+                        <%= mf.check_box :_destroy, class: "destroy-check" %> Remove
+                      </label>
+                    </div>
+                    <%= mf.hidden_field :id %>
+                    <div class="mod-field-row">
+                      <div class="mod-field">
+                        <%= mf.label :platform_field, "Platform Field", class: "mod-field__label" %>
+                        <%= mf.text_field :platform_field, class: "mod-input mod-input--mono mod-input--sm" %>
+                      </div>
+                      <div class="mod-field">
+                        <%= mf.label :renderer_variable, "Renderer Variable", class: "mod-field__label" %>
+                        <%= mf.text_field :renderer_variable, class: "mod-input mod-input--mono mod-input--sm" %>
+                      </div>
+                      <div class="mod-field">
+                        <%= mf.label :mapping_type, "Type", class: "mod-field__label" %>
+                        <%= mf.select :mapping_type, FieldMapping::MAPPING_TYPES.map { |t| [t.humanize, t] }, {}, class: "mod-select mod-select--sm" %>
+                      </div>
+                      <div class="mod-field">
+                        <%= mf.label :transform, "Transform", class: "mod-field__label" %>
+                        <%= mf.select :transform, [["None", ""]] + FieldMapping::TRANSFORMS.map { |t| [t, t] }, {}, class: "mod-select mod-select--sm" %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# ── Save / Cancel ── %>
+    <div style="display:flex;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+      <%= link_to "Cancel", module_path(@module_definition), class: "mod-edit-btn" %>
+      <%= f.submit "Save Changes", class: "mod-btn-primary" %>
     </div>
   <% end %>
 </div>
+
+<script>
+  // Counter for unique nested field IDs
+  let nestedIndex = Date.now();
+  const FIELD_TYPES = <%= ModuleField::FIELD_TYPES.to_json.html_safe %>;
+  const CLASSIFICATIONS = <%= ModuleField::CLASSIFICATIONS.to_json.html_safe %>;
+
+  function optionsHtml(arr, humanize) {
+    return arr.map(function(v) {
+      var label = humanize ? v.replace(/_/g, ' ') : v;
+      return '<option value="' + v + '">' + label + '</option>';
+    }).join('');
+  }
+
+  function addNestedField(btn) {
+    var container = btn.closest('#fields-container');
+    var idx = nestedIndex++;
+    var prefix = 'module_definition[module_fields_attributes][' + idx + ']';
+    var html = '<div class="nested-row" data-nested-type="field">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">' +
+        '<span style="font-size:11px;font-weight:600;color:var(--text-secondary)">New Field</span>' +
+        '<button type="button" class="f50-btn f50-btn--danger f50-btn--sm" style="font-size:10px;padding:2px 8px" onclick="this.closest(\'.nested-row\').remove()">✕ Remove</button>' +
+      '</div>' +
+      '<div class="mod-field-row">' +
+        '<div class="mod-field"><label class="mod-field__label">Name</label><input type="text" name="' + prefix + '[name]" class="mod-input mod-input--mono mod-input--sm"></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Label</label><input type="text" name="' + prefix + '[label]" class="mod-input mod-input--sm"></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Type</label><select name="' + prefix + '[field_type]" class="mod-select mod-select--sm">' + optionsHtml(FIELD_TYPES, false) + '</select></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Classification</label><select name="' + prefix + '[classification]" class="mod-select mod-select--sm">' + optionsHtml(CLASSIFICATIONS, true) + '</select></div>' +
+      '</div>' +
+      '<div class="mod-field-row">' +
+        '<div class="mod-field"><label class="checkbox-label" style="margin-top:18px"><input type="hidden" name="' + prefix + '[required]" value="0"><input type="checkbox" name="' + prefix + '[required]" value="1"> Required</label></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Default</label><input type="text" name="' + prefix + '[default_value]" class="mod-input mod-input--mono mod-input--sm"></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Group</label><input type="text" name="' + prefix + '[group]" class="mod-input mod-input--sm"></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Position</label><input type="number" name="' + prefix + '[position]" class="mod-input mod-input--sm" style="width:70px"></div>' +
+      '</div>' +
+      '<div class="mod-field"><label class="mod-field__label">Validation (JSON)</label><input type="text" name="' + prefix + '[validation]" class="mod-input mod-input--mono mod-input--sm"></div>' +
+    '</div>';
+    btn.insertAdjacentHTML('beforebegin', html);
+  }
+
+  function addNestedOutput(btn) {
+    var idx = nestedIndex++;
+    var prefix = 'module_definition[module_outputs_attributes][' + idx + ']';
+    var html = '<div class="nested-row" data-nested-type="output">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">' +
+        '<span style="font-size:11px;font-weight:600;color:var(--text-secondary)">New Output</span>' +
+        '<button type="button" class="f50-btn f50-btn--danger f50-btn--sm" style="font-size:10px;padding:2px 8px" onclick="this.closest(\'.nested-row\').remove()">✕ Remove</button>' +
+      '</div>' +
+      '<div class="mod-field-row">' +
+        '<div class="mod-field"><label class="mod-field__label">Name</label><input type="text" name="' + prefix + '[name]" class="mod-input mod-input--mono mod-input--sm"></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Description</label><input type="text" name="' + prefix + '[description]" class="mod-input mod-input--sm"></div>' +
+        '<div class="mod-field"><label class="mod-field__label">Type</label><input type="text" name="' + prefix + '[output_type]" class="mod-input mod-input--sm" placeholder="e.g. string"></div>' +
+      '</div>' +
+    '</div>';
+    btn.insertAdjacentHTML('beforebegin', html);
+  }
+</script>

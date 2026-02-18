@@ -12,19 +12,24 @@ class AutoPlacementService
   #   4. Default → first in allowed_zones array
   def self.determine_zone(module_definition, customer = nil)
     allowed = module_definition.allowed_zones
+    Rails.logger.info "[AutoPlacement] Module=#{module_definition.name} allowed_zones=#{allowed.inspect}"
     return allowed.first if allowed.size == 1
 
     rules = applicable_rules(module_definition, customer)
+    Rails.logger.info "[AutoPlacement] Applicable rules count=#{rules.count}"
 
     # Primary: derive target zone from THEN conditions (any severity).
     # The THEN condition is the source of truth, not the action.
     target_zone = find_target_zone_from_conditions(rules, module_definition)
+    Rails.logger.info "[AutoPlacement] target_zone from conditions=#{target_zone.inspect}"
     return target_zone if target_zone && allowed.include?(target_zone)
 
     # Secondary: restriction-based logic from block rules
     restricted_zones = zones_restricted_by_rules(rules, module_definition)
     available = allowed - restricted_zones
-    available.any? ? available.first : allowed.first
+    result = available.any? ? available.first : allowed.first
+    Rails.logger.info "[AutoPlacement] restricted=#{restricted_zones.inspect} result=#{result}"
+    result
   end
 
   def self.applicable_rules(module_definition, customer)
@@ -42,7 +47,9 @@ class AutoPlacementService
   # This is the authoritative zone directive.
   def self.find_target_zone_from_conditions(rules, module_definition)
     rules.find_each do |rule|
-      next unless rule_matches_module?(rule, module_definition)
+      matches = rule_matches_module?(rule, module_definition)
+      Rails.logger.info "[AutoPlacement] Rule '#{rule.name}' (#{rule.severity}) matches=#{matches}"
+      next unless matches
 
       conditions = rule.conditions
       next unless conditions
@@ -50,6 +57,7 @@ class AutoPlacementService
       if conditions["if_conditions"]
         (conditions["then_conditions"] || []).each do |tc|
           if tc["field"] == "resource.subnet_type" && tc["operator"].in?(["MUST_BE", "=="])
+            Rails.logger.info "[AutoPlacement] Found target zone=#{tc['value']} from rule '#{rule.name}'"
             return tc["value"]
           end
         end

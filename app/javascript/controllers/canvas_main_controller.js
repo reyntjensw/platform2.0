@@ -278,18 +278,58 @@ export default class extends Controller {
 
     async deleteResource(e) {
         const resourceId = e.target.closest("[data-resource-id]")?.dataset.resourceId || this.selectedId
-        if (!resourceId || !confirm("Delete this resource?")) return
-        const resp = await fetch(`${this.apiUrlValue}/${resourceId}`, {
-            method: "DELETE", headers: { "X-CSRF-Token": this.csrf }
+        if (!resourceId) return
+        const res = this.resourcesValue.find(r => r.id === resourceId)
+        const name = res?.name || "this resource"
+        this._showDeleteModal(name, async () => {
+            const resp = await fetch(`${this.apiUrlValue}/${resourceId}`, {
+                method: "DELETE", headers: { "X-CSRF-Token": this.csrf }
+            })
+            if (resp.ok) {
+                this.resourcesValue = this.resourcesValue.filter(r => r.id !== resourceId)
+                this.connectionsValue = this.connectionsValue.filter(c =>
+                    c.from_resource_id !== resourceId && c.to_resource_id !== resourceId
+                )
+                if (this.selectedId === resourceId) this.deselectAll()
+                this.render()
+            }
         })
-        if (resp.ok) {
-            this.resourcesValue = this.resourcesValue.filter(r => r.id !== resourceId)
-            this.connectionsValue = this.connectionsValue.filter(c =>
-                c.from_resource_id !== resourceId && c.to_resource_id !== resourceId
-            )
-            if (this.selectedId === resourceId) this.deselectAll()
-            this.render()
-        }
+    }
+
+    _showDeleteModal(resourceName, onConfirm) {
+        // Remove any existing modal
+        document.getElementById("stim-delete-modal")?.remove()
+
+        const overlay = document.createElement("div")
+        overlay.id = "stim-delete-modal"
+        overlay.className = "modal-overlay"
+        overlay.style.display = "flex"
+
+        overlay.innerHTML = `
+          <div class="modal-panel" style="max-width:420px;">
+            <div class="modal-header">
+              <h3 class="modal-title" style="color:var(--red);">Delete Resource</h3>
+              <button class="modal-close" data-dismiss aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size:13px;color:var(--text-secondary);">
+                Are you sure you want to delete <span style="font-weight:600;color:var(--text-primary);">${resourceName}</span>?
+                This will also remove all its connections.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-ghost" data-dismiss>Cancel</button>
+              <button type="button" class="btn btn-danger" data-confirm>Delete</button>
+            </div>
+          </div>
+        `
+
+        const close = () => overlay.remove()
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay || e.target.closest("[data-dismiss]")) close()
+            if (e.target.closest("[data-confirm]")) { close(); onConfirm() }
+        })
+        document.body.appendChild(overlay)
     }
 
     // ── Add Resource ──

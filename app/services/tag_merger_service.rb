@@ -4,12 +4,11 @@ class TagMergerService
   # Walks the tenant hierarchy and merges tags from config.tags at each level.
   # Lower levels override higher levels.
   def self.merge(reseller, customer, project, environment)
-    tags = { "managed_by" => "factorfifty" }
+    tags = GlobalTag.to_tag_hash
 
     tags.merge!(reseller.config&.dig("tags") || {}) if reseller
     tags.merge!(customer.config&.dig("tags") || {}) if customer
 
-    tags["reseller"] = reseller&.slug || reseller&.name&.parameterize
     tags["customer"] = customer&.slug || customer&.name&.parameterize
     tags["project"] = project&.slug || project&.name&.parameterize
     tags["environment"] = environment.name

@@ -8,6 +8,8 @@ import PromoteScreen from "./PromoteScreen"
 import TemplatesScreen from "./TemplatesScreen"
 import ImportScreen from "./ImportScreen"
 import DeployScreen from "./DeployScreen"
+import GlobalTagsScreen from "./GlobalTagsScreen"
+import useCanvasLock from "./useCanvasLock"
 import { csrf } from "./constants"
 
 const GROUP_COLORS = ["#58a6ff", "#3fb950", "#d29922", "#f85149", "#bc8cff", "#39d2c0", "#f778ba", "#79c0ff"]
@@ -69,6 +71,7 @@ function CreateGroupModal({ onCreate, onClose }) {
 export default function CanvasApp({
   initialResources, initialConnections, catalogModules,
   apiUrl, connectionsApiUrl, businessRulesApiUrl, applicationGroupsApiUrl,
+  canvasLockApiUrl,
   environmentId, environment, project, customer, siblingEnvs, currentUser,
   canvasPath, rootPath
 }) {
@@ -78,7 +81,24 @@ export default function CanvasApp({
   const [cmdOpen, setCmdOpen] = useState(false)
   const [propsHtml, setPropsHtml] = useState("")
   const [cloudFilter, setCloudFilter] = useState(null)
-  const [activeScreen, setActiveScreen] = useState("canvas")
+  const VALID_SCREENS = ["canvas", "rules", "promote", "templates", "import", "deploy", "global_tags"]
+  const screenFromHash = () => {
+    const h = window.location.hash.replace("#", "")
+    return VALID_SCREENS.includes(h) ? h : "canvas"
+  }
+  const [activeScreen, setActiveScreenRaw] = useState(screenFromHash)
+  const setActiveScreen = useCallback((id) => {
+    setActiveScreenRaw(id)
+    window.history.replaceState(null, "", id === "canvas" ? window.location.pathname : `#${id}`)
+  }, [])
+
+  // Sync tab when user navigates back/forward
+  useEffect(() => {
+    const onHash = () => setActiveScreenRaw(screenFromHash())
+    window.addEventListener("hashchange", onHash)
+    return () => window.removeEventListener("hashchange", onHash)
+  }, [])
+
   const [toasts, setToasts] = useState([])
 
   // Connect mode
@@ -89,6 +109,13 @@ export default function CanvasApp({
   const [appGroups, setAppGroups] = useState([])
   const [selectedGroupId, setSelectedGroupId] = useState(null)
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false)
+
+  // Delete confirmation
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null)
+
+  // Canvas locking
+  const { lockState, acquire: acquireLock, release: releaseLock, acquiring: acquiringLock } = useCanvasLock(canvasLockApiUrl)
+  const canvasLocked = lockState.locked && !lockState.isMe
 
   useEffect(() => {
     if (!applicationGroupsApiUrl) return
@@ -125,6 +152,8 @@ export default function CanvasApp({
   const deselectAll = useCallback(() => setSelectedId(null), [])
 
   const addResource = useCallback(async (moduleId, posX, posY) => {
+    if (canvasLocked) { addToast("Canvas is locked by " + (lockState.holder?.user_name || lockState.holder?.user_email || "another user"), "error"); return }
+    if (!lockState.isMe) { addToast("Acquire the canvas lock before editing", "error"); return }
     const body = { module_definition_id: moduleId }
     if (posX != null) body.position_x = posX
     if (posY != null) body.position_y = posY
@@ -149,19 +178,27 @@ export default function CanvasApp({
         addToast(data.error, "error")
       }
     }
-  }, [apiUrl, addToast])
+  }, [apiUrl, addToast, canvasLocked, lockState])
 
   const updateResourcePosition = useCallback(async (id, x, y) => {
+    if (canvasLocked || !lockState.isMe) return
     setResources(prev => prev.map(r => r.id === id ? { ...r, position_x: x, position_y: y } : r))
     await fetch(`${apiUrl}/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
       body: JSON.stringify({ position_x: x, position_y: y })
     })
-  }, [apiUrl])
+  }, [apiUrl, canvasLocked, lockState])
 
   const deleteResource = useCallback(async (id) => {
-    if (!confirm("Delete this resource?")) return
+    if (canvasLocked || !lockState.isMe) { addToast("Acquire the canvas lock before editing", "error"); return }
+    setDeleteConfirmId(id)
+  }, [canvasLocked, lockState, addToast])
+
+  const confirmDeleteResource = useCallback(async () => {
+    const id = deleteConfirmId
+    if (!id) return
+    setDeleteConfirmId(null)
     const resp = await fetch(`${apiUrl}/${id}`, {
       method: "DELETE", headers: { "X-CSRF-Token": csrf() }
     })
@@ -170,9 +207,10 @@ export default function CanvasApp({
       setConnections(prev => prev.filter(c => c.from_resource_id !== id && c.to_resource_id !== id))
       if (selectedId === id) setSelectedId(null)
     }
-  }, [apiUrl, selectedId])
+  }, [apiUrl, selectedId, deleteConfirmId])
 
   const createConnection = useCallback(async (fromId, toId) => {
+    if (canvasLocked || !lockState.isMe) return
     if (connections.some(c => c.from_resource_id === fromId && c.to_resource_id === toId)) return
     const resp = await fetch(connectionsApiUrl, {
       method: "POST",
@@ -183,7 +221,7 @@ export default function CanvasApp({
       const conn = await resp.json()
       setConnections(prev => [...prev, conn])
     }
-  }, [connectionsApiUrl, connections])
+  }, [connectionsApiUrl, connections, canvasLocked, lockState])
 
   const startConnect = useCallback((id) => {
     setConnectMode(true)
@@ -270,6 +308,20 @@ export default function CanvasApp({
         <div className="cv-top-right">
           <a href="/modules" className="cv-btn cv-btn-secondary cv-btn-sm" style={{ textDecoration: "none" }}>📦 Modules</a>
           <button className="cv-btn cv-btn-secondary cv-btn-sm">✦ New Environment</button>
+          {/* Canvas lock controls */}
+          {lockState.isMe ? (
+            <button className="cv-btn cv-btn-secondary cv-btn-sm" onClick={releaseLock} style={{ color: "var(--accent-green, #3fb950)" }}>
+              🔓 Editing · Unlock
+            </button>
+          ) : (
+            <button
+              className="cv-btn cv-btn-primary cv-btn-sm"
+              onClick={acquireLock}
+              disabled={acquiringLock}
+            >
+              {acquiringLock ? "Acquiring…" : canvasLocked ? `🔒 Locked by ${lockState.holder?.user_name || lockState.holder?.user_email || "someone"}` : "🔒 Lock to Edit"}
+            </button>
+          )}
           <button className="cv-btn cv-btn-primary cv-btn-sm" onClick={() => setActiveScreen("deploy")}>▶ Deploy</button>
           <div className="cv-avatar">{currentUser || "U"}</div>
         </div>
@@ -284,6 +336,7 @@ export default function CanvasApp({
           { id: "templates", label: "④ Templates" },
           { id: "import", label: "⑤ Import" },
           { id: "deploy", label: "⑥ Deploy & IaC Engine" },
+          { id: "global_tags", label: "🏷️ Global Tags" },
         ].map(s => (
           <button
             key={s.id}
@@ -296,6 +349,17 @@ export default function CanvasApp({
       {/* Screen content */}
       {activeScreen === "canvas" && (
         <>
+          {/* Lock banner when another user holds the lock */}
+          {canvasLocked && (
+            <div className="cv-lock-banner" style={{
+              background: "var(--accent-orange, #d29922)", color: "#000",
+              padding: "8px 16px", fontSize: 13, fontWeight: 500,
+              display: "flex", alignItems: "center", gap: 8
+            }}>
+              🔒 Canvas is being edited by {lockState.holder?.user_name || lockState.holder?.user_email || "another user"}.
+              View-only mode until they release the lock.
+            </div>
+          )}
           {/* App Group Filter Bar — always visible */}
           <div className="group-filter-bar">
             <button
@@ -358,6 +422,7 @@ export default function CanvasApp({
             environment={environment}
             canvasPath={canvasPath}
             appGroups={appGroups}
+            readOnly={canvasLocked || !lockState.isMe}
           />
           <RightPanel
             selectedId={selectedId}
@@ -381,10 +446,18 @@ export default function CanvasApp({
         </>
       )}
       {activeScreen === "rules" && <BusinessRulesScreen rulesApiUrl={businessRulesApiUrl} />}
-      {activeScreen === "promote" && <PromoteScreen />}
+      {activeScreen === "promote" && (
+        <PromoteScreen
+          project={project}
+          environment={environment}
+          siblingEnvs={siblingEnvs}
+          promotionsApiUrl={`/api/projects/${project.id}/promotions`}
+        />
+      )}
       {activeScreen === "templates" && <TemplatesScreen />}
       {activeScreen === "import" && <ImportScreen />}
-      {activeScreen === "deploy" && <DeployScreen />}
+      {activeScreen === "deploy" && <DeployScreen environmentId={environmentId} />}
+      {activeScreen === "global_tags" && <GlobalTagsScreen />}
 
       {/* Command Palette */}
       {cmdOpen && (
@@ -394,8 +467,36 @@ export default function CanvasApp({
           onClose={() => setCmdOpen(false)}
           onSelectResource={(id) => { selectResource(id); setCmdOpen(false) }}
           onAddModule={(id) => { addResource(id); setCmdOpen(false) }}
+          appGroups={appGroups}
+          onSelectGroup={(id) => { setSelectedGroupId(id); setCmdOpen(false) }}
+          onCreateGroup={createAppGroup}
         />
       )}
+
+      {/* Delete Resource Confirmation Modal */}
+      {deleteConfirmId && (() => {
+        const res = resources.find(r => r.id === deleteConfirmId)
+        return (
+          <div className="modal-overlay" style={{ display: "flex" }} onClick={(e) => { if (e.target === e.currentTarget) setDeleteConfirmId(null) }}>
+            <div className="modal-panel" style={{ maxWidth: 420 }}>
+              <div className="modal-header">
+                <h3 className="modal-title" style={{ color: "var(--red)" }}>Delete Resource</h3>
+                <button className="modal-close" onClick={() => setDeleteConfirmId(null)} aria-label="Close">&times;</button>
+              </div>
+              <div className="modal-body">
+                <p style={{ fontSize: 13, color: "var(--text-secondary)" }}>
+                  Are you sure you want to delete <span style={{ fontWeight: 600, color: "var(--text-primary)" }}>{res?.name || "this resource"}</span>?
+                  This will also remove all its connections.
+                </p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-ghost" onClick={() => setDeleteConfirmId(null)}>Cancel</button>
+                <button type="button" className="btn btn-danger" onClick={confirmDeleteResource}>Delete</button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Toast notifications */}
       {toasts.length > 0 && (

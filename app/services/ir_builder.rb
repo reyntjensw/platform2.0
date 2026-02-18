@@ -20,6 +20,24 @@ class IRBuilder
     }
   end
 
+  # Builds IR for a specific deployment layer.
+  #
+  # @param deployment [Deployment]
+  # @param layer [DeploymentLayer] with resource_ids, required_providers, remote_state_refs, state_key
+  # @return [Hash] layer-specific IR payload
+  def build_for_layer(deployment, layer)
+    {
+      environment: environment_block.merge(iac_engine: @env.iac_engine),
+      credentials: credentials_block,
+      backend: layer_backend_block(layer),
+      tags: TagMergerService.merge(@reseller, @customer, @project, @env),
+      modules: layer_modules_block(layer),
+      layer_context: layer_context_block(layer),
+      git_credentials: git_credentials_block,
+      callback_url: callback_url(deployment)
+    }
+  end
+
   private
 
   def environment_block
@@ -33,21 +51,82 @@ class IRBuilder
   end
 
   def credentials_block
-    {
+    creds = {
       aws_account_id: @env.aws_account_id,
-      aws_role_arn: @env.aws_role_arn,
-      azure_subscription_id: @env.azure_subscription_id
+      azure_subscription_id: @env.azure_subscription_id,
+      gcp_project_id: @env.gcp_project_id
     }.compact
+
+    # For AWS: fetch role_arn and external_id from the platform's
+    # environment_info record (via backend API, with DynamoDB GSI fallback).
+    if @env.aws? && @env.aws_account_id.present?
+      platform_creds = EnvironmentCredentialsService.fetch_aws(
+        customer_uuid: @customer.slug,
+        project_uuid: @project.slug,
+        aws_account_id: @env.aws_account_id
+      )
+      creds[:aws_role_arn] = platform_creds[:role_arn]
+      creds[:external_id] = platform_creds[:external_id]
+    end
+
+    creds
   end
 
   def backend_block(deployment)
     bucket = ENV.fetch("S3_TFSTATE_BUCKET", "f50-tfstate")
+    account_id = @env.aws_account_id || @env.azure_subscription_id || @env.gcp_project_id
     {
       type: "s3",
       bucket: bucket,
-      key: "#{@env.cloud_provider}/#{@env.aws_account_id || @env.azure_subscription_id}/#{@env.env_type}.tfstate",
+      key: "#{@env.cloud_provider}/#{account_id}/#{@env.env_type}.tfstate",
       region: @env.region,
       dynamodb_table: ENV.fetch("DYNAMODB_TFLOCK_TABLE", "f50-tflock")
+    }
+  end
+
+  def layer_backend_block(layer)
+    bucket = ENV.fetch("S3_TFSTATE_BUCKET", "f50-tfstate")
+    deployment = layer.deployment
+    version = deployment.version.to_s.rjust(6, "0")
+    {
+      type: "s3",
+      bucket: bucket,
+      key: layer.state_key,
+      region: @env.region,
+      dynamodb_table: ENV.fetch("DYNAMODB_TFLOCK_TABLE", "f50-tflock"),
+      version: version
+    }
+  end
+
+  def layer_modules_block(layer)
+    resource_ids = layer.resource_ids || []
+    resources = @env.resources
+                    .where(id: resource_ids)
+                    .includes(module_definition: [module_renderers: :field_mappings])
+
+    resources.map do |resource|
+      renderer = resource.module_definition.module_renderers.find_by(engine: @env.iac_engine)
+      next unless renderer
+
+      variables = build_variables(resource, renderer)
+
+      {
+        resource_id: resource.id,
+        resource_name: resource.name,
+        module_key: resource.module_definition.name,
+        source: renderer.source_url,
+        source_ref: renderer.source_ref,
+        variables: variables
+      }
+    end.compact
+  end
+
+  def layer_context_block(layer)
+    {
+      layer_index: layer.index,
+      required_providers: layer.required_providers || [],
+      remote_state_refs: layer.remote_state_refs || [],
+      state_key: layer.state_key
     }
   end
 

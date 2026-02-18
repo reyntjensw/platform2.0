@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   # React mounting test page
   get "react_test" => "pages#react_test"
 
+  # Pipeline Runner Admin
+  resources :runners, only: [:index]
+
   # Module Registry
   resources :modules, only: [:index, :show, :edit, :update, :destroy], controller: "module_definitions" do
     member do
@@ -60,6 +63,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # Global Tags Management
+  resources :global_tags, path: "settings/global_tags", only: [:index, :create, :update, :destroy] do
+    member do
+      patch :toggle
+    end
+  end
+
   # Canvas API
   namespace :api do
     resources :environments, param: :id, only: [] do
@@ -71,11 +81,56 @@ Rails.application.routes.draw do
       resources :connections, only: [:create, :destroy]
       resources :business_rules, only: [:index, :update, :create, :destroy]
       resources :application_groups, only: [:index, :create, :update, :destroy]
+
+      # Deployments (approval gate)
+      resources :deployments, only: [:show, :create] do
+        collection do
+          get :pre_checks
+          get :runner_status
+        end
+        member do
+          patch :approve
+          patch :reject
+          get :logs
+          get :plan
+          get :infracost
+        end
+      end
+
+      # Canvas locking
+      post   "canvas_lock/acquire", to: "canvas_locks#acquire"
+      post   "canvas_lock/renew",   to: "canvas_locks#renew"
+      get    "canvas_lock/status",  to: "canvas_locks#status"
+      delete "canvas_lock/release", to: "canvas_locks#release"
+    end
+
+    # Promotions API (project-scoped)
+    resources :projects, param: :id, only: [] do
+      get  "promotions/pipeline", to: "promotions#pipeline"
+      get  "promotions/diff",     to: "promotions#diff"
+      post "promotions/preview",  to: "promotions#preview"
+      post "promotions",          to: "promotions#create", as: :promotions
+      get  "promotions/history",  to: "promotions#history"
+      resources :promotions, only: [] do
+        member do
+          patch :approve
+          patch :reject
+        end
+      end
     end
 
     # Pipeline callback (service token auth, not Keycloak)
     namespace :callbacks do
-      resources :deployments, only: [:update]
+      resources :deployments, only: [:update] do
+        resources :layers, only: [:update], controller: "layer_callbacks"
+      end
+    end
+
+    # Global Tags API
+    resources :global_tags, only: [:index, :create, :update, :destroy] do
+      member do
+        patch :toggle
+      end
     end
   end
 
@@ -94,6 +149,12 @@ Rails.application.routes.draw do
       resources :environments, param: :uuid, only: [:create] do
         collection do
           post :validate
+        end
+      end
+      resources :canvas_environments, only: [:create, :destroy] do
+        member do
+          patch :link
+          patch :unlink
         end
       end
       resources :azure_credentials, param: :id, only: %i[index create update destroy] do

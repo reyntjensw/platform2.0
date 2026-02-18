@@ -13,3 +13,18 @@ production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
+
+  expire_stale_promotions:
+    class: PromotionExpirationJob
+    queue: default
+    schedule: every hour at minute 30
+
+  detect_stale_heartbeats:
+    class: StaleHeartbeatDetectionJob
+    queue: default
+    schedule: every 2 minutes
+
+  cleanup_stale_runners:
+    class: RunnerCleanupJob
+    queue: default
+    schedule: every 5 minutes

@@ -19,6 +19,13 @@ gem "stimulus-rails"
 gem "faraday"
 gem "faraday-retry"
 
+# AWS SDK for SQS job dispatch [https://github.com/aws/aws-sdk-ruby]
+gem "aws-sdk-sqs"
+# AWS SDK for DynamoDB heartbeat detection [https://github.com/aws/aws-sdk-ruby]
+gem "aws-sdk-dynamodb"
+# AWS SDK for S3 runner manifest [https://github.com/aws/aws-sdk-ruby]
+gem "aws-sdk-s3"
+
 # Keycloak OIDC authentication [https://github.com/omniauth/omniauth]
 gem "omniauth"
 gem "omniauth-keycloak", "~> 1.5"

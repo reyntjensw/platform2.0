@@ -7,11 +7,16 @@ class ModuleDefinition < ApplicationRecord
   OWNERSHIPS = %w[platform reseller customer].freeze
   VISIBILITIES = %w[global reseller customer].freeze
   VALID_ZONES = %w[public private global].freeze
+  VALID_PROVIDERS = %w[aws azure gcp kubernetes helm kubectl tls].freeze
 
   belongs_to :owner, polymorphic: true, optional: true
   has_many :module_fields, dependent: :destroy
   has_many :module_outputs, dependent: :destroy
   has_many :module_renderers, dependent: :destroy
+
+  accepts_nested_attributes_for :module_fields, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :module_outputs, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :module_renderers, allow_destroy: true, reject_if: :all_blank
 
   validates :name, presence: true, uniqueness: { scope: :cloud_provider }
   validates :display_name, presence: true
@@ -21,6 +26,7 @@ class ModuleDefinition < ApplicationRecord
   validates :ownership, presence: true, inclusion: { in: OWNERSHIPS }
   validates :visibility, presence: true, inclusion: { in: VISIBILITIES }
   validate :allowed_zones_valid
+  validate :provider_dependencies_valid
 
   scope :live, -> { where(status: "live") }
   scope :by_category, ->(cat) { where(category: cat) if cat.present? }
@@ -53,6 +59,18 @@ class ModuleDefinition < ApplicationRecord
     invalid = allowed_zones - VALID_ZONES
     if invalid.any?
       errors.add(:allowed_zones, "contains invalid zones: #{invalid.join(', ')}")
+    end
+  end
+
+  def provider_dependencies_valid
+    return if provider_dependencies.blank?
+    unless provider_dependencies.is_a?(Array)
+      errors.add(:provider_dependencies, "must be an array")
+      return
+    end
+    invalid = provider_dependencies - VALID_PROVIDERS
+    if invalid.any?
+      errors.add(:provider_dependencies, "contains invalid providers: #{invalid.join(', ')}")
     end
   end
 end

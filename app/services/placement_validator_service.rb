@@ -86,15 +86,17 @@ class PlacementValidatorService
   def self.evaluate_single(actual, operator, expected)
     case operator
     when "IN"
-      Array(expected).include?(actual.to_s)
+      Array(expected).any? { |e| e.to_s.casecmp(actual.to_s).zero? }
     when "NOT_IN"
-      !Array(expected).include?(actual.to_s)
+      Array(expected).none? { |e| e.to_s.casecmp(actual.to_s).zero? }
     when "==", "MUST_BE"
-      coerce(actual) == coerce(expected)
+      a, e = coerce(actual), coerce(expected)
+      a.is_a?(String) && e.is_a?(String) ? a.casecmp(e).zero? : a == e
     when "!="
-      coerce(actual) != coerce(expected)
+      a, e = coerce(actual), coerce(expected)
+      a.is_a?(String) && e.is_a?(String) ? !a.casecmp(e).zero? : a != e
     when "CONTAINS"
-      actual.to_s.include?(expected.to_s)
+      actual.to_s.downcase.include?(expected.to_s.downcase)
     else
       false
     end

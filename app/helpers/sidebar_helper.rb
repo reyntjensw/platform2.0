@@ -29,6 +29,12 @@ module SidebarHelper
       active: controller_name == "git_credentials"
     }
 
+    items << {
+      icon: "🏷️", label: "Global Tags", short_label: "Tags",
+      path: global_tags_path,
+      active: controller_name == "global_tags"
+    }
+
     items
   end
 

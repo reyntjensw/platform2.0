@@ -1921,7 +1921,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React11 = require_react(), Internals = {
+      var React12 = require_react(), Internals = {
         d: {
           f: noop,
           r: function() {
@@ -1939,7 +1939,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -3474,7 +3474,7 @@ var require_react_dom_client_development = __commonJS({
         "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
       }
       function validateOptionProps(element, props) {
-        null == props.value && ("object" === typeof props.children && null !== props.children ? React11.Children.forEach(props.children, function(child) {
+        null == props.value && ("object" === typeof props.children && null !== props.children ? React12.Children.forEach(props.children, function(child) {
           null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
             "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
           ));
@@ -19106,14 +19106,14 @@ var require_react_dom_client_development = __commonJS({
         ));
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var Scheduler = require_scheduler(), React11 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+      var Scheduler = require_scheduler(), React12 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
       /* @__PURE__ */ Symbol.for("react.scope");
       var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
       /* @__PURE__ */ Symbol.for("react.legacy_hidden");
       /* @__PURE__ */ Symbol.for("react.tracing_marker");
       var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
       /* @__PURE__ */ Symbol.for("react.view_transition");
-      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
         pending: false,
         data: null,
         method: null,
@@ -21901,7 +21901,7 @@ var require_react_dom_client_development = __commonJS({
         }
       };
       (function() {
-        var isomorphicReactPackageVersion = React11.version;
+        var isomorphicReactPackageVersion = React12.version;
         if ("19.2.4" !== isomorphicReactPackageVersion)
           throw Error(
             'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.4\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -22255,18 +22255,18 @@ var require_react_jsx_runtime_development = __commonJS({
       function isValidElement(object) {
         return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
       }
-      var React11 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React11.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+      var React12 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React12.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
         return null;
       };
-      React11 = {
+      React12 = {
         react_stack_bottom_frame: function(callStackForError) {
           return callStackForError();
         }
       };
       var specialPropKeyWarningShown;
       var didWarnAboutElementRef = {};
-      var unknownOwnerDebugStack = React11.react_stack_bottom_frame.bind(
-        React11,
+      var unknownOwnerDebugStack = React12.react_stack_bottom_frame.bind(
+        React12,
         UnknownOwner
       )();
       var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -30328,7 +30328,7 @@ var hello_controller_default = class extends Controller {
 };
 
 // app/javascript/controllers/react_controller.ts
-var import_react11 = __toESM(require_react());
+var import_react13 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // app/javascript/components/HelloWorld.tsx
@@ -30345,7 +30345,7 @@ function HelloWorld({ name = "World" }) {
 }
 
 // app/javascript/components/canvas/CanvasApp.jsx
-var import_react10 = __toESM(require_react());
+var import_react12 = __toESM(require_react());
 
 // app/javascript/components/canvas/CatalogPanel.jsx
 var import_react = __toESM(require_react());
@@ -30465,7 +30465,8 @@ function CanvasArea({
   siblingEnvs,
   environment,
   canvasPath,
-  appGroups
+  appGroups,
+  readOnly
 }) {
   const [zoom, setZoomState] = (0, import_react2.useState)(1);
   const [pan, setPan] = (0, import_react2.useState)({ x: 0, y: 0 });
@@ -30525,7 +30526,7 @@ function CanvasArea({
     setZoom(zoom + delta);
   }, [zoom, setZoom]);
   const onBlockMouseDown = (0, import_react2.useCallback)((e, resource) => {
-    if (e.button !== 0 || connectMode) return;
+    if (e.button !== 0 || connectMode || readOnly) return;
     e.preventDefault();
     e.stopPropagation();
     const el = e.currentTarget;
@@ -30579,7 +30580,7 @@ function CanvasArea({
     };
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseup", onUp);
-  }, [connectMode, zoom, connections, updateResourcePosition]);
+  }, [connectMode, zoom, connections, updateResourcePosition, readOnly]);
   const onBlockClick = (0, import_react2.useCallback)((e, resource) => {
     e.stopPropagation();
     if (connectMode) {
@@ -30594,6 +30595,7 @@ function CanvasArea({
   };
   const onDrop = (e) => {
     e.preventDefault();
+    if (readOnly) return;
     const moduleId = e.dataTransfer.getData("text/plain");
     if (!moduleId || !viewportRef.current) return;
     const vpRect = viewportRef.current.getBoundingClientRect();
@@ -30775,13 +30777,14 @@ function CanvasArea({
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { className: "zc-btn", onClick: () => setZoom(zoom + 0.1), children: "+" }),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { className: "zc-btn", title: "Fit all", onClick: fitAll, children: "\u2922" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Minimap, { resources, zoom, pan, transformRef })
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Minimap, { resources, zoom, pan, setPan, transformRef })
       ]
     }
   );
 }
-function Minimap({ resources, zoom, pan, transformRef }) {
+function Minimap({ resources, zoom, pan, setPan, transformRef }) {
   const mmW = 168, mmH = 96;
+  const mmCanvasRef = (0, import_react2.useRef)(null);
   const zoneFlags = (0, import_react2.useMemo)(() => {
     const flags = { public: false, private: false, global: false };
     resources.forEach((r) => {
@@ -30789,9 +30792,43 @@ function Minimap({ resources, zoom, pan, transformRef }) {
     });
     return flags;
   }, [resources]);
-  const hasPublic = zoneFlags.public;
-  const hasPrivate = zoneFlags.private;
-  const hasGlobal = zoneFlags.global;
+  const { maxX, maxY, scaleX, scaleY } = (0, import_react2.useMemo)(() => {
+    let mx = 800, my = 500;
+    resources.forEach((r) => {
+      mx = Math.max(mx, (r.position_x || 0) + 150);
+      my = Math.max(my, (r.position_y || 0) + 50);
+    });
+    return { maxX: mx, maxY: my, scaleX: mmW / mx, scaleY: mmH / my };
+  }, [resources]);
+  const mmToPan = (0, import_react2.useCallback)((mmX, mmY) => {
+    const tRect2 = transformRef.current?.getBoundingClientRect();
+    const canvasX = mmX / scaleX;
+    const canvasY = mmY / scaleY;
+    const viewW = tRect2 ? tRect2.width / zoom : 800;
+    const viewH = tRect2 ? tRect2.height / zoom : 500;
+    return {
+      x: -(canvasX - viewW / 2) * zoom,
+      y: -(canvasY - viewH / 2) * zoom
+    };
+  }, [scaleX, scaleY, zoom, transformRef]);
+  const onMinimapMouseDown = (0, import_react2.useCallback)((e) => {
+    const rect = mmCanvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    e.preventDefault();
+    const update = (ev) => {
+      const mx = Math.max(0, Math.min(mmW, ev.clientX - rect.left));
+      const my = Math.max(0, Math.min(mmH, ev.clientY - rect.top));
+      setPan(mmToPan(mx, my));
+    };
+    update(e);
+    const onMove = (ev) => update(ev);
+    const onUp = () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onUp);
+    };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  }, [mmToPan, setPan]);
   if (resources.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "minimap", children: [
     /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mm-label", children: "Minimap" }),
     /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "mm-canvas", children: [
@@ -30800,12 +30837,9 @@ function Minimap({ resources, zoom, pan, transformRef }) {
       /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mm-zone global" })
     ] })
   ] });
-  let maxX = 800, maxY = 500;
-  resources.forEach((r) => {
-    maxX = Math.max(maxX, (r.position_x || 0) + 150);
-    maxY = Math.max(maxY, (r.position_y || 0) + 50);
-  });
-  const scaleX = mmW / maxX, scaleY = mmH / maxY;
+  const hasPublic = zoneFlags.public;
+  const hasPrivate = zoneFlags.private;
+  const hasGlobal = zoneFlags.global;
   const tRect = transformRef.current?.getBoundingClientRect();
   const vpW = tRect ? tRect.width / zoom * scaleX : mmW;
   const vpH = tRect ? tRect.height / zoom * scaleY : mmH;
@@ -30817,7 +30851,7 @@ function Minimap({ resources, zoom, pan, transformRef }) {
       resources.length,
       " resources"
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "mm-canvas", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "mm-canvas", ref: mmCanvasRef, onMouseDown: onMinimapMouseDown, style: { cursor: "pointer" }, children: [
       hasPublic && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mm-zone pub" }),
       hasPrivate && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mm-zone prv" }),
       hasGlobal && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "mm-zone global" }),
@@ -30833,7 +30867,8 @@ function Minimap({ resources, zoom, pan, transformRef }) {
         left: Math.max(0, vpX),
         top: Math.max(0, vpY),
         width: Math.min(mmW, vpW),
-        height: Math.min(mmH, vpH)
+        height: Math.min(mmH, vpH),
+        pointerEvents: "none"
       } })
     ] })
   ] });
@@ -30861,6 +30896,7 @@ function RightPanel({
   const [activeTab, setActiveTab] = (0, import_react3.useState)("overview");
   const [newGroupName, setNewGroupName] = (0, import_react3.useState)("");
   const [newGroupColor, setNewGroupColor] = (0, import_react3.useState)("#58a6ff");
+  const [saveFlash, setSaveFlash] = (0, import_react3.useState)(null);
   (0, import_react3.useEffect)(() => {
     if (selectedGroupId) setActiveTab("group");
     else setActiveTab("overview");
@@ -30894,7 +30930,14 @@ function RightPanel({
         headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
         body: JSON.stringify({ config: config2 })
       });
-      if (resp.ok && onPropsSaved) onPropsSaved(resourceId);
+      if (resp.ok) {
+        if (onPropsSaved) onPropsSaved(resourceId);
+        setSaveFlash("saved");
+        setTimeout(() => setSaveFlash(null), 2e3);
+      } else {
+        setSaveFlash("error");
+        setTimeout(() => setSaveFlash(null), 3e3);
+      }
     };
     const handleClick = (e) => {
       const btn = e.target.closest("[data-action]");
@@ -31010,6 +31053,16 @@ function RightPanel({
         })()
       ] }),
       activeTab === "props" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { children: !selectedId ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { textAlign: "center", color: "var(--text-muted)", padding: "40px 10px", fontSize: 11 }, children: "Select a resource to view properties" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+        saveFlash && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: {
+          padding: "6px 10px",
+          marginBottom: 8,
+          borderRadius: 6,
+          fontSize: 11,
+          fontWeight: 600,
+          background: saveFlash === "saved" ? "rgba(16,185,129,0.12)" : "rgba(239,68,68,0.12)",
+          color: saveFlash === "saved" ? "var(--accent-green)" : "var(--accent-red)",
+          border: `1px solid ${saveFlash === "saved" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`
+        }, children: saveFlash === "saved" ? "\u2713 Saved" : "\u2717 Save failed" }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { ref: propsRef, dangerouslySetInnerHTML: { __html: propsHtml } }),
         appGroups && assignResourceToGroup && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border, #30363d)" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "rp-field-label", style: { fontSize: 10, display: "block", marginBottom: 4 }, children: "Application Group" }),
@@ -31081,9 +31134,21 @@ function RightPanel({
 // app/javascript/components/canvas/CommandPalette.jsx
 var import_react4 = __toESM(require_react());
 var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-function CommandPalette({ resources, catalogModules, onClose, onSelectResource, onAddModule }) {
+var GROUP_COLORS = ["#58a6ff", "#3fb950", "#d29922", "#f85149", "#bc8cff", "#39d2c0", "#f778ba", "#79c0ff"];
+function CommandPalette({
+  resources,
+  catalogModules,
+  onClose,
+  onSelectResource,
+  onAddModule,
+  appGroups,
+  onSelectGroup,
+  onCreateGroup
+}) {
   const [query, setQuery] = (0, import_react4.useState)("");
   const [highlightIndex, setHighlightIndex] = (0, import_react4.useState)(-1);
+  const [creatingGroup, setCreatingGroup] = (0, import_react4.useState)(false);
+  const [newGroupColor, setNewGroupColor] = (0, import_react4.useState)(GROUP_COLORS[0]);
   const inputRef = (0, import_react4.useRef)(null);
   const resultsRef = (0, import_react4.useRef)(null);
   (0, import_react4.useEffect)(() => {
@@ -31092,10 +31157,24 @@ function CommandPalette({ resources, catalogModules, onClose, onSelectResource, 
   const q = query.toLowerCase().trim();
   const matchedResources = q ? resources.filter((r) => r.name.toLowerCase().includes(q) || r.module_definition.display_name.toLowerCase().includes(q)).slice(0, 8) : resources.slice(0, 8);
   const matchedModules = q ? catalogModules.filter((m) => (m.display_name || m.name || "").toLowerCase().includes(q)).slice(0, 5) : catalogModules.slice(0, 5);
+  const matchedGroups = appGroups ? (q ? appGroups.filter((g) => g.name.toLowerCase().includes(q)) : appGroups).slice(0, 5) : [];
+  const showCreateGroup = onCreateGroup && q.length > 0 && !appGroups?.some((g) => g.name.toLowerCase() === q);
   const allItems = [
     ...matchedResources.map((r) => ({ type: "resource", id: r.id, resource: r })),
+    ...matchedGroups.map((g) => ({ type: "group", id: g.id, group: g })),
+    ...showCreateGroup ? [{ type: "create-group", id: "__create_group__" }] : [],
     ...matchedModules.map((m) => ({ type: "module", id: m.id, module: m }))
   ];
+  const handleCreateGroup = (0, import_react4.useCallback)(async () => {
+    if (!q) return;
+    setCreatingGroup(true);
+    const group = await onCreateGroup(q, newGroupColor);
+    setCreatingGroup(false);
+    if (group && onSelectGroup) {
+      onSelectGroup(group.id);
+      onClose();
+    }
+  }, [q, newGroupColor, onCreateGroup, onSelectGroup, onClose]);
   const onKeyDown = (0, import_react4.useCallback)((e) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -31108,8 +31187,12 @@ function CommandPalette({ resources, catalogModules, onClose, onSelectResource, 
       const item = allItems[highlightIndex];
       if (item?.type === "resource") onSelectResource(item.id);
       else if (item?.type === "module") onAddModule(item.id);
+      else if (item?.type === "group" && onSelectGroup) {
+        onSelectGroup(item.id);
+        onClose();
+      } else if (item?.type === "create-group") handleCreateGroup();
     } else if (e.key === "Escape") onClose();
-  }, [allItems, highlightIndex, onSelectResource, onAddModule, onClose]);
+  }, [allItems, highlightIndex, onSelectResource, onAddModule, onSelectGroup, onClose, handleCreateGroup]);
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-overlay open", onClick: (e) => {
     if (e.target === e.currentTarget) onClose();
   }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-panel", onClick: (e) => e.stopPropagation(), children: [
@@ -31118,7 +31201,7 @@ function CommandPalette({ resources, catalogModules, onClose, onSelectResource, 
       {
         ref: inputRef,
         className: "cmd-input",
-        placeholder: "Search resources, modules, actions...",
+        placeholder: "Search resources, modules, groups...",
         value: query,
         onChange: (e) => {
           setQuery(e.target.value);
@@ -31152,10 +31235,77 @@ function CommandPalette({ resources, catalogModules, onClose, onSelectResource, 
           );
         })
       ] }),
+      (matchedGroups.length > 0 || showCreateGroup) && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-section", children: [
+          "App Groups",
+          appGroups?.length ? ` (${appGroups.length})` : ""
+        ] }),
+        matchedGroups.map((g, i) => {
+          const idx = matchedResources.length + i;
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+            "div",
+            {
+              className: `cmd-item${idx === highlightIndex ? " highlighted" : ""}`,
+              onClick: () => {
+                if (onSelectGroup) {
+                  onSelectGroup(g.id);
+                  onClose();
+                }
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-icon", style: { background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { width: 10, height: 10, borderRadius: 2, background: g.color } }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-name", children: g.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-item-hint", children: [
+                  resources.filter((r) => r.application_group_id === g.id).length,
+                  " resources"
+                ] })
+              ]
+            },
+            g.id
+          );
+        }),
+        showCreateGroup && (() => {
+          const idx = matchedResources.length + matchedGroups.length;
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+            "div",
+            {
+              className: `cmd-item${idx === highlightIndex ? " highlighted" : ""}`,
+              onClick: handleCreateGroup,
+              style: { opacity: creatingGroup ? 0.5 : 1 },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-icon", style: { fontSize: 10 }, children: "+" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-name", style: { flex: 1 }, children: creatingGroup ? "Creating\u2026" : `Create group "${query.trim()}"` }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { display: "flex", gap: 3, alignItems: "center" }, children: GROUP_COLORS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      setNewGroupColor(c);
+                    },
+                    style: {
+                      width: 14,
+                      height: 14,
+                      borderRadius: 3,
+                      background: c,
+                      border: newGroupColor === c ? "2px solid #fff" : "2px solid transparent",
+                      cursor: "pointer",
+                      padding: 0,
+                      flexShrink: 0
+                    },
+                    "aria-label": `Color ${c}`
+                  },
+                  c
+                )) })
+              ]
+            }
+          );
+        })()
+      ] }),
       matchedModules.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-section", children: q ? "Add Module" : "Quick Add" }),
         matchedModules.map((m, i) => {
-          const idx = matchedResources.length + i;
+          const idx = matchedResources.length + matchedGroups.length + (showCreateGroup ? 1 : 0) + i;
           return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
             "div",
             {
@@ -31729,75 +31879,420 @@ function BusinessRulesScreen({ rulesApiUrl }) {
 // app/javascript/components/canvas/PromoteScreen.jsx
 var import_react6 = __toESM(require_react());
 var import_jsx_runtime7 = __toESM(require_jsx_runtime());
-var STAGES = [
-  { name: "Development", dot: "var(--accent-green)", ver: "v2.14.0", deployed: "2h ago", resources: 12, chips: ["EKS 1.29", "RDS", "Redis", "S3 \xD73"], newChip: "+2 new" },
-  { name: "Acceptance", dot: "var(--accent-orange)", ver: "v2.13.1", deployed: "3 days ago", resources: 10, chips: ["EKS 1.28", "RDS", "Redis", "S3 \xD72"], active: true },
-  { name: "Production", dot: "var(--accent-red)", ver: "v2.13.0", deployed: "1 week ago", resources: 10, chips: ["EKS 1.28", "RDS", "Redis", "S3 \xD72"] }
-];
-var DIFFS = [
-  { type: "add", name: "opensearch-01", desc: "OpenSearch 2.x cluster (r6g.large \xD7 3)" },
-  { type: "add", name: "shared-storage", desc: "EFS file system with lifecycle policy" },
-  { type: "mod", name: "platform-eks", desc: "Cluster 1.28\u21921.29, max nodes 8\u219212" }
-];
-function PromoteScreen() {
+var ENV_DOTS = { dev: "var(--accent-green)", acc: "var(--accent-orange)", prd: "var(--accent-red)" };
+function timeAgo(dateStr) {
+  if (!dateStr) return "never";
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 6e4);
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return `${days}d ago`;
+}
+function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) {
+  const [environments, setEnvironments] = (0, import_react6.useState)([]);
+  const [changeCounts, setChangeCounts] = (0, import_react6.useState)({});
+  const [loading, setLoading] = (0, import_react6.useState)(true);
+  const [error2, setError] = (0, import_react6.useState)(null);
+  const [diffView, setDiffView] = (0, import_react6.useState)(null);
+  const [diffReport, setDiffReport] = (0, import_react6.useState)(null);
+  const [diffLoading, setDiffLoading] = (0, import_react6.useState)(false);
+  const [appGroupFilter, setAppGroupFilter] = (0, import_react6.useState)(null);
+  const [excludedIds, setExcludedIds] = (0, import_react6.useState)(/* @__PURE__ */ new Set());
+  const [planOutput, setPlanOutput] = (0, import_react6.useState)(null);
+  const [planLoading, setPlanLoading] = (0, import_react6.useState)(false);
+  const [promoting, setPromoting] = (0, import_react6.useState)(false);
+  const [promotionResult, setPromotionResult] = (0, import_react6.useState)(null);
+  const fetchPipeline = (0, import_react6.useCallback)(async () => {
+    if (!promotionsApiUrl) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const resp = await fetch(`${promotionsApiUrl}/pipeline`);
+      if (!resp.ok) throw new Error("Failed to load pipeline");
+      const data = await resp.json();
+      setEnvironments(data.environments || []);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [promotionsApiUrl]);
+  (0, import_react6.useEffect)(() => {
+    fetchPipeline();
+  }, [fetchPipeline]);
+  (0, import_react6.useEffect)(() => {
+    if (environments.length < 2 || !promotionsApiUrl) return;
+    const pairs = [];
+    for (let i = 0; i < environments.length - 1; i++) {
+      pairs.push([environments[i], environments[i + 1]]);
+    }
+    pairs.forEach(async ([src, tgt]) => {
+      try {
+        const resp = await fetch(
+          `${promotionsApiUrl}/diff?source_env_id=${src.id}&target_env_id=${tgt.id}`
+        );
+        if (resp.ok) {
+          const data = await resp.json();
+          const total = (data.summary?.added || 0) + (data.summary?.modified || 0) + (data.summary?.removed || 0);
+          setChangeCounts((prev) => ({ ...prev, [`${src.id}-${tgt.id}`]: total }));
+        }
+      } catch (_) {
+      }
+    });
+  }, [environments, promotionsApiUrl]);
+  const openDiff = (0, import_react6.useCallback)(async (sourceEnv, targetEnv) => {
+    setDiffView({ sourceEnv, targetEnv });
+    setDiffReport(null);
+    setDiffLoading(true);
+    setPlanOutput(null);
+    setPromotionResult(null);
+    setExcludedIds(/* @__PURE__ */ new Set());
+    setAppGroupFilter(null);
+    try {
+      const url = `${promotionsApiUrl}/diff?source_env_id=${sourceEnv.id}&target_env_id=${targetEnv.id}`;
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error("Failed to load diff");
+      setDiffReport(await resp.json());
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setDiffLoading(false);
+    }
+  }, [promotionsApiUrl]);
+  (0, import_react6.useEffect)(() => {
+    if (!diffView) return;
+    const { sourceEnv, targetEnv } = diffView;
+    setDiffLoading(true);
+    setDiffReport(null);
+    const params = new URLSearchParams({
+      source_env_id: sourceEnv.id,
+      target_env_id: targetEnv.id
+    });
+    if (appGroupFilter) params.set("app_group_id", appGroupFilter);
+    fetch(`${promotionsApiUrl}/diff?${params}`).then((r) => r.ok ? r.json() : Promise.reject("Failed")).then((data) => {
+      setDiffReport(data);
+      setDiffLoading(false);
+    }).catch(() => setDiffLoading(false));
+  }, [appGroupFilter]);
+  const toggleExclude = (0, import_react6.useCallback)((resourceId) => {
+    setExcludedIds((prev) => {
+      const next = new Set(prev);
+      next.has(resourceId) ? next.delete(resourceId) : next.add(resourceId);
+      return next;
+    });
+  }, []);
+  const handlePreview = (0, import_react6.useCallback)(async () => {
+    if (!diffView) return;
+    setPlanLoading(true);
+    setPlanOutput(null);
+    try {
+      const resp = await fetch(`${promotionsApiUrl}/preview`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({
+          source_env_id: diffView.sourceEnv.id,
+          target_env_id: diffView.targetEnv.id,
+          app_group_id: appGroupFilter || void 0,
+          excluded_resource_ids: [...excludedIds]
+        })
+      });
+      if (!resp.ok) throw new Error("Preview failed");
+      const data = await resp.json();
+      setPlanOutput(typeof data.plan_output === "string" ? data.plan_output : JSON.stringify(data.plan_output, null, 2));
+    } catch (e) {
+      setPlanOutput(`Error: ${e.message}`);
+    } finally {
+      setPlanLoading(false);
+    }
+  }, [diffView, promotionsApiUrl, appGroupFilter, excludedIds]);
+  const handlePromote = (0, import_react6.useCallback)(async () => {
+    if (!diffView) return;
+    setPromoting(true);
+    setPromotionResult(null);
+    try {
+      const resp = await fetch(promotionsApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({
+          source_env_id: diffView.sourceEnv.id,
+          target_env_id: diffView.targetEnv.id,
+          app_group_id: appGroupFilter || void 0,
+          excluded_resource_ids: [...excludedIds]
+        })
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || `Promotion failed (${resp.status})`);
+      }
+      const data = await resp.json();
+      setPromotionResult(data);
+      setDiffView(null);
+      fetchPipeline();
+    } catch (e) {
+      setPromotionResult({ error: e.message });
+    } finally {
+      setPromoting(false);
+    }
+  }, [diffView, promotionsApiUrl, appGroupFilter, excludedIds, fetchPipeline]);
+  const handleApprovePromote = (0, import_react6.useCallback)(async () => {
+    if (!diffView) return;
+    setPromoting(true);
+    setPromotionResult(null);
+    try {
+      const createResp = await fetch(promotionsApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({
+          source_env_id: diffView.sourceEnv.id,
+          target_env_id: diffView.targetEnv.id,
+          app_group_id: appGroupFilter || void 0,
+          excluded_resource_ids: [...excludedIds]
+        })
+      });
+      if (!createResp.ok) {
+        const err = await createResp.json().catch(() => ({}));
+        throw new Error(err.error || `Promotion failed (${createResp.status})`);
+      }
+      const record = await createResp.json();
+      const approveResp = await fetch(`${promotionsApiUrl}/${record.id}/approve`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() }
+      });
+      if (!approveResp.ok) {
+        const err = await approveResp.json().catch(() => ({}));
+        throw new Error(err.error || `Approval failed (${approveResp.status})`);
+      }
+      const approved = await approveResp.json();
+      setPromotionResult(approved);
+      setDiffView(null);
+      fetchPipeline();
+    } catch (e) {
+      setPromotionResult({ error: e.message });
+    } finally {
+      setPromoting(false);
+    }
+  }, [diffView, promotionsApiUrl, appGroupFilter, excludedIds, fetchPipeline]);
+  const appGroups = (0, import_react6.useMemo)(() => {
+    if (!diffReport) return [];
+    const groups = /* @__PURE__ */ new Map();
+    const allItems = [...diffReport.added || [], ...diffReport.modified || [], ...diffReport.removed || []];
+    allItems.forEach((item) => {
+      if (item.application_group_id && item.application_group_name) {
+        groups.set(item.application_group_id, item.application_group_name);
+      }
+    });
+    return [...groups.entries()].map(([id, name]) => ({ id, name }));
+  }, [diffReport]);
+  const diffItems = (0, import_react6.useMemo)(() => {
+    if (!diffReport) return [];
+    return [
+      ...(diffReport.added || []).map((r) => ({ ...r, type: "add" })),
+      ...(diffReport.modified || []).map((r) => ({ ...r, type: "mod" })),
+      ...(diffReport.removed || []).map((r) => ({ ...r, type: "rem" }))
+    ];
+  }, [diffReport]);
+  const isPrd = diffView?.targetEnv?.env_type === "prd";
+  if (loading) {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "promote-layout", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Environment Promotion Pipeline" }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "promote-subtitle", children: "Loading pipeline\u2026" })
+    ] });
+  }
+  if (error2 && !environments.length) {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "promote-layout", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Environment Promotion Pipeline" }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "promote-subtitle", style: { color: "var(--accent-red)" }, children: error2 })
+    ] });
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "promote-layout", children: [
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Environment Promotion Pipeline" }),
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "promote-subtitle", children: "Compare, diff, and promote infrastructure changes across environments." }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "pipeline", children: STAGES.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_react6.default.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "pipeline", children: environments.map((env, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_react6.default.Fragment, { children: [
       i > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "arrow-col", children: [
         /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
           "button",
           {
             className: "promote-btn2",
-            style: i === 2 ? { opacity: 0.5, cursor: "not-allowed" } : {},
-            onClick: i === 1 ? () => alert("Promote dev \u2192 acc triggered") : void 0,
+            disabled: promoting,
+            onClick: () => openDiff(environments[i - 1], env),
             children: "Promote \u2192"
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "arrow-line" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "arrow-note", style: i === 2 ? { color: "var(--accent-orange)" } : {}, children: i === 1 ? "3 changes" : "needs approval" })
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "arrow-note", children: (() => {
+          const key = `${environments[i - 1].id}-${env.id}`;
+          const count = changeCounts[key];
+          if (count === void 0) return "\u2026";
+          if (count === 0) return "in sync";
+          return `${count} change${count !== 1 ? "s" : ""}`;
+        })() })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `stage${s.active ? " active-s" : ""}`, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `stage${env.id === environment?.id ? " active-s" : ""}`, children: [
         /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-head", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "env-dot", style: { background: s.dot } }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "stage-name", children: s.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "stage-ver", children: s.ver })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "env-dot", style: { background: ENV_DOTS[env.env_type] || "var(--text-muted)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "stage-name", children: env.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-ver", children: [
+            "v",
+            env.version || "0.0.0"
+          ] })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-meta", children: [
           "Last deployed: ",
-          s.deployed
+          timeAgo(env.last_deployed_at)
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-meta", children: [
-          s.resources,
-          " resources \xB7 OpenTofu"
+          env.resource_count,
+          " resources"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-chips", children: [
-          s.chips.map((c) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "chip", children: c }, c)),
-          s.newChip && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "chip new", children: s.newChip })
-        ] })
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "stage-chips", children: Object.entries(env.resource_summary || {}).map(([cat, count]) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "chip", children: [
+          cat,
+          " \xD7",
+          count
+        ] }, cat)) })
       ] })
-    ] }, s.name)) }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-box", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-head", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { children: "Diff: Development \u2192 Acceptance" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-stats", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "a", children: "+2 added" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "m", children: "~1 modified" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "r", children: "-0 removed" })
+    ] }, env.id)) }),
+    promotionResult && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: {
+      padding: "10px 14px",
+      borderRadius: 6,
+      marginBottom: 16,
+      fontSize: 12,
+      background: promotionResult.error ? "rgba(239,68,68,0.1)" : "rgba(16,185,129,0.1)",
+      border: `1px solid ${promotionResult.error ? "var(--accent-red)" : "var(--accent-green)"}`,
+      color: promotionResult.error ? "var(--accent-red)" : "var(--accent-green)"
+    }, children: promotionResult.error ? `Promotion failed: ${promotionResult.error}` : `Promotion ${promotionResult.status || "completed"} successfully` }),
+    diffView && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-box", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-head", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h3", { children: [
+              "Diff: ",
+              diffView.sourceEnv.name,
+              " \u2192 ",
+              diffView.targetEnv.name
+            ] }),
+            appGroups.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+              "select",
+              {
+                value: appGroupFilter || "",
+                onChange: (e) => setAppGroupFilter(e.target.value || null),
+                style: {
+                  fontSize: 11,
+                  padding: "3px 6px",
+                  background: "var(--bg-tertiary)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 4,
+                  color: "var(--text-primary)"
+                },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: "", children: "All Resources" }),
+                  appGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: g.id, children: g.name }, g.id))
+                ]
+              }
+            )
+          ] }),
+          diffReport && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-stats", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "a", children: [
+              "+",
+              diffReport.summary?.added || 0,
+              " added"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "m", children: [
+              "~",
+              diffReport.summary?.modified || 0,
+              " modified"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "r", children: [
+              "-",
+              diffReport.summary?.removed || 0,
+              " removed"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-body", children: [
+          diffLoading && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", padding: 8 }, children: "Loading diff\u2026" }),
+          !diffLoading && diffItems.length === 0 && diffReport && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", padding: 8 }, children: "No changes detected \u2014 environments are in sync." }),
+          diffItems.map((item, idx) => {
+            const rid = item.resource_id || item.resource_name || idx;
+            const isExcluded = excludedIds.has(rid);
+            return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+              "div",
+              {
+                className: `ditem d${item.type[0]}`,
+                style: isExcluded ? { opacity: 0.4, textDecoration: "line-through" } : {},
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                    "input",
+                    {
+                      type: "checkbox",
+                      checked: !isExcluded,
+                      onChange: () => toggleExclude(rid),
+                      title: isExcluded ? "Include in promotion" : "Exclude from promotion",
+                      style: { marginRight: 4, cursor: "pointer" }
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "dbadge", children: item.type === "add" ? "added" : item.type === "mod" ? "modified" : "removed" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("strong", { children: item.resource_name || item.name }),
+                    item.module_name && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+                      " \u2014 ",
+                      item.module_name
+                    ] }),
+                    item.type === "mod" && item.changes && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { style: { fontSize: 10, color: "var(--text-muted)", marginLeft: 6 }, children: [
+                      "(",
+                      Object.keys(item.changes).join(", "),
+                      ")"
+                    ] })
+                  ] })
+                ]
+              },
+              rid
+            );
+          })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "diff-body", children: DIFFS.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `ditem d${d.type[0]}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "dbadge", children: d.type }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("strong", { children: d.name }),
-          " \u2014 ",
-          d.desc
-        ] })
-      ] }, i)) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "cv-btn cv-btn-secondary", children: "Preview Plan" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "cv-btn cv-btn-primary", children: "Approve & Promote to Acceptance" })
+      planOutput && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: {
+        marginTop: 12,
+        background: "var(--bg-tertiary)",
+        border: "1px solid var(--border)",
+        borderRadius: 8,
+        padding: 14,
+        maxHeight: 300,
+        overflowY: "auto"
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: 11, fontWeight: 600, marginBottom: 8, color: "var(--text-secondary)" }, children: "Preview Plan Output" }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { style: { fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-primary)", margin: 0, whiteSpace: "pre-wrap" }, children: planOutput })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end", alignItems: "center" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "cv-btn cv-btn-secondary", onClick: () => setDiffView(null), children: "\u2190 Back" }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+          "button",
+          {
+            className: "cv-btn cv-btn-secondary",
+            onClick: handlePreview,
+            disabled: planLoading || !diffReport,
+            children: planLoading ? "Loading plan\u2026" : "Preview Plan"
+          }
+        ),
+        isPrd ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+          "button",
+          {
+            className: "cv-btn cv-btn-primary",
+            onClick: handleApprovePromote,
+            disabled: promoting || !diffReport,
+            children: promoting ? "Promoting\u2026" : "Approve & Promote"
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+          "button",
+          {
+            className: "cv-btn cv-btn-primary",
+            onClick: handlePromote,
+            disabled: promoting || !diffReport,
+            children: promoting ? "Promoting\u2026" : `Promote to ${diffView.targetEnv.name}`
+          }
+        )
+      ] })
     ] })
   ] });
 }
@@ -31975,41 +32470,262 @@ function ImportScreen() {
 var import_react9 = __toESM(require_react());
 var import_jsx_runtime10 = __toESM(require_jsx_runtime());
 var ENGINES = [
-  { id: "tofu", logo: "OT", logoClass: "tofu", name: "OpenTofu", desc: "Open-source IaC" },
-  { id: "cfn", logo: "CF", logoClass: "cfn", name: "CloudFormation", desc: "AWS-native stacks" },
-  { id: "bicep", logo: "Bi", logoClass: "bicep", name: "Bicep / ARM", desc: "Azure-native IaC" },
-  { id: "cdk", logo: "CDK", logoClass: "cdk", name: "AWS CDK", desc: "Programmatic IaC" }
+  { id: "tofu", logo: "OT", logoClass: "tofu", name: "OpenTofu", desc: "Open-source IaC", enabled: true },
+  { id: "cfn", logo: "CF", logoClass: "cfn", name: "CloudFormation", desc: "AWS-native stacks", enabled: false },
+  { id: "bicep", logo: "Bi", logoClass: "bicep", name: "Bicep / ARM", desc: "Azure-native IaC", enabled: false },
+  { id: "cdk", logo: "CDK", logoClass: "cdk", name: "AWS CDK", desc: "Programmatic IaC", enabled: false }
 ];
 var PIPE_STEPS = [
-  { icon: "\u{1F4CB}", name: "Validate", detail: "Business rules" },
-  { icon: "\u2699", name: "Generate", detail: "IR \u2192 IaC code" },
-  { icon: "\u{1F4E6}", name: "Plan", detail: "tofu plan / cfn changeset" },
-  { icon: "\u{1F441}", name: "Review", detail: "Manual approval" },
-  { icon: "\u{1F680}", name: "Apply", detail: "tofu apply / deploy stack" },
-  { icon: "\u2705", name: "Verify", detail: "Drift detection" }
+  { icon: "\u{1F4CB}", name: "Validate", detail: "Business rules", key: "validate" },
+  { icon: "\u2699", name: "Generate", detail: "IR \u2192 IaC code", key: "generate" },
+  { icon: "\u{1F4E6}", name: "Plan", detail: "tofu plan", key: "plan" },
+  { icon: "\u{1F441}", name: "Review", detail: "Manual approval", key: "review" },
+  { icon: "\u{1F680}", name: "Apply", detail: "tofu apply", key: "apply" },
+  { icon: "\u2705", name: "Verify", detail: "Drift detection", key: "verify" }
 ];
-var CHECKS = [
-  { status: "pass", icon: "\u2713", label: "Business rules validation", detail: "14/14 rules passed" },
-  { status: "pass", icon: "\u2713", label: "Cross-env references", detail: "All outputs resolvable" },
-  { status: "fail", icon: "\u2717", label: "Encryption compliance", detail: 'S3 "static-assets" missing encryption' },
-  { status: "pass", icon: "\u2713", label: "IAM least privilege", detail: "No wildcard permissions detected" },
-  { status: "pass", icon: "\u2713", label: "Cost estimation", detail: "~$2,340/mo (within budget of $3,000)" },
-  { status: "pend", icon: "\u25CC", label: "Manual approval", detail: "Waiting for project owner sign-off" }
-];
-function DeployScreen() {
-  const [selectedEngine, setSelectedEngine] = (0, import_react9.useState)("tofu");
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "deploy-layout", children: [
+var STATUS_ICON = { passed: "\u2713", failed: "\u2717", pending: "\u25CC" };
+var STATUS_CLASS = { passed: "pass", failed: "fail", pending: "pend" };
+var STEP_STATUS_ICON = { executing: "\u27F3", completed: "\u2713", failed: "\u2717", skipped: "\u2298" };
+function getPipelineStepStates(checks, deployResult) {
+  const states = { validate: "idle", generate: "idle", plan: "idle", review: "idle", apply: "idle", verify: "idle" };
+  if (!checks && !deployResult) return states;
+  if (checks) {
+    const hasBlockers = checks.some((c) => c.status === "failed");
+    states.validate = hasBlockers ? "failed" : "completed";
+  }
+  if (!deployResult) return states;
+  const status = deployResult.status;
+  if (status === "pending" || status === "dispatched") {
+    states.generate = "active";
+  } else if (status === "planning") {
+    states.generate = "completed";
+    states.plan = "active";
+  } else if (status === "planned") {
+    states.generate = "completed";
+    states.plan = "completed";
+    states.review = "active";
+  } else if (status === "applying") {
+    states.generate = "completed";
+    states.plan = "completed";
+    states.review = "completed";
+    states.apply = "active";
+  } else if (status === "completed") {
+    states.generate = "completed";
+    states.plan = "completed";
+    states.review = "completed";
+    states.apply = "completed";
+    states.verify = "completed";
+  } else if (status === "failed") {
+    const failedLayer = deployResult.layers?.find((l) => l.status === "failed");
+    const failedStep = failedLayer?.steps?.find((s) => s.status === "failed");
+    const failedStepName = failedStep?.name || "";
+    const generateSteps = ["generate", "tofu_fmt"];
+    const planSteps = ["tofu_init", "tofu_validate", "infracost", "tofu_plan"];
+    const applySteps = ["tofu_apply"];
+    if (generateSteps.some((s) => failedStepName.includes(s))) {
+      states.generate = "failed";
+    } else if (planSteps.some((s) => failedStepName.includes(s))) {
+      states.generate = "completed";
+      states.plan = "failed";
+    } else if (applySteps.some((s) => failedStepName.includes(s))) {
+      states.generate = "completed";
+      states.plan = "completed";
+      states.review = "completed";
+      states.apply = "failed";
+    } else {
+      states.generate = "failed";
+    }
+  } else if (status === "rejected") {
+    states.generate = "completed";
+    states.plan = "completed";
+    states.review = "failed";
+  }
+  return states;
+}
+function DeployScreen({ environmentId }) {
+  const [selectedEngine] = (0, import_react9.useState)("tofu");
+  const [checks, setChecks] = (0, import_react9.useState)(null);
+  const [loading, setLoading] = (0, import_react9.useState)(false);
+  const [deploying, setDeploying] = (0, import_react9.useState)(false);
+  const [deployResult, setDeployResult] = (0, import_react9.useState)(null);
+  const [error2, setError] = (0, import_react9.useState)(null);
+  const [runnerConnected, setRunnerConnected] = (0, import_react9.useState)(false);
+  const [runnerLoading, setRunnerLoading] = (0, import_react9.useState)(true);
+  const [expandedLayers, setExpandedLayers] = (0, import_react9.useState)({});
+  const [layerLogs, setLayerLogs] = (0, import_react9.useState)({});
+  const [loadingLogs, setLoadingLogs] = (0, import_react9.useState)({});
+  const [layerPlans, setLayerPlans] = (0, import_react9.useState)({});
+  const [loadingPlans, setLoadingPlans] = (0, import_react9.useState)({});
+  const planFetchedRef = (0, import_react9.useRef)({});
+  const apiBase = `/api/environments/${environmentId}/deployments`;
+  const checkRunnerStatus = (0, import_react9.useCallback)(async () => {
+    setRunnerLoading(true);
+    try {
+      const resp = await fetch(`${apiBase}/runner_status`);
+      if (resp.ok) {
+        const data = await resp.json();
+        setRunnerConnected(data.connected);
+      }
+    } catch (e) {
+    } finally {
+      setRunnerLoading(false);
+    }
+  }, [apiBase]);
+  const runPreChecks = (0, import_react9.useCallback)(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const resp = await fetch(`${apiBase}/pre_checks`);
+      if (resp.ok) {
+        const data = await resp.json();
+        setChecks(data.checks || []);
+      } else {
+        setError("Failed to load pre-deployment checks");
+      }
+    } catch (e) {
+      setError("Network error loading checks");
+    } finally {
+      setLoading(false);
+    }
+  }, [apiBase]);
+  (0, import_react9.useEffect)(() => {
+    runPreChecks();
+    checkRunnerStatus();
+  }, [runPreChecks, checkRunnerStatus]);
+  const hasBlockers = checks && checks.some((c) => c.status === "failed");
+  const triggerPlan = (0, import_react9.useCallback)(async () => {
+    setDeploying(true);
+    setDeployResult(null);
+    setError(null);
+    try {
+      const resp = await fetch(`/api/environments/${environmentId}/deployments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() }
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setDeployResult(data);
+      } else {
+        const data = await resp.json().catch(() => ({}));
+        setError(data.error || "Failed to trigger plan");
+      }
+    } catch (e) {
+      setError("Network error triggering plan");
+    } finally {
+      setDeploying(false);
+    }
+  }, [environmentId]);
+  (0, import_react9.useEffect)(() => {
+    if (!deployResult?.id) return;
+    const terminal = ["completed", "failed", "rejected", "planned"];
+    if (terminal.includes(deployResult.status)) return;
+    const interval = setInterval(async () => {
+      try {
+        const resp = await fetch(`${apiBase}/${deployResult.id}`);
+        if (resp.ok) {
+          const data = await resp.json();
+          setDeployResult(data);
+          if (terminal.includes(data.status)) clearInterval(interval);
+        }
+      } catch (e) {
+      }
+    }, 3e3);
+    return () => clearInterval(interval);
+  }, [deployResult?.id, deployResult?.status, apiBase]);
+  const approveDeployment = (0, import_react9.useCallback)(async (deploymentId) => {
+    try {
+      const resp = await fetch(`${apiBase}/${deploymentId}/approve`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() }
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setDeployResult(data);
+      } else {
+        const data = await resp.json().catch(() => ({}));
+        setError(data.error || "Failed to approve");
+      }
+    } catch (e) {
+      setError("Network error approving deployment");
+    }
+  }, [apiBase]);
+  const rejectDeployment = (0, import_react9.useCallback)(async (deploymentId) => {
+    try {
+      const resp = await fetch(`${apiBase}/${deploymentId}/reject`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() }
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        setDeployResult(data);
+      } else {
+        const data = await resp.json().catch(() => ({}));
+        setError(data.error || "Failed to reject");
+      }
+    } catch (e) {
+      setError("Network error rejecting deployment");
+    }
+  }, [apiBase]);
+  const toggleLayer = (0, import_react9.useCallback)((layerIndex) => {
+    setExpandedLayers((prev) => ({ ...prev, [layerIndex]: !prev[layerIndex] }));
+  }, []);
+  const fetchLayerLogs = (0, import_react9.useCallback)(async (deploymentId, layerIndex) => {
+    const key = `${deploymentId}-${layerIndex}`;
+    if (layerLogs[key]) return;
+    setLoadingLogs((prev) => ({ ...prev, [key]: true }));
+    try {
+      const resp = await fetch(`${apiBase}/${deploymentId}/logs?layer_index=${layerIndex}`);
+      if (resp.ok) {
+        const data = await resp.json();
+        const logs = data.layers?.[0]?.logs || {};
+        setLayerLogs((prev) => ({ ...prev, [key]: logs }));
+      }
+    } catch (e) {
+    } finally {
+      setLoadingLogs((prev) => ({ ...prev, [key]: false }));
+    }
+  }, [apiBase, layerLogs]);
+  const fetchLayerPlan = (0, import_react9.useCallback)(async (deploymentId, layerIndex) => {
+    const key = `${deploymentId}-${layerIndex}`;
+    setLoadingPlans((prev) => ({ ...prev, [key]: true }));
+    try {
+      const resp = await fetch(`${apiBase}/${deploymentId}/plan`);
+      if (resp.ok) {
+        const data = await resp.json();
+        const plans = {};
+        (data.layers || []).forEach((l) => {
+          plans[`${deploymentId}-${l.layer_index}`] = l.plan_output;
+        });
+        setLayerPlans((prev) => ({ ...prev, ...plans }));
+      }
+    } catch (e) {
+    } finally {
+      setLoadingPlans((prev) => ({ ...prev, [key]: false }));
+    }
+  }, [apiBase]);
+  (0, import_react9.useEffect)(() => {
+    if (!deployResult?.id) return;
+    if (!["planned", "completed", "applying"].includes(deployResult.status)) return;
+    const key = `${deployResult.id}-0`;
+    if (planFetchedRef.current[key]) return;
+    planFetchedRef.current[key] = true;
+    fetchLayerPlan(deployResult.id, 0);
+  }, [deployResult?.id, deployResult?.status, fetchLayerPlan]);
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { flex: 1, overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "deploy-layout", children: [
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h2", { children: "Deploy Configuration" }),
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "deploy-subtitle", children: "Select your IaC engine and review the deployment pipeline. The engine is decoupled from your diagram." }),
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "engine-grid", children: ENGINES.map((e) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
       "div",
       {
-        className: `eng-opt${selectedEngine === e.id ? " sel" : ""}`,
-        onClick: () => setSelectedEngine(e.id),
+        className: `eng-opt${selectedEngine === e.id ? " sel" : ""}${!e.enabled ? " disabled" : ""}`,
+        onClick: () => e.enabled && null,
+        style: !e.enabled ? { opacity: 0.4, cursor: "not-allowed", pointerEvents: "none" } : {},
+        title: !e.enabled ? "Coming soon" : "",
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `eng-logo ${e.logoClass}`, children: e.logo }),
           /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "eng-name", children: e.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "eng-desc", children: e.desc })
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "eng-desc", children: e.desc }),
+          !e.enabled && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 9, color: "var(--text-muted)", marginTop: 4 }, children: "Coming soon" })
         ]
       },
       e.id
@@ -32019,43 +32735,547 @@ function DeployScreen() {
         /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "Deployment Pipeline" }),
         /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Engine-agnostic orchestration" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pipe-steps", children: PIPE_STEPS.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_react9.default.Fragment, { children: [
-        i > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pconnector" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "pstep", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-icon", children: s.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-name", children: s.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-detail", children: s.detail })
-        ] })
-      ] }, i)) })
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pipe-steps", children: PIPE_STEPS.map((s, i) => {
+        const stepStates = getPipelineStepStates(checks, deployResult);
+        const state = stepStates[s.key];
+        const stateClass = state === "completed" ? "pstep--done" : state === "active" ? "pstep--active" : state === "failed" ? "pstep--fail" : "";
+        const stateIcon = state === "completed" ? "\u2713" : state === "active" ? "\u27F3" : state === "failed" ? "\u2717" : null;
+        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_react9.default.Fragment, { children: [
+          i > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `pconnector${state === "completed" || state === "active" && i > 0 ? " pconnector--done" : ""}` }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: `pstep ${stateClass}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-icon", children: stateIcon ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "pstep-state", children: stateIcon }) : s.icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-name", children: s.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-detail", children: s.detail })
+          ] })
+        ] }, i);
+      }) })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "checks-box", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "Pre-Deploy Checks" }),
-      CHECKS.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s ${c.status}`, children: c.icon }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "Pre-Deploy Checks" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: runPreChecks, disabled: loading, children: loading ? "Running\u2026" : "\u21BB Re-run checks" })
+      ] }),
+      error2 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--accent-red)", fontSize: 12, padding: "8px 0" }, children: error2 }),
+      loading && !checks && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12, padding: "16px 0" }, children: "Running pre-deployment checks\u2026" }),
+      checks && checks.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s ${STATUS_CLASS[c.status] || "pend"}`, children: STATUS_ICON[c.status] || "\u25CC" }),
         /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
-          c.label,
+          c.name,
           " ",
           /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
             "\u2014 ",
-            c.detail
+            c.message
           ] })
         ] })
-      ] }, i))
+      ] }, i)),
+      checks && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s pend`, children: "\u25CC" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+          "Manual approval ",
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "\u2014 Waiting for project owner sign-off" })
+        ] })
+      ] })
+    ] }),
+    deployResult && ["planned", "completed", "applying"].includes(deployResult.status) && (() => {
+      const allPlans = (deployResult.layers || []).map((layer) => {
+        const key = `${deployResult.id}-${layer.index}`;
+        return { index: layer.index, plan: layerPlans[key], loading: loadingPlans[key] };
+      });
+      const hasAnyPlan = allPlans.some((p) => p.plan);
+      const anyLoading = allPlans.some((p) => p.loading);
+      if (!hasAnyPlan && !anyLoading) return null;
+      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "checks-box", style: { marginTop: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "\u{1F4CB} Plan Review" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { style: { fontSize: 11, color: "var(--text-muted)", marginBottom: 12 }, children: "Review the infrastructure changes before approving." }),
+        allPlans.map(({ index, plan, loading: isLoading }) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+          isLoading && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "8px 0" }, children: [
+            "Loading plan for layer ",
+            index,
+            "\u2026"
+          ] }),
+          plan && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { open: true, style: { marginBottom: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 6 }, children: [
+              "Layer ",
+              index,
+              " \u2014 tofu plan"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: 0, padding: 12, borderRadius: 6, background: "var(--bg-primary, #0d1117)", color: "var(--text-primary, #e0e0e0)", fontSize: 10, maxHeight: 500, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.5 }, children: plan })
+          ] })
+        ] }, index))
+      ] });
+    })(),
+    deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 12, padding: 16, borderRadius: 8, border: `1px solid ${deployResult.status === "failed" ? "var(--accent-red)" : deployResult.status === "completed" || deployResult.status === "planned" ? "var(--accent-green)" : "var(--border)"}`, fontSize: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+          "Deployment ",
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("code", { children: deployResult.id?.slice(0, 8) }),
+          deployResult.version && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { marginLeft: 8, color: "var(--accent-cyan)", fontWeight: 600 }, children: [
+            "v",
+            deployResult.version
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: `mtag ${deployResult.status === "failed" ? "mtag--err" : deployResult.status === "completed" || deployResult.status === "planned" ? "mtag--ok" : "mtag--warn"}`, children: deployResult.status })
+      ] }),
+      deployResult.result?.error && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "8px 10px", marginBottom: 8, borderRadius: 4, background: "rgba(255,60,60,0.08)", border: "1px solid rgba(255,60,60,0.2)", color: "var(--accent-red)", fontSize: 11, whiteSpace: "pre-wrap", fontFamily: "monospace" }, children: deployResult.result.error }),
+      deployResult.layers && deployResult.layers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 8 }, children: deployResult.layers.map((layer, i) => {
+        const isExpanded = expandedLayers[layer.index];
+        const logKey = `${deployResult.id}-${layer.index}`;
+        const logs = layerLogs[logKey];
+        const isLoadingLog = loadingLogs[logKey];
+        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 6, border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+            "div",
+            {
+              onClick: () => {
+                toggleLayer(layer.index);
+                if (!isExpanded && !logs) fetchLayerLogs(deployResult.id, layer.index);
+              },
+              style: { display: "flex", gap: 8, alignItems: "center", padding: "8px 10px", fontSize: 11, cursor: "pointer", background: layer.status === "failed" ? "rgba(255,60,60,0.05)" : "transparent" },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 14, textAlign: "center", fontSize: 10, color: "var(--text-muted)" }, children: isExpanded ? "\u25BC" : "\u25B6" }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 16, textAlign: "center" }, children: layer.status === "completed" ? "\u2713" : layer.status === "failed" ? "\u2717" : layer.status === "dispatched" || layer.status === "executing" ? "\u27F3" : "\u25CC" }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+                  "Layer ",
+                  layer.index
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
+                  "\u2014 ",
+                  layer.status
+                ] }),
+                layer.duration && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)", marginLeft: "auto" }, children: [
+                  layer.duration.toFixed(1),
+                  "s"
+                ] }),
+                layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--accent-red)", marginLeft: 8, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: [
+                  "(",
+                  layer.error_details,
+                  ")"
+                ] })
+              ]
+            }
+          ),
+          isExpanded && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { padding: "4px 10px 10px 38px", borderTop: "1px solid var(--border)" }, children: [
+            layer.steps && layer.steps.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 8 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Steps" }),
+              layer.steps.map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center", padding: "2px 0", fontSize: 11 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 14, textAlign: "center" }, children: STEP_STATUS_ICON[step.status] || "\u25CC" }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace" }, children: step.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
+                  "\u2014 ",
+                  step.status
+                ] }),
+                step.duration != null && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)", marginLeft: "auto" }, children: [
+                  step.duration.toFixed(2),
+                  "s"
+                ] })
+              ] }, si))
+            ] }),
+            layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 8 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--accent-red)", marginBottom: 4 }, children: "Error" }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "6px 8px", borderRadius: 4, background: "rgba(255,60,60,0.06)", border: "1px solid rgba(255,60,60,0.15)", fontFamily: "monospace", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word" }, children: layer.error_details })
+            ] }),
+            isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "Loading logs\u2026" }),
+            logs && Object.keys(logs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Execution Logs" }),
+              Object.entries(logs).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginBottom: 4 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
+                  stepName,
+                  "/out.log"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-secondary, #1a1a2e)", color: "var(--text-primary, #e0e0e0)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
+              ] }, stepName))
+            ] }),
+            logs && Object.keys(logs).length === 0 && !isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "No logs available yet" })
+          ] })
+        ] }, i);
+      }) }),
+      deployResult.cost_estimate && Object.keys(deployResult.cost_estimate).length > 0 && (() => {
+        const cost = deployResult.cost_estimate;
+        const monthly = parseFloat(cost.totalMonthlyCost || 0);
+        const currency = cost.currency || "USD";
+        const layers = cost.layers || [];
+        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 8, padding: "10px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "rgba(0,200,150,0.04)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: layers.length > 0 ? 6 : 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "\u{1F4B0} Estimated Monthly Cost" }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600, color: monthly > 0 ? "var(--accent-cyan)" : "var(--text-muted)" }, children: [
+              currency === "USD" ? "$" : currency,
+              " ",
+              monthly.toFixed(2),
+              " / mo"
+            ] })
+          ] }),
+          layers.length > 1 && layers.map((lc, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "var(--text-muted)", padding: "2px 0" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+              "Layer ",
+              lc.layer_index
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+              "$",
+              parseFloat(lc.totalMonthlyCost || 0).toFixed(2)
+            ] })
+          ] }, i))
+        ] });
+      })(),
+      deployResult.approval_status === "pending_approval" && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 10, display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => approveDeployment(deployResult.id), children: "\u2713 Approve & Apply" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => rejectDeployment(deployResult.id), children: "\u2717 Reject" })
+      ] })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-secondary", children: "Download Generated Code" }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-primary", style: { opacity: 0.5, cursor: "not-allowed" }, children: "\u25B6 Deploy (1 blocker remaining)" })
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+        "button",
+        {
+          className: "cv-btn cv-btn-primary",
+          disabled: deploying || hasBlockers || !runnerConnected || deployResult && !["completed", "failed", "rejected"].includes(deployResult.status),
+          onClick: triggerPlan,
+          title: hasBlockers ? "Fix blockers before deploying" : !runnerConnected ? "No runner connected \u2014 deploy a runner first" : "Trigger OpenTofu plan",
+          style: hasBlockers || !runnerConnected ? { opacity: 0.5, cursor: "not-allowed" } : {},
+          children: deploying ? "\u25B6 Deploying\u2026" : hasBlockers ? `\u25B6 Deploy (${checks ? checks.filter((c) => c.status === "failed").length : 0} blocker${checks && checks.filter((c) => c.status === "failed").length > 1 ? "s" : ""} remaining)` : !runnerConnected ? "\u25B6 Deploy (runner not connected)" : "\u25B6 Deploy"
+        }
+      )
+    ] })
+  ] }) });
+}
+
+// app/javascript/components/canvas/GlobalTagsScreen.jsx
+var import_react10 = __toESM(require_react());
+var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+function GlobalTagsScreen() {
+  const [tags, setTags] = (0, import_react10.useState)([]);
+  const [loading, setLoading] = (0, import_react10.useState)(true);
+  const [newKey, setNewKey] = (0, import_react10.useState)("");
+  const [newValue, setNewValue] = (0, import_react10.useState)("");
+  const [newDesc, setNewDesc] = (0, import_react10.useState)("");
+  const [saving, setSaving] = (0, import_react10.useState)(false);
+  const [editingId, setEditingId] = (0, import_react10.useState)(null);
+  const [editValue, setEditValue] = (0, import_react10.useState)("");
+  const fetchTags = (0, import_react10.useCallback)(async () => {
+    const resp = await fetch("/api/global_tags", { headers: { Accept: "application/json" } });
+    if (resp.ok) setTags(await resp.json());
+    setLoading(false);
+  }, []);
+  (0, import_react10.useEffect)(() => {
+    fetchTags();
+  }, [fetchTags]);
+  const addTag = async (e) => {
+    e.preventDefault();
+    if (!newKey.trim() || !newValue.trim()) return;
+    setSaving(true);
+    const resp = await fetch("/api/global_tags", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+      body: JSON.stringify({ key: newKey.trim(), value: newValue.trim(), description: newDesc.trim() })
+    });
+    if (resp.ok) {
+      const tag = await resp.json();
+      setTags((prev) => [...prev, tag].sort((a, b) => a.key.localeCompare(b.key)));
+      setNewKey("");
+      setNewValue("");
+      setNewDesc("");
+    }
+    setSaving(false);
+  };
+  const toggleTag = async (tag) => {
+    const resp = await fetch(`/api/global_tags/${tag.id}/toggle`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() }
+    });
+    if (resp.ok) {
+      const updated = await resp.json();
+      setTags((prev) => prev.map((t) => t.id === updated.id ? updated : t));
+    }
+  };
+  const deleteTag = async (tag) => {
+    if (!confirm(`Delete tag '${tag.key}'? This will remove it from all future deployments.`)) return;
+    const resp = await fetch(`/api/global_tags/${tag.id}`, {
+      method: "DELETE",
+      headers: { "X-CSRF-Token": csrf() }
+    });
+    if (resp.ok) setTags((prev) => prev.filter((t) => t.id !== tag.id));
+  };
+  const startEdit = (tag) => {
+    setEditingId(tag.id);
+    setEditValue(tag.value);
+  };
+  const saveEdit = async (tag) => {
+    const resp = await fetch(`/api/global_tags/${tag.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+      body: JSON.stringify({ value: editValue })
+    });
+    if (resp.ok) {
+      const updated = await resp.json();
+      setTags((prev) => prev.map((t) => t.id === updated.id ? updated : t));
+    }
+    setEditingId(null);
+  };
+  const enabledTags = tags.filter((t) => t.enabled);
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary, #e6edf3)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 24 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: "Global Tags" }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted, #8b949e)" }, children: [
+        "Tags applied to every deployed resource across all environments.",
+        enabledTags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { marginLeft: 8 }, children: [
+          enabledTags.length,
+          " active / ",
+          tags.length,
+          " total"
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 18, marginBottom: 20 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginTop: 0, marginBottom: 12 }, children: "Add Tag" }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: addTag, style: { display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", display: "block", marginBottom: 4 }, children: "Key *" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "input",
+            {
+              type: "text",
+              value: newKey,
+              onChange: (e) => setNewKey(e.target.value),
+              className: "modal-input",
+              placeholder: "e.g. managed-by",
+              pattern: "[a-zA-Z0-9_\\-:\\/\\.]+",
+              title: "Alphanumeric, hyphens, underscores, colons, slashes, dots",
+              required: true,
+              style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", display: "block", marginBottom: 4 }, children: "Value *" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "input",
+            {
+              type: "text",
+              value: newValue,
+              onChange: (e) => setNewValue(e.target.value),
+              className: "modal-input",
+              placeholder: "e.g. factorfifty",
+              required: true,
+              style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "2 1 200px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", display: "block", marginBottom: 4 }, children: "Description" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "input",
+            {
+              type: "text",
+              value: newDesc,
+              onChange: (e) => setNewDesc(e.target.value),
+              className: "modal-input",
+              placeholder: "Optional \u2014 why this tag exists",
+              style: { fontSize: 12 }
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { type: "submit", className: "cv-btn cv-btn-primary cv-btn-sm", disabled: saving || !newKey.trim() || !newValue.trim(), children: saving ? "Adding\u2026" : "+ Add Tag" })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, overflow: "hidden" }, children: loading ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted, #8b949e)", fontSize: 13 }, children: "Loading\u2026" }) : tags.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted, #8b949e)", fontSize: 13 }, children: "No global tags configured yet. Add one above." }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: 13 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: { borderBottom: "1px solid var(--border, #30363d)", fontSize: 11, color: "var(--text-muted, #8b949e)", textTransform: "uppercase", letterSpacing: "0.05em" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "left" }, children: "Key" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "left" }, children: "Value" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "left" }, children: "Description" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "center", width: 70 }, children: "Status" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "right", width: 160 } })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("tbody", { children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: { borderBottom: "1px solid var(--border, #30363d)", opacity: tag.enabled ? 1 : 0.5 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, background: "rgba(110,118,129,0.1)", padding: "2px 6px", borderRadius: 4 }, children: tag.key }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px" }, children: editingId === tag.id ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "input",
+            {
+              type: "text",
+              value: editValue,
+              onChange: (e) => setEditValue(e.target.value),
+              className: "modal-input",
+              autoFocus: true,
+              style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, width: 160 },
+              onKeyDown: (e) => {
+                if (e.key === "Enter") saveEdit(tag);
+                if (e.key === "Escape") setEditingId(null);
+              }
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => saveEdit(tag), style: { fontSize: 11 }, children: "Save" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => setEditingId(null), style: { fontSize: 11 }, children: "Cancel" })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          "code",
+          {
+            style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, cursor: "pointer" },
+            onClick: () => startEdit(tag),
+            title: "Click to edit",
+            children: tag.value
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px", fontSize: 11, color: "var(--text-muted, #8b949e)" }, children: tag.description }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px", textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: {
+          fontSize: 10,
+          fontWeight: 600,
+          padding: "2px 8px",
+          borderRadius: 10,
+          background: tag.enabled ? "rgba(63,185,80,0.15)" : "rgba(248,81,73,0.15)",
+          color: tag.enabled ? "#3fb950" : "#f85149"
+        }, children: tag.enabled ? "Active" : "Disabled" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("td", { style: { padding: "10px 16px", textAlign: "right", display: "flex", gap: 4, justifyContent: "flex-end" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => toggleTag(tag), style: { fontSize: 11 }, children: tag.enabled ? "Disable" : "Enable" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => deleteTag(tag), style: { fontSize: 11, color: "#f85149" }, children: "Delete" })
+        ] })
+      ] }, tag.id)) })
+    ] }) }),
+    enabledTags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, marginTop: 20, overflow: "hidden" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "12px 16px", borderBottom: "1px solid var(--border, #30363d)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, margin: 0 }, children: "Preview" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", margin: "2px 0 0" }, children: "These tags will be merged into every resource during deployment." })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: {
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 12,
+        padding: 16,
+        margin: 0,
+        lineHeight: 1.6,
+        overflowX: "auto",
+        color: "var(--text-primary, #e6edf3)"
+      }, children: enabledTags.map((t) => `${t.key} = "${t.value}"`).join("\n") })
     ] })
   ] });
 }
 
+// app/javascript/components/canvas/useCanvasLock.js
+var import_react11 = __toESM(require_react());
+var HEARTBEAT_INTERVAL = 3e4;
+var STATUS_POLL_INTERVAL = 15e3;
+function generateDeviceId() {
+  let id = sessionStorage.getItem("canvas_device_id");
+  if (!id) {
+    id = `dev_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    sessionStorage.setItem("canvas_device_id", id);
+  }
+  return id;
+}
+function useCanvasLock(lockApiUrl) {
+  const [lockState, setLockState] = (0, import_react11.useState)({ locked: false, holder: null, isMe: false });
+  const [acquiring, setAcquiring] = (0, import_react11.useState)(false);
+  const deviceId = (0, import_react11.useRef)(generateDeviceId()).current;
+  const heartbeatRef = (0, import_react11.useRef)(null);
+  const pollRef = (0, import_react11.useRef)(null);
+  const fetchStatus = (0, import_react11.useCallback)(async () => {
+    try {
+      const resp = await fetch(`${lockApiUrl}/status`);
+      if (!resp.ok) return;
+      const data = await resp.json();
+      if (data.locked) {
+        setLockState({
+          locked: true,
+          holder: data.lock,
+          isMe: data.lock.device_id === deviceId
+        });
+      } else {
+        setLockState({ locked: false, holder: null, isMe: false });
+      }
+    } catch {
+    }
+  }, [lockApiUrl, deviceId]);
+  (0, import_react11.useEffect)(() => {
+    fetchStatus();
+    pollRef.current = setInterval(() => {
+      if (!lockState.isMe) fetchStatus();
+    }, STATUS_POLL_INTERVAL);
+    return () => clearInterval(pollRef.current);
+  }, [fetchStatus, lockState.isMe]);
+  const acquire = (0, import_react11.useCallback)(async () => {
+    setAcquiring(true);
+    try {
+      const resp = await fetch(`${lockApiUrl}/acquire`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({ device_id: deviceId })
+      });
+      if (resp.ok) {
+        const lock = await resp.json();
+        setLockState({ locked: true, holder: lock, isMe: true });
+        clearInterval(heartbeatRef.current);
+        heartbeatRef.current = setInterval(async () => {
+          try {
+            const r = await fetch(`${lockApiUrl}/renew`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+              body: JSON.stringify({ device_id: deviceId })
+            });
+            if (!r.ok) {
+              clearInterval(heartbeatRef.current);
+              setLockState((prev) => ({ ...prev, isMe: false }));
+              fetchStatus();
+            }
+          } catch {
+            clearInterval(heartbeatRef.current);
+            setLockState((prev) => ({ ...prev, isMe: false }));
+          }
+        }, HEARTBEAT_INTERVAL);
+        return { ok: true };
+      } else if (resp.status === 409) {
+        const data = await resp.json();
+        setLockState({ locked: true, holder: data.lock, isMe: false });
+        return { ok: false, holder: data.lock };
+      }
+      return { ok: false };
+    } catch {
+      return { ok: false };
+    } finally {
+      setAcquiring(false);
+    }
+  }, [lockApiUrl, deviceId, fetchStatus]);
+  const release = (0, import_react11.useCallback)(async () => {
+    clearInterval(heartbeatRef.current);
+    try {
+      await fetch(`${lockApiUrl}/release`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({ device_id: deviceId })
+      });
+    } catch {
+    }
+    setLockState({ locked: false, holder: null, isMe: false });
+    fetchStatus();
+  }, [lockApiUrl, deviceId, fetchStatus]);
+  (0, import_react11.useEffect)(() => {
+    const onUnload = () => {
+      if (lockState.isMe) {
+        navigator.sendBeacon(
+          `${lockApiUrl}/release?device_id=${deviceId}&_method=DELETE`
+        );
+      }
+    };
+    window.addEventListener("beforeunload", onUnload);
+    return () => {
+      window.removeEventListener("beforeunload", onUnload);
+      clearInterval(heartbeatRef.current);
+      if (lockState.isMe) {
+        fetch(`${lockApiUrl}/release`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+          body: JSON.stringify({ device_id: deviceId }),
+          keepalive: true
+        }).catch(() => {
+        });
+      }
+    };
+  }, [lockApiUrl, deviceId, lockState.isMe]);
+  return { lockState, acquire, release, acquiring };
+}
+
 // app/javascript/components/canvas/CanvasApp.jsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime());
-var GROUP_COLORS = ["#58a6ff", "#3fb950", "#d29922", "#f85149", "#bc8cff", "#39d2c0", "#f778ba", "#79c0ff"];
+var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+var GROUP_COLORS2 = ["#58a6ff", "#3fb950", "#d29922", "#f85149", "#bc8cff", "#39d2c0", "#f778ba", "#79c0ff"];
 function CreateGroupModal({ onCreate, onClose }) {
-  const [name, setName] = (0, import_react10.useState)("");
-  const [color, setColor] = (0, import_react10.useState)(GROUP_COLORS[0]);
-  const [submitting, setSubmitting] = (0, import_react10.useState)(false);
+  const [name, setName] = (0, import_react12.useState)("");
+  const [color, setColor] = (0, import_react12.useState)(GROUP_COLORS2[0]);
+  const [submitting, setSubmitting] = (0, import_react12.useState)(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name.trim()) return;
@@ -32063,12 +33283,12 @@ function CreateGroupModal({ onCreate, onClose }) {
     await onCreate(name.trim(), color);
     setSubmitting(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "modal-overlay", style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "modal-content", style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 24, width: 360, color: "var(--text-primary, #e6edf3)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { marginTop: 0, fontSize: 16, fontWeight: 600 }, children: "Create Application Group" }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { className: "modal-label", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-overlay", style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-content", style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 24, width: 360, color: "var(--text-primary, #e6edf3)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { style: { marginTop: 0, fontSize: 16, fontWeight: 600 }, children: "Create Application Group" }),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "modal-label", children: [
         "Name",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "input",
           {
             type: "text",
@@ -32081,9 +33301,9 @@ function CreateGroupModal({ onCreate, onClose }) {
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { className: "modal-label", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "modal-label", children: [
         "Color",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { display: "flex", gap: 8, marginTop: 6 }, children: GROUP_COLORS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { display: "flex", gap: 8, marginTop: 6 }, children: GROUP_COLORS2.map((c) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
             type: "button",
@@ -32102,9 +33322,9 @@ function CreateGroupModal({ onCreate, onClose }) {
           c
         )) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { type: "button", className: "cv-btn cv-btn-secondary", onClick: onClose, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { type: "submit", className: "cv-btn cv-btn-primary", disabled: !name.trim() || submitting, children: submitting ? "Creating\u2026" : "Create Group" })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "cv-btn cv-btn-secondary", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "cv-btn cv-btn-primary", disabled: !name.trim() || submitting, children: submitting ? "Creating\u2026" : "Create Group" })
       ] })
     ] })
   ] }) });
@@ -32117,6 +33337,7 @@ function CanvasApp({
   connectionsApiUrl,
   businessRulesApiUrl,
   applicationGroupsApiUrl,
+  canvasLockApiUrl,
   environmentId,
   environment,
   project,
@@ -32126,29 +33347,46 @@ function CanvasApp({
   canvasPath,
   rootPath
 }) {
-  const [resources, setResources] = (0, import_react10.useState)(initialResources || []);
-  const [connections, setConnections] = (0, import_react10.useState)(initialConnections || []);
-  const [selectedId, setSelectedId] = (0, import_react10.useState)(null);
-  const [cmdOpen, setCmdOpen] = (0, import_react10.useState)(false);
-  const [propsHtml, setPropsHtml] = (0, import_react10.useState)("");
-  const [cloudFilter, setCloudFilter] = (0, import_react10.useState)(null);
-  const [activeScreen, setActiveScreen] = (0, import_react10.useState)("canvas");
-  const [toasts, setToasts] = (0, import_react10.useState)([]);
-  const [connectMode, setConnectMode] = (0, import_react10.useState)(false);
-  const [connectFromId, setConnectFromId] = (0, import_react10.useState)(null);
-  const [appGroups, setAppGroups] = (0, import_react10.useState)([]);
-  const [selectedGroupId, setSelectedGroupId] = (0, import_react10.useState)(null);
-  const [showCreateGroupModal, setShowCreateGroupModal] = (0, import_react10.useState)(false);
-  (0, import_react10.useEffect)(() => {
+  const [resources, setResources] = (0, import_react12.useState)(initialResources || []);
+  const [connections, setConnections] = (0, import_react12.useState)(initialConnections || []);
+  const [selectedId, setSelectedId] = (0, import_react12.useState)(null);
+  const [cmdOpen, setCmdOpen] = (0, import_react12.useState)(false);
+  const [propsHtml, setPropsHtml] = (0, import_react12.useState)("");
+  const [cloudFilter, setCloudFilter] = (0, import_react12.useState)(null);
+  const VALID_SCREENS = ["canvas", "rules", "promote", "templates", "import", "deploy", "global_tags"];
+  const screenFromHash = () => {
+    const h = window.location.hash.replace("#", "");
+    return VALID_SCREENS.includes(h) ? h : "canvas";
+  };
+  const [activeScreen, setActiveScreenRaw] = (0, import_react12.useState)(screenFromHash);
+  const setActiveScreen = (0, import_react12.useCallback)((id) => {
+    setActiveScreenRaw(id);
+    window.history.replaceState(null, "", id === "canvas" ? window.location.pathname : `#${id}`);
+  }, []);
+  (0, import_react12.useEffect)(() => {
+    const onHash = () => setActiveScreenRaw(screenFromHash());
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+  const [toasts, setToasts] = (0, import_react12.useState)([]);
+  const [connectMode, setConnectMode] = (0, import_react12.useState)(false);
+  const [connectFromId, setConnectFromId] = (0, import_react12.useState)(null);
+  const [appGroups, setAppGroups] = (0, import_react12.useState)([]);
+  const [selectedGroupId, setSelectedGroupId] = (0, import_react12.useState)(null);
+  const [showCreateGroupModal, setShowCreateGroupModal] = (0, import_react12.useState)(false);
+  const [deleteConfirmId, setDeleteConfirmId] = (0, import_react12.useState)(null);
+  const { lockState, acquire: acquireLock, release: releaseLock, acquiring: acquiringLock } = useCanvasLock(canvasLockApiUrl);
+  const canvasLocked = lockState.locked && !lockState.isMe;
+  (0, import_react12.useEffect)(() => {
     if (!applicationGroupsApiUrl) return;
     fetch(applicationGroupsApiUrl).then((r) => r.ok ? r.json() : []).then(setAppGroups);
   }, [applicationGroupsApiUrl]);
-  const addToast = (0, import_react10.useCallback)((message, type = "info") => {
+  const addToast = (0, import_react12.useCallback)((message, type = "info") => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 5e3);
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     const handler = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
@@ -32158,18 +33396,26 @@ function CanvasApp({
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     if (!selectedId) {
       setPropsHtml("");
       return;
     }
     fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } }).then((r) => r.ok ? r.text() : "").then(setPropsHtml);
   }, [selectedId, apiUrl]);
-  const selectResource = (0, import_react10.useCallback)((id) => {
+  const selectResource = (0, import_react12.useCallback)((id) => {
     setSelectedId(id === selectedId ? null : id);
   }, [selectedId]);
-  const deselectAll = (0, import_react10.useCallback)(() => setSelectedId(null), []);
-  const addResource = (0, import_react10.useCallback)(async (moduleId, posX, posY) => {
+  const deselectAll = (0, import_react12.useCallback)(() => setSelectedId(null), []);
+  const addResource = (0, import_react12.useCallback)(async (moduleId, posX, posY) => {
+    if (canvasLocked) {
+      addToast("Canvas is locked by " + (lockState.holder?.user_name || lockState.holder?.user_email || "another user"), "error");
+      return;
+    }
+    if (!lockState.isMe) {
+      addToast("Acquire the canvas lock before editing", "error");
+      return;
+    }
     const body = { module_definition_id: moduleId };
     if (posX != null) body.position_x = posX;
     if (posY != null) body.position_y = posY;
@@ -32194,17 +33440,27 @@ function CanvasApp({
         addToast(data.error, "error");
       }
     }
-  }, [apiUrl, addToast]);
-  const updateResourcePosition = (0, import_react10.useCallback)(async (id, x, y) => {
+  }, [apiUrl, addToast, canvasLocked, lockState]);
+  const updateResourcePosition = (0, import_react12.useCallback)(async (id, x, y) => {
+    if (canvasLocked || !lockState.isMe) return;
     setResources((prev) => prev.map((r) => r.id === id ? { ...r, position_x: x, position_y: y } : r));
     await fetch(`${apiUrl}/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
       body: JSON.stringify({ position_x: x, position_y: y })
     });
-  }, [apiUrl]);
-  const deleteResource = (0, import_react10.useCallback)(async (id) => {
-    if (!confirm("Delete this resource?")) return;
+  }, [apiUrl, canvasLocked, lockState]);
+  const deleteResource = (0, import_react12.useCallback)(async (id) => {
+    if (canvasLocked || !lockState.isMe) {
+      addToast("Acquire the canvas lock before editing", "error");
+      return;
+    }
+    setDeleteConfirmId(id);
+  }, [canvasLocked, lockState, addToast]);
+  const confirmDeleteResource = (0, import_react12.useCallback)(async () => {
+    const id = deleteConfirmId;
+    if (!id) return;
+    setDeleteConfirmId(null);
     const resp = await fetch(`${apiUrl}/${id}`, {
       method: "DELETE",
       headers: { "X-CSRF-Token": csrf() }
@@ -32214,8 +33470,9 @@ function CanvasApp({
       setConnections((prev) => prev.filter((c) => c.from_resource_id !== id && c.to_resource_id !== id));
       if (selectedId === id) setSelectedId(null);
     }
-  }, [apiUrl, selectedId]);
-  const createConnection = (0, import_react10.useCallback)(async (fromId, toId) => {
+  }, [apiUrl, selectedId, deleteConfirmId]);
+  const createConnection = (0, import_react12.useCallback)(async (fromId, toId) => {
+    if (canvasLocked || !lockState.isMe) return;
     if (connections.some((c) => c.from_resource_id === fromId && c.to_resource_id === toId)) return;
     const resp = await fetch(connectionsApiUrl, {
       method: "POST",
@@ -32226,23 +33483,23 @@ function CanvasApp({
       const conn = await resp.json();
       setConnections((prev) => [...prev, conn]);
     }
-  }, [connectionsApiUrl, connections]);
-  const startConnect = (0, import_react10.useCallback)((id) => {
+  }, [connectionsApiUrl, connections, canvasLocked, lockState]);
+  const startConnect = (0, import_react12.useCallback)((id) => {
     setConnectMode(true);
     setConnectFromId(id || selectedId);
   }, [selectedId]);
-  const completeConnect = (0, import_react10.useCallback)((toId) => {
+  const completeConnect = (0, import_react12.useCallback)((toId) => {
     if (connectFromId && toId !== connectFromId) {
       createConnection(connectFromId, toId);
     }
     setConnectMode(false);
     setConnectFromId(null);
   }, [connectFromId, createConnection]);
-  const cancelConnect = (0, import_react10.useCallback)(() => {
+  const cancelConnect = (0, import_react12.useCallback)(() => {
     setConnectMode(false);
     setConnectFromId(null);
   }, []);
-  const createAppGroup = (0, import_react10.useCallback)(async (name, color) => {
+  const createAppGroup = (0, import_react12.useCallback)(async (name, color) => {
     const resp = await fetch(applicationGroupsApiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
@@ -32255,7 +33512,7 @@ function CanvasApp({
     }
     return null;
   }, [applicationGroupsApiUrl]);
-  const deleteAppGroup = (0, import_react10.useCallback)(async (groupId) => {
+  const deleteAppGroup = (0, import_react12.useCallback)(async (groupId) => {
     const resp = await fetch(`${applicationGroupsApiUrl}/${groupId}`, {
       method: "DELETE",
       headers: { "X-CSRF-Token": csrf() }
@@ -32267,7 +33524,7 @@ function CanvasApp({
       ));
     }
   }, [applicationGroupsApiUrl]);
-  const assignResourceToGroup = (0, import_react10.useCallback)(async (resourceId, groupId) => {
+  const assignResourceToGroup = (0, import_react12.useCallback)(async (resourceId, groupId) => {
     const resp = await fetch(`${apiUrl}/${resourceId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
@@ -32283,47 +33540,57 @@ function CanvasApp({
       })));
     }
   }, [apiUrl]);
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "cv-app", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("nav", { className: "cv-topbar", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("a", { href: rootPath, className: "cv-logo", style: { textDecoration: "none", color: "inherit" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "cv-logo-bars", "aria-hidden": "true", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", {})
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-app", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("nav", { className: "cv-topbar", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("a", { href: rootPath, className: "cv-logo", style: { textDecoration: "none", color: "inherit" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-logo-bars", "aria-hidden": "true", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {})
           ] }),
           "Factor Fifty"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "cv-breadcrumb", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: customer.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-breadcrumb", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: customer.name }),
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "\u203A" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: project.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "\u203A" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: project.name }),
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "\u203A" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "curr", children: environment.name })
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "\u203A" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "curr", children: environment.name })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "cv-top-right", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("a", { href: "/modules", className: "cv-btn cv-btn-secondary cv-btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", children: "\u2726 New Environment" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => setActiveScreen("deploy"), children: "\u25B6 Deploy" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "cv-avatar", children: currentUser || "U" })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-top-right", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: "/modules", className: "cv-btn cv-btn-secondary cv-btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", children: "\u2726 New Environment" }),
+        lockState.isMe ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: releaseLock, style: { color: "var(--accent-green, #3fb950)" }, children: "\u{1F513} Editing \xB7 Unlock" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          "button",
+          {
+            className: "cv-btn cv-btn-primary cv-btn-sm",
+            onClick: acquireLock,
+            disabled: acquiringLock,
+            children: acquiringLock ? "Acquiring\u2026" : canvasLocked ? `\u{1F512} Locked by ${lockState.holder?.user_name || lockState.holder?.user_email || "someone"}` : "\u{1F512} Lock to Edit"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => setActiveScreen("deploy"), children: "\u25B6 Deploy" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cv-avatar", children: currentUser || "U" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "screen-selector", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "screen-selector", children: [
       { id: "canvas", label: "\u2460 Canvas & Guardrails" },
       { id: "rules", label: "\u2461 Business Rules" },
       { id: "promote", label: "\u2462 Promote & Sync" },
       { id: "templates", label: "\u2463 Templates" },
       { id: "import", label: "\u2464 Import" },
-      { id: "deploy", label: "\u2465 Deploy & IaC Engine" }
-    ].map((s) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      { id: "deploy", label: "\u2465 Deploy & IaC Engine" },
+      { id: "global_tags", label: "\u{1F3F7}\uFE0F Global Tags" }
+    ].map((s) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       "button",
       {
         className: `screen-btn${activeScreen === s.id ? " active" : ""}`,
@@ -32332,38 +33599,52 @@ function CanvasApp({
       },
       s.id
     )) }),
-    activeScreen === "canvas" && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "group-filter-bar", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    activeScreen === "canvas" && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+      canvasLocked && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-lock-banner", style: {
+        background: "var(--accent-orange, #d29922)",
+        color: "#000",
+        padding: "8px 16px",
+        fontSize: 13,
+        fontWeight: 500,
+        display: "flex",
+        alignItems: "center",
+        gap: 8
+      }, children: [
+        "\u{1F512} Canvas is being edited by ",
+        lockState.holder?.user_name || lockState.holder?.user_email || "another user",
+        ". View-only mode until they release the lock."
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "group-filter-bar", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
           "button",
           {
             className: `group-filter-tab${!selectedGroupId ? " active" : ""}`,
             onClick: () => setSelectedGroupId(null),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "group-filter-dot", style: { background: "var(--text-muted)" } }),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-dot", style: { background: "var(--text-muted)" } }),
               "All Resources ",
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "group-filter-count", children: resources.length })
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-count", children: resources.length })
             ]
           }
         ),
         appGroups.map((g) => {
           const count = resources.filter((r) => r.application_group_id === g.id).length;
-          return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
             "button",
             {
               className: `group-filter-tab${selectedGroupId === g.id ? " active" : ""}`,
               onClick: () => setSelectedGroupId(selectedGroupId === g.id ? null : g.id),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "group-filter-dot", style: { background: g.color } }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-dot", style: { background: g.color } }),
                 g.name,
                 " ",
-                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "group-filter-count", children: count })
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-count", children: count })
               ]
             },
             g.id
           );
         }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
             className: "group-filter-tab",
@@ -32373,7 +33654,7 @@ function CanvasApp({
           }
         )
       ] }),
-      showCreateGroupModal && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      showCreateGroupModal && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
         CreateGroupModal,
         {
           onCreate: async (name, color) => {
@@ -32383,8 +33664,8 @@ function CanvasApp({
           onClose: () => setShowCreateGroupModal(false)
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "cv-main", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-main", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           CatalogPanel,
           {
             modules: catalogModules,
@@ -32393,7 +33674,7 @@ function CanvasApp({
             onAddResource: addResource
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           CanvasArea,
           {
             resources: selectedGroupId ? resources.filter((r) => r.application_group_id === selectedGroupId) : resources,
@@ -32412,10 +33693,11 @@ function CanvasApp({
             siblingEnvs,
             environment,
             canvasPath,
-            appGroups
+            appGroups,
+            readOnly: canvasLocked || !lockState.isMe
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           RightPanel,
           {
             selectedId,
@@ -32436,12 +33718,21 @@ function CanvasApp({
         )
       ] })
     ] }),
-    activeScreen === "rules" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(BusinessRulesScreen, { rulesApiUrl: businessRulesApiUrl }),
-    activeScreen === "promote" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(PromoteScreen, {}),
-    activeScreen === "templates" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TemplatesScreen, {}),
-    activeScreen === "import" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ImportScreen, {}),
-    activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(DeployScreen, {}),
-    cmdOpen && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+    activeScreen === "rules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BusinessRulesScreen, { rulesApiUrl: businessRulesApiUrl }),
+    activeScreen === "promote" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      PromoteScreen,
+      {
+        project,
+        environment,
+        siblingEnvs,
+        promotionsApiUrl: `/api/projects/${project.id}/promotions`
+      }
+    ),
+    activeScreen === "templates" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TemplatesScreen, {}),
+    activeScreen === "import" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ImportScreen, {}),
+    activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DeployScreen, { environmentId }),
+    activeScreen === "global_tags" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(GlobalTagsScreen, {}),
+    cmdOpen && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       CommandPalette,
       {
         resources,
@@ -32454,16 +33745,42 @@ function CanvasApp({
         onAddModule: (id) => {
           addResource(id);
           setCmdOpen(false);
-        }
+        },
+        appGroups,
+        onSelectGroup: (id) => {
+          setSelectedGroupId(id);
+          setCmdOpen(false);
+        },
+        onCreateGroup: createAppGroup
       }
     ),
-    toasts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "cv-toasts", children: toasts.map((t) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: `cv-toast cv-toast-${t.type}`, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
+    deleteConfirmId && (() => {
+      const res = resources.find((r) => r.id === deleteConfirmId);
+      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+        if (e.target === e.currentTarget) setDeleteConfirmId(null);
+      }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-panel", style: { maxWidth: 420 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { className: "modal-title", style: { color: "var(--red)" }, children: "Delete Resource" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "modal-close", onClick: () => setDeleteConfirmId(null), "aria-label": "Close", children: "\xD7" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: [
+          "Are you sure you want to delete ",
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: { fontWeight: 600, color: "var(--text-primary)" }, children: res?.name || "this resource" }),
+          "? This will also remove all its connections."
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-footer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: () => setDeleteConfirmId(null), children: "Cancel" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-danger", onClick: confirmDeleteResource, children: "Delete" })
+        ] })
+      ] }) });
+    })(),
+    toasts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cv-toasts", children: toasts.map((t) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: `cv-toast cv-toast-${t.type}`, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { children: [
         t.type === "error" ? "\u{1F6AB}" : "\u26A0\uFE0F",
         " ",
         t.message
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-toast-close", onClick: () => setToasts((prev) => prev.filter((x) => x.id !== t.id)), children: "\xD7" })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-toast-close", onClick: () => setToasts((prev) => prev.filter((x) => x.id !== t.id)), children: "\xD7" })
     ] }, t.id)) })
   ] });
 }
@@ -32511,7 +33828,7 @@ var ReactController = class extends Controller {
     if (!this.root) {
       this.root = (0, import_client.createRoot)(this.element);
     }
-    this.root.render((0, import_react11.createElement)(Component, this.propsValue));
+    this.root.render((0, import_react13.createElement)(Component, this.propsValue));
   }
 };
 
@@ -34062,19 +35379,57 @@ var canvas_main_controller_default = class extends Controller {
   }
   async deleteResource(e) {
     const resourceId = e.target.closest("[data-resource-id]")?.dataset.resourceId || this.selectedId;
-    if (!resourceId || !confirm("Delete this resource?")) return;
-    const resp = await fetch(`${this.apiUrlValue}/${resourceId}`, {
-      method: "DELETE",
-      headers: { "X-CSRF-Token": this.csrf }
+    if (!resourceId) return;
+    const res = this.resourcesValue.find((r) => r.id === resourceId);
+    const name = res?.name || "this resource";
+    this._showDeleteModal(name, async () => {
+      const resp = await fetch(`${this.apiUrlValue}/${resourceId}`, {
+        method: "DELETE",
+        headers: { "X-CSRF-Token": this.csrf }
+      });
+      if (resp.ok) {
+        this.resourcesValue = this.resourcesValue.filter((r) => r.id !== resourceId);
+        this.connectionsValue = this.connectionsValue.filter(
+          (c) => c.from_resource_id !== resourceId && c.to_resource_id !== resourceId
+        );
+        if (this.selectedId === resourceId) this.deselectAll();
+        this.render();
+      }
     });
-    if (resp.ok) {
-      this.resourcesValue = this.resourcesValue.filter((r) => r.id !== resourceId);
-      this.connectionsValue = this.connectionsValue.filter(
-        (c) => c.from_resource_id !== resourceId && c.to_resource_id !== resourceId
-      );
-      if (this.selectedId === resourceId) this.deselectAll();
-      this.render();
-    }
+  }
+  _showDeleteModal(resourceName, onConfirm) {
+    document.getElementById("stim-delete-modal")?.remove();
+    const overlay = document.createElement("div");
+    overlay.id = "stim-delete-modal";
+    overlay.className = "modal-overlay";
+    overlay.style.display = "flex";
+    overlay.innerHTML = `
+          <div class="modal-panel" style="max-width:420px;">
+            <div class="modal-header">
+              <h3 class="modal-title" style="color:var(--red);">Delete Resource</h3>
+              <button class="modal-close" data-dismiss aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p style="font-size:13px;color:var(--text-secondary);">
+                Are you sure you want to delete <span style="font-weight:600;color:var(--text-primary);">${resourceName}</span>?
+                This will also remove all its connections.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-ghost" data-dismiss>Cancel</button>
+              <button type="button" class="btn btn-danger" data-confirm>Delete</button>
+            </div>
+          </div>
+        `;
+    const close = () => overlay.remove();
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay || e.target.closest("[data-dismiss]")) close();
+      if (e.target.closest("[data-confirm]")) {
+        close();
+        onConfirm();
+      }
+    });
+    document.body.appendChild(overlay);
   }
   // ── Add Resource ──
   async addResource(moduleId, posX, posY) {

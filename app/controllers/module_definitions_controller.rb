@@ -31,6 +31,10 @@ class ModuleDefinitionsController < AuthenticatedController
 
   # GET /modules/:id/edit
   def edit
+    @module_definition = ModuleDefinition.includes(
+      :module_fields, :module_outputs,
+      module_renderers: :field_mappings
+    ).find(params[:id])
   end
 
   # PATCH /modules/:id
@@ -107,7 +111,22 @@ class ModuleDefinitionsController < AuthenticatedController
     permitted = params.require(:module_definition).permit(
       :display_name, :category, :status, :ownership,
       :visibility, :description, :version, :icon,
-      :constraints, :supported_engines, allowed_zones: []
+      :constraints, :supported_engines,
+      allowed_zones: [],
+      module_fields_attributes: [
+        :id, :name, :label, :field_type, :classification,
+        :required, :default_value, :group, :position, :validation, :_destroy
+      ],
+      module_outputs_attributes: [
+        :id, :name, :description, :output_type, :_destroy
+      ],
+      module_renderers_attributes: [
+        :id, :engine, :source_type, :source_url, :source_ref, :source_subpath,
+        :git_credential_id, :_destroy,
+        field_mappings_attributes: [
+          :id, :platform_field, :renderer_variable, :mapping_type, :transform, :_destroy
+        ]
+      ]
     )
     permitted[:allowed_zones] = permitted[:allowed_zones]&.reject(&:blank?)
     permitted[:constraints] = JSON.parse(permitted[:constraints]) if permitted[:constraints].is_a?(String)

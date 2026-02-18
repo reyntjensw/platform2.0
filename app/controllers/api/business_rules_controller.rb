@@ -78,12 +78,13 @@ module Api
       raw = params.require(:business_rule)
       permitted = raw.permit(
         :name, :description, :severity, :rule_type,
-        :scope_type, :cloud_provider, :customer_id
+        :scope_type, :cloud_provider, :customer_id,
+        conditions: {},
+        actions: {}
       )
-      # conditions & actions contain nested arrays of hashes that
-      # Rails strong params cannot express — extract from raw params
-      permitted[:conditions] = raw[:conditions].to_unsafe_h if raw[:conditions].present?
-      permitted[:actions] = raw[:actions].to_unsafe_h if raw[:actions].present?
+      # Deep-permit nested structures that Rails strong params can't express
+      permitted[:conditions] = raw[:conditions].to_unsafe_h if raw.key?(:conditions)
+      permitted[:actions] = raw[:actions].to_unsafe_h if raw.key?(:actions)
       permitted
     end
 

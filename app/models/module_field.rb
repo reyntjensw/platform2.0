@@ -19,4 +19,16 @@ class ModuleField < ApplicationRecord
   def default_for_env(env_type)
     defaults_by_env&.dig(env_type) || default_value
   end
+
+  def validation=(val)
+    if val.is_a?(String) && val.present?
+      super(JSON.parse(val))
+    elsif val.is_a?(String) && val.blank?
+      super({})
+    else
+      super
+    end
+  rescue JSON::ParserError
+    super(val)
+  end
 end

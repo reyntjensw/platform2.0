@@ -192,6 +192,10 @@
               <div style="margin-top:10px;">
                 <%= link_to "🎨 Open Canvas", canvas_path(local_env), class: "btn btn-green btn-sm", style: "text-decoration:none;" %>
               </div>
+            <% else %>
+              <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">
+                No canvas linked — create one below and link it to <span class="mono"><%= env.account_id %></span>
+              </div>
             <% end %>
           </div>
         <% end %>
@@ -202,10 +206,16 @@
 
     <%# ═══ Canvas Environments (from local DB) ═══ %>
     <% canvas_envs = LocalEnvironment.includes(local_project: :local_customer).order(:env_type) %>
-    <% if canvas_envs.any? %>
-      <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:24px;">
-        <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">🎨 Canvas Environments</h2>
-        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Infrastructure-as-Code canvas for designing and deploying resources.</p>
+    <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">🎨 Canvas Environments</h2>
+          <p style="font-size:12px;color:var(--text-secondary);">Infrastructure-as-Code canvas for designing and deploying resources.</p>
+        </div>
+        <button class="btn btn-green btn-sm" onclick="document.getElementById('create-canvas-modal').style.display='flex'">+ Create Canvas</button>
+      </div>
+
+      <% if canvas_envs.any? %>
         <div class="card-grid">
           <% canvas_envs.each do |cenv| %>
             <div class="card">
@@ -214,14 +224,167 @@
                 <span class="badge badge-<%= cenv.env_type == 'prd' ? 'prd' : 'dev' %>"><%= cenv.env_type.upcase %></span>
               </div>
               <div class="card-meta"><%= cenv.local_project.name %> · <%= cenv.cloud_provider.upcase %> · <%= cenv.region %></div>
-              <div style="margin-top:10px;">
+
+              <%# Show linked account if any %>
+              <% linked_account = cenv.aws_account_id || cenv.azure_subscription_id || cenv.gcp_project_id %>
+              <% if linked_account %>
+                <div style="margin-top:6px;font-size:11px;color:var(--text-muted);">
+                  🔗 Linked: <span class="mono"><%= linked_account %></span>
+                </div>
+              <% end %>
+
+              <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
                 <%= link_to "Open Canvas →", canvas_path(cenv), class: "btn btn-green btn-sm", style: "text-decoration:none;" %>
+
+                <%# Link / Unlink button %>
+                <% if linked_account %>
+                  <%= button_to "Unlink",
+                        unlink_customer_project_canvas_environment_path(params[:customer_uuid], @project.uuid, cenv),
+                        method: :patch,
+                        class: "btn btn-ghost btn-sm",
+                        data: { turbo_confirm: "Unlink canvas '#{cenv.name}' from account #{linked_account}?" } %>
+                <% else %>
+                  <button class="btn btn-ghost btn-sm"
+                          onclick="openLinkModal('<%= cenv.id %>', '<%= cenv.name %>', '<%= cenv.cloud_provider %>')">
+                    🔗 Link
+                  </button>
+                <% end %>
+
+                <%# Delete button %>
+                <button class="btn btn-ghost btn-sm"
+                        style="color:var(--red);"
+                        onclick="openDeleteCanvasModal('<%= cenv.id %>', '<%= j cenv.name %>')">
+                  🗑
+                </button>
               </div>
             </div>
           <% end %>
         </div>
+      <% else %>
+        <%= render "shared/empty_state", icon: "🎨", title: "No canvas environments yet", description: "Create a canvas to start designing infrastructure." %>
+      <% end %>
+    </div>
+
+    <%# ═══ Create Canvas Modal ═══ %>
+    <div id="create-canvas-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+      <div class="modal-panel" style="max-width:480px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Create Canvas Environment</h3>
+          <button class="modal-close" onclick="document.getElementById('create-canvas-modal').style.display='none'" aria-label="Close">&times;</button>
+        </div>
+        <%= form_with url: customer_project_canvas_environments_path(params[:customer_uuid], @project.uuid), method: :post, local: true do |f| %>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label">Name *</label>
+              <input type="text" name="canvas_environment[name]" class="form-input" placeholder="e.g. Development" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Environment Type *</label>
+              <select name="canvas_environment[env_type]" class="form-input" required>
+                <option value="dev">Development (DEV)</option>
+                <option value="acc">Acceptance (ACC)</option>
+                <option value="prd">Production (PRD)</option>
+                <option value="shared">Shared</option>
+              </select>
+            </div>
+            <% if @environments.any? %>
+              <div class="form-group">
+                <label class="form-label">Link to environment</label>
+                <select name="account_id" class="form-input">
+                  <option value="">— None (link later) —</option>
+                  <% @environments.each do |env| %>
+                    <option value="<%= env.account_id %>" <%= @environments.size == 1 ? "selected" : "" %>><%= env.name %> (<%= env.account_id %>)</option>
+                  <% end %>
+                </select>
+                <span style="font-size:11px;color:var(--text-muted);margin-top:2px;display:block;">Links the canvas to a cloud account so deployments can target it.</span>
+              </div>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('create-canvas-modal').style.display='none'">Cancel</button>
+            <button type="submit" class="btn btn-green">Create Canvas</button>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
+    <%# ═══ Link Canvas Modal ═══ %>
+    <div id="link-canvas-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+      <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Link Canvas to Environment</h3>
+          <button class="modal-close" onclick="document.getElementById('link-canvas-modal').style.display='none'" aria-label="Close">&times;</button>
+        </div>
+        <form id="link-canvas-form" method="post">
+          <input type="hidden" name="_method" value="patch">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <div class="modal-body">
+            <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">
+              Link canvas <span id="link-canvas-name" style="font-weight:600;color:var(--text-primary);"></span> to a platform environment.
+            </p>
+            <div class="form-group">
+              <label class="form-label" id="link-account-label">Account ID *</label>
+              <% if @environments.any? %>
+                <select name="account_id" class="form-input" id="link-account-select">
+                  <option value="">— Select an environment —</option>
+                  <% @environments.each do |env| %>
+                    <option value="<%= env.account_id %>"><%= env.name %> (<%= env.account_id %>)</option>
+                  <% end %>
+                </select>
+              <% else %>
+                <input type="text" name="account_id" class="form-input" placeholder="123456789012" required>
+              <% end %>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('link-canvas-modal').style.display='none'">Cancel</button>
+            <button type="submit" class="btn btn-green">Link</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <%# ═══ Delete Canvas Confirmation Modal ═══ %>
+    <div id="delete-canvas-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+      <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-header">
+          <h3 class="modal-title" style="color:var(--red);">Delete Canvas Environment</h3>
+          <button class="modal-close" onclick="document.getElementById('delete-canvas-modal').style.display='none'" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size:13px;color:var(--text-secondary);">
+            Are you sure you want to delete <span id="delete-canvas-name" style="font-weight:600;color:var(--text-primary);"></span>?
+            This will remove all resources and deployments. This action cannot be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="document.getElementById('delete-canvas-modal').style.display='none'">Cancel</button>
+          <form id="delete-canvas-form" method="post" style="margin:0;">
+            <input type="hidden" name="_method" value="delete">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openDeleteCanvasModal(envId, envName) {
+        document.getElementById('delete-canvas-name').textContent = envName;
+        var basePath = '<%= customer_project_canvas_environments_path(params[:customer_uuid], @project.uuid) %>';
+        document.getElementById('delete-canvas-form').action = basePath + '/' + envId;
+        document.getElementById('delete-canvas-modal').style.display = 'flex';
+      }
+
+      function openLinkModal(envId, envName, cloudProvider) {
+        document.getElementById('link-canvas-name').textContent = envName;
+        var basePath = '<%= customer_project_canvas_environments_path(params[:customer_uuid], @project.uuid) %>';
+        document.getElementById('link-canvas-form').action = basePath + '/' + envId + '/link';
+        document.getElementById('link-account-label').textContent =
+          cloudProvider === 'azure' ? 'Subscription ID *' : 'Account ID *';
+        document.getElementById('link-canvas-modal').style.display = 'flex';
+      }
+    </script>
 
     <% if provider == "aws" %>
       <%# ── AWS Create Environment Modal (2-step) ── %>

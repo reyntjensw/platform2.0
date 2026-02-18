@@ -10,6 +10,7 @@ export default function RightPanel({
   const [activeTab, setActiveTab] = useState("overview")
   const [newGroupName, setNewGroupName] = useState("")
   const [newGroupColor, setNewGroupColor] = useState("#58a6ff")
+  const [saveFlash, setSaveFlash] = useState(null) // "saved" | "error" | null
 
   // Switch to overview/group tab when group filter changes
   useEffect(() => {
@@ -50,7 +51,14 @@ export default function RightPanel({
         headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
         body: JSON.stringify({ config })
       })
-      if (resp.ok && onPropsSaved) onPropsSaved(resourceId)
+      if (resp.ok) {
+        if (onPropsSaved) onPropsSaved(resourceId)
+        setSaveFlash("saved")
+        setTimeout(() => setSaveFlash(null), 2000)
+      } else {
+        setSaveFlash("error")
+        setTimeout(() => setSaveFlash(null), 3000)
+      }
     }
 
     const handleClick = (e) => {
@@ -206,6 +214,16 @@ export default function RightPanel({
               </div>
             ) : (
               <div>
+                {saveFlash && (
+                  <div style={{
+                    padding: "6px 10px", marginBottom: 8, borderRadius: 6, fontSize: 11, fontWeight: 600,
+                    background: saveFlash === "saved" ? "rgba(16,185,129,0.12)" : "rgba(239,68,68,0.12)",
+                    color: saveFlash === "saved" ? "var(--accent-green)" : "var(--accent-red)",
+                    border: `1px solid ${saveFlash === "saved" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`
+                  }}>
+                    {saveFlash === "saved" ? "✓ Saved" : "✗ Save failed"}
+                  </div>
+                )}
                 <div ref={propsRef} dangerouslySetInnerHTML={{ __html: propsHtml }} />
                 {appGroups && assignResourceToGroup && (
                   <div style={{ padding: "8px 0", borderTop: "1px solid var(--border, #30363d)" }}>
