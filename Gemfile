@@ -31,7 +31,7 @@ gem "aws-sdk-s3"
 # Keycloak OIDC authentication [https://github.com/omniauth/omniauth]
 gem "omniauth"
 gem "omniauth-keycloak", "~> 1.5"
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-rails_csrf_protection", "~> 2.0"
 
 # Redis-backed session store [https://github.com/roidrage/redis-session-store]
 gem "redis-session-store"
