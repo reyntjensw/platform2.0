@@ -1,9 +1,15 @@
-<div class="page-content" style="max-width:1200px;margin:0 auto">
-  <div style="margin-bottom:20px">
-    <%= link_to "← Back to #{@module_definition.display_name}", module_path(@module_definition), class: "back-link" %>
-    <h2 style="font-size:18px;font-weight:600;margin-top:8px;margin-bottom:4px">Edit <%= @module_definition.display_name %></h2>
-    <p style="font-size:12px;color:var(--text-secondary)">Update module metadata, fields, outputs, and renderers.</p>
+<% content_for(:title) { "Edit #{@module_definition.display_name} — Factor Fifty" } %>
+
+<div style="margin-bottom:20px">
+  <%= link_to "← Back to #{@module_definition.display_name}", module_path(@module_definition), style: "font-size:12px;color:var(--text-secondary);text-decoration:none;" %>
+</div>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Edit <%= @module_definition.display_name %></h1>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Update module metadata, fields, outputs, and renderers.</p>
   </div>
+</div>
 
   <% if @module_definition.errors.any? %>
     <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:14px;margin-bottom:16px">
@@ -285,7 +291,6 @@
       <%= f.submit "Save Changes", class: "mod-btn-primary" %>
     </div>
   <% end %>
-</div>
 
 <script>
   // Counter for unique nested field IDs

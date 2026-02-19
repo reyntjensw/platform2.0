@@ -1,59 +1,59 @@
 <% content_for(:title) { "#{@customer.name} — Factor Fifty" } %>
 
 <div class="page-header">
-  <h2><%= @customer.name %></h2>
-</div>
-
-<div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
-  <div class="section-header" style="display: flex; align-items: center; justify-content: space-between;">
-    <h3>Projects</h3>
-    <button class="btn btn-green btn-sm" data-action="click->modal#open">+ New Project</button>
+  <div>
+    <h1 class="page-title">Projects</h1>
   </div>
+  <div class="header-actions">
+    <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
+      <button class="btn btn-green btn-sm" data-action="click->modal#open">+ New Project</button>
 
-  <%# ── New Project Modal ── %>
-  <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
-    <div class="modal-panel" data-controller="project-form"
-         data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
-      <div class="modal-header">
-        <h3 class="modal-title">New Project</h3>
-        <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+      <%# ── New Project Modal ── %>
+      <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
+        <div class="modal-panel" data-controller="project-form"
+             data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
+          <div class="modal-header">
+            <h3 class="modal-title">New Project</h3>
+            <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+          </div>
+
+          <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="form-label" for="project_name">Project name *</label>
+                <input type="text" name="project[name]" id="project_name"
+                       class="form-input" placeholder="Enter project name" required>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                  <label class="form-label" for="project_provider">Cloud provider *</label>
+                  <select name="project[provider]" id="project_provider" class="form-input" required
+                          data-project-form-target="provider"
+                          data-action="change->project-form#providerChanged">
+                    <option value="">Select a provider...</option>
+                    <option value="AWS">AWS</option>
+                    <option value="Azure">Azure</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="project_region">Project region *</label>
+                  <select name="project[region]" id="project_region" class="form-input" required
+                          data-project-form-target="region">
+                    <option value="">Select a provider first</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+              <%= f.submit "Create", class: "btn btn-green" %>
+            </div>
+          <% end %>
+        </div>
       </div>
-
-      <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="form-label" for="project_name">Project name *</label>
-            <input type="text" name="project[name]" id="project_name"
-                   class="form-input" placeholder="Enter project name" required>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div class="form-group">
-              <label class="form-label" for="project_provider">Cloud provider *</label>
-              <select name="project[provider]" id="project_provider" class="form-input" required
-                      data-project-form-target="provider"
-                      data-action="change->project-form#providerChanged">
-                <option value="">Select a provider...</option>
-                <option value="AWS">AWS</option>
-                <option value="Azure">Azure</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="project_region">Project region *</label>
-              <select name="project[region]" id="project_region" class="form-input" required
-                      data-project-form-target="region">
-                <option value="">Select a provider first</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
-          <%= f.submit "Create", class: "btn btn-green" %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>
@@ -74,22 +74,35 @@
       </span>
     </div>
 
-    <div class="card-grid" data-project-list-target="grid">
-      <% @projects.sort_by { |p| p.name.to_s.downcase }.each do |project| %>
+    <div class="entity-grid" data-project-list-target="grid">
+      <% @projects.sort_by { |p| p.name.to_s.downcase }.each_with_index do |project, i| %>
+        <% provider = project.provider.to_s.downcase %>
+        <% color = provider == "azure" ? "#0078d4" : "#ff9900" %>
         <%= link_to customer_project_path(@customer.uuid, project.uuid),
-              class: "card card-clickable card-gradient-hover",
+              class: "entity-card", style: "--accent-color: #{color};",
               data: { project_list_target: "card", name: project.name, provider: project.provider } do %>
-          <div class="card-header-row">
-            <div class="card-title"><%= project.name %></div>
+          <div class="entity-card-top">
+            <div class="entity-card-name"><%= project.name %></div>
             <% if project.provider.present? %>
               <%= render "shared/provider_icon", provider: project.provider %>
             <% end %>
           </div>
-          <% if project.status.present? %>
-            <div class="card-meta"><%= project.status %></div>
-          <% end %>
+          <div class="entity-card-meta"><%= project.status.presence || "unknown" %></div>
+          <div class="entity-card-footer">
+            <div class="entity-card-stat">
+              <div class="entity-card-dot" style="background: <%= color %>;"></div>
+              <%= provider.upcase %>
+            </div>
+            <span class="entity-card-arrow">→</span>
+          </div>
         <% end %>
       <% end %>
+
+      <%# Add card %>
+      <div class="entity-card entity-card-add" data-controller="modal" data-action="click->modal#open" style="cursor:pointer;">
+        <div class="entity-add-icon">+</div>
+        <span>New Project</span>
+      </div>
     </div>
 
     <div data-project-list-target="empty" style="display:none;">

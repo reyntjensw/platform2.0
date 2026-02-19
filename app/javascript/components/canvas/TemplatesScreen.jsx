@@ -74,7 +74,7 @@ export default function TemplatesScreen() {
     <div className="tpl-layout">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
         <h2>Environment Templates</h2>
-        <button className="cv-btn cv-btn-primary">+ Create Template</button>
+        <button className="btn btn-green">+ Create Template</button>
       </div>
       <div className="tpl-filters">
         {FILTERS.map(f => (

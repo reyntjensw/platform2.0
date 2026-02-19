@@ -1,176 +1,197 @@
-<div class="page-content" style="max-width:1200px;margin:0 auto">
-  <div class="page-header">
-    <div class="page-header__breadcrumb">
-      <%= link_to "← Module Registry", modules_path, class: "back-link" %>
-    </div>
-    <div class="page-header__title-row">
-      <span class="module-icon-lg"><%= @module_definition.icon %></span>
-      <div>
-        <h1 class="page-title"><%= @module_definition.display_name %></h1>
-        <p class="page-subtitle"><%= @module_definition.description %></p>
-      </div>
-      <span class="cloud-badge cloud-badge--<%= @module_definition.cloud_provider %> cloud-badge--lg">
-        <%= @module_definition.cloud_provider.upcase %>
-      </span>
-    </div>
-    <div class="module-meta">
-      <span class="meta-tag">v<%= @module_definition.version %></span>
-      <span class="meta-tag"><%= @module_definition.category.capitalize %></span>
-      <span class="meta-tag meta-tag--<%= @module_definition.status %>"><%= @module_definition.status.capitalize %></span>
-      <span class="meta-tag"><%= @module_definition.ownership.capitalize %></span>
-      <% unless @module_definition.deployable? %>
-        <span class="meta-tag meta-tag--warning">Canvas only — deploy not available</span>
-      <% end %>
-    </div>
+<% content_for(:title) { "#{@module_definition.display_name} — Factor Fifty" } %>
 
-    <%# Action buttons %>
-    <div class="module-actions">
-      <%= link_to "Edit", edit_module_path(@module_definition), class: "f50-btn f50-btn--secondary f50-btn--sm" %>
-      <%= link_to "Updates", module_updates_path(@module_definition), class: "f50-btn f50-btn--secondary f50-btn--sm" %>
-      <% if @module_definition.deployable? %>
-        <%= button_to "Re-scan", rescan_module_path(@module_definition), method: :post, class: "f50-btn f50-btn--secondary f50-btn--sm" %>
-      <% end %>
-      <% if @module_definition.status != "deprecated" %>
-        <%= button_to "Deprecate", deprecate_module_path(@module_definition), method: :post, class: "f50-btn f50-btn--warning f50-btn--sm",
-            data: { turbo_confirm: "Deprecate #{@module_definition.display_name}? This will show a warning on the canvas and block new instances." } %>
-      <% end %>
-      <% if @usage_count == 0 %>
-        <%= button_to "Delete", module_path(@module_definition), method: :delete, class: "f50-btn f50-btn--danger f50-btn--sm",
-            data: { turbo_confirm: "Permanently delete #{@module_definition.display_name}?" } %>
-      <% else %>
-        <span class="meta-tag">Used by <%= @usage_count %> resource(s) — cannot delete</span>
-      <% end %>
+<div style="margin-bottom:20px;">
+  <%= link_to "← Module Registry", modules_path, style: "font-size:12px;color:var(--text-secondary);text-decoration:none;" %>
+</div>
+
+<div class="page-header">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="mod-icon mod-icon--<%= @module_definition.category %>" style="width:40px;height:40px;font-size:14px;"><%= @module_definition.icon %></div>
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <h1 class="page-title"><%= @module_definition.display_name %></h1>
+        <span class="mod-cloud-badge mod-cloud-<%= @module_definition.cloud_provider %>"><%= @module_definition.cloud_provider.upcase %></span>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;"><%= @module_definition.description %></p>
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+        <span class="mod-version-text" style="padding:2px 8px;background:var(--bg-input);border-radius:4px;"><%= @module_definition.version.to_s.start_with?("v") ? @module_definition.version : "v#{@module_definition.version}" %></span>
+        <span class="mod-renderer-badge" style="background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);"><%= @module_definition.category.capitalize %></span>
+        <% case @module_definition.status %>
+        <% when "live" %>
+          <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Live</span>
+        <% when "draft" %>
+          <span class="mod-status-badge mod-status-draft"><span class="mod-status-dot"></span>Draft</span>
+        <% when "deprecated" %>
+          <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Deprecated</span>
+        <% end %>
+        <span class="mod-renderer-badge" style="background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);"><%= @module_definition.ownership.capitalize %></span>
+        <% unless @module_definition.deployable? %>
+          <span class="mod-status-badge" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(245,158,11,0.2);">Canvas only — deploy not available</span>
+        <% end %>
+      </div>
     </div>
   </div>
+  <div class="header-actions" style="flex-wrap:wrap;align-items:center;gap:8px;">
+    <%= link_to "Edit", edit_module_path(@module_definition), class: "btn btn-ghost btn-sm" %>
+    <%= link_to "Updates", module_updates_path(@module_definition), class: "btn btn-ghost btn-sm" %>
+    <% if @module_definition.deployable? %>
+      <%= button_to "Re-scan", rescan_module_path(@module_definition), method: :post, class: "btn btn-ghost btn-sm", form: { style: "display:inline;" } %>
+    <% end %>
+    <% if @module_definition.status != "deprecated" %>
+      <%= button_to "Deprecate", deprecate_module_path(@module_definition), method: :post,
+          class: "btn btn-ghost btn-sm", style: "color:var(--orange);",
+          form: { style: "display:inline;" },
+          data: { turbo_confirm: "Deprecate #{@module_definition.display_name}? This will show a warning on the canvas and block new instances." } %>
+    <% end %>
+    <% if @usage_count == 0 %>
+      <%= button_to "Delete", module_path(@module_definition), method: :delete,
+          class: "btn btn-ghost btn-sm", style: "color:var(--red);",
+          form: { style: "display:inline;" },
+          data: { turbo_confirm: "Permanently delete #{@module_definition.display_name}?" } %>
+    <% else %>
+      <span style="font-size:11px;color:var(--text-muted);">Used by <%= @usage_count %> resource(s)</span>
+    <% end %>
+  </div>
+</div>
 
-  <%# Fields table %>
-  <section class="detail-section">
-    <h2 class="section-title">Fields (<%= @module_definition.module_fields.size %>)</h2>
-    <div class="table-wrap">
-      <table class="f50-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Label</th>
-            <th>Type</th>
-            <th>Classification</th>
-            <th>Required</th>
-            <th>Default</th>
-            <th>Group</th>
-            <th>Validation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @module_definition.module_fields.ordered.each do |field| %>
-            <tr>
-              <td class="mono"><%= field.name %></td>
-              <td><%= field.label %></td>
-              <td><span class="type-badge"><%= field.field_type %></span></td>
-              <td><span class="classification-badge classification-badge--<%= field.classification %>"><%= field.classification.humanize %></span></td>
-              <td><%= field.required? ? "✓" : "—" %></td>
-              <td class="mono"><%= field.default_value.present? ? field.default_value.to_json : "—" %></td>
-              <td><%= field.group || "—" %></td>
-              <td class="mono"><%= field.validation.present? ? field.validation.to_json : "—" %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </section>
+<%# Fields table %>
+<div class="mod-table-wrap" style="margin-bottom:20px;">
+  <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+    <h3 style="font-size:13px;font-weight:600;">Fields (<%= @module_definition.module_fields.size %>)</h3>
+  </div>
+  <table class="mod-tbl">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Label</th>
+        <th>Type</th>
+        <th>Classification</th>
+        <th>Required</th>
+        <th>Default</th>
+        <th>Group</th>
+        <th>Validation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @module_definition.module_fields.ordered.each do |field| %>
+        <tr class="mod-tbl__row">
+          <td><code style="font-family:var(--font-mono);font-size:11px;"><%= field.name %></code></td>
+          <td><span style="font-size:12px;"><%= field.label %></span></td>
+          <td><span class="mod-renderer-badge mod-renderer-tofu" style="font-size:10px;"><%= field.field_type %></span></td>
+          <td><span class="mod-renderer-badge" style="font-size:10px;background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);"><%= field.classification.humanize %></span></td>
+          <td><%= field.required? ? "✓" : "—" %></td>
+          <td><code style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);"><%= field.default_value.present? ? field.default_value.to_json : "—" %></code></td>
+          <td><span style="font-size:12px;color:var(--text-muted);"><%= field.group || "—" %></span></td>
+          <td><code style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);"><%= field.validation.present? ? field.validation.to_json : "—" %></code></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-  <%# Outputs table %>
-  <section class="detail-section">
-    <h2 class="section-title">Outputs (<%= @module_definition.module_outputs.size %>)</h2>
-    <div class="table-wrap">
-      <table class="f50-table">
-        <thead>
-          <tr><th>Name</th><th>Description</th><th>Type</th></tr>
-        </thead>
-        <tbody>
-          <% @module_definition.module_outputs.each do |output| %>
-            <tr>
-              <td class="mono"><%= output.name %></td>
-              <td><%= output.description %></td>
-              <td><span class="type-badge"><%= output.output_type %></span></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </section>
+<%# Outputs table %>
+<div class="mod-table-wrap" style="margin-bottom:20px;">
+  <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+    <h3 style="font-size:13px;font-weight:600;">Outputs (<%= @module_definition.module_outputs.size %>)</h3>
+  </div>
+  <table class="mod-tbl">
+    <thead>
+      <tr><th>Name</th><th>Description</th><th>Type</th></tr>
+    </thead>
+    <tbody>
+      <% @module_definition.module_outputs.each do |output| %>
+        <tr class="mod-tbl__row">
+          <td><code style="font-family:var(--font-mono);font-size:11px;"><%= output.name %></code></td>
+          <td><span style="font-size:12px;"><%= output.description %></span></td>
+          <td><span class="mod-renderer-badge mod-renderer-tofu" style="font-size:10px;"><%= output.output_type %></span></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-  <%# Renderers %>
-  <% if @module_definition.module_renderers.any? %>
-    <section class="detail-section">
-      <h2 class="section-title">Renderers</h2>
-      <% @module_definition.module_renderers.each do |renderer| %>
-        <div class="renderer-card">
-          <div class="renderer-card__header">
-            <span class="meta-tag"><%= renderer.engine.capitalize %></span>
-            <span class="meta-tag"><%= renderer.source_type %></span>
-            <span class="meta-tag meta-tag--<%= renderer.scan_status %>"><%= renderer.scan_status %></span>
-            <% if renderer.last_scanned_at %>
-              <span class="renderer-card__scanned">Scanned <%= time_ago_in_words(renderer.last_scanned_at) %> ago</span>
-            <% end %>
-          </div>
-          <div class="renderer-card__source">
-            <span class="mono"><%= renderer.source_url %></span>
-            <span class="meta-tag">ref: <%= renderer.source_ref %></span>
-          </div>
+<%# Renderers %>
+<% if @module_definition.module_renderers.any? %>
+  <% @module_definition.module_renderers.each do |renderer| %>
+    <div class="mod-panel" style="margin-bottom:16px;">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <h3 style="font-size:13px;font-weight:600;">Renderer</h3>
+        <span class="mod-renderer-badge mod-renderer-tofu"><%= renderer.engine.capitalize %></span>
+        <span class="mod-renderer-badge" style="background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);"><%= renderer.source_type %></span>
+        <% case renderer.scan_status %>
+        <% when "scanned" %>
+          <span class="mod-status-badge mod-status-live" style="font-size:10px;"><span class="mod-status-dot"></span>Scanned</span>
+        <% when "pending" %>
+          <span class="mod-status-badge mod-status-draft" style="font-size:10px;"><span class="mod-status-dot"></span>Pending</span>
+        <% when "error" %>
+          <span class="mod-status-badge mod-status-deprecated" style="font-size:10px;"><span class="mod-status-dot"></span>Error</span>
+        <% end %>
+        <% if renderer.last_scanned_at %>
+          <span style="margin-left:auto;font-size:11px;color:var(--text-muted);">Scanned <%= time_ago_in_words(renderer.last_scanned_at) %> ago</span>
+        <% end %>
+      </div>
+      <div style="padding:14px 18px;">
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);margin-bottom:8px;">
+          <%= renderer.source_url %>
+          <span class="mod-renderer-badge" style="font-size:10px;margin-left:6px;background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);">ref: <%= renderer.source_ref %></span>
+        </div>
 
-          <% if renderer.field_mappings.any? %>
-            <h3 class="subsection-title">Field Mappings</h3>
-            <table class="f50-table f50-table--compact">
+        <% if renderer.field_mappings.any? %>
+          <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
+            <h4 style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Field Mappings</h4>
+            <table class="mod-tbl">
               <thead>
-                <tr><th>Platform Field</th><th>→</th><th>Renderer Variable</th><th>Type</th></tr>
+                <tr><th>Platform Field</th><th></th><th>Renderer Variable</th><th>Type</th></tr>
               </thead>
               <tbody>
                 <% renderer.field_mappings.each do |mapping| %>
-                  <tr>
-                    <td class="mono"><%= mapping.platform_field %></td>
-                    <td>→</td>
-                    <td class="mono"><%= mapping.renderer_variable %></td>
-                    <td><span class="type-badge"><%= mapping.mapping_type %></span></td>
+                  <tr class="mod-tbl__row">
+                    <td><code style="font-family:var(--font-mono);font-size:11px;"><%= mapping.platform_field %></code></td>
+                    <td style="color:var(--text-muted);">→</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px;"><%= mapping.renderer_variable %></code></td>
+                    <td><span class="mod-renderer-badge mod-renderer-tofu" style="font-size:10px;"><%= mapping.mapping_type %></span></td>
                   </tr>
                 <% end %>
               </tbody>
             </table>
-          <% end %>
+          </div>
+        <% end %>
 
-          <%# Version history %>
-          <% if renderer.module_versions.any? %>
-            <h3 class="subsection-title">Versions (<%= renderer.module_versions.size %>)</h3>
-            <div class="version-list">
-              <% renderer.module_versions.recent.limit(5).each do |v| %>
-                <div class="version-item">
-                  <span class="mono"><%= v.version_ref %></span>
-                  <% if v.breaking? %>
-                    <span class="meta-tag meta-tag--error">Breaking</span>
-                  <% end %>
-                  <span class="version-item__date"><%= v.scanned_at&.strftime("%Y-%m-%d") %></span>
-                </div>
-              <% end %>
-            </div>
-            <%= link_to "View all versions →", module_updates_path(@module_definition), class: "link-subtle" %>
-          <% end %>
-        </div>
-      <% end %>
-    </section>
-  <% end %>
-
-  <%# Usage %>
-  <% if @affected_environments.any? %>
-    <section class="detail-section">
-      <h2 class="section-title">Usage (<%= @usage_count %> resources)</h2>
-      <div class="usage-list">
-        <% @affected_environments.each do |env| %>
-          <div class="usage-item">
-            <span><%= env.local_project.name %> / <%= env.name %></span>
-            <span class="meta-tag"><%= env.env_type %></span>
-            <span class="meta-tag"><%= env.cloud_provider.upcase %></span>
+        <%# Version history %>
+        <% if renderer.module_versions.any? %>
+          <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px;">
+            <h4 style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Versions (<%= renderer.module_versions.size %>)</h4>
+            <% renderer.module_versions.recent.limit(5).each do |v| %>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;">
+                <code style="font-family:var(--font-mono);"><%= v.version_ref %></code>
+                <% if v.breaking? %>
+                  <span class="mod-status-badge mod-status-deprecated" style="font-size:9px;padding:1px 6px;"><span class="mod-status-dot"></span>Breaking</span>
+                <% end %>
+                <span style="font-size:11px;color:var(--text-muted);margin-left:auto;"><%= v.scanned_at&.strftime("%Y-%m-%d") %></span>
+              </div>
+            <% end %>
+            <%= link_to "View all versions →", module_updates_path(@module_definition), style: "font-size:12px;color:var(--blue);margin-top:6px;display:inline-block;" %>
           </div>
         <% end %>
       </div>
-    </section>
+    </div>
   <% end %>
-</div>
+<% end %>
+
+<%# Usage %>
+<% if @affected_environments.any? %>
+  <div class="mod-table-wrap">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+      <h3 style="font-size:13px;font-weight:600;">Usage (<%= @usage_count %> resources)</h3>
+    </div>
+    <div style="padding:14px 18px;">
+      <% @affected_environments.each do |env| %>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;">
+          <span style="color:var(--text-primary);"><%= env.local_project.name %> / <%= env.name %></span>
+          <span class="mod-renderer-badge" style="font-size:10px;background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);"><%= env.env_type %></span>
+          <span class="mod-cloud-badge mod-cloud-<%= env.cloud_provider %>" style="font-size:10px;"><%= env.cloud_provider.upcase %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

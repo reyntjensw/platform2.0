@@ -1,27 +1,52 @@
 <% content_for(:title) { "Customers — Factor Fifty" } %>
 
-<div class="section-header" style="display: flex; align-items: center; justify-content: space-between;">
-  <h3>Customers</h3>
-  <% if current_user.platform_admin? %>
-    <%= link_to "← Back to Resellers", resellers_path, class: "btn btn-ghost btn-sm" %>
-  <% end %>
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Customers</h1>
+  </div>
+  <div class="header-actions">
+    <% if current_user.platform_admin? %>
+      <%= link_to "← Back to Resellers", resellers_path, class: "btn btn-ghost btn-sm" %>
+    <% end %>
+  </div>
 </div>
 
 <% if @customers.any? %>
-  <div class="card-grid">
-    <% @customers.each do |customer| %>
-      <%= link_to customer_path(customer.uuid), class: "card card-clickable card-gradient-hover" do %>
-        <div class="card-header-row">
-          <div class="card-title"><%= customer.name %></div>
-          <% if customer.inactive? %>
-            <span class="badge badge-inactive">Inactive</span>
-          <% end %>
+  <div class="entity-grid">
+    <% @customers.each_with_index do |customer, i| %>
+      <% color = %w[#4fc3f7 #56d490 #f6ad55 #a78bfa #fc8181 #39d2c0][i % 6] %>
+      <% initials = customer.name.to_s.split.map(&:first).join.upcase.first(2) %>
+      <%= link_to customer_path(customer.uuid), class: "entity-card", style: "--accent-color: #{color};", data: { turbo: false } do %>
+        <div class="entity-card-top">
+          <div class="entity-card-icon" style="background: <%= color %>1a; color: <%= color %>;"><%= initials %></div>
+          <div class="entity-card-badges">
+            <% if customer.vat_number.present? %>
+              <span class="entity-badge entity-badge-region">BE</span>
+            <% end %>
+            <% if customer.inactive? %>
+              <span class="entity-badge entity-badge-inactive">Inactive</span>
+            <% else %>
+              <span class="entity-badge entity-badge-active">Active</span>
+            <% end %>
+          </div>
         </div>
-        <% if customer.vat_number.present? %>
-          <div class="card-meta mono"><%= customer.vat_number %></div>
-        <% end %>
+        <div class="entity-card-name"><%= customer.name %></div>
+        <div class="entity-card-meta"><%= customer.vat_number.presence || "—" %></div>
+        <div class="entity-card-footer">
+          <div class="entity-card-stat">
+            <div class="entity-card-dot" style="background: #56d490;"></div>
+            Projects
+          </div>
+          <span class="entity-card-arrow">→</span>
+        </div>
       <% end %>
     <% end %>
+
+    <%# Add card %>
+    <div class="entity-card entity-card-add">
+      <div class="entity-add-icon">+</div>
+      <span>New Customer</span>
+    </div>
   </div>
 <% else %>
   <%= render "shared/empty_state",

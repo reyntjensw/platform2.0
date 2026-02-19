@@ -1,28 +1,52 @@
-<div class="page-content" data-controller="filter" style="max-width:1200px;margin:0 auto">
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
-    <div>
-      <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Module Registry</h2>
-      <p style="font-size:12px;color:var(--text-secondary)">All registered modules with their renderers, versions, and field mappings.</p>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <input type="search" class="f50-input" placeholder="Search modules..."
+<% content_for(:title) { "Module Registry — Factor Fifty" } %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Module Registry</h1>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">All registered modules with their renderers, versions, and field mappings.</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost btn-sm">↗ Export</button>
+    <%= link_to "+ New Module", new_module_import_path, class: "btn btn-green btn-sm" %>
+  </div>
+</div>
+
+<div data-controller="filter">
+  <div class="mod-toolbar">
+    <div class="mod-search-wrap">
+      <svg class="mod-search-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="mod-search-input" type="text" placeholder="Search modules…"
              data-action="input->filter#search" data-filter-target="searchInput"
-             aria-label="Search modules" style="width:200px">
-      <select class="f50-select" data-action="change->filter#setProvider" data-filter-target="providerSelect" style="width:120px">
-        <option value="">All Clouds</option>
-        <% @cloud_providers.each do |cp| %>
-          <option value="<%= cp %>" <%= 'selected' if params[:cloud_provider] == cp %>><%= cp.upcase %></option>
-        <% end %>
-      </select>
+             aria-label="Search modules">
     </div>
+
+    <select class="mod-filter-select" data-action="change->filter#setProvider" data-filter-target="providerSelect">
+      <option value="">All Clouds</option>
+      <% @cloud_providers.each do |cp| %>
+        <option value="<%= cp %>" <%= 'selected' if params[:cloud_provider] == cp %>><%= cp.upcase %></option>
+      <% end %>
+    </select>
+
+    <select class="mod-filter-select" data-action="change->filter#setStatus" data-filter-target="statusSelect">
+      <option value="">All Statuses</option>
+      <option value="live" <%= 'selected' if params[:status] == 'live' %>>Live</option>
+      <option value="draft" <%= 'selected' if params[:status] == 'draft' %>>Draft</option>
+      <option value="deprecated" <%= 'selected' if params[:status] == 'deprecated' %>>Deprecated</option>
+    </select>
+
+    <span class="mod-count-badge" data-filter-target="count"><%= @modules.size %> modules</span>
   </div>
 
-  <div class="mod-panel" data-filter-target="grid">
+  <div class="mod-table-wrap" data-filter-target="grid">
     <% if @modules.any? %>
-      <table class="mod-tbl">
+      <table class="mod-tbl mod-tbl--registry">
+        <colgroup>
+          <col><col><col><col><col><col><col><col>
+        </colgroup>
         <thead>
           <tr>
-            <th style="width:30px"></th>
             <th>Module</th>
             <th>Cloud</th>
             <th>Category</th>
@@ -35,52 +59,71 @@
         </thead>
         <tbody>
           <% @modules.each do |mod| %>
-            <tr class="mod-tbl__row" data-category="<%= mod.category %>" data-cloud="<%= mod.cloud_provider %>" data-name="<%= mod.display_name.downcase %>">
+            <tr class="mod-tbl__row"
+                data-category="<%= mod.category %>"
+                data-cloud="<%= mod.cloud_provider %>"
+                data-status="<%= mod.status %>"
+                data-name="<%= mod.display_name.downcase %>"
+                data-href="<%= module_path(mod) %>"
+                onclick="if(!event.target.closest('a,button')){Turbo.visit(this.dataset.href)}"
+                style="cursor:pointer;">
               <td>
-                <div class="mod-icon mod-icon--<%= mod.category %>"><%= mod.icon %></div>
+                <div class="mod-cell">
+                  <div class="mod-icon mod-icon--<%= mod.category %>"><%= mod.icon %></div>
+                  <span class="mod-cell-name"><%= mod.display_name %></span>
+                </div>
               </td>
               <td>
-                <%= link_to module_path(mod), class: "mod-name-link" do %>
-                  <strong><%= mod.display_name %></strong>
-                  <span class="mod-desc"><%= truncate(mod.description, length: 60) %></span>
-                <% end %>
+                <span class="mod-cloud-badge mod-cloud-<%= mod.cloud_provider %>"><%= mod.cloud_provider.upcase %></span>
               </td>
-              <td><span class="mtag mtag--<%= mod.cloud_provider %>"><%= mod.cloud_provider.upcase %></span></td>
-              <td class="mod-cat"><%= mod.category.capitalize %></td>
+              <td><span class="mod-category-text"><%= mod.category.capitalize %></span></td>
               <td>
                 <% if mod.module_renderers.any? %>
                   <% mod.module_renderers.each do |r| %>
-                    <span class="mtag mtag--tf"><%= r.engine == "opentofu" ? "OpenTofu" : r.engine.capitalize %></span>
+                    <% engine_class = case r.engine
+                         when "opentofu" then "mod-renderer-tofu"
+                         when "cloudformation" then "mod-renderer-cf"
+                         when "arm" then "mod-renderer-arm"
+                         else "mod-renderer-tofu"
+                       end %>
+                    <span class="mod-renderer-badge <%= engine_class %>"><%= r.engine == "opentofu" ? "OpenTofu" : r.engine.capitalize %></span>
                   <% end %>
                 <% else %>
-                  <span class="mtag mtag--warn">Canvas only</span>
+                  <span class="mod-renderer-badge" style="background:rgba(245,158,11,0.12);color:#f59e0b;border-color:rgba(245,158,11,0.2);">Canvas only</span>
                 <% end %>
               </td>
-              <td class="mod-fields">
-                <% inputs = mod.module_fields.select { |f| f.classification == "user_config" }.size %>
-                <% outputs = mod.module_outputs.size rescue 0 %>
-                <%= inputs %> inputs · <%= outputs %> outputs
+              <td>
+                <span class="mod-fields-text">
+                  <% inputs = mod.module_fields.select { |f| f.classification == "user_config" }.size %>
+                  <% outputs = mod.module_outputs.size rescue 0 %>
+                  <%= inputs %> inputs<span class="mod-fields-sep">·</span><%= outputs %> outputs
+                </span>
               </td>
-              <td class="mod-version">v<%= mod.version || "0.0.0" %></td>
+              <td><span class="mod-version-text"><%= (mod.version || "0.0.0").to_s.start_with?("v") ? mod.version : "v#{mod.version || "0.0.0"}" %></span></td>
               <td>
                 <% case mod.status %>
                 <% when "live" %>
-                  <span class="mtag mtag--ok">● Live</span>
+                  <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Live</span>
                 <% when "draft" %>
-                  <span class="mtag mtag--warn">● Draft</span>
+                  <span class="mod-status-badge mod-status-draft"><span class="mod-status-dot"></span>Draft</span>
                 <% when "deprecated" %>
-                  <span class="mtag mtag--err">● Deprecated</span>
+                  <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Deprecated</span>
                 <% end %>
               </td>
-              <td><%= link_to "Edit", edit_module_path(mod), class: "mod-edit-btn" %></td>
+              <td>
+                <div class="mod-actions-cell">
+                  <%= link_to "View", module_path(mod), class: "mod-action-btn" %>
+                  <%= link_to "Edit", edit_module_path(mod), class: "mod-action-btn mod-action-btn-primary" %>
+                </div>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     <% else %>
-      <div style="padding:40px;text-align:center;color:var(--text-secondary)">
-        <p>No modules found matching your filters.</p>
-        <%= link_to "Import a module →", new_module_import_path, style: "color:var(--accent)" %>
+      <div class="mod-empty-state">
+        <p>No modules match your filters.</p>
+        <%= link_to "Import a module →", new_module_import_path, style: "color:var(--green);" %>
       </div>
     <% end %>
   </div>

@@ -3,7 +3,8 @@ import { csrf } from "./constants"
 
 export default function RightPanel({
   selectedId, propsHtml, resources, deleteResource, startConnect, apiUrl, onPropsSaved,
-  appGroups, createAppGroup, deleteAppGroup, assignResourceToGroup, selectedGroupId
+  appGroups, createAppGroup, deleteAppGroup, assignResourceToGroup, selectedGroupId,
+  readOnly
 }) {
   const scrollRef = useRef(null)
   const propsRef = useRef(null)
@@ -27,6 +28,18 @@ export default function RightPanel({
   useEffect(() => {
     const container = propsRef.current
     if (!container || !apiUrl) return
+
+    // When readOnly, hide action buttons and disable inputs in server-rendered HTML
+    if (readOnly) {
+      const actions = container.querySelector(".rp-actions")
+      if (actions) actions.style.display = "none"
+      container.querySelectorAll("input, select, textarea").forEach(el => {
+        el.disabled = true
+        el.style.opacity = "0.7"
+        el.style.cursor = "default"
+      })
+      return
+    }
 
     const handleSubmit = async (e) => {
       if (e.target.tagName !== "FORM") return
@@ -79,7 +92,7 @@ export default function RightPanel({
       container.removeEventListener("submit", handleSubmit)
       container.removeEventListener("click", handleClick)
     }
-  }, [propsHtml, apiUrl, onPropsSaved, deleteResource, startConnect])
+  }, [propsHtml, apiUrl, onPropsSaved, deleteResource, startConnect, readOnly])
 
   const selectedGroup = selectedGroupId && appGroups ? appGroups.find(g => g.id === selectedGroupId) : null
   const groupMembers = selectedGroup ? resources.filter(r => r.application_group_id === selectedGroupId) : []
@@ -124,7 +137,7 @@ export default function RightPanel({
             {appGroups && appGroups.map(g => {
               const count = resources.filter(r => r.application_group_id === g.id).length
               return (
-                <div key={g.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 0", fontSize: 12, borderBottom: "1px solid var(--border, #30363d)" }}>
+                <div key={g.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 0", fontSize: 12, borderBottom: "1px solid var(--border)" }}>
                   <div style={{ width: 28, height: 28, borderRadius: 6, background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }}>
                     <div style={{ width: 10, height: 10, borderRadius: 2, background: g.color }} />
                   </div>
@@ -225,8 +238,8 @@ export default function RightPanel({
                   </div>
                 )}
                 <div ref={propsRef} dangerouslySetInnerHTML={{ __html: propsHtml }} />
-                {appGroups && assignResourceToGroup && (
-                  <div style={{ padding: "8px 0", borderTop: "1px solid var(--border, #30363d)" }}>
+                {appGroups && assignResourceToGroup && !readOnly && (
+                  <div style={{ padding: "8px 0", borderTop: "1px solid var(--border)" }}>
                     <label className="rp-field-label" style={{ fontSize: 10, display: "block", marginBottom: 4 }}>Application Group</label>
                     <select
                       className="rp-select"

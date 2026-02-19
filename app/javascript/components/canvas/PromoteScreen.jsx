@@ -402,9 +402,9 @@ export default function PromoteScreen({ project, environment, siblingEnvs, promo
 
           {/* Action buttons */}
           <div style={{ marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end", alignItems: "center" }}>
-            <button className="cv-btn cv-btn-secondary" onClick={() => setDiffView(null)}>← Back</button>
+            <button className="btn btn-ghost" onClick={() => setDiffView(null)}>← Back</button>
             <button
-              className="cv-btn cv-btn-secondary"
+              className="btn btn-ghost"
               onClick={handlePreview}
               disabled={planLoading || !diffReport}
             >
@@ -412,7 +412,7 @@ export default function PromoteScreen({ project, environment, siblingEnvs, promo
             </button>
             {isPrd ? (
               <button
-                className="cv-btn cv-btn-primary"
+                className="btn btn-green"
                 onClick={handleApprovePromote}
                 disabled={promoting || !diffReport}
               >
@@ -420,7 +420,7 @@ export default function PromoteScreen({ project, environment, siblingEnvs, promo
               </button>
             ) : (
               <button
-                className="cv-btn cv-btn-primary"
+                className="btn btn-green"
                 onClick={handlePromote}
                 disabled={promoting || !diffReport}
               >

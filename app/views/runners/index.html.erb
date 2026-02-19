@@ -1,94 +1,107 @@
-<div class="page-content" style="max-width:1200px;margin:0 auto">
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
-    <div>
-      <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Pipeline Runners</h2>
-      <p style="font-size:12px;color:var(--text-secondary)">
-        Registered runners across all accounts.
-        <% if @current_version %>
-          Current version: <strong><%= @current_version %></strong>
-          · Min compatible: <strong><%= @min_compatible_version %></strong>
-        <% end %>
-      </p>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <%= form_tag runners_path, method: :get, style: "display:flex;gap:8px" do %>
-        <input type="text" name="account_id" class="f50-input" placeholder="Filter by account ID..."
-               value="<%= params[:account_id] %>" aria-label="Filter by account ID" style="width:200px">
-        <button type="submit" class="f50-btn f50-btn--sm">Filter</button>
-      <% end %>
-    </div>
-  </div>
+<% content_for(:title) { "Pipeline Runners — Factor Fifty" } %>
 
-  <div class="mod-panel">
-    <% if @runners.any? %>
-      <table class="mod-tbl">
-        <thead>
-          <tr>
-            <th>Runner ID</th>
-            <th>Account</th>
-            <th>Mode</th>
-            <th>Execution</th>
-            <th>Version</th>
-            <th>Status</th>
-            <th>Last Heartbeat</th>
-            <th>Registered</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @runners.each do |runner| %>
-            <% outdated = @min_compatible_version && runner[:version] &&
-                 Gem::Version.new(runner[:version]) < Gem::Version.new(@min_compatible_version) rescue false %>
-            <% update_available = !outdated && @current_version && runner[:version] &&
-                 Gem::Version.new(runner[:version]) < Gem::Version.new(@current_version) rescue false %>
-            <tr class="mod-tbl__row">
-              <td><code style="font-size:11px"><%= runner[:runner_id]&.truncate(12) %></code></td>
-              <td><%= runner[:account_id] %></td>
-              <td><span class="mtag mtag--tf"><%= runner[:runner_mode] %></span></td>
-              <td><span class="mtag"><%= runner[:execution_mode] %></span></td>
-              <td>
-                <% if outdated %>
-                  <span class="mtag mtag--err" title="Below minimum compatible version (<%= @min_compatible_version %>)">
-                    ⚠ <%= runner[:version] %>
-                  </span>
-                <% elsif update_available %>
-                  <span class="mtag mtag--warn" title="Update available (<%= @current_version %>)">
-                    ↑ <%= runner[:version] %>
-                  </span>
-                <% else %>
-                  <span class="mtag mtag--ok"><%= runner[:version] || "unknown" %></span>
-                <% end %>
-              </td>
-              <td>
-                <% case runner[:status] %>
-                <% when "active" %>
-                  <% if runner[:live] %>
-                    <span class="mtag mtag--ok">● Active</span>
-                  <% else %>
-                    <span class="mtag mtag--warn">● Stale</span>
-                  <% end %>
-                <% when "update_required" %>
-                  <span class="mtag mtag--err">● Update Required</span>
-                <% when "offline" %>
-                  <span class="mtag mtag--warn">● Offline</span>
-                <% else %>
-                  <span class="mtag"><%= runner[:status] %></span>
-                <% end %>
-              </td>
-              <td style="font-size:11px;color:var(--text-secondary)">
-                <%= runner[:last_heartbeat] ? Time.parse(runner[:last_heartbeat]).strftime("%Y-%m-%d %H:%M:%S UTC") : "—" %>
-              </td>
-              <td style="font-size:11px;color:var(--text-secondary)">
-                <%= runner[:registered_at] ? Time.parse(runner[:registered_at]).strftime("%Y-%m-%d %H:%M") : "—" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <div style="padding:40px;text-align:center;color:var(--text-secondary)">
-        <p>No runners found<%= " for account #{params[:account_id]}" if params[:account_id].present? %>.</p>
-        <p style="font-size:12px;margin-top:8px">Runners register automatically when they first start up.</p>
-      </div>
-    <% end %>
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Pipeline Runners</h1>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+      Registered runners across all accounts.
+      <% if @current_version %>
+        Current version: <span style="font-weight:600;color:var(--text-primary);"><%= @current_version %></span>
+        · Min compatible: <span style="font-weight:600;color:var(--text-primary);"><%= @min_compatible_version %></span>
+      <% end %>
+    </p>
   </div>
+</div>
+
+<div class="mod-toolbar">
+  <%= form_tag runners_path, method: :get, style: "display:contents;" do %>
+    <div class="mod-search-wrap">
+      <svg class="mod-search-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="mod-search-input" type="text" name="account_id" placeholder="Filter by account ID…"
+             value="<%= params[:account_id] %>" aria-label="Filter by account ID">
+    </div>
+    <button type="submit" class="btn btn-ghost btn-sm">Filter</button>
+  <% end %>
+  <span class="mod-count-badge"><%= @runners.size %> runner(s)</span>
+</div>
+
+<div class="mod-table-wrap">
+  <% if @runners.any? %>
+    <table class="mod-tbl">
+      <thead>
+        <tr>
+          <th>Runner ID</th>
+          <th>Account</th>
+          <th>Mode</th>
+          <th>Execution</th>
+          <th>Version</th>
+          <th>Status</th>
+          <th>Last Heartbeat</th>
+          <th>Registered</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @runners.each do |runner| %>
+          <% outdated = @min_compatible_version && runner[:version] &&
+               Gem::Version.new(runner[:version]) < Gem::Version.new(@min_compatible_version) rescue false %>
+          <% update_available = !outdated && @current_version && runner[:version] &&
+               Gem::Version.new(runner[:version]) < Gem::Version.new(@current_version) rescue false %>
+          <tr class="mod-tbl__row">
+            <td><code style="font-size:11px;font-family:var(--font-mono);"><%= runner[:runner_id]&.truncate(12) %></code></td>
+            <td><span style="font-size:12px;"><%= runner[:account_id] %></span></td>
+            <td><span class="mod-renderer-badge mod-renderer-tofu"><%= runner[:runner_mode] %></span></td>
+            <td><span class="mod-renderer-badge" style="background:rgba(139,153,181,0.1);color:var(--text-secondary);border:1px solid var(--border);"><%= runner[:execution_mode] %></span></td>
+            <td>
+              <% if outdated %>
+                <span class="mod-status-badge mod-status-deprecated" title="Below minimum compatible version (<%= @min_compatible_version %>)">
+                  <span class="mod-status-dot"></span>⚠ <%= runner[:version] %>
+                </span>
+              <% elsif update_available %>
+                <span class="mod-status-badge" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(245,158,11,0.2);" title="Update available (<%= @current_version %>)">
+                  <span class="mod-status-dot" style="background:var(--orange);"></span>↑ <%= runner[:version] %>
+                </span>
+              <% else %>
+                <span class="mod-status-badge mod-status-live">
+                  <span class="mod-status-dot"></span><%= runner[:version] || "unknown" %>
+                </span>
+              <% end %>
+            </td>
+            <td>
+              <% case runner[:status] %>
+              <% when "active" %>
+                <% if runner[:live] %>
+                  <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Active</span>
+                <% else %>
+                  <span class="mod-status-badge" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(245,158,11,0.2);">
+                    <span class="mod-status-dot" style="background:var(--orange);"></span>Stale
+                  </span>
+                <% end %>
+              <% when "update_required" %>
+                <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Update Required</span>
+              <% when "offline" %>
+                <span class="mod-status-badge" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(245,158,11,0.2);">
+                  <span class="mod-status-dot" style="background:var(--orange);"></span>Offline
+                </span>
+              <% else %>
+                <span class="mod-status-badge mod-status-draft"><span class="mod-status-dot"></span><%= runner[:status] %></span>
+              <% end %>
+            </td>
+            <td style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);">
+              <%= runner[:last_heartbeat] ? Time.parse(runner[:last_heartbeat]).strftime("%Y-%m-%d %H:%M:%S UTC") : "—" %>
+            </td>
+            <td style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);">
+              <%= runner[:registered_at] ? Time.parse(runner[:registered_at]).strftime("%Y-%m-%d %H:%M") : "—" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="mod-empty-state">
+      <p>No runners found<%= " for account #{params[:account_id]}" if params[:account_id].present? %>.</p>
+      <p style="font-size:12px;margin-top:8px;">Runners register automatically when they first start up.</p>
+    </div>
+  <% end %>
 </div>

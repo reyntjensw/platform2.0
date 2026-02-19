@@ -24,18 +24,15 @@
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 <body>
-  <%# Top Navigation Bar — canvas style %>
+  <%# Top Navigation Bar %>
   <%= render "shared/topnav" %>
-
-  <%# Notification bar — hidden for now, reserved for future use %>
-  <div class="screen-selector" style="display: none;">
-  </div>
 
   <%# Flash Messages %>
   <%= render "shared/flash" %>
 
-  <%# Full-width content area (no sidebar) %>
+  <%# Full-width content area with breadcrumb %>
   <main class="app-content">
+    <%= render "shared/breadcrumb" %>
     <%= yield %>
   </main>
 </body>

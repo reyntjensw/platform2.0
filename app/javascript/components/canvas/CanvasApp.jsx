@@ -28,37 +28,42 @@ function CreateGroupModal({ onCreate, onClose }) {
   }
 
   return (
-    <div className="modal-overlay" style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
-      <div className="modal-content" style={{ background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 24, width: 360, color: "var(--text-primary, #e6edf3)" }}>
-        <h3 style={{ marginTop: 0, fontSize: 16, fontWeight: 600 }}>Create Application Group</h3>
+    <div className="modal-overlay" style={{ display: "flex" }} onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div className="modal-panel" style={{ maxWidth: 360 }}>
+        <div className="modal-header">
+          <h3 className="modal-title">Create Application Group</h3>
+          <button className="modal-close" onClick={onClose} aria-label="Close">&times;</button>
+        </div>
         <form onSubmit={handleSubmit}>
-          <label className="modal-label">
-            Name
-            <input
-              type="text" value={name} onChange={e => setName(e.target.value)}
-              className="modal-input" placeholder="e.g. Compute, Data, Networking"
-              autoFocus required
-            />
-          </label>
-          <label className="modal-label">
-            Color
-            <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
-              {GROUP_COLORS.map(c => (
-                <button
-                  key={c} type="button"
-                  onClick={() => setColor(c)}
-                  style={{
-                    width: 28, height: 28, borderRadius: 6, background: c, border: color === c ? "2px solid white" : "2px solid transparent",
-                    cursor: "pointer", transition: "border-color 0.15s"
-                  }}
-                  aria-label={`Color ${c}`}
-                />
-              ))}
+          <div className="modal-body">
+            <div className="form-group">
+              <label className="form-label">Name *</label>
+              <input
+                type="text" value={name} onChange={e => setName(e.target.value)}
+                className="form-input" placeholder="e.g. Compute, Data, Networking"
+                autoFocus required
+              />
             </div>
-          </label>
-          <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 20 }}>
-            <button type="button" className="cv-btn cv-btn-secondary" onClick={onClose}>Cancel</button>
-            <button type="submit" className="cv-btn cv-btn-primary" disabled={!name.trim() || submitting}>
+            <div className="form-group">
+              <label className="form-label">Color</label>
+              <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
+                {GROUP_COLORS.map(c => (
+                  <button
+                    key={c} type="button"
+                    onClick={() => setColor(c)}
+                    style={{
+                      width: 28, height: 28, borderRadius: 6, background: c, border: color === c ? "2px solid white" : "2px solid transparent",
+                      cursor: "pointer", transition: "border-color 0.15s"
+                    }}
+                    aria-label={`Color ${c}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-ghost" onClick={onClose}>Cancel</button>
+            <button type="submit" className="btn btn-green" disabled={!name.trim() || submitting}>
               {submitting ? "Creating…" : "Create Group"}
             </button>
           </div>
@@ -306,23 +311,23 @@ export default function CanvasApp({
           </div>
         </div>
         <div className="cv-top-right">
-          <a href="/modules" className="cv-btn cv-btn-secondary cv-btn-sm" style={{ textDecoration: "none" }}>📦 Modules</a>
-          <button className="cv-btn cv-btn-secondary cv-btn-sm">✦ New Environment</button>
+          <a href="/modules" className="btn btn-ghost btn-sm" style={{ textDecoration: "none" }}>📦 Modules</a>
+          <button className="btn btn-ghost btn-sm">✦ New Environment</button>
           {/* Canvas lock controls */}
           {lockState.isMe ? (
-            <button className="cv-btn cv-btn-secondary cv-btn-sm" onClick={releaseLock} style={{ color: "var(--accent-green, #3fb950)" }}>
+            <button className="btn btn-ghost btn-sm" onClick={releaseLock} style={{ color: "var(--accent-green)" }}>
               🔓 Editing · Unlock
             </button>
           ) : (
             <button
-              className="cv-btn cv-btn-primary cv-btn-sm"
+              className="btn btn-green btn-sm"
               onClick={acquireLock}
               disabled={acquiringLock}
             >
               {acquiringLock ? "Acquiring…" : canvasLocked ? `🔒 Locked by ${lockState.holder?.user_name || lockState.holder?.user_email || "someone"}` : "🔒 Lock to Edit"}
             </button>
           )}
-          <button className="cv-btn cv-btn-primary cv-btn-sm" onClick={() => setActiveScreen("deploy")}>▶ Deploy</button>
+          <button className="btn btn-green btn-sm" onClick={() => setActiveScreen("deploy")}>▶ Deploy</button>
           <div className="cv-avatar">{currentUser || "U"}</div>
         </div>
       </nav>
@@ -441,6 +446,7 @@ export default function CanvasApp({
             deleteAppGroup={deleteAppGroup}
             assignResourceToGroup={assignResourceToGroup}
             selectedGroupId={selectedGroupId}
+            readOnly={canvasLocked || !lockState.isMe}
           />
         </div>
         </>
@@ -457,7 +463,7 @@ export default function CanvasApp({
       {activeScreen === "templates" && <TemplatesScreen />}
       {activeScreen === "import" && <ImportScreen />}
       {activeScreen === "deploy" && <DeployScreen environmentId={environmentId} />}
-      {activeScreen === "global_tags" && <GlobalTagsScreen />}
+      {activeScreen === "global_tags" && <GlobalTagsScreen environmentId={environmentId} environment={environment} project={project} customer={customer} />}
 
       {/* Command Palette */}
       {cmdOpen && (

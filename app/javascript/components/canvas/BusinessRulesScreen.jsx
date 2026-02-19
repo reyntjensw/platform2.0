@@ -269,11 +269,15 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
   }
 
   return (
-    <div className="modal-overlay" style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
-      <div className="modal-content" style={{ background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 24, width: 640, maxHeight: "85vh", overflow: "auto", color: "var(--text-primary, #e6edf3)" }}>
-        <h3 style={{ marginTop: 0, fontSize: 16, fontWeight: 600 }}>{isEdit ? "Edit" : "Create"} Business Rule</h3>
-        {errorMsg && <div style={{ color: "#ef4444", marginBottom: 12, fontSize: 12 }}>{errorMsg}</div>}
+    <div className="modal-overlay" style={{ display: "flex" }} onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div className="modal-panel" style={{ maxWidth: 640, maxHeight: "85vh", overflow: "auto" }}>
+        <div className="modal-header">
+          <h3 className="modal-title">{isEdit ? "Edit" : "Create"} Business Rule</h3>
+          <button className="modal-close" onClick={onClose} aria-label="Close">&times;</button>
+        </div>
+        {errorMsg && <div style={{ color: "var(--red)", marginBottom: 12, fontSize: 12, padding: "0 24px" }}>{errorMsg}</div>}
         <form onSubmit={handleSubmit}>
+          <div className="modal-body">
           <div className="builder-grid">
             <label className="modal-label">Name
               <input type="text" name="name" value={form.name} onChange={handleChange} required className="modal-input" />
@@ -339,9 +343,10 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
             </div>
           )}
 
-          <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }}>
-            <button type="button" className="cv-btn cv-btn-secondary" onClick={onClose}>Cancel</button>
-            <button type="submit" className="cv-btn cv-btn-primary" disabled={submitting}>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-ghost" onClick={onClose}>Cancel</button>
+            <button type="submit" className="btn btn-green" disabled={submitting}>
               {submitting ? (isEdit ? "Saving…" : "Creating…") : (isEdit ? "Save Changes" : "Create Rule")}
             </button>
           </div>
@@ -428,7 +433,7 @@ export default function BusinessRulesScreen({ rulesApiUrl }) {
     return (
       <div className="rules-layout"><div style={{ padding: 40, textAlign: "center", width: "100%" }}>
         <p>Failed to load business rules.</p>
-        <button className="cv-btn cv-btn-primary" onClick={() => { setLoading(true); setError(null); fetch(rulesApiUrl).then(r => r.json()).then(data => { setRules(data); setLoading(false) }).catch(err => { setError(err.message); setLoading(false) }) }}>Retry</button>
+        <button className="btn btn-green" onClick={() => { setLoading(true); setError(null); fetch(rulesApiUrl).then(r => r.json()).then(data => { setRules(data); setLoading(false) }).catch(err => { setError(err.message); setLoading(false) }) }}>Retry</button>
       </div></div>
     )
   }
@@ -465,7 +470,7 @@ export default function BusinessRulesScreen({ rulesApiUrl }) {
             <h2>{activeLabel} Rules</h2>
             <div className="rules-subtitle">{filteredRules.length} rule{filteredRules.length !== 1 ? "s" : ""} · Applied to: All environments</div>
           </div>
-          <button className="cv-btn cv-btn-primary" onClick={() => setShowCreateModal(true)}>+ Create Rule</button>
+          <button className="btn btn-green" onClick={() => setShowCreateModal(true)}>+ Create Rule</button>
         </div>
 
         {showCreateModal && (
@@ -487,11 +492,11 @@ export default function BusinessRulesScreen({ rulesApiUrl }) {
               <div className="rule-head">
                 <span className={`sev ${sev.className}`}>{sev.label}</span>
                 <span className="rule-name">{rule.name}</span>
-                <button className="cv-btn cv-btn-secondary cv-btn-sm" style={{ marginLeft: 8 }}
+                <button className="btn btn-ghost btn-sm" style={{ marginLeft: 8 }}
                   onClick={() => setEditingRule(rule)} aria-label={`Edit ${rule.name}`}>
                   Edit
                 </button>
-                <button className="cv-btn cv-btn-danger cv-btn-sm"
+                <button className="btn btn-danger btn-sm"
                   onClick={() => deleteRule(rule.id, rule.name)} aria-label={`Delete ${rule.name}`}>
                   Delete
                 </button>

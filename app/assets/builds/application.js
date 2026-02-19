@@ -30730,7 +30730,7 @@ function CanvasArea({
                       fontSize: 10,
                       fontWeight: 600,
                       color: g.color || "var(--accent-cyan)",
-                      background: "var(--bg-canvas, #0d1117)",
+                      background: "var(--bg-body, #0a0e1a)",
                       padding: "0 4px"
                     }, children: g.name }) }, g.id);
                   }),
@@ -30889,7 +30889,8 @@ function RightPanel({
   createAppGroup,
   deleteAppGroup,
   assignResourceToGroup,
-  selectedGroupId
+  selectedGroupId,
+  readOnly
 }) {
   const scrollRef = (0, import_react3.useRef)(null);
   const propsRef = (0, import_react3.useRef)(null);
@@ -30907,6 +30908,16 @@ function RightPanel({
   (0, import_react3.useEffect)(() => {
     const container = propsRef.current;
     if (!container || !apiUrl) return;
+    if (readOnly) {
+      const actions = container.querySelector(".rp-actions");
+      if (actions) actions.style.display = "none";
+      container.querySelectorAll("input, select, textarea").forEach((el) => {
+        el.disabled = true;
+        el.style.opacity = "0.7";
+        el.style.cursor = "default";
+      });
+      return;
+    }
     const handleSubmit = async (e) => {
       if (e.target.tagName !== "FORM") return;
       e.preventDefault();
@@ -30956,7 +30967,7 @@ function RightPanel({
       container.removeEventListener("submit", handleSubmit);
       container.removeEventListener("click", handleClick);
     };
-  }, [propsHtml, apiUrl, onPropsSaved, deleteResource, startConnect]);
+  }, [propsHtml, apiUrl, onPropsSaved, deleteResource, startConnect, readOnly]);
   const selectedGroup = selectedGroupId && appGroups ? appGroups.find((g) => g.id === selectedGroupId) : null;
   const groupMembers = selectedGroup ? resources.filter((r) => r.application_group_id === selectedGroupId) : [];
   const errCount = resources.filter((r) => r.validation_errors && Object.keys(r.validation_errors).length > 0).length;
@@ -30998,7 +31009,7 @@ function RightPanel({
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rp-section", children: "By Group" }),
         appGroups && appGroups.map((g) => {
           const count = resources.filter((r) => r.application_group_id === g.id).length;
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "8px 0", fontSize: 12, borderBottom: "1px solid var(--border, #30363d)" }, children: [
+          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "8px 0", fontSize: 12, borderBottom: "1px solid var(--border)" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { width: 28, height: 28, borderRadius: 6, background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { width: 10, height: 10, borderRadius: 2, background: g.color } }) }),
             /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: g.name }),
             /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 11 }, children: count })
@@ -31064,7 +31075,7 @@ function RightPanel({
           border: `1px solid ${saveFlash === "saved" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`
         }, children: saveFlash === "saved" ? "\u2713 Saved" : "\u2717 Save failed" }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { ref: propsRef, dangerouslySetInnerHTML: { __html: propsHtml } }),
-        appGroups && assignResourceToGroup && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border, #30363d)" }, children: [
+        appGroups && assignResourceToGroup && !readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "rp-field-label", style: { fontSize: 10, display: "block", marginBottom: 4 }, children: "Application Group" }),
           /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
             "select",
@@ -31589,91 +31600,98 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
       setSubmitting(false);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-overlay", style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-content", style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 24, width: 640, maxHeight: "85vh", overflow: "auto", color: "var(--text-primary, #e6edf3)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { style: { marginTop: 0, fontSize: 16, fontWeight: 600 }, children: [
-      isEdit ? "Edit" : "Create",
-      " Business Rule"
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+    if (e.target === e.currentTarget) onClose();
+  }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-panel", style: { maxWidth: 640, maxHeight: "85vh", overflow: "auto" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { className: "modal-title", children: [
+        isEdit ? "Edit" : "Create",
+        " Business Rule"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "\xD7" })
     ] }),
-    errorMsg && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { color: "#ef4444", marginBottom: 12, fontSize: 12 }, children: errorMsg }),
+    errorMsg && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { color: "var(--red)", marginBottom: 12, fontSize: 12, padding: "0 24px" }, children: errorMsg }),
     /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-          "Name",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", name: "name", value: form.name, onChange: handleChange, required: true, className: "modal-input" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-          "Severity",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { name: "severity", value: form.severity, onChange: handleChange, className: "modal-input", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "block", children: "block" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "warn", children: "warn" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "info", children: "info" })
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-body", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+            "Name",
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", name: "name", value: form.name, onChange: handleChange, required: true, className: "modal-input" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+            "Severity",
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { name: "severity", value: form.severity, onChange: handleChange, className: "modal-input", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "block", children: "block" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "warn", children: "warn" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "info", children: "info" })
+            ] })
           ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-        "Description",
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("textarea", { name: "description", value: form.description, onChange: handleChange, rows: 2, className: "modal-input" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-          "Rule Type",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("select", { name: "rule_type", value: form.rule_type, onChange: handleChange, className: "modal-input", children: CATEGORY_TREE.flatMap((cat) => cat.types.map((t) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: t, children: cat.labels[t] }, t))) })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-          "Scope",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { name: "scope_type", value: form.scope_type, onChange: handleChange, className: "modal-input", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "platform", children: "platform" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "customer", children: "customer" })
+          "Description",
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("textarea", { name: "description", value: form.description, onChange: handleChange, rows: 2, className: "modal-input" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+            "Rule Type",
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("select", { name: "rule_type", value: form.rule_type, onChange: handleChange, className: "modal-input", children: CATEGORY_TREE.flatMap((cat) => cat.types.map((t) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: t, children: cat.labels[t] }, t))) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+            "Scope",
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { name: "scope_type", value: form.scope_type, onChange: handleChange, className: "modal-input", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "platform", children: "platform" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "customer", children: "customer" })
+            ] })
           ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+            "Cloud Provider",
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", name: "cloud_provider", value: form.cloud_provider, onChange: handleChange, className: "modal-input", placeholder: "aws, azure, multi" })
+          ] }),
+          form.scope_type === "customer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+            "Customer ID",
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "number", name: "customer_id", value: form.customer_id, onChange: handleChange, className: "modal-input" })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-section", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-section-title", children: "Rule Builder" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-group", children: [
+            ifConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              ConditionRow,
+              {
+                condition: c,
+                prefix: i === 0 ? "IF" : "AND",
+                onChange: (val) => updateCondition(ifConditions, setIfConditions, i, val),
+                onRemove: () => removeCondition(ifConditions, setIfConditions, i)
+              },
+              i
+            )),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-add", onClick: () => setIfConditions((prev) => [...prev, { ...EMPTY_IF }]), children: "+ Add IF condition" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-group", children: [
+            thenConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              ConditionRow,
+              {
+                condition: c,
+                prefix: i === 0 ? "THEN" : "AND",
+                onChange: (val) => updateCondition(thenConditions, setThenConditions, i, val),
+                onRemove: () => removeCondition(thenConditions, setThenConditions, i)
+              },
+              i
+            )),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-add", onClick: () => setThenConditions((prev) => [...prev, { ...EMPTY_THEN }]), children: "+ Add THEN condition" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ActionPicker, { selected: actionList, onChange: setActionList })
+        ] }),
+        preview && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-preview", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-preview-title", children: "Preview" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("pre", { className: "rule-code", style: { margin: 0 }, children: preview })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-          "Cloud Provider",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", name: "cloud_provider", value: form.cloud_provider, onChange: handleChange, className: "modal-input", placeholder: "aws, azure, multi" })
-        ] }),
-        form.scope_type === "customer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
-          "Customer ID",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "number", name: "customer_id", value: form.customer_id, onChange: handleChange, className: "modal-input" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-section", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-section-title", children: "Rule Builder" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-group", children: [
-          ifConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-            ConditionRow,
-            {
-              condition: c,
-              prefix: i === 0 ? "IF" : "AND",
-              onChange: (val) => updateCondition(ifConditions, setIfConditions, i, val),
-              onRemove: () => removeCondition(ifConditions, setIfConditions, i)
-            },
-            i
-          )),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-add", onClick: () => setIfConditions((prev) => [...prev, { ...EMPTY_IF }]), children: "+ Add IF condition" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-group", children: [
-          thenConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-            ConditionRow,
-            {
-              condition: c,
-              prefix: i === 0 ? "THEN" : "AND",
-              onChange: (val) => updateCondition(thenConditions, setThenConditions, i, val),
-              onRemove: () => removeCondition(thenConditions, setThenConditions, i)
-            },
-            i
-          )),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-add", onClick: () => setThenConditions((prev) => [...prev, { ...EMPTY_THEN }]), children: "+ Add THEN condition" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ActionPicker, { selected: actionList, onChange: setActionList })
-      ] }),
-      preview && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-preview", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-preview-title", children: "Preview" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("pre", { className: "rule-code", style: { margin: 0 }, children: preview })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "cv-btn cv-btn-secondary", onClick: onClose, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", className: "cv-btn cv-btn-primary", disabled: submitting, children: submitting ? isEdit ? "Saving\u2026" : "Creating\u2026" : isEdit ? "Save Changes" : "Create Rule" })
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", className: "btn btn-green", disabled: submitting, children: submitting ? isEdit ? "Saving\u2026" : "Creating\u2026" : isEdit ? "Save Changes" : "Create Rule" })
       ] })
     ] })
   ] }) });
@@ -31753,7 +31771,7 @@ function BusinessRulesScreen({ rulesApiUrl }) {
   if (error2) {
     return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "rules-layout", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { padding: 40, textAlign: "center", width: "100%" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Failed to load business rules." }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "cv-btn cv-btn-primary", onClick: () => {
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-green", onClick: () => {
         setLoading(true);
         setError(null);
         fetch(rulesApiUrl).then((r) => r.json()).then((data) => {
@@ -31807,7 +31825,7 @@ function BusinessRulesScreen({ rulesApiUrl }) {
             " \xB7 Applied to: All environments"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "cv-btn cv-btn-primary", onClick: () => setShowCreateModal(true), children: "+ Create Rule" })
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-green", onClick: () => setShowCreateModal(true), children: "+ Create Rule" })
       ] }),
       showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: null, onSaved: handleCreated, onClose: () => setShowCreateModal(false) }),
       editingRule && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: editingRule, onSaved: handleEdited, onClose: () => setEditingRule(null) }),
@@ -31822,7 +31840,7 @@ function BusinessRulesScreen({ rulesApiUrl }) {
             /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
               "button",
               {
-                className: "cv-btn cv-btn-secondary cv-btn-sm",
+                className: "btn btn-ghost btn-sm",
                 style: { marginLeft: 8 },
                 onClick: () => setEditingRule(rule),
                 "aria-label": `Edit ${rule.name}`,
@@ -31832,7 +31850,7 @@ function BusinessRulesScreen({ rulesApiUrl }) {
             /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
               "button",
               {
-                className: "cv-btn cv-btn-danger cv-btn-sm",
+                className: "btn btn-danger btn-sm",
                 onClick: () => deleteRule(rule.id, rule.name),
                 "aria-label": `Delete ${rule.name}`,
                 children: "Delete"
@@ -32265,11 +32283,11 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
         /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { style: { fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-primary)", margin: 0, whiteSpace: "pre-wrap" }, children: planOutput })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end", alignItems: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "cv-btn cv-btn-secondary", onClick: () => setDiffView(null), children: "\u2190 Back" }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-ghost", onClick: () => setDiffView(null), children: "\u2190 Back" }),
         /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
           "button",
           {
-            className: "cv-btn cv-btn-secondary",
+            className: "btn btn-ghost",
             onClick: handlePreview,
             disabled: planLoading || !diffReport,
             children: planLoading ? "Loading plan\u2026" : "Preview Plan"
@@ -32278,7 +32296,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
         isPrd ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
           "button",
           {
-            className: "cv-btn cv-btn-primary",
+            className: "btn btn-green",
             onClick: handleApprovePromote,
             disabled: promoting || !diffReport,
             children: promoting ? "Promoting\u2026" : "Approve & Promote"
@@ -32286,7 +32304,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
         ) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
           "button",
           {
-            className: "cv-btn cv-btn-primary",
+            className: "btn btn-green",
             onClick: handlePromote,
             disabled: promoting || !diffReport,
             children: promoting ? "Promoting\u2026" : `Promote to ${diffView.targetEnv.name}`
@@ -32380,7 +32398,7 @@ function TemplatesScreen() {
   return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-layout", children: [
     /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Environment Templates" }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "cv-btn cv-btn-primary", children: "+ Create Template" })
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "btn btn-green", children: "+ Create Template" })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-filters", children: FILTERS.map((f) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       "div",
@@ -32479,6 +32497,7 @@ var PIPE_STEPS = [
   { icon: "\u{1F4CB}", name: "Validate", detail: "Business rules", key: "validate" },
   { icon: "\u2699", name: "Generate", detail: "IR \u2192 IaC code", key: "generate" },
   { icon: "\u{1F4E6}", name: "Plan", detail: "tofu plan", key: "plan" },
+  { icon: "\u{1F4B0}", name: "Cost", detail: "Cost estimate", key: "cost" },
   { icon: "\u{1F441}", name: "Review", detail: "Manual approval", key: "review" },
   { icon: "\u{1F680}", name: "Apply", detail: "tofu apply", key: "apply" },
   { icon: "\u2705", name: "Verify", detail: "Drift detection", key: "verify" }
@@ -32486,8 +32505,39 @@ var PIPE_STEPS = [
 var STATUS_ICON = { passed: "\u2713", failed: "\u2717", pending: "\u25CC" };
 var STATUS_CLASS = { passed: "pass", failed: "fail", pending: "pend" };
 var STEP_STATUS_ICON = { executing: "\u27F3", completed: "\u2713", failed: "\u2717", skipped: "\u2298" };
+var HIDDEN_LOGS = /* @__PURE__ */ new Set(["tofu_fmt", "tofu_validate"]);
+var HIDDEN_APPLY_STEPS = /* @__PURE__ */ new Set(["cleanup", "generate", "infracost", "tofu_init", "tofu_validate"]);
+var INTERNAL_LOG_PATTERN = /^(tofu_apply: (starting|completed|failed)|Updated status for step )/;
+function formatApplyLog(raw) {
+  const lines = raw.split(/\r?\n/);
+  const result = [];
+  let seenJson = false;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    if (INTERNAL_LOG_PATTERN.test(trimmed)) continue;
+    if (trimmed.startsWith("{")) {
+      seenJson = true;
+      try {
+        const obj = JSON.parse(trimmed);
+        const msg = obj["@message"];
+        if (!msg) continue;
+        const type = obj.type || "";
+        if (type === "version") continue;
+        result.push(msg);
+      } catch {
+        result.push(line);
+      }
+    } else if (!seenJson) {
+      continue;
+    } else {
+      result.push(line);
+    }
+  }
+  return result.join("\n");
+}
 function getPipelineStepStates(checks, deployResult) {
-  const states = { validate: "idle", generate: "idle", plan: "idle", review: "idle", apply: "idle", verify: "idle" };
+  const states = { validate: "idle", generate: "idle", plan: "idle", cost: "idle", review: "idle", apply: "idle", verify: "idle" };
   if (!checks && !deployResult) return states;
   if (checks) {
     const hasBlockers = checks.some((c) => c.status === "failed");
@@ -32503,15 +32553,18 @@ function getPipelineStepStates(checks, deployResult) {
   } else if (status === "planned") {
     states.generate = "completed";
     states.plan = "completed";
+    states.cost = "completed";
     states.review = "active";
   } else if (status === "applying") {
     states.generate = "completed";
     states.plan = "completed";
+    states.cost = "completed";
     states.review = "completed";
     states.apply = "active";
   } else if (status === "completed") {
     states.generate = "completed";
     states.plan = "completed";
+    states.cost = "completed";
     states.review = "completed";
     states.apply = "completed";
     states.verify = "completed";
@@ -32520,16 +32573,22 @@ function getPipelineStepStates(checks, deployResult) {
     const failedStep = failedLayer?.steps?.find((s) => s.status === "failed");
     const failedStepName = failedStep?.name || "";
     const generateSteps = ["generate", "tofu_fmt"];
-    const planSteps = ["tofu_init", "tofu_validate", "infracost", "tofu_plan"];
+    const planSteps = ["tofu_init", "tofu_validate", "tofu_plan"];
+    const costSteps = ["infracost"];
     const applySteps = ["tofu_apply"];
     if (generateSteps.some((s) => failedStepName.includes(s))) {
       states.generate = "failed";
     } else if (planSteps.some((s) => failedStepName.includes(s))) {
       states.generate = "completed";
       states.plan = "failed";
+    } else if (costSteps.some((s) => failedStepName.includes(s))) {
+      states.generate = "completed";
+      states.plan = "completed";
+      states.cost = "failed";
     } else if (applySteps.some((s) => failedStepName.includes(s))) {
       states.generate = "completed";
       states.plan = "completed";
+      states.cost = "completed";
       states.review = "completed";
       states.apply = "failed";
     } else {
@@ -32538,6 +32597,7 @@ function getPipelineStepStates(checks, deployResult) {
   } else if (status === "rejected") {
     states.generate = "completed";
     states.plan = "completed";
+    states.cost = "completed";
     states.review = "failed";
   }
   return states;
@@ -32556,7 +32616,16 @@ function DeployScreen({ environmentId }) {
   const [loadingLogs, setLoadingLogs] = (0, import_react9.useState)({});
   const [layerPlans, setLayerPlans] = (0, import_react9.useState)({});
   const [loadingPlans, setLoadingPlans] = (0, import_react9.useState)({});
+  const [showPlanModal, setShowPlanModal] = (0, import_react9.useState)(false);
+  const [showCostModal, setShowCostModal] = (0, import_react9.useState)(false);
+  const [showApplyModal, setShowApplyModal] = (0, import_react9.useState)(false);
+  const [infracostData, setInfracostData] = (0, import_react9.useState)(null);
+  const [loadingInfracost, setLoadingInfracost] = (0, import_react9.useState)(false);
   const planFetchedRef = (0, import_react9.useRef)({});
+  const [checksExpanded, setChecksExpanded] = (0, import_react9.useState)(false);
+  const [planSearch, setPlanSearch] = (0, import_react9.useState)("");
+  const [applySearch, setApplySearch] = (0, import_react9.useState)("");
+  const applyLogsFetchedRef = (0, import_react9.useRef)({});
   const apiBase = `/api/environments/${environmentId}/deployments`;
   const checkRunnerStatus = (0, import_react9.useCallback)(async () => {
     setRunnerLoading(true);
@@ -32669,9 +32738,9 @@ function DeployScreen({ environmentId }) {
   const toggleLayer = (0, import_react9.useCallback)((layerIndex) => {
     setExpandedLayers((prev) => ({ ...prev, [layerIndex]: !prev[layerIndex] }));
   }, []);
-  const fetchLayerLogs = (0, import_react9.useCallback)(async (deploymentId, layerIndex) => {
+  const fetchLayerLogs = (0, import_react9.useCallback)(async (deploymentId, layerIndex, force = false) => {
     const key = `${deploymentId}-${layerIndex}`;
-    if (layerLogs[key]) return;
+    if (!force && layerLogs[key]) return;
     setLoadingLogs((prev) => ({ ...prev, [key]: true }));
     try {
       const resp = await fetch(`${apiBase}/${deploymentId}/logs?layer_index=${layerIndex}`);
@@ -32694,15 +32763,45 @@ function DeployScreen({ environmentId }) {
         const data = await resp.json();
         const plans = {};
         (data.layers || []).forEach((l) => {
-          plans[`${deploymentId}-${l.layer_index}`] = l.plan_output;
+          if (l.plan_output) {
+            plans[`${deploymentId}-${l.layer_index}`] = l.plan_output;
+          }
         });
+        if (Object.keys(plans).length === 0 && deployResult?.layers) {
+          deployResult.layers.forEach((l) => {
+            if (l.plan_output) {
+              plans[`${deploymentId}-${l.index}`] = l.plan_output;
+            }
+          });
+        }
         setLayerPlans((prev) => ({ ...prev, ...plans }));
       }
     } catch (e) {
     } finally {
       setLoadingPlans((prev) => ({ ...prev, [key]: false }));
     }
-  }, [apiBase]);
+  }, [apiBase, deployResult]);
+  const fetchInfracostData = (0, import_react9.useCallback)(async (deploymentId) => {
+    setLoadingInfracost(true);
+    try {
+      const resp = await fetch(`${apiBase}/${deploymentId}/infracost`);
+      if (resp.ok) {
+        const data = await resp.json();
+        const layers = data.layers || [];
+        if (layers.every((l) => !l.cost_data) && deployResult?.layers) {
+          const fallbackLayers = deployResult.layers.filter((l) => l.cost_estimate && Object.keys(l.cost_estimate).length > 0).map((l) => ({ layer_index: l.index, cost_data: l.cost_estimate }));
+          if (fallbackLayers.length > 0) {
+            setInfracostData(fallbackLayers);
+            return;
+          }
+        }
+        setInfracostData(layers);
+      }
+    } catch (e) {
+    } finally {
+      setLoadingInfracost(false);
+    }
+  }, [apiBase, deployResult]);
   (0, import_react9.useEffect)(() => {
     if (!deployResult?.id) return;
     if (!["planned", "completed", "applying"].includes(deployResult.status)) return;
@@ -32711,6 +32810,35 @@ function DeployScreen({ environmentId }) {
     planFetchedRef.current[key] = true;
     fetchLayerPlan(deployResult.id, 0);
   }, [deployResult?.id, deployResult?.status, fetchLayerPlan]);
+  (0, import_react9.useEffect)(() => {
+    if (deployResult?.status === "applying") {
+      setShowApplyModal(true);
+    }
+  }, [deployResult?.status]);
+  (0, import_react9.useEffect)(() => {
+    if (!showApplyModal || !deployResult?.id) return;
+    if (!["applying", "completed", "failed"].includes(deployResult.status)) return;
+    const isTerminal = deployResult.status === "completed" || deployResult.status === "failed";
+    (deployResult.layers || []).forEach((layer) => {
+      const key = `${deployResult.id}-${layer.index}`;
+      const terminalKey = `${key}-terminal`;
+      if (!applyLogsFetchedRef.current[key]) {
+        applyLogsFetchedRef.current[key] = true;
+        fetchLayerLogs(deployResult.id, layer.index);
+      } else if (isTerminal && !applyLogsFetchedRef.current[terminalKey]) {
+        applyLogsFetchedRef.current[terminalKey] = true;
+        fetchLayerLogs(deployResult.id, layer.index, true);
+      }
+    });
+    if (deployResult.status !== "applying") return;
+    const logPollInterval = setInterval(() => {
+      ;
+      (deployResult.layers || []).forEach((layer) => {
+        fetchLayerLogs(deployResult.id, layer.index, true);
+      });
+    }, 5e3);
+    return () => clearInterval(logPollInterval);
+  }, [showApplyModal, deployResult?.id, deployResult?.status, deployResult?.layers, fetchLayerLogs]);
   return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { flex: 1, overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "deploy-layout", children: [
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h2", { children: "Deploy Configuration" }),
     /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "deploy-subtitle", children: "Select your IaC engine and review the deployment pipeline. The engine is decoupled from your diagram." }),
@@ -32740,68 +32868,84 @@ function DeployScreen({ environmentId }) {
         const state = stepStates[s.key];
         const stateClass = state === "completed" ? "pstep--done" : state === "active" ? "pstep--active" : state === "failed" ? "pstep--fail" : "";
         const stateIcon = state === "completed" ? "\u2713" : state === "active" ? "\u27F3" : state === "failed" ? "\u2717" : null;
+        const isClickable = (s.key === "plan" || s.key === "cost") && state === "completed" && deployResult || s.key === "apply" && (state === "active" || state === "completed" || state === "failed") && deployResult;
         return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_react9.default.Fragment, { children: [
           i > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `pconnector${state === "completed" || state === "active" && i > 0 ? " pconnector--done" : ""}` }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: `pstep ${stateClass}`, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-icon", children: stateIcon ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "pstep-state", children: stateIcon }) : s.icon }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-name", children: s.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-detail", children: s.detail })
-          ] })
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+            "div",
+            {
+              className: `pstep ${stateClass}`,
+              onClick: isClickable ? () => {
+                if (s.key === "plan") {
+                  setShowPlanModal(true);
+                  if (deployResult.layers) {
+                    deployResult.layers.forEach((l) => {
+                      const key = `${deployResult.id}-${l.index}`;
+                      if (!layerPlans[key]) fetchLayerPlan(deployResult.id, l.index);
+                    });
+                  }
+                } else if (s.key === "cost") {
+                  setShowCostModal(true);
+                  if (!infracostData) fetchInfracostData(deployResult.id);
+                } else if (s.key === "apply") {
+                  setShowApplyModal(true);
+                }
+              } : void 0,
+              style: isClickable ? { cursor: "pointer" } : void 0,
+              title: isClickable ? "Click to view plan output" : void 0,
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-icon", children: stateIcon ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "pstep-state", children: stateIcon }) : s.icon }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-name", children: s.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-detail", children: s.detail })
+              ]
+            }
+          )
         ] }, i);
       }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "checks-box", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "Pre-Deploy Checks" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: runPreChecks, disabled: loading, children: loading ? "Running\u2026" : "\u21BB Re-run checks" })
-      ] }),
-      error2 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--accent-red)", fontSize: 12, padding: "8px 0" }, children: error2 }),
-      loading && !checks && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12, padding: "16px 0" }, children: "Running pre-deployment checks\u2026" }),
-      checks && checks.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s ${STATUS_CLASS[c.status] || "pend"}`, children: STATUS_ICON[c.status] || "\u25CC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
-          c.name,
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
-            "\u2014 ",
-            c.message
+    (() => {
+      const allChecks = checks ? [...checks] : null;
+      const passedCount = allChecks ? allChecks.filter((c) => c.status === "passed").length : 0;
+      const totalCount = allChecks ? allChecks.length : 0;
+      const allPassed = passedCount === totalCount;
+      const scoreColor = !allChecks ? "var(--text-muted)" : allPassed ? "var(--accent-green)" : "var(--accent-yellow, #e8a735)";
+      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "checks-box", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+          "div",
+          {
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" },
+            onClick: () => setChecksExpanded((prev) => !prev),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 10, color: "var(--text-muted)" }, children: checksExpanded ? "\u25BC" : "\u25B6" }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { style: { margin: 0 }, children: "Pre-Deploy Checks" }),
+                allChecks && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 11, fontWeight: 600, color: scoreColor }, children: [
+                  passedCount,
+                  "/",
+                  totalCount,
+                  " passed"
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: (e) => {
+                e.stopPropagation();
+                runPreChecks();
+              }, disabled: loading, children: loading ? "Running\u2026" : "\u21BB Re-run checks" })
+            ]
+          }
+        ),
+        error2 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--accent-red)", fontSize: 12, padding: "8px 0" }, children: error2 }),
+        loading && !checks && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12, padding: "16px 0" }, children: "Running pre-deployment checks\u2026" }),
+        checksExpanded && allChecks && allChecks.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s ${STATUS_CLASS[c.status] || "pend"}`, children: STATUS_ICON[c.status] || "\u25CC" }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+            c.name,
+            " ",
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+              "\u2014 ",
+              c.message
+            ] })
           ] })
-        ] })
-      ] }, i)),
-      checks && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s pend`, children: "\u25CC" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
-          "Manual approval ",
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "\u2014 Waiting for project owner sign-off" })
-        ] })
-      ] })
-    ] }),
-    deployResult && ["planned", "completed", "applying"].includes(deployResult.status) && (() => {
-      const allPlans = (deployResult.layers || []).map((layer) => {
-        const key = `${deployResult.id}-${layer.index}`;
-        return { index: layer.index, plan: layerPlans[key], loading: loadingPlans[key] };
-      });
-      const hasAnyPlan = allPlans.some((p) => p.plan);
-      const anyLoading = allPlans.some((p) => p.loading);
-      if (!hasAnyPlan && !anyLoading) return null;
-      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "checks-box", style: { marginTop: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "\u{1F4CB} Plan Review" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { style: { fontSize: 11, color: "var(--text-muted)", marginBottom: 12 }, children: "Review the infrastructure changes before approving." }),
-        allPlans.map(({ index, plan, loading: isLoading }) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
-          isLoading && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "8px 0" }, children: [
-            "Loading plan for layer ",
-            index,
-            "\u2026"
-          ] }),
-          plan && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { open: true, style: { marginBottom: 8 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 6 }, children: [
-              "Layer ",
-              index,
-              " \u2014 tofu plan"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: 0, padding: 12, borderRadius: 6, background: "var(--bg-primary, #0d1117)", color: "var(--text-primary, #e0e0e0)", fontSize: 10, maxHeight: 500, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.5 }, children: plan })
-          ] })
-        ] }, index))
+        ] }, i))
       ] });
     })(),
     deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 12, padding: 16, borderRadius: 8, border: `1px solid ${deployResult.status === "failed" ? "var(--accent-red)" : deployResult.status === "completed" || deployResult.status === "planned" ? "var(--accent-green)" : "var(--border)"}`, fontSize: 12 }, children: [
@@ -32855,9 +32999,9 @@ function DeployScreen({ environmentId }) {
             }
           ),
           isExpanded && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { padding: "4px 10px 10px 38px", borderTop: "1px solid var(--border)" }, children: [
-            layer.steps && layer.steps.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 8 }, children: [
+            layer.steps && layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 8 }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Steps" }),
-              layer.steps.map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center", padding: "2px 0", fontSize: 11 }, children: [
+              layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center", padding: "2px 0", fontSize: 11 }, children: [
                 /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 14, textAlign: "center" }, children: STEP_STATUS_ICON[step.status] || "\u25CC" }),
                 /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace" }, children: step.name }),
                 /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
@@ -32877,12 +33021,12 @@ function DeployScreen({ environmentId }) {
             isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "Loading logs\u2026" }),
             logs && Object.keys(logs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
               /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Execution Logs" }),
-              Object.entries(logs).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginBottom: 4 }, children: [
+              Object.entries(logs).filter(([stepName]) => !HIDDEN_LOGS.has(stepName)).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginBottom: 4 }, children: [
                 /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
                   stepName,
                   "/out.log"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-secondary, #1a1a2e)", color: "var(--text-primary, #e0e0e0)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-secondary, #1a1a2e)", color: "var(--text-primary, #e8ecf4)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
               ] }, stepName))
             ] }),
             logs && Object.keys(logs).length === 0 && !isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "No logs available yet" })
@@ -32917,55 +33061,339 @@ function DeployScreen({ environmentId }) {
         ] });
       })(),
       deployResult.approval_status === "pending_approval" && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 10, display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => approveDeployment(deployResult.id), children: "\u2713 Approve & Apply" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => rejectDeployment(deployResult.id), children: "\u2717 Reject" })
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => approveDeployment(deployResult.id), children: "\u2713 Approve & Apply" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => rejectDeployment(deployResult.id), children: "\u2717 Reject" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "cv-btn cv-btn-secondary", children: "Download Generated Code" }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }, children: (() => {
+      const pipelineRunning = deployResult && !["completed", "failed", "rejected"].includes(deployResult.status);
+      const isDisabled = deploying || hasBlockers || !runnerConnected || pipelineRunning;
+      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
         "button",
         {
-          className: "cv-btn cv-btn-primary",
-          disabled: deploying || hasBlockers || !runnerConnected || deployResult && !["completed", "failed", "rejected"].includes(deployResult.status),
+          className: "btn btn-green",
+          disabled: isDisabled,
           onClick: triggerPlan,
-          title: hasBlockers ? "Fix blockers before deploying" : !runnerConnected ? "No runner connected \u2014 deploy a runner first" : "Trigger OpenTofu plan",
-          style: hasBlockers || !runnerConnected ? { opacity: 0.5, cursor: "not-allowed" } : {},
-          children: deploying ? "\u25B6 Deploying\u2026" : hasBlockers ? `\u25B6 Deploy (${checks ? checks.filter((c) => c.status === "failed").length : 0} blocker${checks && checks.filter((c) => c.status === "failed").length > 1 ? "s" : ""} remaining)` : !runnerConnected ? "\u25B6 Deploy (runner not connected)" : "\u25B6 Deploy"
+          title: pipelineRunning ? "Pipeline is running" : hasBlockers ? "Fix blockers before running" : !runnerConnected ? "No runner connected \u2014 deploy a runner first" : "Run OpenTofu plan",
+          style: isDisabled ? { opacity: 0.5, cursor: "not-allowed" } : {},
+          children: deploying ? "\u27F3 Running\u2026" : pipelineRunning ? "\u27F3 Pipeline running\u2026" : hasBlockers ? `\u25B6 Run Pipeline (${checks ? checks.filter((c) => c.status === "failed").length : 0} blocker${checks && checks.filter((c) => c.status === "failed").length > 1 ? "s" : ""} remaining)` : !runnerConnected ? "\u25B6 Run Pipeline (runner not connected)" : "\u25B6 Run Pipeline"
         }
-      )
-    ] })
+      );
+    })() }),
+    showPlanModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      "div",
+      {
+        style: { position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" },
+        onClick: () => {
+          setShowPlanModal(false);
+          setPlanSearch("");
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+          "div",
+          {
+            style: { width: "80%", maxWidth: 900, maxHeight: "80vh", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-secondary, #1a1a2e)", display: "flex", flexDirection: "column", overflow: "hidden" },
+            onClick: (e) => e.stopPropagation(),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
+                  "\u{1F4E6} Plan Output \u2014 Deployment v",
+                  deployResult.version
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                  "button",
+                  {
+                    onClick: () => {
+                      setShowPlanModal(false);
+                      setPlanSearch("");
+                    },
+                    style: { background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: 18, lineHeight: 1 },
+                    "aria-label": "Close plan modal",
+                    children: "\u2715"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "10px 20px 0", borderBottom: "1px solid var(--border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                "input",
+                {
+                  type: "text",
+                  value: planSearch,
+                  onChange: (e) => setPlanSearch(e.target.value),
+                  placeholder: "Search plan output\u2026",
+                  autoFocus: true,
+                  style: { width: "100%", padding: "8px 10px", fontSize: 12, borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", outline: "none", marginBottom: 10 }
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: (deployResult.layers || []).map((layer) => {
+                const key = `${deployResult.id}-${layer.index}`;
+                const plan = layerPlans[key];
+                const isLoading = loadingPlans[key];
+                const search = planSearch.trim().toLowerCase();
+                if (search && plan && !plan.toLowerCase().includes(search)) return null;
+                return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 16 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 8 }, children: [
+                    "Layer ",
+                    layer.index
+                  ] }),
+                  isLoading && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading plan\u2026" }),
+                  plan ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: 0, padding: 14, borderRadius: 6, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.6 }, children: search ? plan.split("\n").filter((line) => line.toLowerCase().includes(search)).join("\n") : plan }) : !isLoading ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No plan output available" }) : null
+                ] }, layer.index);
+              }) })
+            ]
+          }
+        )
+      }
+    ),
+    showCostModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      "div",
+      {
+        style: { position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" },
+        onClick: () => setShowCostModal(false),
+        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+          "div",
+          {
+            style: { width: "80%", maxWidth: 900, maxHeight: "80vh", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-secondary, #1a1a2e)", display: "flex", flexDirection: "column", overflow: "hidden" },
+            onClick: (e) => e.stopPropagation(),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
+                  "\u{1F4B0} Cost Estimate \u2014 Deployment v",
+                  deployResult.version
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                  "button",
+                  {
+                    onClick: () => setShowCostModal(false),
+                    style: { background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: 18, lineHeight: 1 },
+                    "aria-label": "Close cost modal",
+                    children: "\u2715"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: [
+                loadingInfracost && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading cost data\u2026" }),
+                infracostData && infracostData.map((layer) => {
+                  const cost = layer.cost_data;
+                  if (!cost) return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 16 }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 8 }, children: [
+                      "Layer ",
+                      layer.layer_index
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No cost data available" })
+                  ] }, layer.layer_index);
+                  const monthly = parseFloat(cost.totalMonthlyCost || 0);
+                  const currency = cost.currency || "USD";
+                  const projects = cost.projects || [];
+                  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 20 }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)" }, children: [
+                        "Layer ",
+                        layer.layer_index
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 16, fontWeight: 600, color: monthly > 0 ? "var(--accent-cyan)" : "var(--text-muted)" }, children: [
+                        currency === "USD" ? "$" : currency,
+                        " ",
+                        monthly.toFixed(2),
+                        " / mo"
+                      ] })
+                    ] }),
+                    projects.map((proj, pi) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginBottom: 12 }, children: (proj.breakdown?.resources || []).map((res, ri) => {
+                      const resCost = parseFloat(res.monthlyCost || 0);
+                      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", padding: "4px 0", fontSize: 11, borderBottom: "1px solid var(--border)" }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace" }, children: res.name }),
+                        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: resCost > 0 ? "var(--text-primary)" : "var(--text-muted)" }, children: [
+                          "$",
+                          resCost.toFixed(2)
+                        ] })
+                      ] }, ri);
+                    }) }, pi))
+                  ] }, layer.layer_index);
+                }),
+                !loadingInfracost && !infracostData && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No cost data available" })
+              ] })
+            ]
+          }
+        )
+      }
+    ),
+    showApplyModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      "div",
+      {
+        style: { position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" },
+        onClick: () => {
+          setShowApplyModal(false);
+          setApplySearch("");
+        },
+        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+          "div",
+          {
+            style: { width: "80%", maxWidth: 900, maxHeight: "80vh", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-secondary, #1a1a2e)", display: "flex", flexDirection: "column", overflow: "hidden" },
+            onClick: (e) => e.stopPropagation(),
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
+                    "\u{1F680} Apply Output \u2014 Deployment v",
+                    deployResult.version
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: `mtag ${deployResult.status === "failed" ? "mtag--err" : deployResult.status === "completed" ? "mtag--ok" : "mtag--warn"}`, style: { fontSize: 10 }, children: deployResult.status })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                  "button",
+                  {
+                    onClick: () => {
+                      setShowApplyModal(false);
+                      setApplySearch("");
+                    },
+                    style: { background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: 18, lineHeight: 1 },
+                    "aria-label": "Close apply modal",
+                    children: "\u2715"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "10px 20px 0", borderBottom: "1px solid var(--border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                "input",
+                {
+                  type: "text",
+                  value: applySearch,
+                  onChange: (e) => setApplySearch(e.target.value),
+                  placeholder: "Search apply output\u2026",
+                  autoFocus: true,
+                  style: { width: "100%", padding: "8px 10px", marginBottom: 10, borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 12, outline: "none" }
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: [
+                (deployResult.layers || []).map((layer) => {
+                  const isApplyLayer = ["applying", "completed", "failed"].includes(deployResult.status);
+                  if (!isApplyLayer) return null;
+                  const stepIcon = (status) => status === "completed" ? "\u2713" : status === "failed" ? "\u2717" : status === "executing" ? "\u27F3" : status === "skipped" ? "\u2298" : "\u25CC";
+                  const stepColor = (status) => status === "completed" ? "var(--accent-green)" : status === "failed" ? "var(--accent-red)" : status === "executing" ? "var(--accent-cyan)" : "var(--text-muted)";
+                  const logKey = `${deployResult.id}-${layer.index}`;
+                  const logs = layerLogs[logKey];
+                  const isLoadingLog = loadingLogs[logKey];
+                  const applyLog = logs?.["tofu_apply"] || null;
+                  const otherLogs = logs ? Object.fromEntries(Object.entries(logs).filter(([k]) => k !== "tofu_apply" && !HIDDEN_LOGS.has(k))) : null;
+                  const search = applySearch.trim().toLowerCase();
+                  if (search && applyLog && !applyLog.toLowerCase().includes(search)) return null;
+                  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 16 }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { color: stepColor(layer.status), fontSize: 14 }, children: stepIcon(layer.status) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)" }, children: [
+                        "Layer ",
+                        layer.index
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+                        "\u2014 ",
+                        layer.status
+                      ] }),
+                      layer.status === "executing" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 10, color: "var(--accent-cyan)", animation: "pulse 1.5s infinite" }, children: "running\u2026" })
+                    ] }),
+                    layer.steps && layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginBottom: 10, padding: "8px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)" }, children: layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", gap: 8, alignItems: "center", padding: "4px 0", fontSize: 11 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 16, textAlign: "center", color: stepColor(step.status) }, children: stepIcon(step.status) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace", flex: 1 }, children: step.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: step.status }),
+                      step.duration != null && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: [
+                        step.duration.toFixed(2),
+                        "s"
+                      ] })
+                    ] }, si)) }),
+                    layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "8px 10px", marginBottom: 8, borderRadius: 4, background: "rgba(255,60,60,0.08)", border: "1px solid rgba(255,60,60,0.2)", color: "var(--accent-red)", fontSize: 11, whiteSpace: "pre-wrap", fontFamily: "monospace" }, children: layer.error_details }),
+                    isLoadingLog && !applyLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading apply output\u2026" }),
+                    applyLog ? (() => {
+                      const formatted = formatApplyLog(applyLog);
+                      const displayed = search ? formatted.split("\n").filter((line) => line.toLowerCase().includes(search)).join("\n") : formatted;
+                      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: 0, padding: 14, borderRadius: 6, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.6, maxHeight: 400, overflow: "auto" }, children: displayed });
+                    })() : !isLoadingLog && logs ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No apply output available yet" }) : null,
+                    otherLogs && Object.keys(otherLogs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginTop: 8 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", color: "var(--text-muted)" }, children: [
+                        "Other execution logs (",
+                        Object.keys(otherLogs).length,
+                        ")"
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 6 }, children: Object.entries(otherLogs).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginBottom: 4 }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 10, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
+                          stepName,
+                          "/out.log"
+                        ] }),
+                        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
+                      ] }, stepName)) })
+                    ] })
+                  ] }, layer.index);
+                }),
+                deployResult.status === "completed" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 12, padding: "10px 14px", borderRadius: 6, border: "1px solid var(--accent-green)", background: "rgba(0,200,100,0.06)", fontSize: 12, color: "var(--accent-green)", textAlign: "center" }, children: "\u2713 Apply completed successfully" }),
+                deployResult.status === "failed" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 12, padding: "10px 14px", borderRadius: 6, border: "1px solid var(--accent-red)", background: "rgba(255,60,60,0.06)", fontSize: 12, color: "var(--accent-red)", textAlign: "center" }, children: "\u2717 Apply failed" })
+              ] })
+            ]
+          }
+        )
+      }
+    )
   ] }) });
 }
 
 // app/javascript/components/canvas/GlobalTagsScreen.jsx
 var import_react10 = __toESM(require_react());
 var import_jsx_runtime11 = __toESM(require_jsx_runtime());
-function GlobalTagsScreen() {
-  const [tags, setTags] = (0, import_react10.useState)([]);
+function GlobalTagsScreen({ environmentId, environment, project, customer }) {
+  const [levels, setLevels] = (0, import_react10.useState)([]);
+  const [mergedTags, setMergedTags] = (0, import_react10.useState)({});
   const [loading, setLoading] = (0, import_react10.useState)(true);
+  const [activeLevel, setActiveLevel] = (0, import_react10.useState)(null);
+  const [tags, setTags] = (0, import_react10.useState)([]);
   const [newKey, setNewKey] = (0, import_react10.useState)("");
   const [newValue, setNewValue] = (0, import_react10.useState)("");
   const [newDesc, setNewDesc] = (0, import_react10.useState)("");
   const [saving, setSaving] = (0, import_react10.useState)(false);
   const [editingId, setEditingId] = (0, import_react10.useState)(null);
   const [editValue, setEditValue] = (0, import_react10.useState)("");
-  const fetchTags = (0, import_react10.useCallback)(async () => {
-    const resp = await fetch("/api/global_tags", { headers: { Accept: "application/json" } });
+  const [view, setView] = (0, import_react10.useState)("levels");
+  const fetchByLevel = (0, import_react10.useCallback)(async () => {
+    if (!environmentId) return;
+    const resp = await fetch(`/api/global_tags/by_level?environment_id=${environmentId}`, {
+      headers: { Accept: "application/json" }
+    });
+    if (resp.ok) setLevels(await resp.json());
+  }, [environmentId]);
+  const fetchMerged = (0, import_react10.useCallback)(async () => {
+    if (!environmentId) return;
+    const resp = await fetch(`/api/global_tags/merged?environment_id=${environmentId}`, {
+      headers: { Accept: "application/json" }
+    });
+    if (resp.ok) setMergedTags(await resp.json());
+  }, [environmentId]);
+  const fetchScopedTags = (0, import_react10.useCallback)(async (scopeType, scopeId) => {
+    const params = scopeType && scopeId ? `?scope_type=${scopeType}&scope_id=${scopeId}` : "";
+    const resp = await fetch(`/api/global_tags${params}`, {
+      headers: { Accept: "application/json" }
+    });
     if (resp.ok) setTags(await resp.json());
-    setLoading(false);
   }, []);
   (0, import_react10.useEffect)(() => {
-    fetchTags();
-  }, [fetchTags]);
+    Promise.all([fetchByLevel(), fetchMerged()]).then(() => setLoading(false));
+  }, [fetchByLevel, fetchMerged]);
+  const selectLevel = (level) => {
+    setActiveLevel(level);
+    fetchScopedTags(level.taggable_type, level.taggable_id);
+  };
+  const backToLevels = () => {
+    setActiveLevel(null);
+    setTags([]);
+    fetchByLevel();
+    fetchMerged();
+  };
   const addTag = async (e) => {
     e.preventDefault();
     if (!newKey.trim() || !newValue.trim()) return;
     setSaving(true);
-    const resp = await fetch("/api/global_tags", {
+    const body = { key: newKey.trim(), value: newValue.trim(), description: newDesc.trim() };
+    if (activeLevel?.taggable_type) {
+      body.scope_type = activeLevel.taggable_type;
+      body.scope_id = activeLevel.taggable_id;
+    }
+    const params = activeLevel?.taggable_type ? `?scope_type=${activeLevel.taggable_type}&scope_id=${activeLevel.taggable_id}` : "";
+    const resp = await fetch(`/api/global_tags${params}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
-      body: JSON.stringify({ key: newKey.trim(), value: newValue.trim(), description: newDesc.trim() })
+      body: JSON.stringify(body)
     });
     if (resp.ok) {
       const tag = await resp.json();
@@ -32987,7 +33415,7 @@ function GlobalTagsScreen() {
     }
   };
   const deleteTag = async (tag) => {
-    if (!confirm(`Delete tag '${tag.key}'? This will remove it from all future deployments.`)) return;
+    if (!confirm(`Delete tag '${tag.key}'?`)) return;
     const resp = await fetch(`/api/global_tags/${tag.id}`, {
       method: "DELETE",
       headers: { "X-CSRF-Token": csrf() }
@@ -33010,141 +33438,256 @@ function GlobalTagsScreen() {
     }
     setEditingId(null);
   };
-  const enabledTags = tags.filter((t) => t.enabled);
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary, #e6edf3)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 24 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: "Global Tags" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted, #8b949e)" }, children: [
-        "Tags applied to every deployed resource across all environments.",
-        enabledTags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { marginLeft: 8 }, children: [
-          enabledTags.length,
-          " active / ",
+  const mergedEntries = Object.entries(mergedTags).sort(([a], [b]) => a.localeCompare(b));
+  if (loading) {
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "60px 48px", textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "Loading tags\u2026" });
+  }
+  if (activeLevel) {
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: backToLevels, style: { marginBottom: 12 }, children: "\u2190 Back to overview" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: activeLevel.level }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted)" }, children: [
           tags.length,
-          " total"
+          " tag",
+          tags.length !== 1 ? "s" : "",
+          " at this level"
         ] })
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 18, marginBottom: 20 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginTop: 0, marginBottom: 12 }, children: "Add Tag" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: addTag, style: { display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", display: "block", marginBottom: 4 }, children: "Key *" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "text",
-              value: newKey,
-              onChange: (e) => setNewKey(e.target.value),
-              className: "modal-input",
-              placeholder: "e.g. managed-by",
-              pattern: "[a-zA-Z0-9_\\-:\\/\\.]+",
-              title: "Alphanumeric, hyphens, underscores, colons, slashes, dots",
-              required: true,
-              style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", display: "block", marginBottom: 4 }, children: "Value *" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "text",
-              value: newValue,
-              onChange: (e) => setNewValue(e.target.value),
-              className: "modal-input",
-              placeholder: "e.g. factorfifty",
-              required: true,
-              style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "2 1 200px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", display: "block", marginBottom: 4 }, children: "Description" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "text",
-              value: newDesc,
-              onChange: (e) => setNewDesc(e.target.value),
-              className: "modal-input",
-              placeholder: "Optional \u2014 why this tag exists",
-              style: { fontSize: 12 }
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { type: "submit", className: "cv-btn cv-btn-primary cv-btn-sm", disabled: saving || !newKey.trim() || !newValue.trim(), children: saving ? "Adding\u2026" : "+ Add Tag" })
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, overflow: "hidden" }, children: loading ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted, #8b949e)", fontSize: 13 }, children: "Loading\u2026" }) : tags.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted, #8b949e)", fontSize: 13 }, children: "No global tags configured yet. Add one above." }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: 13 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: { borderBottom: "1px solid var(--border, #30363d)", fontSize: 11, color: "var(--text-muted, #8b949e)", textTransform: "uppercase", letterSpacing: "0.05em" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "left" }, children: "Key" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "left" }, children: "Value" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "left" }, children: "Description" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "center", width: 70 }, children: "Status" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { padding: "10px 16px", textAlign: "right", width: 160 } })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("tbody", { children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: { borderBottom: "1px solid var(--border, #30363d)", opacity: tag.enabled ? 1 : 0.5 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, background: "rgba(110,118,129,0.1)", padding: "2px 6px", borderRadius: 4 }, children: tag.key }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px" }, children: editingId === tag.id ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "input",
-            {
-              type: "text",
-              value: editValue,
-              onChange: (e) => setEditValue(e.target.value),
-              className: "modal-input",
-              autoFocus: true,
-              style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, width: 160 },
-              onKeyDown: (e) => {
-                if (e.key === "Enter") saveEdit(tag);
-                if (e.key === "Escape") setEditingId(null);
-              }
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => saveEdit(tag), style: { fontSize: 11 }, children: "Save" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => setEditingId(null), style: { fontSize: 11 }, children: "Cancel" })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-          "code",
-          {
-            style: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, cursor: "pointer" },
-            onClick: () => startEdit(tag),
-            title: "Click to edit",
-            children: tag.value
-          }
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px", fontSize: 11, color: "var(--text-muted, #8b949e)" }, children: tag.description }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { padding: "10px 16px", textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: {
-          fontSize: 10,
-          fontWeight: 600,
-          padding: "2px 8px",
-          borderRadius: 10,
-          background: tag.enabled ? "rgba(63,185,80,0.15)" : "rgba(248,81,73,0.15)",
-          color: tag.enabled ? "#3fb950" : "#f85149"
-        }, children: tag.enabled ? "Active" : "Disabled" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("td", { style: { padding: "10px 16px", textAlign: "right", display: "flex", gap: 4, justifyContent: "flex-end" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => toggleTag(tag), style: { fontSize: 11 }, children: tag.enabled ? "Disable" : "Enable" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: () => deleteTag(tag), style: { fontSize: 11, color: "#f85149" }, children: "Delete" })
-        ] })
-      ] }, tag.id)) })
-    ] }) }),
-    enabledTags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, marginTop: 20, overflow: "hidden" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "12px 16px", borderBottom: "1px solid var(--border, #30363d)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, margin: 0 }, children: "Preview" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { style: { fontSize: 11, color: "var(--text-muted, #8b949e)", margin: "2px 0 0" }, children: "These tags will be merged into every resource during deployment." })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: {
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 12,
-        padding: 16,
-        margin: 0,
-        lineHeight: 1.6,
-        overflowX: "auto",
-        color: "var(--text-primary, #e6edf3)"
-      }, children: enabledTags.map((t) => `${t.key} = "${t.value}"`).join("\n") })
-    ] })
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: panelStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginTop: 0, marginBottom: 12 }, children: "Add Tag" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: addTag, style: { display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: labelStyle, children: "Key *" }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "input",
+              {
+                type: "text",
+                value: newKey,
+                onChange: (e) => setNewKey(e.target.value),
+                className: "form-input",
+                placeholder: "e.g. managed-by",
+                required: true,
+                style: { fontFamily: "var(--font-mono)", fontSize: 12 }
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: labelStyle, children: "Value *" }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "input",
+              {
+                type: "text",
+                value: newValue,
+                onChange: (e) => setNewValue(e.target.value),
+                className: "form-input",
+                placeholder: "e.g. factorfifty",
+                required: true,
+                style: { fontFamily: "var(--font-mono)", fontSize: 12 }
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "2 1 200px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: labelStyle, children: "Description" }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "input",
+              {
+                type: "text",
+                value: newDesc,
+                onChange: (e) => setNewDesc(e.target.value),
+                className: "form-input",
+                placeholder: "Optional",
+                style: { fontSize: 12 }
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "button",
+            {
+              type: "submit",
+              className: "btn btn-green btn-sm",
+              disabled: saving || !newKey.trim() || !newValue.trim(),
+              children: saving ? "Adding\u2026" : "+ Add"
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { ...panelStyle, padding: 0, marginTop: 16, overflow: "hidden" }, children: tags.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "No tags at this level yet." }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("table", { style: tableStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: theadRowStyle, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: thStyle, children: "Key" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: thStyle, children: "Value" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: thStyle, children: "Description" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { ...thStyle, textAlign: "center", width: 70 }, children: "Status" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { ...thStyle, textAlign: "right", width: 160 } })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("tbody", { children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)", opacity: tag.enabled ? 1 : 0.5 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: tdStyle, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: codeStyle, children: tag.key }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: tdStyle, children: editingId === tag.id ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "input",
+              {
+                type: "text",
+                value: editValue,
+                onChange: (e) => setEditValue(e.target.value),
+                className: "form-input",
+                autoFocus: true,
+                style: { fontFamily: "var(--font-mono)", fontSize: 12, width: 160 },
+                onKeyDown: (e) => {
+                  if (e.key === "Enter") saveEdit(tag);
+                  if (e.key === "Escape") setEditingId(null);
+                }
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => saveEdit(tag), style: { fontSize: 11 }, children: "Save" }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => setEditingId(null), style: { fontSize: 11 }, children: "Cancel" })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            "code",
+            {
+              style: { fontFamily: "var(--font-mono)", fontSize: 12, cursor: "pointer" },
+              onClick: () => startEdit(tag),
+              title: "Click to edit",
+              children: tag.value
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { ...tdStyle, fontSize: 11, color: "var(--text-muted)" }, children: tag.description }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { ...tdStyle, textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: tag.enabled ? badgeActive : badgeDisabled, children: tag.enabled ? "Active" : "Disabled" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("td", { style: { ...tdStyle, textAlign: "right", display: "flex", gap: 4, justifyContent: "flex-end" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => toggleTag(tag), style: { fontSize: 11 }, children: tag.enabled ? "Disable" : "Enable" }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-danger btn-sm", onClick: () => deleteTag(tag), style: { fontSize: 11 }, children: "Delete" })
+          ] })
+        ] }, tag.id)) })
+      ] }) })
+    ] });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: "Global Tags" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted)" }, children: [
+          "Tags for ",
+          environment?.name || "this environment",
+          " \u2014 merged from Platform \u2192 Reseller \u2192 Customer \u2192 Project \u2192 Environment."
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          "button",
+          {
+            className: `btn btn-sm ${view === "levels" ? "btn-green" : "btn-ghost"}`,
+            onClick: () => setView("levels"),
+            children: "By Level"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          "button",
+          {
+            className: `btn btn-sm ${view === "merged" ? "btn-green" : "btn-ghost"}`,
+            onClick: () => setView("merged"),
+            children: "Merged Preview"
+          }
+        )
+      ] })
+    ] }),
+    view === "levels" ? (
+      /* Level cards */
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 12 }, children: levels.map((level, i) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: panelStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: level.tags.length > 0 ? 12 : 0 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, margin: 0 }, children: level.level }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+              level.tags.length,
+              " tag",
+              level.tags.length !== 1 ? "s" : ""
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => selectLevel(level), children: "Edit \u2192" })
+        ] }),
+        level.tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 }, children: level.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: {
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
+          padding: "3px 8px",
+          borderRadius: "var(--radius)",
+          background: "var(--bg-input)",
+          border: "1px solid var(--border)",
+          fontSize: 11,
+          opacity: tag.enabled ? 1 : 0.4
+        }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { fontFamily: "var(--font-mono)", color: "var(--text-primary)" }, children: tag.key }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { color: "var(--text-muted)" }, children: "=" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { fontFamily: "var(--font-mono)", color: "var(--text-secondary)" }, children: tag.value }),
+          !tag.enabled && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 9, color: "var(--red)", fontWeight: 600 }, children: "OFF" })
+        ] }, tag.id)) })
+      ] }, i)) })
+    ) : (
+      /* Merged preview */
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: panelStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 12 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("h3", { style: { fontSize: 13, fontWeight: 600, margin: 0 }, children: [
+            "Merged Tags for ",
+            environment?.name
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: [
+            "Final tag set applied during deployment (",
+            mergedEntries.length,
+            " tags)."
+          ] })
+        ] }),
+        mergedEntries.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 20, textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "No enabled tags across any level." }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: {
+          fontFamily: "var(--font-mono)",
+          fontSize: 12,
+          padding: 16,
+          margin: 0,
+          background: "var(--bg-input)",
+          borderRadius: "var(--radius)",
+          lineHeight: 1.6,
+          overflowX: "auto",
+          color: "var(--text-primary)"
+        }, children: mergedEntries.map(([k, v]) => `${k} = "${v}"`).join("\n") })
+      ] })
+    )
   ] });
 }
+var panelStyle = {
+  background: "var(--bg-surface)",
+  border: "1px solid var(--border)",
+  borderRadius: 10,
+  padding: 18
+};
+var labelStyle = { fontSize: 11, color: "var(--text-muted)", display: "block", marginBottom: 4 };
+var tableStyle = { width: "100%", borderCollapse: "collapse", fontSize: 13 };
+var theadRowStyle = {
+  borderBottom: "1px solid var(--border)",
+  fontSize: 11,
+  color: "var(--text-muted)",
+  textTransform: "uppercase",
+  letterSpacing: "0.05em"
+};
+var thStyle = { padding: "10px 16px", textAlign: "left" };
+var tdStyle = { padding: "10px 16px" };
+var codeStyle = {
+  fontFamily: "var(--font-mono)",
+  fontSize: 12,
+  background: "rgba(110,118,129,0.1)",
+  padding: "2px 6px",
+  borderRadius: 4
+};
+var badgeActive = {
+  fontSize: 10,
+  fontWeight: 600,
+  padding: "2px 8px",
+  borderRadius: 10,
+  background: "rgba(59,130,246,0.1)",
+  color: "var(--green)"
+};
+var badgeDisabled = {
+  fontSize: 10,
+  fontWeight: 600,
+  padding: "2px 8px",
+  borderRadius: 10,
+  background: "rgba(239,68,68,0.1)",
+  color: "var(--red)"
+};
 
 // app/javascript/components/canvas/useCanvasLock.js
 var import_react11 = __toESM(require_react());
@@ -33283,48 +33826,55 @@ function CreateGroupModal({ onCreate, onClose }) {
     await onCreate(name.trim(), color);
     setSubmitting(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-overlay", style: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-content", style: { background: "var(--bg-secondary, #161b22)", border: "1px solid var(--border, #30363d)", borderRadius: 10, padding: 24, width: 360, color: "var(--text-primary, #e6edf3)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { style: { marginTop: 0, fontSize: 16, fontWeight: 600 }, children: "Create Application Group" }),
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+    if (e.target === e.currentTarget) onClose();
+  }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-panel", style: { maxWidth: 360 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { className: "modal-title", children: "Create Application Group" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "\xD7" })
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "modal-label", children: [
-        "Name",
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-          "input",
-          {
-            type: "text",
-            value: name,
-            onChange: (e) => setName(e.target.value),
-            className: "modal-input",
-            placeholder: "e.g. Compute, Data, Networking",
-            autoFocus: true,
-            required: true
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "modal-label", children: [
-        "Color",
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { display: "flex", gap: 8, marginTop: 6 }, children: GROUP_COLORS2.map((c) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-          "button",
-          {
-            type: "button",
-            onClick: () => setColor(c),
-            style: {
-              width: 28,
-              height: 28,
-              borderRadius: 6,
-              background: c,
-              border: color === c ? "2px solid white" : "2px solid transparent",
-              cursor: "pointer",
-              transition: "border-color 0.15s"
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-body", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-group", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "form-label", children: "Name *" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            "input",
+            {
+              type: "text",
+              value: name,
+              onChange: (e) => setName(e.target.value),
+              className: "form-input",
+              placeholder: "e.g. Compute, Data, Networking",
+              autoFocus: true,
+              required: true
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-group", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "form-label", children: "Color" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { display: "flex", gap: 8, marginTop: 6 }, children: GROUP_COLORS2.map((c) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: () => setColor(c),
+              style: {
+                width: 28,
+                height: 28,
+                borderRadius: 6,
+                background: c,
+                border: color === c ? "2px solid white" : "2px solid transparent",
+                cursor: "pointer",
+                transition: "border-color 0.15s"
+              },
+              "aria-label": `Color ${c}`
             },
-            "aria-label": `Color ${c}`
-          },
-          c
-        )) })
+            c
+          )) })
+        ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "cv-btn cv-btn-secondary", onClick: onClose, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "cv-btn cv-btn-primary", disabled: !name.trim() || submitting, children: submitting ? "Creating\u2026" : "Create Group" })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "btn btn-green", disabled: !name.trim() || submitting, children: submitting ? "Creating\u2026" : "Create Group" })
       ] })
     ] })
   ] }) });
@@ -33567,18 +34117,18 @@ function CanvasApp({
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-top-right", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: "/modules", className: "cv-btn cv-btn-secondary cv-btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", children: "\u2726 New Environment" }),
-        lockState.isMe ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-btn cv-btn-secondary cv-btn-sm", onClick: releaseLock, style: { color: "var(--accent-green, #3fb950)" }, children: "\u{1F513} Editing \xB7 Unlock" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: "/modules", className: "btn btn-ghost btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", children: "\u2726 New Environment" }),
+        lockState.isMe ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: releaseLock, style: { color: "var(--accent-green)" }, children: "\u{1F513} Editing \xB7 Unlock" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
-            className: "cv-btn cv-btn-primary cv-btn-sm",
+            className: "btn btn-green btn-sm",
             onClick: acquireLock,
             disabled: acquiringLock,
             children: acquiringLock ? "Acquiring\u2026" : canvasLocked ? `\u{1F512} Locked by ${lockState.holder?.user_name || lockState.holder?.user_email || "someone"}` : "\u{1F512} Lock to Edit"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-btn cv-btn-primary cv-btn-sm", onClick: () => setActiveScreen("deploy"), children: "\u25B6 Deploy" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => setActiveScreen("deploy"), children: "\u25B6 Deploy" }),
         /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cv-avatar", children: currentUser || "U" })
       ] })
     ] }),
@@ -33713,7 +34263,8 @@ function CanvasApp({
             createAppGroup,
             deleteAppGroup,
             assignResourceToGroup,
-            selectedGroupId
+            selectedGroupId,
+            readOnly: canvasLocked || !lockState.isMe
           }
         )
       ] })
@@ -33731,7 +34282,7 @@ function CanvasApp({
     activeScreen === "templates" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TemplatesScreen, {}),
     activeScreen === "import" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ImportScreen, {}),
     activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DeployScreen, { environmentId }),
-    activeScreen === "global_tags" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(GlobalTagsScreen, {}),
+    activeScreen === "global_tags" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(GlobalTagsScreen, { environmentId, environment, project, customer }),
     cmdOpen && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       CommandPalette,
       {

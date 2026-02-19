@@ -14,6 +14,7 @@ class LocalEnvironment < ApplicationRecord
   has_many :promotion_records_as_source, class_name: "PromotionRecord", foreign_key: :source_environment_id, dependent: :destroy
   has_many :promotion_records_as_target, class_name: "PromotionRecord", foreign_key: :target_environment_id, dependent: :nullify
   has_many :canvas_locks, foreign_key: :environment_id, dependent: :destroy
+  has_many :global_tags, as: :taggable, dependent: :destroy
 
   validates :name, presence: true
   validates :env_type, presence: true, inclusion: { in: ENV_TYPES }

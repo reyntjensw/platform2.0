@@ -5,6 +5,7 @@ class LocalProject < ApplicationRecord
 
   belongs_to :local_customer
   has_many :local_environments, dependent: :destroy
+  has_many :global_tags, as: :taggable, dependent: :destroy
 
   validates :name, presence: true
   validates :slug, presence: true

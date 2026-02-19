@@ -1,110 +1,199 @@
-<div class="page-content" style="max-width:900px;margin:0 auto">
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
-    <div>
-      <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Global Tags</h2>
-      <p style="font-size:12px;color:var(--text-secondary)">Tags applied to every deployed resource across all environments.</p>
-    </div>
-    <div style="font-size:11px;color:var(--text-secondary)">
-      <%= GlobalTag.enabled.count %> active / <%= GlobalTag.count %> total
-    </div>
+<% content_for(:title) { "Global Tags — Factor Fifty" } %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Global Tags</h1>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+      Manage tags at different hierarchy levels. Lower levels override higher levels on key conflicts.
+    </p>
   </div>
+  <div class="header-actions">
+    <span style="font-size:12px;color:var(--text-muted);">
+      <%= @tags.select(&:enabled?).count %> active / <%= @tags.count %> total at this level
+    </span>
+  </div>
+</div>
 
-  <%# Existing tags table %>
-  <div class="mod-panel">
-    <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
-      <h3 style="font-size:13px;font-weight:600">Configured Tags</h3>
-    </div>
-
-    <% if @tags.any? %>
-      <table class="mod-tbl">
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Value</th>
-            <th>Description</th>
-            <th style="width:70px">Status</th>
-            <th style="width:160px"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @tags.each do |tag| %>
-            <tr class="mod-tbl__row">
-              <td>
-                <code style="font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg-secondary);padding:2px 6px;border-radius:4px"><%= tag.key %></code>
-              </td>
-              <td>
-                <code style="font-size:12px;font-family:'JetBrains Mono',monospace"><%= tag.value %></code>
-              </td>
-              <td style="font-size:11px;color:var(--text-secondary)"><%= tag.description %></td>
-              <td>
-                <% if tag.enabled? %>
-                  <span class="meta-tag meta-tag--ready">Active</span>
-                <% else %>
-                  <span class="meta-tag meta-tag--error">Disabled</span>
-                <% end %>
-              </td>
-              <td style="display:flex;gap:4px;justify-content:flex-end">
-                <%= button_to tag.enabled? ? "Disable" : "Enable",
-                    toggle_global_tag_path(tag), method: :patch,
-                    class: "f50-btn f50-btn--secondary f50-btn--sm" %>
-                <%= button_to "Delete", global_tag_path(tag),
-                    method: :delete, class: "f50-btn f50-btn--danger f50-btn--sm",
-                    data: { turbo_confirm: "Delete tag '#{tag.key}'? This will remove it from all future deployments." } %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+<%# Scope selector %>
+<div class="mod-panel" style="margin-bottom:20px;">
+  <div style="padding:14px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-secondary);">
+      Scope Level
+    </label>
+    <select class="mod-input" style="width:auto;min-width:280px;"
+            onchange="if(this.value==='platform'){window.location='<%= global_tags_path %>'}else{var parts=this.value.split(':');window.location='<%= global_tags_path %>?scope_type='+parts[0]+'&scope_id='+parts[1]}">
+      <% @all_levels.each do |lvl| %>
+        <option value="<%= lvl[:type] ? "#{lvl[:type]}:#{lvl[:id]}" : "platform" %>"
+                <%= "selected" if lvl[:current] %>>
+          <%= lvl[:label] %>
+        </option>
+      <% end %>
+    </select>
+    <% if @scope_record %>
+      <span class="mod-status-badge mod-status-live" style="font-size:10px;">
+        <span class="mod-status-dot"></span>
+        Editing: <%= @scope_record.class.name.sub("Local", "") %> level
+      </span>
     <% else %>
-      <div style="padding:40px;text-align:center;color:var(--text-secondary);font-size:13px">
-        No global tags configured yet. Add one below.
-      </div>
+      <span class="mod-status-badge mod-status-draft" style="font-size:10px;">
+        <span class="mod-status-dot"></span>
+        Platform level (applies to all)
+      </span>
     <% end %>
   </div>
+</div>
 
-  <%# Add new tag form %>
-  <div class="mod-panel" style="margin-top:20px">
-    <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
-      <h3 style="font-size:13px;font-weight:600">Add Tag</h3>
-    </div>
-    <div style="padding:18px">
-      <%= form_with url: global_tags_path, method: :post, local: true do %>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="mod-field mod-field--req">
-            <label class="mod-field__label" for="tag_key">Key</label>
-            <input type="text" name="key" id="tag_key" class="mod-input mod-input--mono"
-                   placeholder="e.g. managed-by" required
-                   pattern="[a-zA-Z0-9_\-:\/\.]+"
-                   title="Only alphanumeric, hyphens, underscores, colons, slashes, and dots">
-          </div>
-          <div class="mod-field mod-field--req">
-            <label class="mod-field__label" for="tag_value">Value</label>
-            <input type="text" name="value" id="tag_value" class="mod-input mod-input--mono"
-                   placeholder="e.g. factorfifty" required>
-          </div>
-        </div>
-        <div class="mod-field" style="margin-bottom:16px">
-          <label class="mod-field__label" for="tag_description">Description</label>
-          <input type="text" name="description" id="tag_description" class="mod-input"
-                 placeholder="Optional — why this tag exists">
-        </div>
-        <button type="submit" class="f50-btn f50-btn--primary">Add Tag</button>
-      <% end %>
-    </div>
+<%# Tags table for current scope %>
+<div class="mod-table-wrap">
+  <% if @tags.any? %>
+    <table class="mod-tbl">
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th>Description</th>
+          <th style="width:80px">Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tags.each do |tag| %>
+          <tr class="mod-tbl__row">
+            <td>
+              <code style="font-size:12px;font-family:var(--font-mono);background:var(--bg-input);padding:2px 6px;border-radius:4px;"><%= tag.key %></code>
+            </td>
+            <td>
+              <code style="font-size:12px;font-family:var(--font-mono);"><%= tag.value %></code>
+            </td>
+            <td style="font-size:12px;color:var(--text-secondary);"><%= tag.description %></td>
+            <td>
+              <% if tag.enabled? %>
+                <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Active</span>
+              <% else %>
+                <span class="mod-status-badge mod-status-draft"><span class="mod-status-dot"></span>Disabled</span>
+              <% end %>
+            </td>
+            <td>
+              <div class="mod-actions-cell">
+                <%= button_to tag.enabled? ? "Disable" : "Enable",
+                    toggle_global_tag_path(tag), method: :patch,
+                    class: "mod-action-btn",
+                    params: { scope_type: @scope_type, scope_id: @scope_id }.compact_blank %>
+                <%= button_to "Delete", global_tag_path(tag),
+                    method: :delete, class: "mod-action-btn", style: "color:var(--red);",
+                    data: { turbo_confirm: "Delete tag '#{tag.key}'?" },
+                    params: { scope_type: @scope_type, scope_id: @scope_id }.compact_blank %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="mod-empty-state">No tags at this level. Add one below or select a different scope.</div>
+  <% end %>
+</div>
+
+<%# Add new tag form %>
+<div class="mod-panel" style="margin-top:20px;">
+  <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+    <h3 style="font-size:13px;font-weight:600;">Add Tag at <%= @scope_record ? @scope_record.class.name.sub("Local", "") : "Platform" %> Level</h3>
   </div>
-
-  <%# Preview %>
-  <% if @tags.select(&:enabled?).any? %>
-    <div class="mod-panel" style="margin-top:20px">
-      <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
-        <h3 style="font-size:13px;font-weight:600">Preview</h3>
-        <p style="font-size:11px;color:var(--text-secondary);margin-top:2px">These tags will be merged into every resource during deployment.</p>
+  <div style="padding:18px;">
+    <%= form_with url: global_tags_path(scope_type: @scope_type, scope_id: @scope_id), method: :post, local: true do %>
+      <% if @scope_type.present? %>
+        <input type="hidden" name="scope_type" value="<%= @scope_type %>">
+        <input type="hidden" name="scope_id" value="<%= @scope_id %>">
+      <% end %>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="mod-field mod-field--req">
+          <label class="mod-field__label" for="tag_key">Key</label>
+          <input type="text" name="key" id="tag_key" class="mod-input mod-input--mono"
+                 placeholder="e.g. managed-by" required
+                 pattern="[a-zA-Z0-9_\-:\/\.]+"
+                 title="Only alphanumeric, hyphens, underscores, colons, slashes, and dots">
+        </div>
+        <div class="mod-field mod-field--req">
+          <label class="mod-field__label" for="tag_value">Value</label>
+          <input type="text" name="value" id="tag_value" class="mod-input mod-input--mono"
+                 placeholder="e.g. factorfifty" required>
+        </div>
       </div>
-      <div style="padding:18px">
-        <pre style="font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg-secondary);padding:12px;border-radius:6px;margin:0;line-height:1.6;overflow-x:auto"><% @tags.select(&:enabled?).each do |tag| %><span style="color:var(--text-secondary)"># <%= tag.description %></span>
-<%= tag.key %> = "<%= tag.value %>"
-<% end %></pre>
+      <div class="mod-field" style="margin-bottom:16px;">
+        <label class="mod-field__label" for="tag_description">Description</label>
+        <input type="text" name="description" id="tag_description" class="mod-input"
+               placeholder="Optional — why this tag exists">
+      </div>
+      <button type="submit" class="btn btn-green btn-sm">Add Tag</button>
+    <% end %>
+  </div>
+</div>
+
+<%# Inherited tags from parent levels (only shown when viewing a non-platform scope) %>
+<% if @scope_record %>
+  <%
+    # Build list of parent-level tags that would be inherited
+    inherited = []
+    case @scope_record
+    when LocalEnvironment
+      project = @scope_record.local_project
+      customer = project.local_customer
+      reseller = customer.local_reseller
+      inherited << { level: "Platform", tags: GlobalTag.platform.by_key }
+      inherited << { level: "Reseller (#{reseller.name})", tags: GlobalTag.for_taggable(reseller).by_key } if reseller
+      inherited << { level: "Customer (#{customer.name})", tags: GlobalTag.for_taggable(customer).by_key }
+      inherited << { level: "Project (#{project.name})", tags: GlobalTag.for_taggable(project).by_key }
+    when LocalProject
+      customer = @scope_record.local_customer
+      reseller = customer.local_reseller
+      inherited << { level: "Platform", tags: GlobalTag.platform.by_key }
+      inherited << { level: "Reseller (#{reseller.name})", tags: GlobalTag.for_taggable(reseller).by_key } if reseller
+      inherited << { level: "Customer (#{customer.name})", tags: GlobalTag.for_taggable(customer).by_key }
+    when LocalCustomer
+      reseller = @scope_record.local_reseller
+      inherited << { level: "Platform", tags: GlobalTag.platform.by_key }
+      inherited << { level: "Reseller (#{reseller.name})", tags: GlobalTag.for_taggable(reseller).by_key } if reseller
+    when LocalReseller
+      inherited << { level: "Platform", tags: GlobalTag.platform.by_key }
+    end
+    inherited.reject! { |l| l[:tags].empty? }
+  %>
+  <% if inherited.any? %>
+    <div class="mod-panel" style="margin-top:20px;">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+        <h3 style="font-size:13px;font-weight:600;">Inherited Tags</h3>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:2px;">
+          Tags from parent levels. These are read-only here — edit them at their own scope level.
+          Tags at this level override inherited tags with the same key.
+        </p>
+      </div>
+      <div style="padding:18px;">
+        <% inherited.each do |group| %>
+          <div style="margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:8px;">
+              <%= group[:level] %>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <% group[:tags].each do |tag| %>
+                <%
+                  overridden = @tags.any? { |t| t.key == tag.key }
+                %>
+                <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--radius);background:var(--bg-input);border:1px solid var(--border);font-size:11px;<%= 'opacity:0.4;text-decoration:line-through;' if overridden %>">
+                  <code style="font-family:var(--font-mono);color:var(--text-primary);"><%= tag.key %></code>
+                  <span style="color:var(--text-muted);">=</span>
+                  <code style="font-family:var(--font-mono);color:var(--text-secondary);"><%= tag.value %></code>
+                  <% if overridden %>
+                    <span style="font-size:9px;color:var(--orange);font-weight:600;">OVERRIDDEN</span>
+                  <% end %>
+                  <% unless tag.enabled? %>
+                    <span style="font-size:9px;color:var(--red);font-weight:600;">DISABLED</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>
-</div>
+<% end %>

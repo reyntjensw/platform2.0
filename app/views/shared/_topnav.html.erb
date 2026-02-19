@@ -1,8 +1,7 @@
-<%# Top Navigation Bar — canvas-style layout %>
-<%# Logo + breadcrumb on left, nav links + avatar on right %>
+<%# Top Navigation Bar — nav links on left, avatar on right %>
 <nav class="topnav" role="navigation" aria-label="Top navigation">
   <div class="topnav-left">
-    <%# Logo: 8 ascending bars + "FACTOR FIFTY" text %>
+    <%# Logo: ascending bars + "FACTOR FIFTY" text %>
     <%= link_to root_path, class: "topnav-logo", aria: { label: "Factor Fifty home" } do %>
       <div class="topnav-logo-bars" aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -10,23 +9,22 @@
       <div class="topnav-logo-text">Factor Fifty</div>
     <% end %>
 
-    <%# Breadcrumb trail %>
-    <%= render "shared/breadcrumb" %>
+    <div class="topnav-sep"></div>
+
+    <%# Inline nav links %>
+    <div class="topnav-links">
+      <% sidebar_app_items.each do |item| %>
+        <a href="<%= item[:path] %>"
+           class="topnav-link<%= ' active' if item[:active] %>"
+           aria-current="<%= 'page' if item[:active] %>">
+          <span aria-hidden="true"><%= item[:icon] %></span>
+          <%= item[:label] %>
+        </a>
+      <% end %>
+    </div>
   </div>
 
   <div class="topnav-right">
-    <%# Inline nav links — replaces sidebar %>
-    <% sidebar_app_items.each do |item| %>
-      <a href="<%= item[:path] %>"
-         class="topnav-link<%= ' active' if item[:active] %>"
-         aria-current="<%= 'page' if item[:active] %>">
-        <span aria-hidden="true"><%= item[:icon] %></span>
-        <%= item[:label] %>
-      </a>
-    <% end %>
-
-    <div class="topnav-sep"></div>
-
     <%# User avatar dropdown %>
     <div class="user-dropdown" data-controller="dropdown">
       <button class="avatar"

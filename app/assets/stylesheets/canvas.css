@@ -4,26 +4,21 @@
    ═══════════════════════════════════════════════════ */
 
 :root {
-    --bg-primary: #0a0e1a;
-    --bg-secondary: #111827;
-    --bg-tertiary: #1a2235;
-    --bg-card: #151d2e;
-    --bg-card-hover: #1c2740;
-    --border: #243049;
-    --border-light: #2a3a58;
-    --text-primary: #e8ecf4;
-    --text-secondary: #8b99b5;
-    --text-muted: #5a6a8a;
-    --accent-blue: #3b82f6;
-    --accent-cyan: #22d3ee;
+    /* Canvas aliases → application.css tokens (single source of truth)
+       Variables with the same name as application.css are inherited automatically.
+       Only canvas-specific aliases are defined here. */
+    --bg-primary: var(--bg-body, #0a0e1a);
+    --bg-secondary: var(--bg-surface, #111827);
+    --bg-tertiary: var(--bg-input, #1a2235);
+    --accent-blue: var(--green, #3b82f6);
+    --accent-cyan: var(--cyan, #22d3ee);
     --accent-green: #10b981;
-    --accent-orange: #f59e0b;
-    --accent-red: #ef4444;
-    --accent-purple: #8b5cf6;
-    --aws-orange: #ff9900;
-    --azure-blue: #0078d4;
-    --radius: 8px;
-    --radius-lg: 12px;
+    /* canvas-only: actual green for diff/status indicators */
+    --accent-orange: var(--orange, #f59e0b);
+    --accent-red: var(--red, #ef4444);
+    --accent-purple: var(--purple, #8b5cf6);
+    --aws-orange: var(--aws, #ff9900);
+    --azure-blue: var(--azure, #0078d4);
 }
 
 * {
@@ -47,7 +42,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
-    height: 56px;
+    height: 48px;
     background: var(--bg-secondary);
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
@@ -146,40 +141,7 @@
     gap: 8px;
 }
 
-/* Buttons */
-.cv-btn {
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: all 0.15s;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.cv-btn-primary {
-    background: var(--accent-blue);
-    color: white;
-}
-
-.cv-btn-primary:hover {
-    background: #2563eb;
-}
-
-.cv-btn-secondary {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
-}
-
-.cv-btn-sm {
-    padding: 6px 10px;
-    font-size: 11px;
-}
+/* Buttons — use .btn / .btn-green / .btn-ghost from application.css */
 
 .cv-avatar {
     width: 28px;
@@ -2676,7 +2638,7 @@
     margin-bottom: 14px;
     font-size: 12px;
     font-weight: 500;
-    color: var(--text-secondary, #8b949e);
+    color: var(--text-secondary, #8b99b5);
 }
 
 .modal-input {
@@ -2686,21 +2648,21 @@
     padding: 8px 10px;
     font-size: 13px;
     font-family: 'DM Sans', sans-serif;
-    background: var(--bg-tertiary, #0d1117);
-    border: 1px solid var(--border, #30363d);
+    background: var(--bg-tertiary, #1a2235);
+    border: 1px solid var(--border, #243049);
     border-radius: 6px;
-    color: var(--text-primary, #e6edf3);
+    color: var(--text-primary, #e8ecf4);
     box-sizing: border-box;
 }
 
 .modal-input:focus {
     outline: none;
-    border-color: var(--accent-blue, #58a6ff);
+    border-color: var(--accent-blue, #3b82f6);
 }
 
 .modal-input option {
-    background: var(--bg-tertiary, #0d1117);
-    color: var(--text-primary, #e6edf3);
+    background: var(--bg-tertiary, #1a2235);
+    color: var(--text-primary, #e8ecf4);
 }
 
 /* ── App Group Filter Tabs ── */
@@ -2709,8 +2671,8 @@
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background: var(--bg-secondary, #161b22);
-    border-bottom: 1px solid var(--border, #30363d);
+    background: var(--bg-secondary, #111827);
+    border-bottom: 1px solid var(--border, #243049);
     overflow-x: auto;
     flex-shrink: 0;
 }
@@ -2723,21 +2685,21 @@
     font-size: 11px;
     font-family: 'DM Sans', sans-serif;
     border-radius: 12px;
-    border: 1px solid var(--border, #30363d);
+    border: 1px solid var(--border, #243049);
     background: transparent;
-    color: var(--text-secondary, #8b949e);
+    color: var(--text-secondary, #8b99b5);
     cursor: pointer;
     white-space: nowrap;
 }
 
 .group-filter-tab:hover {
-    border-color: var(--text-muted, #484f58);
-    color: var(--text-primary, #e6edf3);
+    border-color: var(--text-muted, #5a6a8a);
+    color: var(--text-primary, #e8ecf4);
 }
 
 .group-filter-tab.active {
-    background: var(--accent-blue, #58a6ff);
-    border-color: var(--accent-blue, #58a6ff);
+    background: var(--accent-blue, #3b82f6);
+    border-color: var(--accent-blue, #3b82f6);
     color: white;
 }
 

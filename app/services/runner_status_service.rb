@@ -45,13 +45,12 @@ class RunnerStatusService
     list_runners.any? { |r| r[:live] && r[:status] == "active" }
   end
 
-  # Marks runners with stale heartbeats as offline and deletes
-  # runners that have been offline for longer than max_offline_age.
+  # Marks runners with stale heartbeats as offline and sets a TTL
+  # so DynamoDB auto-deletes them after max_offline_age.
   def cleanup_stale_runners(max_offline_age: 1.hour)
     return unless @table_name
 
     cutoff = Time.current - STALE_THRESHOLD
-    delete_cutoff = Time.current - max_offline_age
 
     runners = @account_id ? query_runners_for_account(@account_id) : scan_all_runners
 
@@ -60,20 +59,28 @@ class RunnerStatusService
       pk = "#{RUNNER_PK_PREFIX}#{runner[:account_id]}"
       sk = "#{RUNNER_PK_PREFIX}#{runner[:runner_id]}"
 
-      if runner[:status] == "offline" && last_hb && last_hb < delete_cutoff
-        # Delete long-offline runners
-        dynamodb_client.delete_item(table_name: @table_name, key: { "PK" => pk, "SK" => sk })
-        Rails.logger.info("RunnerStatusService: Deleted stale runner #{runner[:runner_id]}")
-      elsif runner[:status] == "active" && (last_hb.nil? || last_hb < cutoff)
-        # Mark as offline
+      if runner[:status] == "active" && (last_hb.nil? || last_hb < cutoff)
+        # Mark as offline and set TTL for auto-deletion
+        expire_at = (Time.current + max_offline_age).to_i
         dynamodb_client.update_item(
           table_name: @table_name,
           key: { "PK" => pk, "SK" => sk },
-          update_expression: "SET #status = :s",
-          expression_attribute_names: { "#status" => "status" },
-          expression_attribute_values: { ":s" => "offline" }
+          update_expression: "SET #status = :s, #ttl = :ttl",
+          expression_attribute_names: { "#status" => "status", "#ttl" => "ttl" },
+          expression_attribute_values: { ":s" => "offline", ":ttl" => expire_at }
         )
-        Rails.logger.info("RunnerStatusService: Marked runner #{runner[:runner_id]} as offline (stale heartbeat)")
+        Rails.logger.info("RunnerStatusService: Marked runner #{runner[:runner_id]} as offline (TTL=#{expire_at})")
+      elsif runner[:status] == "offline" && !runner[:ttl]
+        # Backfill TTL for offline runners that don't have one yet
+        expire_at = (Time.current + max_offline_age).to_i
+        dynamodb_client.update_item(
+          table_name: @table_name,
+          key: { "PK" => pk, "SK" => sk },
+          update_expression: "SET #ttl = :ttl",
+          expression_attribute_names: { "#ttl" => "ttl" },
+          expression_attribute_values: { ":ttl" => expire_at }
+        )
+        Rails.logger.info("RunnerStatusService: Backfilled TTL on offline runner #{runner[:runner_id]}")
       end
     end
   rescue Aws::DynamoDB::Errors::ServiceError => e
@@ -127,7 +134,8 @@ class RunnerStatusService
       version: item["version"],
       status: item["status"],
       last_heartbeat: item["last_heartbeat"],
-      registered_at: item["registered_at"]
+      registered_at: item["registered_at"],
+      ttl: item["ttl"]&.to_i
     }
   end
 

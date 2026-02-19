@@ -161,42 +161,92 @@
     <div>
   <% end %>
 
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">Environments</h2>
-    <p style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">Manage cloud environments linked to this project.</p>
-
-    <% if provider == "aws" || provider == "azure" %>
-      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Environments</h1>
+        <p style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Manage cloud environments linked to this project.</p>
+      </div>
+      <div class="header-actions">
         <% if provider == "aws" %>
           <button class="btn btn-green btn-sm" data-action="click->aws-onboard#open">+ Add Environment</button>
-        <% else %>
+        <% elsif provider == "azure" %>
           <button class="btn btn-green btn-sm" data-action="click->azure-onboard#open">+ Add Environment</button>
         <% end %>
       </div>
-    <% end %>
+    </div>
 
     <% if @environments.any? %>
-      <div class="card-grid">
+      <div class="entity-grid">
         <% @environments.each do |env| %>
-          <div class="card">
-            <div class="card-header-row">
-              <div class="card-title"><%= env.name %></div>
-              <% if env.environment_type.present? %>
-                <span class="badge badge-<%= env.environment_type == 'production' ? 'prd' : 'dev' %>"><%= env.environment_type.humanize %></span>
+          <% env_color = case env.environment_type
+               when 'production' then '#ef4444'
+               when 'acceptance' then '#f59e0b'
+               else '#3b82f6'
+             end %>
+          <% local_env = LocalEnvironment.find_by(aws_account_id: env.account_id) || LocalEnvironment.find_by(azure_subscription_id: env.account_id) %>
+          <% if local_env %>
+            <%= link_to canvas_path(local_env), class: "entity-card", style: "--accent-color: #{env_color};", data: { name: env.name } do %>
+              <div class="entity-card-top">
+                <div class="entity-card-name"><%= env.name %></div>
+                <div class="entity-card-badges">
+                  <% if env.environment_type.present? %>
+                    <% badge_class = case env.environment_type
+                         when 'production' then 'badge-prd'
+                         when 'acceptance' then 'badge-acc'
+                         else 'badge-dev'
+                       end %>
+                    <span class="badge <%= badge_class %>"><%= env.environment_type.humanize %></span>
+                  <% end %>
+                </div>
+              </div>
+              <% if env.account_id.present? %>
+                <div class="entity-card-meta"><%= env.account_id %></div>
               <% end %>
+              <div class="entity-card-footer">
+                <div class="entity-card-stat">
+                  <div class="entity-card-dot" style="background: <%= env_color %>;"></div>
+                  🎨 Canvas linked
+                </div>
+                <span class="entity-card-arrow">→</span>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="entity-card" style="--accent-color: <%= env_color %>; cursor: default;" data-name="<%= env.name %>">
+              <div class="entity-card-top">
+                <div class="entity-card-name"><%= env.name %></div>
+                <div class="entity-card-badges">
+                  <% if env.environment_type.present? %>
+                    <% badge_class = case env.environment_type
+                         when 'production' then 'badge-prd'
+                         when 'acceptance' then 'badge-acc'
+                         else 'badge-dev'
+                       end %>
+                    <span class="badge <%= badge_class %>"><%= env.environment_type.humanize %></span>
+                  <% end %>
+                </div>
+              </div>
+              <% if env.account_id.present? %>
+                <div class="entity-card-meta"><%= env.account_id %></div>
+              <% end %>
+              <div class="entity-card-footer">
+                <div class="entity-card-stat" style="color:var(--text-muted);">
+                  No canvas linked
+                </div>
+              </div>
             </div>
-            <% if env.account_id.present? %>
-              <div class="card-meta mono"><%= env.account_id %></div>
-            <% end %>
-            <% local_env = LocalEnvironment.find_by(aws_account_id: env.account_id) || LocalEnvironment.find_by(azure_subscription_id: env.account_id) %>
-            <% if local_env %>
-              <div style="margin-top:10px;">
-                <%= link_to "🎨 Open Canvas", canvas_path(local_env), class: "btn btn-green btn-sm", style: "text-decoration:none;" %>
-              </div>
-            <% else %>
-              <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">
-                No canvas linked — create one below and link it to <span class="mono"><%= env.account_id %></span>
-              </div>
-            <% end %>
+          <% end %>
+        <% end %>
+
+        <%# Add card %>
+        <% if provider == "aws" %>
+          <div class="entity-card entity-card-add" data-action="click->aws-onboard#open" style="cursor:pointer;">
+            <div class="entity-add-icon">+</div>
+            <span>Add Environment</span>
+          </div>
+        <% elsif provider == "azure" %>
+          <div class="entity-card entity-card-add" data-action="click->azure-onboard#open" style="cursor:pointer;">
+            <div class="entity-add-icon">+</div>
+            <span>Add Environment</span>
           </div>
         <% end %>
       </div>
@@ -207,58 +257,91 @@
     <%# ═══ Canvas Environments (from local DB) ═══ %>
     <% canvas_envs = LocalEnvironment.includes(local_project: :local_customer).order(:env_type) %>
     <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:24px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div class="page-header">
         <div>
-          <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">🎨 Canvas Environments</h2>
-          <p style="font-size:12px;color:var(--text-secondary);">Infrastructure-as-Code canvas for designing and deploying resources.</p>
+          <h2 class="page-title" style="font-size:18px;">🎨 Canvas Environments</h2>
+          <p style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Infrastructure-as-Code canvas for designing and deploying resources.</p>
         </div>
-        <button class="btn btn-green btn-sm" onclick="document.getElementById('create-canvas-modal').style.display='flex'">+ Create Canvas</button>
+        <div class="header-actions">
+          <button class="btn btn-green btn-sm" onclick="document.getElementById('create-canvas-modal').style.display='flex'">+ Create Canvas</button>
+        </div>
       </div>
 
       <% if canvas_envs.any? %>
-        <div class="card-grid">
+        <div class="entity-grid">
           <% canvas_envs.each do |cenv| %>
-            <div class="card">
-              <div class="card-header-row">
-                <div class="card-title"><%= cenv.name.capitalize %></div>
-                <span class="badge badge-<%= cenv.env_type == 'prd' ? 'prd' : 'dev' %>"><%= cenv.env_type.upcase %></span>
+            <% canvas_color = case cenv.env_type
+                 when 'prd' then '#ef4444'
+                 when 'acc' then '#f59e0b'
+                 else '#3b82f6'
+               end %>
+            <% linked_account = cenv.aws_account_id || cenv.azure_subscription_id || cenv.gcp_project_id %>
+            <%= link_to canvas_path(cenv), class: "entity-card", style: "--accent-color: #{canvas_color}; text-decoration:none;" do %>
+              <div class="entity-card-top">
+                <div class="entity-card-name"><%= cenv.name.capitalize %></div>
+                <div class="entity-card-badges">
+                  <% badge_class = case cenv.env_type
+                       when 'prd' then 'badge-prd'
+                       when 'acc' then 'badge-acc'
+                       else 'badge-dev'
+                     end %>
+                  <span class="badge <%= badge_class %>"><%= cenv.env_type.upcase %></span>
+                </div>
               </div>
-              <div class="card-meta"><%= cenv.local_project.name %> · <%= cenv.cloud_provider.upcase %> · <%= cenv.region %></div>
-
-              <%# Show linked account if any %>
-              <% linked_account = cenv.aws_account_id || cenv.azure_subscription_id || cenv.gcp_project_id %>
+              <div class="entity-card-meta"><%= cenv.local_project.name %> · <%= cenv.cloud_provider.upcase %> · <%= cenv.region %></div>
               <% if linked_account %>
-                <div style="margin-top:6px;font-size:11px;color:var(--text-muted);">
-                  🔗 Linked: <span class="mono"><%= linked_account %></span>
+                <div style="margin-top:4px;font-size:10px;color:var(--text-muted);">
+                  🔗 <span class="mono"><%= linked_account %></span>
                 </div>
               <% end %>
-
-              <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
-                <%= link_to "Open Canvas →", canvas_path(cenv), class: "btn btn-green btn-sm", style: "text-decoration:none;" %>
-
-                <%# Link / Unlink button %>
-                <% if linked_account %>
-                  <%= button_to "Unlink",
-                        unlink_customer_project_canvas_environment_path(params[:customer_uuid], @project.uuid, cenv),
-                        method: :patch,
-                        class: "btn btn-ghost btn-sm",
-                        data: { turbo_confirm: "Unlink canvas '#{cenv.name}' from account #{linked_account}?" } %>
-                <% else %>
-                  <button class="btn btn-ghost btn-sm"
-                          onclick="openLinkModal('<%= cenv.id %>', '<%= cenv.name %>', '<%= cenv.cloud_provider %>')">
-                    🔗 Link
-                  </button>
-                <% end %>
-
-                <%# Delete button %>
-                <button class="btn btn-ghost btn-sm"
-                        style="color:var(--red);"
-                        onclick="openDeleteCanvasModal('<%= cenv.id %>', '<%= j cenv.name %>')">
-                  🗑
-                </button>
+              <div class="entity-card-footer">
+                <div class="entity-card-stat">
+                  <div class="entity-card-dot" style="background: <%= canvas_color %>;"></div>
+                  <%= cenv.cloud_provider.upcase %>
+                </div>
+                <span class="entity-card-arrow">→</span>
               </div>
-            </div>
+            <% end %>
           <% end %>
+
+          <%# Add canvas card %>
+          <div class="entity-card entity-card-add" onclick="document.getElementById('create-canvas-modal').style.display='flex'" style="cursor:pointer;">
+            <div class="entity-add-icon">+</div>
+            <span>Create Canvas</span>
+          </div>
+        </div>
+
+        <%# Canvas action buttons (link/unlink/delete) — shown below the grid %>
+        <div style="margin-top:16px;">
+          <details style="font-size:12px;color:var(--text-secondary);">
+            <summary style="cursor:pointer;user-select:none;">Manage canvas links & deletions</summary>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+              <% canvas_envs.each do |cenv| %>
+                <% linked_account = cenv.aws_account_id || cenv.azure_subscription_id || cenv.gcp_project_id %>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);font-size:12px;">
+                  <span style="font-weight:600;color:var(--text-primary);flex:1;"><%= cenv.name.capitalize %></span>
+                  <% if linked_account %>
+                    <span class="mono" style="color:var(--text-muted);font-size:10px;"><%= linked_account %></span>
+                    <%= button_to "Unlink",
+                          unlink_customer_project_canvas_environment_path(params[:customer_uuid], @project.uuid, cenv),
+                          method: :patch,
+                          class: "btn btn-ghost btn-sm",
+                          data: { turbo_confirm: "Unlink canvas '#{cenv.name}' from account #{linked_account}?" } %>
+                  <% else %>
+                    <button class="btn btn-ghost btn-sm"
+                            onclick="openLinkModal('<%= cenv.id %>', '<%= cenv.name %>', '<%= cenv.cloud_provider %>')">
+                      🔗 Link
+                    </button>
+                  <% end %>
+                  <button class="btn btn-ghost btn-sm"
+                          style="color:var(--red);"
+                          onclick="openDeleteCanvasModal('<%= cenv.id %>', '<%= j cenv.name %>')">
+                    🗑
+                  </button>
+                </div>
+              <% end %>
+            </div>
+          </details>
         </div>
       <% else %>
         <%= render "shared/empty_state", icon: "🎨", title: "No canvas environments yet", description: "Create a canvas to start designing infrastructure." %>
@@ -411,15 +494,15 @@
                   <label class="form-label">Role Name *</label>
                   <input type="text" name="role_name" class="form-input" placeholder="FactorFifty-Admin" required data-aws-onboard-target="roleName">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:8px;">
                   <label class="form-label">External ID</label>
-                  <div style="display:flex;gap:8px;">
+                  <div style="display:flex;gap:8px;align-items:center;">
                     <input type="text" name="external_id" class="form-input" readonly style="background:var(--bg-elevated);flex:1;" data-aws-onboard-target="externalId">
-                    <button type="button" class="btn btn-ghost btn-sm" data-action="click->aws-onboard#copyExternalId" title="Copy to clipboard">📋</button>
+                    <button type="button" class="btn btn-ghost btn-sm" style="flex-shrink:0;height:38px;" data-action="click->aws-onboard#copyExternalId" title="Copy to clipboard">📋</button>
                   </div>
                 </div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:-8px;">
-                  <a href="https://docs.factorfifty.com/environments/create-a-new-environment/aws" target="_blank" style="color:var(--green);">Read the docs →</a>
+                <div style="font-size:12px;margin-top:0;">
+                  <a href="https://docs.factorfifty.com/environments/create-a-new-environment/aws" target="_blank" style="color:var(--green);text-decoration:none;">Read the docs →</a>
                 </div>
                 <p data-aws-onboard-target="validateError" style="color:var(--red);font-size:12px;margin-top:8px;min-height:16px;"></p>
               </div>

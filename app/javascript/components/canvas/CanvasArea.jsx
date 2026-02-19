@@ -294,7 +294,7 @@ export default function CanvasArea({
                   position: "absolute", top: -18, left: 8,
                   fontSize: 10, fontWeight: 600,
                   color: g.color || "var(--accent-cyan)",
-                  background: "var(--bg-canvas, #0d1117)",
+                  background: "var(--bg-body, #0a0e1a)",
                   padding: "0 4px"
                 }}>{g.name}</div>
               </div>

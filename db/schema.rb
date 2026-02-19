@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_18_400001) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_19_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -180,8 +180,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_18_400001) do
     t.boolean "enabled", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "taggable_type"
+    t.uuid "taggable_id"
     t.index ["enabled"], name: "index_global_tags_on_enabled"
-    t.index ["key"], name: "index_global_tags_on_key", unique: true
+    t.index ["key", "taggable_type", "taggable_id"], name: "index_global_tags_on_key_and_taggable", unique: true
+    t.index ["key"], name: "index_global_tags_on_key_platform", unique: true, where: "((taggable_type IS NULL) AND (taggable_id IS NULL))"
+    t.index ["taggable_type", "taggable_id"], name: "index_global_tags_on_taggable"
   end
 
   create_table "local_customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

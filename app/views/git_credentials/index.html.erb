@@ -1,103 +1,131 @@
-<div class="page-content">
-  <div class="page-header">
+<% content_for(:title) { "Git Credentials — Factor Fifty" } %>
+
+<div class="page-header">
+  <div>
     <h1 class="page-title">Git Credentials</h1>
-    <p class="page-subtitle">Manage credentials for accessing module Git repositories</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Manage credentials for accessing module Git repositories.</p>
   </div>
+</div>
 
-  <%# Expiration warning banner %>
-  <% expiring = @credentials.select { |c| c.expires_at && c.expires_at < 7.days.from_now && c.active? } %>
-  <% if expiring.any? %>
-    <div class="alert alert--warning">
-      ⚠ <%= expiring.size %> credential(s) expiring within 7 days: <%= expiring.map(&:name).join(", ") %>
-    </div>
-  <% end %>
+<%# Expiration warning banner %>
+<% expiring = @credentials.select { |c| c.expires_at && c.expires_at < 7.days.from_now && c.active? } %>
+<% if expiring.any? %>
+  <div style="background:var(--orange-dim);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius);padding:10px 16px;margin-bottom:20px;font-size:13px;color:var(--orange);">
+    ⚠ <%= expiring.size %> credential(s) expiring within 7 days: <%= expiring.map(&:name).join(", ") %>
+  </div>
+<% end %>
 
-  <%# Credentials list %>
-  <div class="credentials-grid">
-    <% @credentials.each do |cred| %>
-      <div class="credential-card">
-        <div class="credential-card__header">
-          <span class="credential-card__name"><%= cred.name %></span>
-          <span class="meta-tag"><%= cred.credential_type.titleize %></span>
-          <% if cred.active? %>
-            <span class="meta-tag meta-tag--ready">Active</span>
-          <% else %>
-            <span class="meta-tag meta-tag--error">Inactive</span>
-          <% end %>
-        </div>
-        <div class="credential-card__body">
-          <p><strong>Host:</strong> <%= cred.host %></p>
-          <p><strong>Scope:</strong> <%= cred.scope %></p>
-          <% if cred.last_verified_at %>
-            <p><strong>Last verified:</strong> <%= time_ago_in_words(cred.last_verified_at) %> ago</p>
-          <% end %>
-          <% if cred.expires_at %>
-            <p>
-              <strong>Expires:</strong>
-              <% if cred.expires_at < Time.current %>
-                <span class="text-danger">Expired</span>
-              <% elsif cred.expires_at < 30.days.from_now %>
-                <span class="text-warning"><%= distance_of_time_in_words_to_now(cred.expires_at) %></span>
+<%# Credentials table %>
+<% if @credentials.any? %>
+  <div class="mod-table-wrap" style="margin-bottom:24px;">
+    <table class="mod-tbl">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Host</th>
+          <th>Type</th>
+          <th>Scope</th>
+          <th>Expires</th>
+          <th>Status</th>
+          <th>Used by</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @credentials.each do |cred| %>
+          <tr class="mod-tbl__row">
+            <td><span style="font-weight:500;"><%= cred.name %></span></td>
+            <td><span class="mod-version-text"><%= cred.host %></span></td>
+            <td><span class="mod-renderer-badge mod-renderer-tofu"><%= cred.credential_type.titleize %></span></td>
+            <td><span style="font-size:12px;color:var(--text-secondary);"><%= cred.scope %></span></td>
+            <td>
+              <% if cred.expires_at %>
+                <% if cred.expires_at < Time.current %>
+                  <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Expired</span>
+                <% elsif cred.expires_at < 30.days.from_now %>
+                  <span class="mod-status-badge" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(245,158,11,0.2);">
+                    <span class="mod-status-dot" style="background:var(--orange);"></span>
+                    <%= distance_of_time_in_words_to_now(cred.expires_at) %>
+                  </span>
+                <% else %>
+                  <span style="font-size:12px;color:var(--text-muted);"><%= cred.expires_at.strftime("%Y-%m-%d") %></span>
+                <% end %>
               <% else %>
-                <%= cred.expires_at.strftime("%Y-%m-%d") %>
+                <span style="font-size:12px;color:var(--text-muted);">—</span>
               <% end %>
-            </p>
-          <% end %>
-          <p><strong>Used by:</strong> <%= cred.module_renderers.count %> module renderer(s)</p>
-        </div>
-        <div class="credential-card__actions">
-          <button class="f50-btn f50-btn--secondary f50-btn--sm"
-                  data-action="click->credential-actions#verify"
-                  data-credential-actions-url-value="<%= verify_git_credential_path(cred) %>">
-            Verify
-          </button>
-          <button class="f50-btn f50-btn--secondary f50-btn--sm"
-                  data-action="click->credential-actions#rotate"
-                  data-credential-actions-url-value="<%= rotate_git_credential_path(cred) %>">
-            Rotate
-          </button>
-          <%= button_to "Delete", git_credential_path(cred, confirm: "true"),
-              method: :delete, class: "f50-btn f50-btn--danger f50-btn--sm",
-              data: { turbo_confirm: "Delete credential '#{cred.name}'? This may affect #{cred.module_renderers.count} module(s)." } %>
-        </div>
-      </div>
-    <% end %>
+            </td>
+            <td>
+              <% if cred.active? %>
+                <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Active</span>
+              <% else %>
+                <span class="mod-status-badge mod-status-draft"><span class="mod-status-dot"></span>Inactive</span>
+              <% end %>
+            </td>
+            <td><span style="font-size:12px;color:var(--text-muted);"><%= cred.module_renderers.count %> renderer(s)</span></td>
+            <td>
+              <div class="mod-actions-cell">
+                <button class="mod-action-btn"
+                        data-action="click->credential-actions#verify"
+                        data-credential-actions-url-value="<%= verify_git_credential_path(cred) %>">
+                  Verify
+                </button>
+                <button class="mod-action-btn"
+                        data-action="click->credential-actions#rotate"
+                        data-credential-actions-url-value="<%= rotate_git_credential_path(cred) %>">
+                  Rotate
+                </button>
+                <%= button_to "Delete", git_credential_path(cred, confirm: "true"),
+                    method: :delete, class: "mod-action-btn",
+                    style: "color:var(--red);",
+                    data: { turbo_confirm: "Delete credential '#{cred.name}'? This may affect #{cred.module_renderers.count} module(s)." } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
+<% else %>
+  <%= render "shared/empty_state", icon: "🔑", title: "No credentials yet", description: "Add a credential below to get started." %>
+<% end %>
 
-  <%# Add new credential form %>
-  <div class="detail-section">
-    <h2 class="section-title">Add Credential</h2>
-    <%= form_with url: git_credentials_path, method: :post, local: true, class: "credential-form" do %>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" for="cred_name">Name</label>
-          <input type="text" name="name" id="cred_name" class="f50-input" placeholder="Acme Corp GitHub" required>
+<%# Add new credential form %>
+<div class="mod-panel" style="margin-top:24px;">
+  <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+    <h3 style="font-size:13px;font-weight:600;">Add Credential</h3>
+  </div>
+  <div style="padding:18px;">
+    <%= form_with url: git_credentials_path, method: :post, local: true do %>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="mod-field mod-field--req">
+          <label class="mod-field__label" for="cred_name">Name</label>
+          <input type="text" name="name" id="cred_name" class="mod-input" placeholder="Acme Corp GitHub" required>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="cred_host">Host</label>
-          <input type="text" name="host" id="cred_host" class="f50-input" placeholder="github.com" required>
+        <div class="mod-field mod-field--req">
+          <label class="mod-field__label" for="cred_host">Host</label>
+          <input type="text" name="host" id="cred_host" class="mod-input" placeholder="github.com" required>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="cred_type">Type</label>
-          <select name="credential_type" id="cred_type" class="f50-select">
+        <div class="mod-field">
+          <label class="mod-field__label" for="cred_type">Type</label>
+          <select name="credential_type" id="cred_type" class="mod-select">
             <% GitCredential::CREDENTIAL_TYPES.each do |ct| %>
               <option value="<%= ct %>"><%= ct.titleize %></option>
             <% end %>
           </select>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group form-group--wide">
-          <label class="form-label" for="cred_token">Token</label>
-          <input type="password" name="token" id="cred_token" class="f50-input" placeholder="ghp_****" required>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="mod-field mod-field--req">
+          <label class="mod-field__label" for="cred_token">Token</label>
+          <input type="password" name="token" id="cred_token" class="mod-input mod-input--mono" placeholder="ghp_****" required>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="cred_expires">Expires</label>
-          <input type="date" name="expires_at" id="cred_expires" class="f50-input">
+        <div class="mod-field">
+          <label class="mod-field__label" for="cred_expires">Expires</label>
+          <input type="date" name="expires_at" id="cred_expires" class="mod-input">
         </div>
       </div>
-      <p class="form-hint">ⓘ Token is encrypted at rest. F50 only needs read access (read_repository scope).</p>
-      <button type="submit" class="f50-btn f50-btn--primary">Save Credential</button>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">ⓘ Token is encrypted at rest. F50 only needs read access (read_repository scope).</p>
+      <button type="submit" class="btn btn-green btn-sm">Save Credential</button>
     <% end %>
   </div>
 </div>

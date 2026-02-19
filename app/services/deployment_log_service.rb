@@ -9,7 +9,7 @@ class DeploymentLogService
     @deployment = deployment
     @layer = layer
     @environment = deployment.local_environment
-    @bucket = ENV["TFENGINE_S3_ARTIFACTS_BUCKET_NAME"]
+    @bucket = ENV["TFENGINE_S3_ARTIFACTS_BUCKET_NAME"] || ENV["S3_ARTIFACTS_BUCKET"]
   end
 
   # Returns a hash of { step_name => log_content } for all steps in this layer.
@@ -97,6 +97,8 @@ class DeploymentLogService
   private
 
   def s3_client
-    @s3_client ||= Aws::S3::Client.new
+    @s3_client ||= Aws::S3::Client.new(
+      **(Rails.env.development? ? { ssl_verify_peer: false } : {})
+    )
   end
 end

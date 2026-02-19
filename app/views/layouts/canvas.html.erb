@@ -16,7 +16,7 @@
   <%= stylesheet_link_tag "canvas", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
-<body style="overflow:hidden;height:100vh;margin:0;background:#0a0e1a;">
+<body style="overflow:hidden;height:100vh;margin:0;background:var(--bg-body, #0a0e1a);">
   <%= yield %>
 </body>
 </html>

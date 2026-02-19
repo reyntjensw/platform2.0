@@ -2,6 +2,7 @@
 
 class LocalReseller < ApplicationRecord
   has_many :local_customers, dependent: :destroy
+  has_many :global_tags, as: :taggable, dependent: :destroy
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true

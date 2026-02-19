@@ -128,6 +128,10 @@ Rails.application.routes.draw do
 
     # Global Tags API
     resources :global_tags, only: [:index, :create, :update, :destroy] do
+      collection do
+        get :merged
+        get :by_level
+      end
       member do
         patch :toggle
       end

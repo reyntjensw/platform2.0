@@ -3,6 +3,7 @@
 class LocalCustomer < ApplicationRecord
   belongs_to :local_reseller
   has_many :local_projects, dependent: :destroy
+  has_many :global_tags, as: :taggable, dependent: :destroy
 
   validates :name, presence: true
   validates :slug, presence: true

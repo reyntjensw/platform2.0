@@ -135,12 +135,13 @@ module Api
 
     # GET /api/environments/:environment_id/deployments/:id/plan
     # Returns the human-readable plan output (tofu show) from S3 for each layer.
+    # Falls back to the plan_output stored in the database if S3 fetch returns nil.
     def plan
       layers = @deployment.deployment_layers.ordered
 
       result = layers.map do |layer|
         log_service = DeploymentLogService.new(@deployment, layer)
-        plan_text = log_service.fetch_plan
+        plan_text = log_service.fetch_plan || layer.plan_output
         { layer_index: layer.index, plan_output: plan_text }
       end
 
@@ -149,12 +150,14 @@ module Api
 
     # GET /api/environments/:environment_id/deployments/:id/infracost
     # Returns parsed infracost data from S3 for each layer.
+    # Falls back to the cost_estimate stored in the database if S3 fetch returns nil.
     def infracost
       layers = @deployment.deployment_layers.ordered
 
       result = layers.map do |layer|
         log_service = DeploymentLogService.new(@deployment, layer)
         cost_data = log_service.fetch_infracost
+        cost_data = layer.cost_estimate if cost_data.nil? && layer.cost_estimate.present?
         { layer_index: layer.index, cost_data: cost_data }
       end
 

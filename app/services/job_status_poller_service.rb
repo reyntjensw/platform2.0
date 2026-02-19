@@ -39,6 +39,13 @@ class JobStatusPollerService
 
       new_layer_status = RUNNER_TO_LAYER_STATUS[dynamo_status[:status]]
       next unless new_layer_status
+
+      # Always sync step details even if layer status hasn't changed
+      if dynamo_status[:steps].present? && layer.step_details != dynamo_status[:steps]
+        layer.update!(step_details: dynamo_status[:steps])
+        changed = true
+      end
+
       next if terminal?(layer.status) # Don't overwrite terminal states
       next if layer.status == new_layer_status # No change
 
@@ -53,6 +60,10 @@ class JobStatusPollerService
       # Drive the deployment state machine forward
       handle_layer_transition(layer, new_layer_status)
     end
+
+    # Safety net: if all layers are terminal but the deployment is still
+    # in-progress, the state machine transition was missed. Recover it.
+    recover_stuck_deployment if @deployment.in_progress?
 
     changed
   end
@@ -146,11 +157,41 @@ class JobStatusPollerService
     end
   end
 
+  # Recovers a deployment that is stuck in an in-progress state
+  # (e.g. "planning", "applying") when all layers have already
+  # reached a terminal state. This can happen if the layer status
+  # was updated but the state machine transition was missed.
+  def recover_stuck_deployment
+    layers = @deployment.deployment_layers.ordered
+    return if layers.empty?
+
+    all_terminal = layers.all? { |l| terminal?(l.status) }
+    return unless all_terminal
+
+    any_failed = layers.any? { |l| l.status == "failed" }
+
+    if any_failed
+      failed_layer = layers.find { |l| l.status == "failed" }
+      @deployment.update!(
+        status: "failed",
+        completed_at: Time.current,
+        result: (@deployment.result || {}).merge(
+          "error" => "Layer #{failed_layer.index} failed: #{failed_layer.error_details}"
+        )
+      )
+    else
+      finalize_deployment
+    end
+
+    Rails.logger.info("JobStatusPollerService: recovered stuck deployment #{@deployment.id} from #{@deployment.status_before_last_save}")
+  end
+
   def finalize_deployment
     action = @deployment.status == "applying" ? "deploy" : "plan"
 
     if action == "plan"
-      # Fetch infracost data from S3 for each layer
+      # Fetch plan output and infracost data from S3 for each layer
+      fetch_layer_plans
       fetch_layer_costs
 
       cost_estimate = CostAggregator.aggregate(@deployment.reload)
@@ -168,8 +209,32 @@ class JobStatusPollerService
     end
   end
 
+  def fetch_layer_plans
+    bucket = ENV["TFENGINE_S3_ARTIFACTS_BUCKET_NAME"] || ENV["S3_ARTIFACTS_BUCKET"]
+    return unless bucket
+
+    cloud_provider = @environment.cloud_provider
+    account_id = @environment.aws_account_id || @environment.azure_subscription_id || @environment.gcp_project_id
+    version = @deployment.version.to_s.rjust(6, "0")
+
+    @deployment.deployment_layers.ordered.each do |layer|
+      next if layer.plan_output.present? # Already populated
+
+      key = "#{cloud_provider}/#{account_id}/#{version}/layer_#{layer.index}/tofu_plan/plan.txt"
+      begin
+        resp = s3_client.get_object(bucket: bucket, key: key)
+        plan_text = resp.body.read.force_encoding("UTF-8")
+        layer.update!(plan_output: plan_text) if plan_text.present?
+      rescue Aws::S3::Errors::NoSuchKey
+        Rails.logger.info("No plan output for layer #{layer.index}")
+      rescue Aws::S3::Errors::ServiceError => e
+        Rails.logger.warn("Failed to fetch plan for layer #{layer.index}: #{e.message}")
+      end
+    end
+  end
+
   def fetch_layer_costs
-    bucket = ENV["TFENGINE_S3_ARTIFACTS_BUCKET_NAME"]
+    bucket = ENV["TFENGINE_S3_ARTIFACTS_BUCKET_NAME"] || ENV["S3_ARTIFACTS_BUCKET"]
     return unless bucket
 
     cloud_provider = @environment.cloud_provider
@@ -193,7 +258,9 @@ class JobStatusPollerService
   end
 
   def s3_client
-    @s3_client ||= Aws::S3::Client.new
+    @s3_client ||= Aws::S3::Client.new(
+      **(Rails.env.development? ? { ssl_verify_peer: false } : {})
+    )
   end
 
   def terminal?(status)
