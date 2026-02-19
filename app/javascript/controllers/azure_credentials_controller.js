@@ -62,7 +62,7 @@ export default class extends Controller {
                     ? '<span class="badge badge-dev">Admin</span>'
                     : '<span class="badge badge-prd">Read-only</span>'
                 const expLabel = c.expiration_date
-                    ? `<span style="font-size:12px;color:var(--text-muted);">Expires: ${c.expiration_date}</span>`
+                    ? `<span style="font-size:12px;color:var(--text-muted);">Expires: ${this.escapeHtml(c.expiration_date)}</span>`
                     : '<span style="font-size:12px;color:var(--text-muted);">No expiration</span>'
                 const name = c.name || c.credential_type || "Credential"
 
@@ -75,7 +75,7 @@ export default class extends Controller {
                         <div style="display:flex;gap:6px;">
                             <button class="btn btn-ghost btn-sm" style="color:var(--red);font-size:12px;"
                                 data-action="click->azure-credentials#openDelete"
-                                data-cred-id="${c.credential_id || c.uuid || ''}"
+                                data-cred-id="${this.escapeHtml(c.credential_id || c.uuid || '')}"
                                 data-cred-name="${this.escapeHtml(name)}">Delete</button>
                         </div>
                     </div>
@@ -303,12 +303,14 @@ export default class extends Controller {
 
     daysRemainingBadge(days) {
         if (days === null || days === undefined) return ""
-        if (days < 0) {
-            return `<span class="badge" style="background:var(--red-dim);color:var(--red);">Expired ${Math.abs(days)}d ago</span>`
+        const d = parseInt(days, 10)
+        if (isNaN(d)) return ""
+        if (d < 0) {
+            return `<span class="badge" style="background:var(--red-dim);color:var(--red);">Expired ${Math.abs(d)}d ago</span>`
         }
-        if (days <= 30) {
-            return `<span class="badge" style="background:var(--orange-dim);color:var(--orange);">${days}d remaining</span>`
+        if (d <= 30) {
+            return `<span class="badge" style="background:var(--orange-dim);color:var(--orange);">${d}d remaining</span>`
         }
-        return `<span class="badge" style="background:var(--green-dim);color:var(--green);">${days}d remaining</span>`
+        return `<span class="badge" style="background:var(--green-dim);color:var(--green);">${d}d remaining</span>`
     }
 }

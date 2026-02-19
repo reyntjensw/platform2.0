@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { escapeHtml } from "../helpers/sanitize"
 
 const CATEGORY_COLORS = {
     compute: { color: "#ff9900", bg: "rgba(255,153,0,0.12)", label: "Compute" },
@@ -142,14 +143,14 @@ export default class extends Controller {
         el.style.left = `${resource.position_x || 50}px`
         el.style.top = `${resource.position_y || 50}px`
 
-        const icon = resource.module_definition.icon || cat.substring(0, 3).toUpperCase()
+        const icon = escapeHtml(resource.module_definition.icon || cat.substring(0, 3).toUpperCase())
         const errCount = (resource.validation_errors || []).length
 
         el.innerHTML = `
       <div class="rb-i" style="background:${catInfo.bg};color:${catInfo.color}">${icon}</div>
       <div>
-        <div class="rb-n">${resource.name}</div>
-        <div class="rb-t">${resource.module_definition.display_name}</div>
+        <div class="rb-n">${escapeHtml(resource.name)}</div>
+        <div class="rb-t">${escapeHtml(resource.module_definition.display_name)}</div>
       </div>
       ${errCount > 0 ? `<div class="rb-badge" style="background:var(--accent-red)">!</div>` : ""}
     `
@@ -249,7 +250,14 @@ export default class extends Controller {
         this.propsContentTarget.hidden = false
         const url = `${this.apiUrlValue}/${resourceId}/properties`
         const resp = await fetch(url, { headers: { Accept: "text/html" } })
-        if (resp.ok) this.propsFrameTarget.innerHTML = await resp.text()
+        if (resp.ok) {
+            const html = await resp.text()
+            this.propsFrameTarget.textContent = ""
+            const doc = new DOMParser().parseFromString(html, "text/html")
+            while (doc.body.firstChild) {
+                this.propsFrameTarget.appendChild(doc.body.firstChild)
+            }
+        }
     }
 
     async saveProperties(e) {
@@ -313,7 +321,7 @@ export default class extends Controller {
             </div>
             <div class="modal-body">
               <p style="font-size:13px;color:var(--text-secondary);">
-                Are you sure you want to delete <span style="font-weight:600;color:var(--text-primary);">${resourceName}</span>?
+                Are you sure you want to delete <span style="font-weight:600;color:var(--text-primary);">${escapeHtml(resourceName)}</span>?
                 This will also remove all its connections.
               </p>
             </div>

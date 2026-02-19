@@ -55,7 +55,7 @@ class ModuleUpdatesController < AuthenticatedController
     end
 
     flash[:notice] = report["breaking"] ? "Breaking changes detected in #{params[:new_ref]}" : "New version #{params[:new_ref]} available"
-    redirect_to module_updates_path(@module_definition)
+    redirect_to module_updates_path(@module_definition), only_path: true
   end
 
   # POST /modules/:module_id/updates/:id/upgrade_resource
@@ -81,7 +81,7 @@ class ModuleUpdatesController < AuthenticatedController
     )
 
     flash[:notice] = "Resource #{resource.name} upgraded to #{version.version_ref}"
-    redirect_to module_updates_path(params[:module_id])
+    redirect_to module_updates_path(params[:module_id]), only_path: true
   end
 
   # POST /modules/:module_id/updates/upgrade_all
@@ -106,13 +106,13 @@ class ModuleUpdatesController < AuthenticatedController
     end
 
     flash[:notice] = "Upgraded #{upgraded} resource(s) to #{latest_version.version_ref}"
-    redirect_to module_updates_path(@module_definition)
+    redirect_to module_updates_path(@module_definition), only_path: true
   end
 
   private
 
   def redirect_with_alert(message)
     flash[:alert] = message
-    redirect_to module_path(params[:module_id])
+    redirect_to module_path(params[:module_id]), only_path: true
   end
 end

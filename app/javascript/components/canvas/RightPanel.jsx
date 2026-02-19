@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useEffect, useState } from "react"
+import DOMPurify from "dompurify"
 import { csrf } from "./constants"
 
 export default function RightPanel({
@@ -237,7 +238,7 @@ export default function RightPanel({
                     {saveFlash === "saved" ? "✓ Saved" : "✗ Save failed"}
                   </div>
                 )}
-                <div ref={propsRef} dangerouslySetInnerHTML={{ __html: propsHtml }} />
+                <div ref={propsRef} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(propsHtml) }} />
                 {appGroups && assignResourceToGroup && !readOnly && (
                   <div style={{ padding: "8px 0", borderTop: "1px solid var(--border)" }}>
                     <label className="rp-field-label" style={{ fontSize: 10, display: "block", marginBottom: 4 }}>Application Group</label>

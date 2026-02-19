@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { escapeHtml } from "../helpers/sanitize"
 
 export default class extends Controller {
     static targets = ["area", "surface", "blocks", "svg", "empty"]
@@ -39,9 +40,9 @@ export default class extends Controller {
         if (resource.id === this.selectedId) el.classList.add("canvas-block--selected")
 
         el.innerHTML = `
-      <span class="canvas-block__icon">${resource.module_definition.icon}</span>
-      <span class="canvas-block__name">${resource.name}</span>
-      <span class="canvas-block__type">${resource.module_definition.display_name}</span>
+      <span class="canvas-block__icon">${escapeHtml(resource.module_definition.icon)}</span>
+      <span class="canvas-block__name">${escapeHtml(resource.name)}</span>
+      <span class="canvas-block__type">${escapeHtml(resource.module_definition.display_name)}</span>
     `
 
         el.addEventListener("mousedown", (e) => this.startDrag(e, resource, el))

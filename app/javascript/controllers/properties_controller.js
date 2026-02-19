@@ -21,7 +21,12 @@ export default class extends Controller {
         const url = `${canvasCtrl.apiUrlValue}/${resourceId}/properties`
         const resp = await fetch(url, { headers: { "Accept": "text/html" } })
         if (resp.ok) {
-            this.frameTarget.innerHTML = await resp.text()
+            const html = await resp.text()
+            this.frameTarget.textContent = ""
+            const doc = new DOMParser().parseFromString(html, "text/html")
+            while (doc.body.firstChild) {
+                this.frameTarget.appendChild(doc.body.firstChild)
+            }
         }
     }
 

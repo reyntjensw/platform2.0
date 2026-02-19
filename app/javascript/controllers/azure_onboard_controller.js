@@ -95,20 +95,34 @@ export default class extends Controller {
 
     populateCredSelects() {
         // Admin select (optional)
-        let html = '<option value="">None (optional)</option>'
+        this.adminCredTarget.textContent = ""
+        const noneOpt = document.createElement("option")
+        noneOpt.value = ""
+        noneOpt.textContent = "None (optional)"
+        this.adminCredTarget.appendChild(noneOpt)
         this.adminCreds.forEach(c => {
             const label = c.name || `Admin (${(c.client_id_masked || "").substring(0, 12)}…)`
-            html += `<option value="${c.credential_id}" data-tenant="${c.tenant_id}">${this.escapeHtml(label)}</option>`
+            const opt = document.createElement("option")
+            opt.value = c.credential_id
+            opt.dataset.tenant = c.tenant_id
+            opt.textContent = label
+            this.adminCredTarget.appendChild(opt)
         })
-        this.adminCredTarget.innerHTML = html
 
         // Read-only select
-        html = '<option value="">Select read-only credential…</option>'
+        this.readOnlyCredTarget.textContent = ""
+        const roPlaceholder = document.createElement("option")
+        roPlaceholder.value = ""
+        roPlaceholder.textContent = "Select read-only credential…"
+        this.readOnlyCredTarget.appendChild(roPlaceholder)
         this.readOnlyCreds.forEach(c => {
             const label = c.name || `Read-only (${(c.client_id_masked || "").substring(0, 12)}…)`
-            html += `<option value="${c.credential_id}" data-tenant="${c.tenant_id}">${this.escapeHtml(label)}</option>`
+            const opt = document.createElement("option")
+            opt.value = c.credential_id
+            opt.dataset.tenant = c.tenant_id
+            opt.textContent = label
+            this.readOnlyCredTarget.appendChild(opt)
         })
-        this.readOnlyCredTarget.innerHTML = html
 
         // Subscription starts empty
     }
@@ -155,8 +169,9 @@ export default class extends Controller {
     }
 
     buildStepIndicator(current) {
-        const s1Active = current >= 1
-        const s2Active = current >= 2
+        const num = parseInt(current, 10) || 1
+        const s1Active = num >= 1
+        const s2Active = num >= 2
         const lineColor = s2Active ? "var(--green)" : "var(--border)"
         return `
             <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 0;">

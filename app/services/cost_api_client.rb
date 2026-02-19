@@ -1,0 +1,48 @@
+# frozen_string_literal: true
+
+class CostApiClient < ApiClient::Base
+  def initialize
+    @conn = self.class.connection(
+      ENV.fetch("REPORTING_API_URL", "http://localhost:8000"),
+      timeout: 30
+    )
+  end
+
+  def daily_spend(params)
+    post("/cost/daily_spend", params)
+  end
+
+  def service_spend(params)
+    post("/cost/service_spend", params)
+  end
+
+  def storage_spend(params)
+    post("/cost/storage_spend", params)
+  end
+
+  def monthly_spend_trend(params)
+    post("/cost/monthly_spend_trend", params)
+  end
+
+  def account_spend_distribution(params)
+    post("/cost/account_spend_distribution", params)
+  end
+
+  def top_services(params)
+    post("/cost/top_services", params)
+  end
+
+  def accounts(customer_uuid, provider: nil)
+    params = provider ? { provider: provider } : {}
+    get("/cost/accounts/#{customer_uuid}", params)
+  end
+
+  def services(customer_uuid, provider: nil)
+    params = provider ? { provider: provider } : {}
+    get("/cost/services/#{customer_uuid}", params)
+  end
+
+  private
+
+  attr_reader :conn
+end

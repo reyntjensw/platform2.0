@@ -66,7 +66,7 @@ class EnvironmentsController < AuthenticatedController
 
     unless register_response.success?
       redirect_to customer_project_path(@customer.uuid, @project.uuid),
-                  alert: "Registration failed: #{register_response.error || register_response.data}"
+                  alert: "Registration failed: #{register_response.error || register_response.data}", only_path: true
       return
     end
 
@@ -165,7 +165,7 @@ class EnvironmentsController < AuthenticatedController
     if response.success?
       @project = Project.from_api(response.data)
     else
-      redirect_to customer_path(params[:customer_uuid]), alert: "Project not found."
+      redirect_to customer_path(params[:customer_uuid]), alert: "Project not found.", only_path: true
     end
   end
 end

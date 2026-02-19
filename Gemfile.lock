@@ -299,7 +299,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (2.2.21)
+    rack (2.2.22)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
@@ -510,6 +510,7 @@ DEPENDENCIES
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
+  rack (~> 2.2, >= 2.2.22)
   rails (~> 8.0.4)
   redis-session-store
   rspec-rails

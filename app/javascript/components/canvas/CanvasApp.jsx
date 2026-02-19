@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from "react"
+import DOMPurify from "dompurify"
 import CatalogPanel from "./CatalogPanel"
 import CanvasArea from "./CanvasArea"
 import RightPanel from "./RightPanel"
@@ -147,7 +148,7 @@ export default function CanvasApp({
     if (!selectedId) { setPropsHtml(""); return }
     fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } })
       .then(r => r.ok ? r.text() : "")
-      .then(setPropsHtml)
+      .then(html => setPropsHtml(DOMPurify.sanitize(html)))
   }, [selectedId, apiUrl])
 
   const selectResource = useCallback((id) => {
@@ -439,7 +440,7 @@ export default function CanvasApp({
             onPropsSaved={(id) => {
               fetch(`${apiUrl}/${id}/properties`, { headers: { Accept: "text/html" } })
                 .then(r => r.ok ? r.text() : "")
-                .then(setPropsHtml)
+                .then(html => setPropsHtml(DOMPurify.sanitize(html)))
             }}
             appGroups={appGroups}
             createAppGroup={createAppGroup}

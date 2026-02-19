@@ -79,6 +79,23 @@ FactoryBot.define do
     status { "pending" }
   end
 
+  factory :dashboard do
+    association :local_customer
+    sequence(:name) { |n| "Dashboard #{n}" }
+  end
+
+  factory :widget do
+    association :dashboard
+    chart_type { "daily-spend" }
+    sequence(:title) { |n| "Widget #{n}" }
+  end
+
+  factory :widget_filter do
+    association :widget
+    filter_type { "service" }
+    filter_value { "Amazon EC2" }
+  end
+
   factory :git_credential do
     owner_type { "LocalReseller" }
     owner_id { SecureRandom.uuid }

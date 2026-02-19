@@ -68,8 +68,9 @@ export default class extends Controller {
     }
 
     buildStepIndicator(current) {
-        const s1Active = current >= 1
-        const s2Active = current >= 2
+        const num = parseInt(current, 10) || 1
+        const s1Active = num >= 1
+        const s2Active = num >= 2
         const lineColor = s2Active ? "var(--green)" : "var(--border)"
         return `
             <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 0;">

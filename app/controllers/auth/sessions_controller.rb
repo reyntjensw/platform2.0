@@ -39,7 +39,7 @@ module Auth
 
     # failure (OmniAuth failure callback)
     def failure
-      redirect_to root_path, alert: "Authentication failed: #{params[:message] || 'Unknown error'}"
+      redirect_to root_path, alert: "Authentication failed: #{params[:message] || 'Unknown error'}", only_path: true
     end
 
     private

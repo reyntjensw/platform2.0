@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_19_100000) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_19_200003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -82,6 +82,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_19_100000) do
     t.index ["from_resource_id", "to_resource_id"], name: "index_connections_on_from_resource_id_and_to_resource_id", unique: true
     t.index ["from_resource_id"], name: "index_connections_on_from_resource_id"
     t.index ["to_resource_id"], name: "index_connections_on_to_resource_id"
+  end
+
+  create_table "dashboards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "local_customer_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.boolean "is_default", default: false
+    t.jsonb "layout_config", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["local_customer_id", "name"], name: "index_dashboards_on_local_customer_id_and_name", unique: true
+    t.index ["local_customer_id"], name: "index_dashboards_on_local_customer_id"
   end
 
   create_table "deployment_layers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -424,10 +436,34 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_19_100000) do
     t.index ["module_definition_id"], name: "index_resources_on_module_definition_id"
   end
 
+  create_table "widget_filters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "widget_id", null: false
+    t.string "filter_type", null: false
+    t.string "filter_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["widget_id"], name: "index_widget_filters_on_widget_id"
+  end
+
+  create_table "widgets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "dashboard_id", null: false
+    t.string "chart_type", null: false
+    t.string "title", null: false
+    t.integer "position", default: 0
+    t.boolean "is_saved", default: false
+    t.boolean "is_expanded", default: false
+    t.jsonb "query_config", default: {}
+    t.jsonb "display_config", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dashboard_id"], name: "index_widgets_on_dashboard_id"
+  end
+
   add_foreign_key "application_groups", "local_environments"
   add_foreign_key "canvas_locks", "local_environments", column: "environment_id"
   add_foreign_key "connections", "resources", column: "from_resource_id", on_delete: :cascade
   add_foreign_key "connections", "resources", column: "to_resource_id", on_delete: :cascade
+  add_foreign_key "dashboards", "local_customers"
   add_foreign_key "deployment_layers", "deployments", on_delete: :cascade
   add_foreign_key "deployments", "local_environments"
   add_foreign_key "environment_snapshots", "local_environments"
@@ -448,4 +484,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_19_100000) do
   add_foreign_key "resources", "application_groups"
   add_foreign_key "resources", "local_environments"
   add_foreign_key "resources", "module_definitions"
+  add_foreign_key "widget_filters", "widgets"
+  add_foreign_key "widgets", "dashboards"
 end

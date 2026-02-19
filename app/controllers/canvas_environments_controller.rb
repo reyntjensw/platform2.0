@@ -60,7 +60,7 @@ class CanvasEnvironmentsController < AuthenticatedController
     end
 
     redirect_to customer_project_path(@customer.uuid, @project.uuid),
-                notice: "Canvas '#{@canvas_env.name}' linked to account #{account_id}."
+                notice: "Canvas '#{@canvas_env.name}' linked to account #{account_id}.", only_path: true
   end
 
   # PATCH /customers/:customer_uuid/projects/:project_uuid/canvas_environments/:id/unlink
@@ -117,7 +117,7 @@ class CanvasEnvironmentsController < AuthenticatedController
     if response.success?
       @project = Project.from_api(response.data)
     else
-      redirect_to customer_path(params[:customer_uuid]), alert: "Project not found."
+      redirect_to customer_path(params[:customer_uuid]), alert: "Project not found.", only_path: true
     end
   end
 end

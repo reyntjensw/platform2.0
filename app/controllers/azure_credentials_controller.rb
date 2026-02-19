@@ -141,7 +141,7 @@ class AzureCredentialsController < AuthenticatedController
     if response.success?
       @project = Project.from_api(response.data)
     else
-      redirect_to customer_path(params[:customer_uuid]), alert: "Project not found."
+      redirect_to customer_path(params[:customer_uuid]), alert: "Project not found.", only_path: true
     end
   end
 end

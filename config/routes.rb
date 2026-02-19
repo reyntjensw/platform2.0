@@ -168,5 +168,28 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    # Financial Dashboard HTML view
+    resources :dashboards, controller: "dashboards", only: [:index]
+
+    # Financial Dashboard API
+    namespace :api, module: "api/customer" do
+      resources :dashboards, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          patch :reorder
+        end
+        resources :widgets, only: [:create, :update, :destroy]
+      end
+
+      # Cost proxy endpoints
+      post   "cost/daily_spend",                to: "cost#daily_spend"
+      post   "cost/service_spend",              to: "cost#service_spend"
+      post   "cost/storage_spend",              to: "cost#storage_spend"
+      post   "cost/monthly_spend_trend",        to: "cost#monthly_spend_trend"
+      post   "cost/account_spend_distribution", to: "cost#account_spend_distribution"
+      post   "cost/top_services",               to: "cost#top_services"
+      get    "cost/accounts",                   to: "cost#accounts"
+      get    "cost/services",                   to: "cost#services"
+    end
   end
 end

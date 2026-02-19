@@ -97,7 +97,7 @@ class ModuleImportsController < AuthenticatedController
     mod = service.finalize(metadata_params.to_h, publish: publish)
 
     flash[:notice] = publish ? "Module published successfully" : "Module saved as draft"
-    redirect_to module_path(mod)
+    redirect_to module_path(mod), only_path: true
   end
 
   # POST /modules/import/:id/verify_credential

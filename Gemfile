@@ -8,6 +8,8 @@ gem "propshaft"
 gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
+# Pin rack to fix path traversal, directory listing & XSS vulnerabilities
+gem "rack", "~> 2.2", ">= 2.2.22"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]

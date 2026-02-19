@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { escapeHtml } from "../helpers/sanitize"
 
 const CATEGORY_COLORS = {
     compute: { color: "#ff9900", label: "Compute" },
@@ -71,24 +72,24 @@ export default class extends Controller {
             html += `<div class="cmd-section">Resources</div>`
             matchedResources.forEach(r => {
                 const cat = CATEGORY_COLORS[r.module_definition.category] || CATEGORY_COLORS.other
-                html += `<div class="cmd-item" data-action="click->cmd-palette#selectResource" data-resource-id="${r.id}">
-          <div class="cmd-item-icon" style="background:${cat.color}1f;color:${cat.color}">${r.module_definition.icon || "?"}</div>
-          <div class="cmd-item-name">${r.name}</div>
-          <div class="cmd-item-hint">${r.module_definition.display_name}</div>
+                html += `<div class="cmd-item" data-action="click->cmd-palette#selectResource" data-resource-id="${escapeHtml(r.id)}">
+          <div class="cmd-item-icon" style="background:${cat.color}1f;color:${cat.color}">${escapeHtml(r.module_definition.icon || "?")}</div>
+          <div class="cmd-item-name">${escapeHtml(r.name)}</div>
+          <div class="cmd-item-hint">${escapeHtml(r.module_definition.display_name)}</div>
         </div>`
             })
         }
         if (matchedModules.length) {
             html += `<div class="cmd-section">Add Module</div>`
             matchedModules.forEach(m => {
-                html += `<div class="cmd-item" data-action="click->cmd-palette#addModule" data-module-id="${m.id}">
+                html += `<div class="cmd-item" data-action="click->cmd-palette#addModule" data-module-id="${escapeHtml(m.id)}">
           <div class="cmd-item-icon" style="font-size:10px;">+</div>
-          <div class="cmd-item-name">Add ${m.display_name || m.name}</div>
-          <div class="cmd-item-hint">${m.category}</div>
+          <div class="cmd-item-name">Add ${escapeHtml(m.display_name || m.name)}</div>
+          <div class="cmd-item-hint">${escapeHtml(m.category)}</div>
         </div>`
             })
         }
-        if (!html) html = `<div class="cmd-empty">No results for "${query}"</div>`
+        if (!html) html = `<div class="cmd-empty">No results for "${escapeHtml(query)}"</div>`
         this.resultsTarget.innerHTML = html
         this.highlightIndex = -1
     }
@@ -103,20 +104,20 @@ export default class extends Controller {
             html += `<div class="cmd-section">Resources (${resources.length})</div>`
             resources.slice(0, 8).forEach(r => {
                 const cat = CATEGORY_COLORS[r.module_definition.category] || CATEGORY_COLORS.other
-                html += `<div class="cmd-item" data-action="click->cmd-palette#selectResource" data-resource-id="${r.id}">
-          <div class="cmd-item-icon" style="background:${cat.color}1f;color:${cat.color}">${r.module_definition.icon || "?"}</div>
-          <div class="cmd-item-name">${r.name}</div>
-          <div class="cmd-item-hint">${r.module_definition.display_name}</div>
+                html += `<div class="cmd-item" data-action="click->cmd-palette#selectResource" data-resource-id="${escapeHtml(r.id)}">
+          <div class="cmd-item-icon" style="background:${cat.color}1f;color:${cat.color}">${escapeHtml(r.module_definition.icon || "?")}</div>
+          <div class="cmd-item-name">${escapeHtml(r.name)}</div>
+          <div class="cmd-item-hint">${escapeHtml(r.module_definition.display_name)}</div>
         </div>`
             })
         }
         if (modules.length) {
             html += `<div class="cmd-section">Quick Add</div>`
             modules.slice(0, 5).forEach(m => {
-                html += `<div class="cmd-item" data-action="click->cmd-palette#addModule" data-module-id="${m.id}">
+                html += `<div class="cmd-item" data-action="click->cmd-palette#addModule" data-module-id="${escapeHtml(m.id)}">
           <div class="cmd-item-icon" style="font-size:10px;">+</div>
-          <div class="cmd-item-name">Add ${m.display_name || m.name}</div>
-          <div class="cmd-item-hint">${m.category}</div>
+          <div class="cmd-item-name">Add ${escapeHtml(m.display_name || m.name)}</div>
+          <div class="cmd-item-hint">${escapeHtml(m.category)}</div>
         </div>`
             })
         }
