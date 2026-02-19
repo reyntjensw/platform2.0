@@ -12,6 +12,7 @@ import {
 import DashboardSelector from './DashboardSelector'
 import GlobalMonthSelector from './GlobalMonthSelector'
 import AddWidgetModal, { CHART_TYPES } from './AddWidgetModal'
+import CreateDashboardModal from './CreateDashboardModal'
 import WidgetCard from './WidgetCard'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend)
@@ -40,6 +41,7 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
 
   const [currentDashboardId, setCurrentDashboardId] = useState(null)
   const [showAddModal, setShowAddModal] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false)
   const [draggedWidgetId, setDraggedWidgetId] = useState(null)
   const [dragOverWidgetId, setDragOverWidgetId] = useState(null)
 
@@ -69,10 +71,13 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
 
   const selectDashboard = useCallback((id) => setCurrentDashboardId(id), [])
 
-  const createDashboard = useCallback(async () => {
-    const result = await createDashboardMut.mutateAsync({ name: `Dashboard ${dashboards.length + 1}` })
+  const openCreateModal = useCallback(() => setShowCreateModal(true), [])
+
+  const createDashboard = useCallback(async (name) => {
+    const result = await createDashboardMut.mutateAsync({ name })
     setCurrentDashboardId(result.id)
-  }, [createDashboardMut, dashboards.length])
+    setShowCreateModal(false)
+  }, [createDashboardMut])
 
   const renameDashboard = useCallback((id, name) => {
     updateDashboardMut.mutate({ id, name })
@@ -139,7 +144,7 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
       <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <h1 className="page-title">Financial Dashboard</h1>
-          <DashboardSelector dashboards={dashboards} currentId={currentDashboardId || ''} isLoading={isLoading} onSelect={selectDashboard} onCreate={createDashboard} onRename={renameDashboard} onDelete={deleteDashboard} />
+          <DashboardSelector dashboards={dashboards} currentId={currentDashboardId || ''} isLoading={isLoading} onSelect={selectDashboard} onCreate={openCreateModal} onRename={renameDashboard} onDelete={deleteDashboard} />
         </div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
           <GlobalMonthSelector year={globalYear} month={globalMonth} onChange={handleMonthChange} />
@@ -164,13 +169,14 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <div style={{ fontSize: 48, color: 'var(--text-muted)', marginBottom: 16 }}>📊</div>
               <p style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>No widgets yet</p>
-              <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 16 }}>Add one to get started.</p>
-              <button onClick={() => setShowAddModal(true)} disabled={!currentDashboardId} className="btn btn-ghost">+ Add Your First Widget</button>
+              <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 16 }}>Add a widget to start tracking your cloud costs.</p>
+              <button onClick={() => setShowAddModal(true)} disabled={!currentDashboardId} className="btn btn-green">+ Add Your First Widget</button>
             </div>
           )}
         </>
       )}
       {showAddModal && <AddWidgetModal onAdd={addWidget} onClose={() => setShowAddModal(false)} />}
+      {showCreateModal && <CreateDashboardModal onConfirm={createDashboard} onClose={() => setShowCreateModal(false)} />}
     </div>
   )
 }

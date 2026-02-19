@@ -25,6 +25,12 @@ class LocalEnvironment < ApplicationRecord
   delegate :local_customer, to: :local_project
   delegate :local_reseller, to: :local_customer, allow_nil: true
 
+  # Expose customer_uuid for authorization checks.
+  # The local_customer.slug stores the platform customer UUID.
+  def customer_uuid
+    local_customer&.slug
+  end
+
   def aws? = cloud_provider == "aws"
   def azure? = cloud_provider == "azure"
   def gcp? = cloud_provider == "gcp"

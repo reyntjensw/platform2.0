@@ -63,3 +63,7 @@ application.register("rpanel", RpanelController)
 
 import CmdPaletteController from "./cmd_palette_controller"
 application.register("cmd-palette", CmdPaletteController)
+
+import CascadingSelectController from "./cascading_select_controller"
+application.register("cascading-select", CascadingSelectController)
+

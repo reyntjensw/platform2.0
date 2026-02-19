@@ -10,6 +10,8 @@ import {
 } from './hooks'
 
 const DEFAULT_PROVIDER = 'aws'
+// Chart.js requires hex values (can't use CSS vars). These map to design tokens:
+// --green=#3b82f6, --purple=#8b5cf6, --orange=#f59e0b, --red=#ef4444, --cyan=#22d3ee
 const PIE_COLORS = ['var(--green)', 'var(--purple)', '#10B981', 'var(--orange)', 'var(--red)', '#EC4899', 'var(--cyan)', '#84CC16']
 const PIE_HEX = ['#3b82f6', '#8b5cf6', '#10B981', '#f59e0b', '#ef4444', '#EC4899', '#22d3ee', '#84CC16']
 
@@ -84,30 +86,30 @@ export default function WidgetCard({
 
   const barOptions = {
     responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#151d2e', borderColor: '#243049', borderWidth: 1, titleColor: '#e8ecf4', bodyColor: '#e8ecf4', padding: 10, cornerRadius: 8 } },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#151d2e'/* --bg-card */, borderColor: '#243049'/* --border */, borderWidth: 1, titleColor: '#e8ecf4'/* --text-primary */, bodyColor: '#e8ecf4'/* --text-primary */, padding: 10, cornerRadius: 8 } },
     scales: {
-      x: { grid: { color: 'rgba(36,48,73,0.5)', drawBorder: false }, ticks: { color: '#8b99b5', font: { size: 11 } } },
-      y: { grid: { color: 'rgba(36,48,73,0.5)', drawBorder: false }, ticks: { color: '#8b99b5', font: { size: 11 } } },
+      x: { grid: { color: 'rgba(36,48,73,0.5)'/* --border@50% */, drawBorder: false }, ticks: { color: '#8b99b5'/* --text-secondary */, font: { size: 11 } } },
+      y: { grid: { color: 'rgba(36,48,73,0.5)'/* --border@50% */, drawBorder: false }, ticks: { color: '#8b99b5'/* --text-secondary */, font: { size: 11 } } },
     },
   }
   const pieOptions = {
     responsive: true, maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'right', labels: { color: '#e8ecf4', boxWidth: 12, padding: 8, font: { size: 10 } } },
-      tooltip: { backgroundColor: '#151d2e', borderColor: '#243049', borderWidth: 1, titleColor: '#e8ecf4', bodyColor: '#e8ecf4', padding: 10, cornerRadius: 8, callbacks: { label: (ctx) => `${ctx.label}: ${ctx.parsed.toLocaleString()}` } },
+      legend: { position: 'right', labels: { color: '#e8ecf4'/* --text-primary */, boxWidth: 12, padding: 8, font: { size: 10 } } },
+      tooltip: { backgroundColor: '#151d2e'/* --bg-card */, borderColor: '#243049'/* --border */, borderWidth: 1, titleColor: '#e8ecf4'/* --text-primary */, bodyColor: '#e8ecf4'/* --text-primary */, padding: 10, cornerRadius: 8, callbacks: { label: (ctx) => `${ctx.label}: ${ctx.parsed.toLocaleString()}` } },
     },
   }
 
   const renderChart = () => {
     if (isLoading) return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-muted)' }}>Loading…</div>
-    if (widget.chart_type === 'daily-spend' && dailyChart) return <Bar data={{ labels: dailyChart.labels, datasets: [{ label: 'Daily Spend', data: dailyChart.datasets[0]?.data || [], backgroundColor: '#3b82f6', borderRadius: 4 }] }} options={barOptions} />
+    if (widget.chart_type === 'daily-spend' && dailyChart) return <Bar data={{ labels: dailyChart.labels, datasets: [{ label: 'Daily Spend', data: dailyChart.datasets[0]?.data || [], backgroundColor: '#3b82f6'/* --green */, borderRadius: 4 }] }} options={barOptions} />
     if (widget.chart_type === 'service-breakdown' && serviceChart) return <Pie data={{ labels: serviceChart.datasets.map(ds => ds.label), datasets: [{ data: serviceChart.datasets.map(ds => ds.data.reduce((a, b) => a + b, 0)), backgroundColor: PIE_HEX, borderWidth: 0 }] }} options={pieOptions} />
     if (widget.chart_type === 'storage-spend' && storageChart) return <Pie data={{ labels: storageChart.datasets.map(ds => ds.label), datasets: [{ data: storageChart.datasets.map(ds => ds.data.reduce((a, b) => a + b, 0)), backgroundColor: PIE_HEX, borderWidth: 0 }] }} options={pieOptions} />
     if (widget.chart_type === 'account-distribution' && acctDistChart) return <Pie data={{ labels: acctDistChart.map(d => d.name), datasets: [{ data: acctDistChart.map(d => d.value), backgroundColor: PIE_HEX, borderWidth: 0 }] }} options={pieOptions} />
     if (widget.chart_type === 'top-services') return renderTopServicesTable()
     if (widget.chart_type === 'monthly-spend-trend' && monthlyChart) {
       const opts = { ...barOptions, scales: { ...barOptions.scales, y: { ...barOptions.scales.y, ticks: { ...barOptions.scales.y.ticks, callback: (v) => `${(Number(v) / 1000).toFixed(0)}k` } } } }
-      return <Bar data={{ labels: monthlyChart.map(d => d.name), datasets: [{ label: 'Total Spend', data: monthlyChart.map(d => d.value), backgroundColor: '#3b82f6', borderRadius: 4 }] }} options={opts} />
+      return <Bar data={{ labels: monthlyChart.map(d => d.name), datasets: [{ label: 'Total Spend', data: monthlyChart.map(d => d.value), backgroundColor: '#3b82f6'/* --green */, borderRadius: 4 }] }} options={opts} />
     }
     return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-muted)' }}>No data</div>
   }

@@ -5,56 +5,58 @@
     <h1 class="page-title">Projects</h1>
   </div>
   <div class="header-actions">
-    <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
-      <button class="btn btn-green btn-sm" data-action="click->modal#open">+ New Project</button>
+    <% if can_manage_resource? %>
+      <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
+        <button class="btn btn-green btn-sm" data-action="click->modal#open">+ New Project</button>
 
-      <%# ── New Project Modal ── %>
-      <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
-        <div class="modal-panel" data-controller="project-form"
-             data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
-          <div class="modal-header">
-            <h3 class="modal-title">New Project</h3>
-            <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+        <%# ── New Project Modal ── %>
+        <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
+          <div class="modal-panel" data-controller="project-form"
+               data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
+            <div class="modal-header">
+              <h3 class="modal-title">New Project</h3>
+              <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+            </div>
+
+            <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-label" for="project_name">Project name *</label>
+                  <input type="text" name="project[name]" id="project_name"
+                         class="form-input" placeholder="Enter project name" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="form-group">
+                    <label class="form-label" for="project_provider">Cloud provider *</label>
+                    <select name="project[provider]" id="project_provider" class="form-input" required
+                            data-project-form-target="provider"
+                            data-action="change->project-form#providerChanged">
+                      <option value="">Select a provider...</option>
+                      <option value="AWS">AWS</option>
+                      <option value="Azure">Azure</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="project_region">Project region *</label>
+                    <select name="project[region]" id="project_region" class="form-input" required
+                            data-project-form-target="region">
+                      <option value="">Select a provider first</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+                <%= f.submit "Create", class: "btn btn-green" %>
+              </div>
+            <% end %>
           </div>
-
-          <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
-            <div class="modal-body">
-              <div class="form-group">
-                <label class="form-label" for="project_name">Project name *</label>
-                <input type="text" name="project[name]" id="project_name"
-                       class="form-input" placeholder="Enter project name" required>
-              </div>
-
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                <div class="form-group">
-                  <label class="form-label" for="project_provider">Cloud provider *</label>
-                  <select name="project[provider]" id="project_provider" class="form-input" required
-                          data-project-form-target="provider"
-                          data-action="change->project-form#providerChanged">
-                    <option value="">Select a provider...</option>
-                    <option value="AWS">AWS</option>
-                    <option value="Azure">Azure</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="project_region">Project region *</label>
-                  <select name="project[region]" id="project_region" class="form-input" required
-                          data-project-form-target="region">
-                    <option value="">Select a provider first</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
-              <%= f.submit "Create", class: "btn btn-green" %>
-            </div>
-          <% end %>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
 
@@ -99,10 +101,12 @@
       <% end %>
 
       <%# Add card %>
-      <div class="entity-card entity-card-add" data-controller="modal" data-action="click->modal#open" style="cursor:pointer;">
-        <div class="entity-add-icon">+</div>
-        <span>New Project</span>
-      </div>
+      <% if can_manage_resource? %>
+        <div class="entity-card entity-card-add" data-controller="modal" data-action="click->modal#open" style="cursor:pointer;">
+          <div class="entity-add-icon">+</div>
+          <span>New Project</span>
+        </div>
+      <% end %>
     </div>
 
     <div data-project-list-target="empty" style="display:none;">

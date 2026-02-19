@@ -47,6 +47,8 @@ module Api
 
     # GET /api/environments/:environment_id/deployments/:id
     def show
+      authorize!(:read, @environment)
+
       # If deployment is in-progress, poll DynamoDB for runner status updates
       if @deployment.in_progress?
         begin
@@ -109,6 +111,8 @@ module Api
     # GET /api/environments/:environment_id/deployments/:id/logs
     # Returns execution logs from S3 for a specific layer (or all layers).
     def logs
+      authorize!(:read, @environment)
+
       layer_index = params[:layer_index]&.to_i
       step_name = params[:step]
 
@@ -137,6 +141,8 @@ module Api
     # Returns the human-readable plan output (tofu show) from S3 for each layer.
     # Falls back to the plan_output stored in the database if S3 fetch returns nil.
     def plan
+      authorize!(:read, @environment)
+
       layers = @deployment.deployment_layers.ordered
 
       result = layers.map do |layer|
@@ -152,6 +158,8 @@ module Api
     # Returns parsed infracost data from S3 for each layer.
     # Falls back to the cost_estimate stored in the database if S3 fetch returns nil.
     def infracost
+      authorize!(:read, @environment)
+
       layers = @deployment.deployment_layers.ordered
 
       result = layers.map do |layer|

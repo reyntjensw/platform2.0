@@ -8,6 +8,8 @@ class CanvasEnvironmentsController < AuthenticatedController
 
   # POST /customers/:customer_uuid/projects/:project_uuid/canvas_environments
   def create
+    authorize!(:manage, @project)
+
     local_project = find_or_create_local_project
 
     env = local_project.local_environments.new(canvas_env_params)
@@ -37,6 +39,8 @@ class CanvasEnvironmentsController < AuthenticatedController
 
   # DELETE /customers/:customer_uuid/projects/:project_uuid/canvas_environments/:id
   def destroy
+    authorize!(:manage, @project)
+
     name = @canvas_env.name
     @canvas_env.destroy!
     redirect_to customer_project_path(@customer.uuid, @project.uuid),
@@ -46,6 +50,8 @@ class CanvasEnvironmentsController < AuthenticatedController
   # PATCH /customers/:customer_uuid/projects/:project_uuid/canvas_environments/:id/link
   # Links a platform environment (by account_id) to this canvas environment.
   def link
+    authorize!(:manage, @project)
+
     account_id = params[:account_id].to_s.strip
     if account_id.blank?
       redirect_to customer_project_path(@customer.uuid, @project.uuid),
@@ -65,6 +71,8 @@ class CanvasEnvironmentsController < AuthenticatedController
 
   # PATCH /customers/:customer_uuid/projects/:project_uuid/canvas_environments/:id/unlink
   def unlink
+    authorize!(:manage, @project)
+
     @canvas_env.update!(aws_account_id: nil, azure_subscription_id: nil, aws_role_arn: nil, gcp_project_id: nil)
     redirect_to customer_project_path(@customer.uuid, @project.uuid),
                 notice: "Canvas '#{@canvas_env.name}' unlinked from platform environment."

@@ -4,7 +4,8 @@ class CostApiClient < ApiClient::Base
   def initialize
     @conn = self.class.connection(
       ENV.fetch("REPORTING_API_URL", "http://localhost:8000"),
-      timeout: 30
+      timeout: 30,
+      headers: platform_auth_headers
     )
   end
 
@@ -45,4 +46,9 @@ class CostApiClient < ApiClient::Base
   private
 
   attr_reader :conn
+
+  def platform_auth_headers
+    key = ENV.fetch("CS_PLATFORM_API_KEY", "")
+    { "cs-intelligent-platform-header" => key }
+  end
 end

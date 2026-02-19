@@ -20,7 +20,10 @@ class User
   def platform_admin? = roles.include?("platform_admin")
   def reseller_admin? = roles.include?("reseller_admin")
   def customer_admin? = roles.include?("customer_admin")
-  def project_admin? = roles.include?("project_admin")
-  def developer? = roles.include?("developer")
-  def viewer? = roles.include?("viewer")
+  def customer_viewer? = roles.include?("customer_viewer")
+
+  # Returns true if the user is scoped to a specific customer
+  def customer_scoped?
+    (customer_admin? || customer_viewer?) && customer_uuid.present?
+  end
 end

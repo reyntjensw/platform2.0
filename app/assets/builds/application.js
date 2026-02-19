@@ -30328,7 +30328,7 @@ var hello_controller_default = class extends Controller {
 };
 
 // app/javascript/controllers/react_controller.ts
-var import_react21 = __toESM(require_react());
+var import_react22 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // app/javascript/components/HelloWorld.tsx
@@ -33621,7 +33621,7 @@ function getPipelineStepStates(checks, deployResult) {
   }
   return states;
 }
-function DeployScreen({ environmentId }) {
+function DeployScreen({ environmentId, canManage = true }) {
   const [selectedEngine] = (0, import_react9.useState)("tofu");
   const [checks, setChecks] = (0, import_react9.useState)(null);
   const [loading, setLoading] = (0, import_react9.useState)(false);
@@ -34079,7 +34079,7 @@ function DeployScreen({ environmentId }) {
           ] }, i))
         ] });
       })(),
-      deployResult.approval_status === "pending_approval" && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 10, display: "flex", gap: 8 }, children: [
+      deployResult.approval_status === "pending_approval" && canManage && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 10, display: "flex", gap: 8 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => approveDeployment(deployResult.id), children: "\u2713 Approve & Apply" }),
         /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => rejectDeployment(deployResult.id), children: "\u2717 Reject" })
       ] })
@@ -34913,6 +34913,7 @@ function CanvasApp({
   customer,
   siblingEnvs,
   currentUser,
+  canManage,
   canvasPath,
   rootPath
 }) {
@@ -35300,7 +35301,7 @@ function CanvasApp({
     ),
     activeScreen === "templates" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TemplatesScreen, {}),
     activeScreen === "import" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ImportScreen, {}),
-    activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DeployScreen, { environmentId }),
+    activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DeployScreen, { environmentId, canManage }),
     activeScreen === "global_tags" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(GlobalTagsScreen, { environmentId, environment, project, customer }),
     cmdOpen && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       CommandPalette,
@@ -35356,7 +35357,7 @@ function CanvasApp({
 }
 
 // app/javascript/components/dashboard/FinancialDashboard.jsx
-var import_react20 = __toESM(require_react());
+var import_react21 = __toESM(require_react());
 
 // node_modules/@tanstack/query-core/build/modern/subscribable.js
 var Subscribable = class {
@@ -50321,18 +50322,24 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
   const [open, setOpen] = (0, import_react13.useState)(false);
   const [editingId, setEditingId] = (0, import_react13.useState)(null);
   const [editName, setEditName] = (0, import_react13.useState)("");
+  const [confirmDeleteId, setConfirmDeleteId] = (0, import_react13.useState)(null);
   const ref = (0, import_react13.useRef)(null);
+  const confirmRef = (0, import_react13.useRef)(null);
   (0, import_react13.useEffect)(() => {
     const h = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
+      if (ref.current && !ref.current.contains(e.target) && !(confirmRef.current && confirmRef.current.contains(e.target))) {
         setOpen(false);
         setEditingId(null);
+      }
+      if (confirmRef.current && !confirmRef.current.contains(e.target)) {
+        setConfirmDeleteId(null);
       }
     };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, []);
   const current = dashboards.find((d) => d.id === currentId);
+  const deleteTarget = dashboards.find((d) => d.id === confirmDeleteId);
   const startEdit = (d, e) => {
     e.stopPropagation();
     setEditingId(d.id);
@@ -50342,9 +50349,15 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
     if (editingId && editName.trim()) onRename(editingId, editName.trim());
     setEditingId(null);
   };
+  const handleConfirmDelete = () => {
+    if (confirmDeleteId) {
+      onDelete(confirmDeleteId);
+      setConfirmDeleteId(null);
+      setOpen(false);
+    }
+  };
   return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { ref, style: { position: "relative" }, children: [
     /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-      "\u{1F4CA} ",
       isLoading ? "\u2026" : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: current?.name || "Select Dashboard" }),
       /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "\u25BE" })
     ] }),
@@ -50380,7 +50393,7 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
             /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: (e) => startEdit(d, e), style: { background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 4, fontSize: 12 }, children: "\u270E" }),
             !d.is_default && dashboards.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: (e) => {
               e.stopPropagation();
-              onDelete(d.id);
+              setConfirmDeleteId(d.id);
             }, style: { background: "none", border: "none", color: "var(--red)", cursor: "pointer", padding: 4, fontSize: 12 }, children: "\u2715" })
           ] })
         },
@@ -50397,7 +50410,22 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
           children: "+ Create New Dashboard"
         }
       ) })
-    ] })
+    ] }),
+    confirmDeleteId && deleteTarget && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { ref: confirmRef, className: "modal-panel", style: { maxWidth: 400 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "modal-header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "modal-title", children: "Delete Dashboard" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: () => setConfirmDeleteId(null), children: "\xD7" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("p", { style: { color: "var(--text-primary)", fontSize: 13, margin: 0 }, children: [
+        "Are you sure you want to delete ",
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { fontWeight: 600 }, children: deleteTarget.name }),
+        "? This will remove all its widgets and cannot be undone."
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: "btn btn-ghost", onClick: () => setConfirmDeleteId(null), children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: "btn btn-danger", onClick: handleConfirmDelete, children: "Delete" })
+      ] })
+    ] }) })
   ] });
 }
 
@@ -50469,12 +50497,64 @@ function AddWidgetModal({ onAdd, onClose }) {
   ] }) });
 }
 
+// app/javascript/components/dashboard/CreateDashboardModal.jsx
+var import_react16 = __toESM(require_react());
+var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+function CreateDashboardModal({ onConfirm, onClose }) {
+  const [name, setName] = (0, import_react16.useState)("");
+  const inputRef = (0, import_react16.useRef)(null);
+  const panelRef = (0, import_react16.useRef)(null);
+  (0, import_react16.useEffect)(() => {
+    inputRef.current?.focus();
+  }, []);
+  (0, import_react16.useEffect)(() => {
+    const h = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) onClose();
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, [onClose]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const trimmed = name.trim();
+    if (trimmed) onConfirm(trimmed);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { ref: panelRef, className: "modal-panel", style: { maxWidth: 420 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { className: "modal-title", children: "Create Dashboard" }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: onClose, children: "\xD7" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "form-group", style: { marginBottom: 0 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "form-label", htmlFor: "dashboard-name", children: "Dashboard Name *" }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          "input",
+          {
+            ref: inputRef,
+            id: "dashboard-name",
+            type: "text",
+            className: "form-input",
+            placeholder: "e.g. Production Costs",
+            value: name,
+            onChange: (e) => setName(e.target.value),
+            maxLength: 100
+          }
+        )
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "submit", className: "btn btn-green", disabled: !name.trim(), children: "Create" })
+      ] })
+    ] })
+  ] }) });
+}
+
 // app/javascript/components/dashboard/WidgetCard.jsx
-var import_react19 = __toESM(require_react());
+var import_react20 = __toESM(require_react());
 
 // node_modules/react-chartjs-2/dist/index.js
-var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-var import_react16 = __toESM(require_react(), 1);
+var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+var import_react17 = __toESM(require_react(), 1);
 var defaultDatasetIdKey = "label";
 function reforwardRef(ref, value) {
   if (typeof ref === "function") {
@@ -50517,8 +50597,8 @@ function cloneData(data, datasetIdKey = defaultDatasetIdKey) {
 }
 function ChartComponent(props, ref) {
   const { height = 150, width = 300, redraw = false, datasetIdKey, type, data, options, plugins = [], fallbackContent, updateMode, ...canvasProps } = props;
-  const canvasRef = (0, import_react16.useRef)(null);
-  const chartRef = (0, import_react16.useRef)(null);
+  const canvasRef = (0, import_react17.useRef)(null);
+  const chartRef = (0, import_react17.useRef)(null);
   const renderChart = () => {
     if (!canvasRef.current) return;
     chartRef.current = new Chart(canvasRef.current, {
@@ -50538,7 +50618,7 @@ function ChartComponent(props, ref) {
       chartRef.current = null;
     }
   };
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!redraw && chartRef.current && options) {
       setOptions(chartRef.current, options);
     }
@@ -50546,7 +50626,7 @@ function ChartComponent(props, ref) {
     redraw,
     options
   ]);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!redraw && chartRef.current) {
       setLabels(chartRef.current.config.data, data.labels);
     }
@@ -50554,7 +50634,7 @@ function ChartComponent(props, ref) {
     redraw,
     data.labels
   ]);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!redraw && chartRef.current && data.datasets) {
       setDatasets(chartRef.current.config.data, data.datasets, datasetIdKey);
     }
@@ -50562,7 +50642,7 @@ function ChartComponent(props, ref) {
     redraw,
     data.datasets
   ]);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!chartRef.current) return;
     if (redraw) {
       destroyChart();
@@ -50577,18 +50657,18 @@ function ChartComponent(props, ref) {
     data.datasets,
     updateMode
   ]);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     if (!chartRef.current) return;
     destroyChart();
     setTimeout(renderChart);
   }, [
     type
   ]);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     renderChart();
     return () => destroyChart();
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("canvas", {
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("canvas", {
     ref: canvasRef,
     role: "img",
     height,
@@ -50597,10 +50677,10 @@ function ChartComponent(props, ref) {
     children: fallbackContent
   });
 }
-var Chart2 = /* @__PURE__ */ (0, import_react16.forwardRef)(ChartComponent);
+var Chart2 = /* @__PURE__ */ (0, import_react17.forwardRef)(ChartComponent);
 function createTypedChart(type, registerables) {
   Chart.register(registerables);
-  return /* @__PURE__ */ (0, import_react16.forwardRef)((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Chart2, {
+  return /* @__PURE__ */ (0, import_react17.forwardRef)((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Chart2, {
     ...props,
     ref,
     type
@@ -50610,38 +50690,9 @@ var Bar = /* @__PURE__ */ createTypedChart("bar", BarController);
 var Pie = /* @__PURE__ */ createTypedChart("pie", PieController);
 
 // app/javascript/components/dashboard/WidgetAccountFilter.jsx
-var import_react17 = __toESM(require_react());
-var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-function WidgetAccountFilter({ accounts, selected, onChange, isLoading }) {
-  const [open, setOpen] = (0, import_react17.useState)(false);
-  const ref = (0, import_react17.useRef)(null);
-  (0, import_react17.useEffect)(() => {
-    const h = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
-  }, []);
-  const toggle = (id) => onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--green)" : void 0, color: selected.length > 0 ? "var(--green)" : void 0 }, children: [
-      "\u23F7 ",
-      selected.length > 0 ? `${selected.length} accounts` : "All accounts"
-    ] }),
-    open && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 200, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 250, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : accounts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No accounts" }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
-      accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)", fontFamily: "var(--font-mono)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("input", { type: "checkbox", checked: selected.includes(acc), onChange: () => toggle(acc) }),
-        acc
-      ] }, acc)),
-      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--green)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
-    ] }) })
-  ] });
-}
-
-// app/javascript/components/dashboard/WidgetServiceFilter.jsx
 var import_react18 = __toESM(require_react());
 var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-function WidgetServiceFilter({ services, selected, onChange, isLoading }) {
+function WidgetAccountFilter({ accounts, selected, onChange, isLoading }) {
   const [open, setOpen] = (0, import_react18.useState)(false);
   const ref = (0, import_react18.useRef)(null);
   (0, import_react18.useEffect)(() => {
@@ -50653,34 +50704,63 @@ function WidgetServiceFilter({ services, selected, onChange, isLoading }) {
   }, []);
   const toggle = (id) => onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
   return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--purple)" : void 0, color: selected.length > 0 ? "var(--purple)" : void 0 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--green)" : void 0, color: selected.length > 0 ? "var(--green)" : void 0 }, children: [
+      "\u23F7 ",
+      selected.length > 0 ? `${selected.length} accounts` : "All accounts"
+    ] }),
+    open && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 200, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 250, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : accounts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No accounts" }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)", fontFamily: "var(--font-mono)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("input", { type: "checkbox", checked: selected.includes(acc), onChange: () => toggle(acc) }),
+        acc
+      ] }, acc)),
+      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--green)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
+    ] }) })
+  ] });
+}
+
+// app/javascript/components/dashboard/WidgetServiceFilter.jsx
+var import_react19 = __toESM(require_react());
+var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+function WidgetServiceFilter({ services, selected, onChange, isLoading }) {
+  const [open, setOpen] = (0, import_react19.useState)(false);
+  const ref = (0, import_react19.useRef)(null);
+  (0, import_react19.useEffect)(() => {
+    const h = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+  const toggle = (id) => onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { ref, style: { position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--purple)" : void 0, color: selected.length > 0 ? "var(--purple)" : void 0 }, children: [
       "\u23F7 ",
       selected.length > 0 ? `${selected.length} services` : "All services"
     ] }),
-    open && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 240, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 300, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : services.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No services" }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-      services.map((svc) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("input", { type: "checkbox", checked: selected.includes(svc), onChange: () => toggle(svc) }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: svc })
+    open && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 240, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 300, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : services.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No services" }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+      services.map((svc) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("input", { type: "checkbox", checked: selected.includes(svc), onChange: () => toggle(svc) }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: svc })
       ] }, svc)),
-      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--purple)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
+      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--purple)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
     ] }) })
   ] });
 }
 
 // app/javascript/components/dashboard/WidgetCard.jsx
-var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+var import_jsx_runtime22 = __toESM(require_jsx_runtime());
 var DEFAULT_PROVIDER = "aws";
 var PIE_HEX = ["#3b82f6", "#8b5cf6", "#10B981", "#f59e0b", "#ef4444", "#EC4899", "#22d3ee", "#84CC16"];
 function DropdownMenu({ items, onSelect, onClose }) {
-  const ref = (0, import_react19.useRef)(null);
-  (0, import_react19.useEffect)(() => {
+  const ref = (0, import_react20.useRef)(null);
+  (0, import_react20.useEffect)(() => {
     const h = (e) => {
       if (ref.current && !ref.current.contains(e.target)) onClose();
     };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { ref, style: { position: "absolute", right: 0, top: "100%", marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 4, minWidth: 180, zIndex: 100, boxShadow: "var(--shadow)", border: "1px solid var(--border)" }, children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { ref, style: { position: "absolute", right: 0, top: "100%", marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 4, minWidth: 180, zIndex: 100, boxShadow: "var(--shadow)", border: "1px solid var(--border)" }, children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "button",
     {
       onClick: () => {
@@ -50715,7 +50795,7 @@ function WidgetCard({
   onDrop,
   onDragEnd
 }) {
-  const [menuOpen, setMenuOpen] = (0, import_react19.useState)(false);
+  const [menuOpen, setMenuOpen] = (0, import_react20.useState)(false);
   const accountIds = widget.query_config?.account_ids || [];
   const serviceIds = widget.query_config?.service_ids || [];
   const effectiveAccountIds = accountIds.length > 0 ? accountIds : accounts;
@@ -50771,48 +50851,48 @@ function WidgetCard({
     }
   };
   const renderChart = () => {
-    if (isLoading) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "Loading\u2026" });
-    if (widget.chart_type === "daily-spend" && dailyChart) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Bar, { data: { labels: dailyChart.labels, datasets: [{ label: "Daily Spend", data: dailyChart.datasets[0]?.data || [], backgroundColor: "#3b82f6", borderRadius: 4 }] }, options: barOptions });
-    if (widget.chart_type === "service-breakdown" && serviceChart) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Pie, { data: { labels: serviceChart.datasets.map((ds) => ds.label), datasets: [{ data: serviceChart.datasets.map((ds) => ds.data.reduce((a, b) => a + b, 0)), backgroundColor: PIE_HEX, borderWidth: 0 }] }, options: pieOptions });
-    if (widget.chart_type === "storage-spend" && storageChart) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Pie, { data: { labels: storageChart.datasets.map((ds) => ds.label), datasets: [{ data: storageChart.datasets.map((ds) => ds.data.reduce((a, b) => a + b, 0)), backgroundColor: PIE_HEX, borderWidth: 0 }] }, options: pieOptions });
-    if (widget.chart_type === "account-distribution" && acctDistChart) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Pie, { data: { labels: acctDistChart.map((d) => d.name), datasets: [{ data: acctDistChart.map((d) => d.value), backgroundColor: PIE_HEX, borderWidth: 0 }] }, options: pieOptions });
+    if (isLoading) return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "Loading\u2026" });
+    if (widget.chart_type === "daily-spend" && dailyChart) return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Bar, { data: { labels: dailyChart.labels, datasets: [{ label: "Daily Spend", data: dailyChart.datasets[0]?.data || [], backgroundColor: "#3b82f6", borderRadius: 4 }] }, options: barOptions });
+    if (widget.chart_type === "service-breakdown" && serviceChart) return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Pie, { data: { labels: serviceChart.datasets.map((ds) => ds.label), datasets: [{ data: serviceChart.datasets.map((ds) => ds.data.reduce((a, b) => a + b, 0)), backgroundColor: PIE_HEX, borderWidth: 0 }] }, options: pieOptions });
+    if (widget.chart_type === "storage-spend" && storageChart) return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Pie, { data: { labels: storageChart.datasets.map((ds) => ds.label), datasets: [{ data: storageChart.datasets.map((ds) => ds.data.reduce((a, b) => a + b, 0)), backgroundColor: PIE_HEX, borderWidth: 0 }] }, options: pieOptions });
+    if (widget.chart_type === "account-distribution" && acctDistChart) return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Pie, { data: { labels: acctDistChart.map((d) => d.name), datasets: [{ data: acctDistChart.map((d) => d.value), backgroundColor: PIE_HEX, borderWidth: 0 }] }, options: pieOptions });
     if (widget.chart_type === "top-services") return renderTopServicesTable();
     if (widget.chart_type === "monthly-spend-trend" && monthlyChart) {
       const opts = { ...barOptions, scales: { ...barOptions.scales, y: { ...barOptions.scales.y, ticks: { ...barOptions.scales.y.ticks, callback: (v) => `${(Number(v) / 1e3).toFixed(0)}k` } } } };
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Bar, { data: { labels: monthlyChart.map((d) => d.name), datasets: [{ label: "Total Spend", data: monthlyChart.map((d) => d.value), backgroundColor: "#3b82f6", borderRadius: 4 }] }, options: opts });
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Bar, { data: { labels: monthlyChart.map((d) => d.name), datasets: [{ label: "Total Spend", data: monthlyChart.map((d) => d.value), backgroundColor: "#3b82f6", borderRadius: 4 }] }, options: opts });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "No data" });
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "No data" });
   };
   const renderTopServicesTable = () => {
     const rows = topSvcData?.services || [];
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { height: "100%", overflow: "auto" }, children: [
-      topSvcData?.date && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { color: "var(--text-muted)", fontSize: 11, marginBottom: 8 }, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { height: "100%", overflow: "auto" }, children: [
+      topSvcData?.date && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { color: "var(--text-muted)", fontSize: 11, marginBottom: 8 }, children: [
         "Data for: ",
         topSvcData.date
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: 12 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: { textAlign: "left", padding: "8px 4px", color: "var(--text-muted)", fontWeight: 500, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }, children: "Service" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: { textAlign: "right", padding: "8px 4px", color: "var(--text-muted)", fontWeight: 500, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }, children: "Cost" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: { textAlign: "right", padding: "8px 4px", color: "var(--text-muted)", fontWeight: 500, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }, children: "Items" })
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: { textAlign: "left", padding: "8px 4px", color: "var(--text-muted)", fontWeight: 500, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }, children: "Service" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: { textAlign: "right", padding: "8px 4px", color: "var(--text-muted)", fontWeight: 500, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }, children: "Cost" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: { textAlign: "right", padding: "8px 4px", color: "var(--text-muted)", fontWeight: 500, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }, children: "Items" })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tbody", { children: [
-          rows.map((row, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { style: { padding: "8px 4px", color: "var(--text-primary)", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: row.service }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("td", { style: { padding: "8px 4px", color: "var(--green)", textAlign: "right", fontFamily: "var(--font-mono)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tbody", { children: [
+          rows.map((row, i) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { style: { padding: "8px 4px", color: "var(--text-primary)", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: row.service }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("td", { style: { padding: "8px 4px", color: "var(--green)", textAlign: "right", fontFamily: "var(--font-mono)" }, children: [
               "$",
               row.total_cost.toLocaleString()
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { style: { padding: "8px 4px", color: "var(--text-muted)", textAlign: "right" }, children: row.line_items.toLocaleString() })
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { style: { padding: "8px 4px", color: "var(--text-muted)", textAlign: "right" }, children: row.line_items.toLocaleString() })
           ] }, i)),
-          rows.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { colSpan: 3, style: { padding: 16, textAlign: "center", color: "var(--text-muted)" }, children: "No data" }) })
+          rows.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { colSpan: 3, style: { padding: 16, textAlign: "center", color: "var(--text-muted)" }, children: "No data" }) })
         ] })
       ] })
     ] });
   };
   const showAccountFilter = !["monthly-spend-trend", "account-distribution"].includes(widget.chart_type);
   const showServiceFilter = !["monthly-spend-trend", "storage-spend", "account-distribution", "top-services"].includes(widget.chart_type);
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "div",
     {
       draggable: true,
@@ -50831,29 +50911,29 @@ function WidgetCard({
         transition: "all 0.2s ease"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { color: isDragging ? "var(--green)" : "var(--text-muted)", cursor: "grab", fontSize: 14 }, children: "\u283F" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { style: { margin: 0, color: "var(--text-primary)", fontSize: 15, fontWeight: 700 }, children: widget.title }),
-            widget.is_saved && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { color: "var(--green)", fontSize: 14 }, children: "\u2605" })
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { style: { color: isDragging ? "var(--green)" : "var(--text-muted)", cursor: "grab", fontSize: 14 }, children: "\u283F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h3", { style: { margin: 0, color: "var(--text-primary)", fontSize: 15, fontWeight: 700 }, children: widget.title }),
+            widget.is_saved && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { style: { color: "var(--green)", fontSize: 14 }, children: "\u2605" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            showAccountFilter && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(WidgetAccountFilter, { accounts, selected: accountIds, onChange: handleAccountFilterChange, isLoading: accountsLoading }),
-            showServiceFilter && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(WidgetServiceFilter, { services, selected: serviceIds, onChange: handleServiceFilterChange, isLoading: servicesLoading }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { position: "relative" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => setMenuOpen(!menuOpen), className: "btn btn-ghost btn-sm", style: { padding: "4px 8px", fontSize: 14 }, children: "\u22EE" }),
-              menuOpen && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DropdownMenu, { items: menuItems, onSelect: handleMenuAction, onClose: () => setMenuOpen(false) })
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+            showAccountFilter && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WidgetAccountFilter, { accounts, selected: accountIds, onChange: handleAccountFilterChange, isLoading: accountsLoading }),
+            showServiceFilter && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WidgetServiceFilter, { services, selected: serviceIds, onChange: handleServiceFilterChange, isLoading: servicesLoading }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { position: "relative" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { onClick: () => setMenuOpen(!menuOpen), className: "btn btn-ghost btn-sm", style: { padding: "4px 8px", fontSize: 14 }, children: "\u22EE" }),
+              menuOpen && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenu, { items: menuItems, onSelect: handleMenuAction, onClose: () => setMenuOpen(false) })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { height: widget.is_expanded ? 400 : 250 }, children: renderChart() })
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { height: widget.is_expanded ? 400 : 250 }, children: renderChart() })
       ]
     }
   );
 }
 
 // app/javascript/components/dashboard/FinancialDashboard.jsx
-var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+var import_jsx_runtime23 = __toESM(require_jsx_runtime());
 Chart.register(CategoryScale, LinearScale, BarElement, ArcElement, plugin_title, plugin_tooltip, plugin_legend);
 var CURRENT_YEAR2 = (/* @__PURE__ */ new Date()).getFullYear();
 var CURRENT_MONTH2 = (/* @__PURE__ */ new Date()).getMonth() + 1;
@@ -50862,9 +50942,9 @@ var queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 5 * 6e4, retry: 1 } }
 });
 function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerName }) {
-  const dashboardApi = (0, import_react20.useMemo)(() => createDashboardApi(dashboardsApiUrl), [dashboardsApiUrl]);
-  const widgetApi = (0, import_react20.useMemo)(() => createWidgetApi(dashboardsApiUrl), [dashboardsApiUrl]);
-  const costApi = (0, import_react20.useMemo)(() => createCostApi(costApiUrl, customerUuid), [costApiUrl, customerUuid]);
+  const dashboardApi = (0, import_react21.useMemo)(() => createDashboardApi(dashboardsApiUrl), [dashboardsApiUrl]);
+  const widgetApi = (0, import_react21.useMemo)(() => createWidgetApi(dashboardsApiUrl), [dashboardsApiUrl]);
+  const costApi = (0, import_react21.useMemo)(() => createCostApi(costApiUrl, customerUuid), [costApiUrl, customerUuid]);
   const { data: dashboards = [], isLoading: dashboardsLoading } = useDashboards(dashboardApi);
   const createDashboardMut = useCreateDashboard(dashboardApi);
   const updateDashboardMut = useUpdateDashboard(dashboardApi);
@@ -50873,20 +50953,21 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
   const updateWidgetMut = useUpdateWidget(widgetApi);
   const deleteWidgetMut = useDeleteWidget(widgetApi);
   const reorderWidgetsMut = useReorderWidgets(dashboardApi);
-  const [currentDashboardId, setCurrentDashboardId] = (0, import_react20.useState)(null);
-  const [showAddModal, setShowAddModal] = (0, import_react20.useState)(false);
-  const [draggedWidgetId, setDraggedWidgetId] = (0, import_react20.useState)(null);
-  const [dragOverWidgetId, setDragOverWidgetId] = (0, import_react20.useState)(null);
-  (0, import_react20.useEffect)(() => {
+  const [currentDashboardId, setCurrentDashboardId] = (0, import_react21.useState)(null);
+  const [showAddModal, setShowAddModal] = (0, import_react21.useState)(false);
+  const [showCreateModal, setShowCreateModal] = (0, import_react21.useState)(false);
+  const [draggedWidgetId, setDraggedWidgetId] = (0, import_react21.useState)(null);
+  const [dragOverWidgetId, setDragOverWidgetId] = (0, import_react21.useState)(null);
+  (0, import_react21.useEffect)(() => {
     if (dashboards.length > 0 && !currentDashboardId) {
       const def = dashboards.find((d) => d.is_default) || dashboards[0];
       setCurrentDashboardId(def.id);
     }
   }, [dashboards, currentDashboardId]);
   const { data: currentDashboard, isLoading: dashboardLoading } = useDashboard(dashboardApi, currentDashboardId);
-  const [globalMonth, setGlobalMonth] = (0, import_react20.useState)(CURRENT_MONTH2);
-  const [globalYear, setGlobalYear] = (0, import_react20.useState)(CURRENT_YEAR2);
-  (0, import_react20.useEffect)(() => {
+  const [globalMonth, setGlobalMonth] = (0, import_react21.useState)(CURRENT_MONTH2);
+  const [globalYear, setGlobalYear] = (0, import_react21.useState)(CURRENT_YEAR2);
+  (0, import_react21.useEffect)(() => {
     if (currentDashboard?.layout_config) {
       setGlobalMonth(currentDashboard.layout_config.globalMonth || CURRENT_MONTH2);
       setGlobalYear(currentDashboard.layout_config.globalYear || CURRENT_YEAR2);
@@ -50896,15 +50977,17 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
   const { data: servicesData, isLoading: servicesLoading } = useDistinctServices(costApi, DEFAULT_PROVIDER2);
   const accounts = accountsData?.accounts || [];
   const services = servicesData?.services || [];
-  const selectDashboard = (0, import_react20.useCallback)((id) => setCurrentDashboardId(id), []);
-  const createDashboard = (0, import_react20.useCallback)(async () => {
-    const result = await createDashboardMut.mutateAsync({ name: `Dashboard ${dashboards.length + 1}` });
+  const selectDashboard = (0, import_react21.useCallback)((id) => setCurrentDashboardId(id), []);
+  const openCreateModal = (0, import_react21.useCallback)(() => setShowCreateModal(true), []);
+  const createDashboard = (0, import_react21.useCallback)(async (name) => {
+    const result = await createDashboardMut.mutateAsync({ name });
     setCurrentDashboardId(result.id);
-  }, [createDashboardMut, dashboards.length]);
-  const renameDashboard = (0, import_react20.useCallback)((id, name) => {
+    setShowCreateModal(false);
+  }, [createDashboardMut]);
+  const renameDashboard = (0, import_react21.useCallback)((id, name) => {
     updateDashboardMut.mutate({ id, name });
   }, [updateDashboardMut]);
-  const deleteDashboard = (0, import_react20.useCallback)((id) => {
+  const deleteDashboard = (0, import_react21.useCallback)((id) => {
     if (dashboards.length <= 1) return;
     deleteDashboardMut.mutate(id);
     if (currentDashboardId === id) {
@@ -50912,39 +50995,39 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
       setCurrentDashboardId(remaining[0]?.id || null);
     }
   }, [deleteDashboardMut, dashboards, currentDashboardId]);
-  const handleMonthChange = (0, import_react20.useCallback)((year, month) => {
+  const handleMonthChange = (0, import_react21.useCallback)((year, month) => {
     setGlobalYear(year);
     setGlobalMonth(month);
     if (currentDashboardId) {
       updateDashboardMut.mutate({ id: currentDashboardId, layout_config: { globalMonth: month, globalYear: year } });
     }
   }, [currentDashboardId, updateDashboardMut]);
-  const addWidget = (0, import_react20.useCallback)(async (type) => {
+  const addWidget = (0, import_react21.useCallback)(async (type) => {
     if (!currentDashboardId) return;
     const ct = CHART_TYPES.find((c) => c.type === type);
     if (!ct) return;
     await createWidgetMut.mutateAsync({ dashboardId: currentDashboardId, chart_type: type, title: ct.label });
   }, [currentDashboardId, createWidgetMut]);
-  const updateWidget = (0, import_react20.useCallback)((id, updates) => {
+  const updateWidget = (0, import_react21.useCallback)((id, updates) => {
     if (!currentDashboardId) return;
     updateWidgetMut.mutate({ id, dashboardId: currentDashboardId, ...updates });
   }, [currentDashboardId, updateWidgetMut]);
-  const deleteWidget = (0, import_react20.useCallback)((id) => {
+  const deleteWidget = (0, import_react21.useCallback)((id) => {
     if (!currentDashboardId) return;
     deleteWidgetMut.mutate({ id, dashboardId: currentDashboardId });
   }, [currentDashboardId, deleteWidgetMut]);
   const widgets = currentDashboard?.widgets || [];
   const isLoading = dashboardsLoading || dashboardLoading;
-  const handleDragStart = (0, import_react20.useCallback)((e, widgetId) => {
+  const handleDragStart = (0, import_react21.useCallback)((e, widgetId) => {
     setDraggedWidgetId(widgetId);
     e.dataTransfer.effectAllowed = "move";
   }, []);
-  const handleDragOver = (0, import_react20.useCallback)((e, widgetId) => {
+  const handleDragOver = (0, import_react21.useCallback)((e, widgetId) => {
     e.preventDefault();
     if (draggedWidgetId && widgetId !== draggedWidgetId) setDragOverWidgetId(widgetId);
   }, [draggedWidgetId]);
-  const handleDragLeave = (0, import_react20.useCallback)(() => setDragOverWidgetId(null), []);
-  const handleDrop = (0, import_react20.useCallback)((e, targetId) => {
+  const handleDragLeave = (0, import_react21.useCallback)(() => setDragOverWidgetId(null), []);
+  const handleDrop = (0, import_react21.useCallback)((e, targetId) => {
     e.preventDefault();
     if (!draggedWidgetId || !currentDashboardId || draggedWidgetId === targetId) {
       setDraggedWidgetId(null);
@@ -50962,23 +51045,23 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
     setDraggedWidgetId(null);
     setDragOverWidgetId(null);
   }, [draggedWidgetId, currentDashboardId, widgets, reorderWidgetsMut]);
-  const handleDragEnd = (0, import_react20.useCallback)(() => {
+  const handleDragEnd = (0, import_react21.useCallback)(() => {
     setDraggedWidgetId(null);
     setDragOverWidgetId(null);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "app-content", style: { padding: "28px 32px", maxWidth: 1400, margin: "0 auto" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "page-header", style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h1", { className: "page-title", children: "Financial Dashboard" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DashboardSelector, { dashboards, currentId: currentDashboardId || "", isLoading, onSelect: selectDashboard, onCreate: createDashboard, onRename: renameDashboard, onDelete: deleteDashboard })
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "app-content", style: { padding: "28px 32px", maxWidth: 1400, margin: "0 auto" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "page-header", style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "page-title", children: "Financial Dashboard" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DashboardSelector, { dashboards, currentId: currentDashboardId || "", isLoading, onSelect: selectDashboard, onCreate: openCreateModal, onRename: renameDashboard, onDelete: deleteDashboard })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GlobalMonthSelector, { year: globalYear, month: globalMonth, onChange: handleMonthChange }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green btn-sm", children: "+ Add Widget" })
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(GlobalMonthSelector, { year: globalYear, month: globalMonth, onChange: handleMonthChange }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green btn-sm", children: "+ Add Widget" })
       ] })
     ] }),
-    isLoading ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", padding: 60, color: "var(--text-muted)" }, children: "Loading dashboard\u2026" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))", gap: 20 }, children: widgets.map((widget) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    isLoading ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", padding: 60, color: "var(--text-muted)" }, children: "Loading dashboard\u2026" }) : /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))", gap: 20 }, children: widgets.map((widget) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
         WidgetCard,
         {
           widget,
@@ -51001,18 +51084,19 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
         },
         widget.id
       )) }),
-      widgets.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { textAlign: "center", padding: "60px 20px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { fontSize: 48, color: "var(--text-muted)", marginBottom: 16 }, children: "\u{1F4CA}" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { style: { fontSize: 18, fontWeight: 600, color: "var(--text-primary)", marginBottom: 8 }, children: "No widgets yet" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 16 }, children: "Add one to get started." }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-ghost", children: "+ Add Your First Widget" })
+      widgets.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { textAlign: "center", padding: "60px 20px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: 48, color: "var(--text-muted)", marginBottom: 16 }, children: "\u{1F4CA}" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: { fontSize: 18, fontWeight: 600, color: "var(--text-primary)", marginBottom: 8 }, children: "No widgets yet" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 16 }, children: "Add a widget to start tracking your cloud costs." }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green", children: "+ Add Your First Widget" })
       ] })
     ] }),
-    showAddModal && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(AddWidgetModal, { onAdd: addWidget, onClose: () => setShowAddModal(false) })
+    showAddModal && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AddWidgetModal, { onAdd: addWidget, onClose: () => setShowAddModal(false) }),
+    showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(CreateDashboardModal, { onConfirm: createDashboard, onClose: () => setShowCreateModal(false) })
   ] });
 }
 function FinancialDashboard(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DashboardInner, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DashboardInner, { ...props }) });
 }
 
 // app/javascript/components/index.ts
@@ -51059,7 +51143,7 @@ var ReactController = class extends Controller {
     if (!this.root) {
       this.root = (0, import_client.createRoot)(this.element);
     }
-    this.root.render((0, import_react21.createElement)(Component, this.propsValue));
+    this.root.render((0, import_react22.createElement)(Component, this.propsValue));
   }
 };
 
@@ -53083,6 +53167,48 @@ var cmd_palette_controller_default = class extends Controller {
   }
 };
 
+// app/javascript/controllers/cascading_select_controller.js
+var cascading_select_controller_default = class extends Controller {
+  static targets = ["parent", "child"];
+  static values = { url: String };
+  connect() {
+    if (this.hasParentTarget && this.parentTarget.value) {
+      this.loadChildren(this.parentTarget.value);
+    }
+  }
+  parentChanged() {
+    const parentValue = this.parentTarget.value;
+    this.childTarget.innerHTML = '<option value="">Loading...</option>';
+    this.childTarget.disabled = true;
+    if (!parentValue) {
+      this.childTarget.innerHTML = '<option value="">Select a reseller first...</option>';
+      this.childTarget.disabled = false;
+      return;
+    }
+    this.loadChildren(parentValue);
+  }
+  async loadChildren(parentValue) {
+    try {
+      const url = `${this.urlValue}?reseller_uuid=${encodeURIComponent(parentValue)}`;
+      const response = await fetch(url, {
+        headers: { "Accept": "application/json" }
+      });
+      const items = await response.json();
+      this.childTarget.innerHTML = '<option value="">Select a customer...</option>';
+      items.forEach((item) => {
+        const option = document.createElement("option");
+        option.value = item.uuid;
+        option.textContent = item.name;
+        this.childTarget.appendChild(option);
+      });
+      this.childTarget.disabled = false;
+    } catch (e) {
+      this.childTarget.innerHTML = '<option value="">Failed to load customers</option>';
+      this.childTarget.disabled = false;
+    }
+  }
+};
+
 // app/javascript/controllers/index.js
 application.register("hello", hello_controller_default);
 application.register("react", ReactController);
@@ -53104,6 +53230,7 @@ application.register("canvas-main", canvas_main_controller_default);
 application.register("sidebar-nav", sidebar_nav_controller_default);
 application.register("rpanel", rpanel_controller_default);
 application.register("cmd-palette", cmd_palette_controller_default);
+application.register("cascading-select", cascading_select_controller_default);
 /*! Bundled license information:
 
 react/cjs/react.development.js:

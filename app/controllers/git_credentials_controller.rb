@@ -95,6 +95,6 @@ class GitCredentialsController < AuthenticatedController
   end
 
   def require_admin
-    authorize!(:manage, nil) unless has_role?(:customer_admin)
+    raise NotAuthorizedError, "Platform admin access required" unless current_user&.platform_admin?
   end
 end

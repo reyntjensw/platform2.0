@@ -21,6 +21,15 @@
           <%= item[:label] %>
         </a>
       <% end %>
+
+      <% if defined?(@customer) && @customer.present? %>
+        <div class="topnav-sep"></div>
+        <a href="<%= customer_dashboards_path(@customer.uuid) %>"
+           class="topnav-link<%= ' active' if controller_name == 'dashboards' %>"
+           aria-current="<%= 'page' if controller_name == 'dashboards' %>">
+          Dashboards
+        </a>
+      <% end %>
     </div>
   </div>
 

@@ -20,9 +20,11 @@
     <h2 style="font-size:18px;font-weight:700;margin-bottom:4px;">Azure Credentials</h2>
     <p style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;">Manage Azure service principal credentials for this project.</p>
 
-    <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
-      <button class="btn btn-green btn-sm" data-action="click->azure-credentials#openAdd">+ Add Credential</button>
-    </div>
+    <% if can_manage_resource? %>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button class="btn btn-green btn-sm" data-action="click->azure-credentials#openAdd">+ Add Credential</button>
+      </div>
+    <% end %>
 
     <div data-azure-credentials-target="list"></div>
 
@@ -167,10 +169,12 @@
         <p style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Manage cloud environments linked to this project.</p>
       </div>
       <div class="header-actions">
-        <% if provider == "aws" %>
-          <button class="btn btn-green btn-sm" data-action="click->aws-onboard#open">+ Add Environment</button>
-        <% elsif provider == "azure" %>
-          <button class="btn btn-green btn-sm" data-action="click->azure-onboard#open">+ Add Environment</button>
+        <% if can_manage_resource? %>
+          <% if provider == "aws" %>
+            <button class="btn btn-green btn-sm" data-action="click->aws-onboard#open">+ Add Environment</button>
+          <% elsif provider == "azure" %>
+            <button class="btn btn-green btn-sm" data-action="click->azure-onboard#open">+ Add Environment</button>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -238,16 +242,18 @@
         <% end %>
 
         <%# Add card %>
-        <% if provider == "aws" %>
-          <div class="entity-card entity-card-add" data-action="click->aws-onboard#open" style="cursor:pointer;">
-            <div class="entity-add-icon">+</div>
-            <span>Add Environment</span>
-          </div>
-        <% elsif provider == "azure" %>
-          <div class="entity-card entity-card-add" data-action="click->azure-onboard#open" style="cursor:pointer;">
-            <div class="entity-add-icon">+</div>
-            <span>Add Environment</span>
-          </div>
+        <% if can_manage_resource? %>
+          <% if provider == "aws" %>
+            <div class="entity-card entity-card-add" data-action="click->aws-onboard#open" style="cursor:pointer;">
+              <div class="entity-add-icon">+</div>
+              <span>Add Environment</span>
+            </div>
+          <% elsif provider == "azure" %>
+            <div class="entity-card entity-card-add" data-action="click->azure-onboard#open" style="cursor:pointer;">
+              <div class="entity-add-icon">+</div>
+              <span>Add Environment</span>
+            </div>
+          <% end %>
         <% end %>
       </div>
     <% else %>
@@ -263,7 +269,9 @@
           <p style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Infrastructure-as-Code canvas for designing and deploying resources.</p>
         </div>
         <div class="header-actions">
-          <button class="btn btn-green btn-sm" onclick="document.getElementById('create-canvas-modal').style.display='flex'">+ Create Canvas</button>
+          <% if can_manage_resource? %>
+            <button class="btn btn-green btn-sm" onclick="document.getElementById('create-canvas-modal').style.display='flex'">+ Create Canvas</button>
+          <% end %>
         </div>
       </div>
 
@@ -305,16 +313,19 @@
           <% end %>
 
           <%# Add canvas card %>
-          <div class="entity-card entity-card-add" onclick="document.getElementById('create-canvas-modal').style.display='flex'" style="cursor:pointer;">
-            <div class="entity-add-icon">+</div>
-            <span>Create Canvas</span>
-          </div>
+          <% if can_manage_resource? %>
+            <div class="entity-card entity-card-add" onclick="document.getElementById('create-canvas-modal').style.display='flex'" style="cursor:pointer;">
+              <div class="entity-add-icon">+</div>
+              <span>Create Canvas</span>
+            </div>
+          <% end %>
         </div>
 
         <%# Canvas action buttons (link/unlink/delete) — shown below the grid %>
-        <div style="margin-top:16px;">
-          <details style="font-size:12px;color:var(--text-secondary);">
-            <summary style="cursor:pointer;user-select:none;">Manage canvas links & deletions</summary>
+        <% if can_manage_resource? %>
+          <div style="margin-top:16px;">
+            <details style="font-size:12px;color:var(--text-secondary);">
+              <summary style="cursor:pointer;user-select:none;">Manage canvas links & deletions</summary>
             <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
               <% canvas_envs.each do |cenv| %>
                 <% linked_account = cenv.aws_account_id || cenv.azure_subscription_id || cenv.gcp_project_id %>
@@ -343,6 +354,7 @@
             </div>
           </details>
         </div>
+        <% end %>
       <% else %>
         <%= render "shared/empty_state", icon: "🎨", title: "No canvas environments yet", description: "Create a canvas to start designing infrastructure." %>
       <% end %>

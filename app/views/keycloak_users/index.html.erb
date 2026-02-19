@@ -1,0 +1,269 @@
+<% content_for(:title) { "Users — Factor Fifty" } %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Users</h1>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Manage platform users and their roles.</p>
+  </div>
+  <div class="header-actions">
+    <% if can_manage_resource? %>
+      <button class="btn btn-green btn-sm" onclick="document.getElementById('new-user-modal').classList.add('open'); document.body.style.overflow='hidden';">+ New User</button>
+    <% end %>
+  </div>
+</div>
+
+<div data-controller="filter">
+  <div class="mod-toolbar">
+    <div class="mod-search-wrap">
+      <svg class="mod-search-icon" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="mod-search-input" type="text" placeholder="Search users..." data-action="input->filter#search" data-filter-target="searchInput" aria-label="Search users">
+    </div>
+    <span class="mod-count-badge"><%= @users.size %> users</span>
+  </div>
+
+  <div class="mod-table-wrap" data-filter-target="grid">
+    <% if @users.any? %>
+      <table class="mod-tbl">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <% if can_manage_resource? %><th></th><% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each_with_index do |user, i| %>
+            <% color = %w[#4fc3f7 #56d490 #f6ad55 #a78bfa #fc8181 #39d2c0][i % 6] %>
+            <% initials = user.display_name.to_s.split.map(&:first).join.upcase.first(2) %>
+            <% initials = "?" if initials.blank? %>
+            <tr class="mod-tbl__row" data-name="<%= user.display_name.to_s.downcase %> <%= user.email.to_s.downcase %>">
+              <td>
+                <div class="mod-cell">
+                  <div class="mod-icon" style="background:<%= color %>1a;color:<%= color %>;"><%= initials %></div>
+                  <span class="mod-cell-name"><%= user.display_name %></span>
+                </div>
+              </td>
+              <td><span style="font-size:12px;color:var(--text-secondary);"><%= user.email %></span></td>
+              <td>
+                <% if user.primary_role.present? %>
+                  <span class="mod-status-badge mod-status-live"><%= user.primary_role.humanize %></span>
+                <% else %>
+                  <span style="font-size:11px;color:var(--text-muted);">&#8212;</span>
+                <% end %>
+              </td>
+              <td>
+                <% if user.enabled %>
+                  <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Active</span>
+                <% else %>
+                  <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Disabled</span>
+                <% end %>
+              </td>
+              <% if can_manage_resource? %>
+                <td>
+                  <div class="mod-actions-cell">
+                    <button class="mod-action-btn mod-action-btn-primary" onclick="document.getElementById('edit-user-<%= user.id %>').classList.add('open'); document.body.style.overflow='hidden';">Edit</button>
+                    <button class="mod-action-btn" style="color:var(--red);" onclick="document.getElementById('delete-user-<%= user.id %>').classList.add('open'); document.body.style.overflow='hidden';">Delete</button>
+                  </div>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="mod-empty-state">
+        <p>No users found.</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if can_manage_resource? %>
+  <% @users.each do |user| %>
+    <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
+      <div id="edit-user-<%= user.id %>" class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
+        <div class="modal-panel" style="max-width:560px;">
+          <div class="modal-header">
+            <h3 class="modal-title">Edit User</h3>
+            <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+          </div>
+          <%= form_with url: keycloak_user_path(user), method: :patch, scope: :keycloak_user, html: { "data-modal-form" => true } do |f| %>
+            <div class="modal-body">
+              <div class="modal-errors" style="display:none;padding:10px 14px;margin-bottom:12px;background:var(--red-dim);border:1px solid var(--red);border-radius:var(--radius);font-size:12px;color:var(--red);"></div>
+              <div class="form-group">
+                <label class="form-label">Email *</label>
+                <%= f.email_field :email, value: user.email, class: "form-input", placeholder: "user@example.com", required: true %>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-group">
+                  <label class="form-label">First name *</label>
+                  <%= f.text_field :first_name, value: user.first_name, class: "form-input", placeholder: "First name", required: true %>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Last name *</label>
+                  <%= f.text_field :last_name, value: user.last_name, class: "form-input", placeholder: "Last name", required: true %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Role *</label>
+                <select name="keycloak_user[role]" class="form-input">
+                  <% edit_roles = @assignable_roles.dup %>
+                  <% edit_roles.unshift(user.primary_role) if user.primary_role.present? && !edit_roles.include?(user.primary_role) %>
+                  <% edit_roles.each do |role| %>
+                    <option value="<%= role %>" <% if user.primary_role.to_s == role.to_s %>selected="selected"<% end %>><%= role.humanize %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Enabled</label>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="hidden" name="keycloak_user[enabled]" value="0">
+                  <input type="checkbox" name="keycloak_user[enabled]" value="1" <%= "checked" if user.enabled %>>
+                  <span style="font-size:13px;color:var(--text-secondary);">User account is active</span>
+                </label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+              <%= f.submit "Save Changes", class: "btn btn-green" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
+      <div id="delete-user-<%= user.id %>" class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
+        <div class="modal-panel" style="max-width:420px;">
+          <div class="modal-header">
+            <h3 class="modal-title" style="color:var(--red);">Delete User</h3>
+            <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p style="font-size:13px;color:var(--text-secondary);margin:0;">
+              Are you sure you want to delete <span style="color:var(--text-primary);font-weight:600;"><%= user.display_name %></span>? This action cannot be undone.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+            <%= button_to "Delete User", keycloak_user_path(user), method: :delete, class: "btn btn-danger" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
+    <div id="new-user-modal" class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
+      <div class="modal-panel" style="max-width:560px;" data-controller="cascading-select" data-cascading-select-url-value="<%= customers_for_reseller_keycloak_users_path %>">
+        <div class="modal-header">
+          <h3 class="modal-title">New User</h3>
+          <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+        </div>
+        <%= form_with url: keycloak_users_path, method: :post, scope: :keycloak_user, html: { "data-modal-form" => true } do |f| %>
+          <div class="modal-body">
+            <div class="modal-errors" style="display:none;padding:10px 14px;margin-bottom:12px;background:var(--red-dim);border:1px solid var(--red);border-radius:var(--radius);font-size:12px;color:var(--red);"></div>
+            <div class="form-group">
+              <label class="form-label">Email *</label>
+              <%= f.email_field :email, class: "form-input", placeholder: "user@example.com", required: true %>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div class="form-group">
+                <label class="form-label">First name *</label>
+                <%= f.text_field :first_name, class: "form-input", placeholder: "First name", required: true %>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last name *</label>
+                <%= f.text_field :last_name, class: "form-input", placeholder: "Last name", required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Role *</label>
+              <select name="keycloak_user[role]" class="form-input" id="new-user-role-select" onchange="(function(v){ var s=document.getElementById('new-user-scope-fields'); if(s) s.style.display = (v==='platform_admin') ? 'none' : ''; })(this.value)">
+                <option value="">Select a role...</option>
+                <% @assignable_roles.each do |role| %>
+                  <option value="<%= role %>"><%= role.humanize %></option>
+                <% end %>
+              </select>
+            </div>
+            <div id="new-user-scope-fields">
+              <% if current_user.platform_admin? %>
+                <div class="form-group">
+                  <label class="form-label">Reseller *</label>
+                  <select name="keycloak_user[reseller_uuid]" class="form-input" data-cascading-select-target="parent" data-action="change->cascading-select#parentChanged">
+                    <option value="">Select a reseller...</option>
+                    <% @resellers.each do |r| %>
+                      <option value="<%= r[:uuid] || r["uuid"] %>"><%= r[:name] || r["name"] %></option>
+                    <% end %>
+                  </select>
+                </div>
+              <% end %>
+              <% if current_user.platform_admin? || current_user.reseller_admin? %>
+                <div class="form-group">
+                  <label class="form-label">Customer *</label>
+                  <select name="keycloak_user[customer_uuid]" class="form-input" data-cascading-select-target="child">
+                    <% if current_user.platform_admin? %>
+                      <option value="">Select a reseller first...</option>
+                    <% else %>
+                      <option value="">Select a customer...</option>
+                      <% @customers.each do |c| %>
+                        <option value="<%= c[:uuid] || c["uuid"] %>"><%= c[:name] || c["name"] %></option>
+                      <% end %>
+                    <% end %>
+                  </select>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+            <%= f.submit "Create User", class: "btn btn-green" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('form[data-modal-form]').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var errBox = form.querySelector('.modal-errors');
+      var btn = form.querySelector('[type="submit"]');
+      var origText = btn ? btn.textContent : '';
+      if (errBox) { errBox.style.display = 'none'; errBox.textContent = ''; }
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+      var formData = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
+        },
+        body: formData
+      }).then(function(resp) {
+        return resp.json().then(function(data) { return { ok: resp.ok, data: data }; });
+      }).then(function(result) {
+        if (btn) { btn.disabled = false; btn.textContent = origText; }
+        if (result.ok && result.data.redirect) {
+          window.location.href = result.data.redirect;
+        } else if (result.data.errors && errBox) {
+          errBox.textContent = result.data.errors.join(', ');
+          errBox.style.display = 'block';
+        }
+      }).catch(function() {
+        if (btn) { btn.disabled = false; btn.textContent = origText; }
+        if (errBox) { errBox.textContent = 'Something went wrong. Please try again.'; errBox.style.display = 'block'; }
+      });
+    });
+  });
+});
+</script>

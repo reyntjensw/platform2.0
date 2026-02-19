@@ -79,6 +79,7 @@ export default function CanvasApp({
   apiUrl, connectionsApiUrl, businessRulesApiUrl, applicationGroupsApiUrl,
   canvasLockApiUrl,
   environmentId, environment, project, customer, siblingEnvs, currentUser,
+  canManage,
   canvasPath, rootPath
 }) {
   const [resources, setResources] = useState(initialResources || [])
@@ -463,7 +464,7 @@ export default function CanvasApp({
       )}
       {activeScreen === "templates" && <TemplatesScreen />}
       {activeScreen === "import" && <ImportScreen />}
-      {activeScreen === "deploy" && <DeployScreen environmentId={environmentId} />}
+      {activeScreen === "deploy" && <DeployScreen environmentId={environmentId} canManage={canManage} />}
       {activeScreen === "global_tags" && <GlobalTagsScreen environmentId={environmentId} environment={environment} project={project} customer={customer} />}
 
       {/* Command Palette */}

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ModuleUpdatesController < AuthenticatedController
+  before_action :require_platform_admin
   # GET /modules/:module_id/updates
   def index
     @module_definition = ModuleDefinition.find(params[:module_id])

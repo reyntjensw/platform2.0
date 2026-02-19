@@ -23,7 +23,7 @@ class EnvironmentsController < AuthenticatedController
 
   # POST /customers/:customer_uuid/projects/:project_uuid/environments
   def create
-    authorize!(:manage, Environment.new(project_uuid: @project.uuid))
+    authorize!(:manage, Environment.new(project_uuid: @project.uuid, customer_uuid: @customer.uuid))
 
     if @project.provider&.downcase == "azure"
       create_azure_environment

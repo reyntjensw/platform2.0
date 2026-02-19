@@ -50,19 +50,32 @@ RSpec.describe User do
       expect(u.customer_admin?).to be true
     end
 
-    it "#project_admin?" do
-      u = described_class.new(roles: %w[project_admin])
-      expect(u.project_admin?).to be true
+    it "#customer_viewer?" do
+      u = described_class.new(roles: %w[customer_viewer])
+      expect(u.customer_viewer?).to be true
+      expect(u.customer_admin?).to be false
+    end
+  end
+
+  describe "#customer_scoped?" do
+    it "returns true for customer_admin with customer_uuid" do
+      u = described_class.new(roles: %w[customer_admin], customer_uuid: "cust-1")
+      expect(u.customer_scoped?).to be true
     end
 
-    it "#developer?" do
-      u = described_class.new(roles: %w[developer])
-      expect(u.developer?).to be true
+    it "returns true for customer_viewer with customer_uuid" do
+      u = described_class.new(roles: %w[customer_viewer], customer_uuid: "cust-1")
+      expect(u.customer_scoped?).to be true
     end
 
-    it "#viewer?" do
-      u = described_class.new(roles: %w[viewer])
-      expect(u.viewer?).to be true
+    it "returns false for customer_admin without customer_uuid" do
+      u = described_class.new(roles: %w[customer_admin])
+      expect(u.customer_scoped?).to be false
+    end
+
+    it "returns false for platform_admin even with customer_uuid" do
+      u = described_class.new(roles: %w[platform_admin], customer_uuid: "cust-1")
+      expect(u.customer_scoped?).to be false
     end
   end
 

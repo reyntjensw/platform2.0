@@ -4,23 +4,41 @@ export default function DashboardSelector({ dashboards, currentId, isLoading, on
   const [open, setOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [editName, setEditName] = useState('')
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null)
   const ref = useRef(null)
+  const confirmRef = useRef(null)
 
   useEffect(() => {
-    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) { setOpen(false); setEditingId(null) } }
+    const h = (e) => {
+      if (ref.current && !ref.current.contains(e.target) && !(confirmRef.current && confirmRef.current.contains(e.target))) {
+        setOpen(false); setEditingId(null)
+      }
+      if (confirmRef.current && !confirmRef.current.contains(e.target)) {
+        setConfirmDeleteId(null)
+      }
+    }
     document.addEventListener('mousedown', h)
     return () => document.removeEventListener('mousedown', h)
   }, [])
 
   const current = dashboards.find(d => d.id === currentId)
+  const deleteTarget = dashboards.find(d => d.id === confirmDeleteId)
 
   const startEdit = (d, e) => { e.stopPropagation(); setEditingId(d.id); setEditName(d.name) }
   const saveEdit = () => { if (editingId && editName.trim()) onRename(editingId, editName.trim()); setEditingId(null) }
 
+  const handleConfirmDelete = () => {
+    if (confirmDeleteId) {
+      onDelete(confirmDeleteId)
+      setConfirmDeleteId(null)
+      setOpen(false)
+    }
+  }
+
   return (
     <div ref={ref} style={{ position: 'relative' }}>
       <button onClick={() => setOpen(!open)} className="btn btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        📊 {isLoading ? '…' : <span style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{current?.name || 'Select Dashboard'}</span>}
+        {isLoading ? '…' : <span style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{current?.name || 'Select Dashboard'}</span>}
         <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>▾</span>
       </button>
       {open && (
@@ -39,7 +57,7 @@ export default function DashboardSelector({ dashboards, currentId, isLoading, on
                   {d.is_default && <span className="badge badge-dev" style={{ fontSize: 9 }}>Default</span>}
                   <button onClick={e => startEdit(d, e)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4, fontSize: 12 }}>✎</button>
                   {!d.is_default && dashboards.length > 1 && (
-                    <button onClick={e => { e.stopPropagation(); onDelete(d.id) }} style={{ background: 'none', border: 'none', color: 'var(--red)', cursor: 'pointer', padding: 4, fontSize: 12 }}>✕</button>
+                    <button onClick={e => { e.stopPropagation(); setConfirmDeleteId(d.id) }} style={{ background: 'none', border: 'none', color: 'var(--red)', cursor: 'pointer', padding: 4, fontSize: 12 }}>✕</button>
                   )}
                 </>
               )}
@@ -50,6 +68,26 @@ export default function DashboardSelector({ dashboards, currentId, isLoading, on
               style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', padding: '8px 10px', background: 'none', border: 'none', color: 'var(--green)', cursor: 'pointer', fontSize: 13, borderRadius: 'var(--radius-sm)' }}>
               + Create New Dashboard
             </button>
+          </div>
+        </div>
+      )}
+
+      {confirmDeleteId && deleteTarget && (
+        <div className="modal-overlay open" style={{ display: 'flex' }}>
+          <div ref={confirmRef} className="modal-panel" style={{ maxWidth: 400 }}>
+            <div className="modal-header">
+              <h3 className="modal-title">Delete Dashboard</h3>
+              <button className="modal-close" aria-label="Close" onClick={() => setConfirmDeleteId(null)}>&times;</button>
+            </div>
+            <div className="modal-body">
+              <p style={{ color: 'var(--text-primary)', fontSize: 13, margin: 0 }}>
+                Are you sure you want to delete <span style={{ fontWeight: 600 }}>{deleteTarget.name}</span>? This will remove all its widgets and cannot be undone.
+              </p>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-ghost" onClick={() => setConfirmDeleteId(null)}>Cancel</button>
+              <button className="btn btn-danger" onClick={handleConfirmDelete}>Delete</button>
+            </div>
           </div>
         </div>
       )}

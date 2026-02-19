@@ -142,7 +142,7 @@ function getPipelineStepStates(checks, deployResult) {
   return states
 }
 
-export default function DeployScreen({ environmentId }) {
+export default function DeployScreen({ environmentId, canManage = true }) {
   const [selectedEngine] = useState("tofu")
   const [checks, setChecks] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -648,7 +648,7 @@ export default function DeployScreen({ environmentId }) {
             )
           })()}
 
-          {deployResult.approval_status === "pending_approval" && (
+          {deployResult.approval_status === "pending_approval" && canManage && (
             <div style={{ marginTop: 10, display: "flex", gap: 8 }}>
               <button className="btn btn-green btn-sm" onClick={() => approveDeployment(deployResult.id)}>
                 ✓ Approve & Apply

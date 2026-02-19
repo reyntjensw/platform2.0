@@ -1,0 +1,11 @@
+<% content_for(:title) { "Edit User — Factor Fifty" } %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Edit User</h1>
+    <p class="page-subtitle"><%= @keycloak_user.display_name %></p>
+  </div>
+</div>
+
+<%= render "form", keycloak_user: @keycloak_user, assignable_roles: @assignable_roles,
+                    resellers: @resellers, customers: @customers, mode: :edit %>

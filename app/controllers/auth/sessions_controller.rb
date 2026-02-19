@@ -27,7 +27,10 @@ module Auth
       # Derive reseller_uuid from Keycloak groups (e.g. "/resellers/cloudsisters/...")
       session[:reseller_uuid] = extract_reseller_uuid(session[:groups])
 
-      redirect_to session.delete(:return_to) || root_path, notice: "Signed in successfully"
+      # Extract customer_uuid from Keycloak user attribute (protocol mapper)
+      session[:customer_uuid] = raw_info["customer_uuid"]
+
+      redirect_to after_login_path, notice: "Signed in successfully"
     end
 
     # destroy (logout)
@@ -43,6 +46,21 @@ module Auth
     end
 
     private
+
+    def after_login_path
+      return session.delete(:return_to) if session[:return_to].present?
+
+      roles = session[:roles] || []
+      if roles.include?("platform_admin")
+        resellers_path
+      elsif roles.include?("reseller_admin")
+        customers_path
+      elsif session[:customer_uuid].present?
+        customer_path(session[:customer_uuid])
+      else
+        root_path
+      end
+    end
 
     def keycloak_logout_url
       base = ENV.fetch("KEYCLOAK_URL", "http://localhost:8080")

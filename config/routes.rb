@@ -141,6 +141,13 @@ Rails.application.routes.draw do
   # Canvas view (standalone, not nested under customer/project)
   get "canvas/:id", to: "canvas#show", as: :canvas
 
+  # User Management
+  resources :keycloak_users, path: "users", only: [:index, :new, :create, :edit, :update, :destroy] do
+    collection do
+      get :customers_for_reseller
+    end
+  end
+
   # Tenant hierarchy
   root "resellers#index"
 

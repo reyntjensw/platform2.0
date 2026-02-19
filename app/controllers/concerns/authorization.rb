@@ -5,14 +5,12 @@ module Authorization
 
   class NotAuthorizedError < StandardError; end
 
-  # Role hierarchy from most to least privileged
+  # Simplified four-role hierarchy from most to least privileged
   ROLE_HIERARCHY = %w[
     platform_admin
     reseller_admin
     customer_admin
-    project_admin
-    developer
-    viewer
+    customer_viewer
   ].freeze
 
   included do
@@ -38,68 +36,94 @@ module Authorization
 
   def authorized?(action, resource)
     case action.to_sym
-    when :manage
-      can_manage?(resource)
-    when :read
-      can_read?(resource)
-    else
-      false
+    when :manage then can_manage?(resource)
+    when :read   then can_read?(resource)
+    else false
     end
   end
 
   # :manage — create, update, delete
   def can_manage?(resource)
     return true if current_user.platform_admin?
-    return true if current_user.reseller_admin?
+    return false if current_user.customer_viewer?
+
+    # Symbol resources represent global resource types (e.g. :keycloak_users)
+    if resource.is_a?(Symbol)
+      return true if resource == :keycloak_users
+      return false
+    end
+
+    if current_user.reseller_admin?
+      return reseller_owns_resource?(resource)
+    end
+
+    if current_user.customer_admin?
+      return customer_owns_resource?(resource)
+    end
+
+    false
+  end
+
+  # :read — index, show
+  def can_read?(resource)
+    return true if current_user.platform_admin?
+
+    # Symbol resources represent global resource types (e.g. :keycloak_users)
+    if resource.is_a?(Symbol)
+      return true if resource == :keycloak_users
+      return false
+    end
+
+    if current_user.reseller_admin?
+      return reseller_owns_resource?(resource)
+    end
+
+    if current_user.customer_admin? || current_user.customer_viewer?
+      return customer_owns_resource?(resource)
+    end
+
+    false
+  end
+
+  # Check if the resource belongs to the reseller_admin's reseller
+  def reseller_owns_resource?(resource)
+    reseller_uuid = current_user.reseller_uuid
+    return false if reseller_uuid.blank?
 
     case resource
     when Customer
-      current_user.customer_admin? && owns_customer?(resource)
-    when Project
-      (current_user.customer_admin? && owns_customer_for_project?(resource)) ||
-        (current_user.project_admin? && owns_project?(resource))
-    when Environment
-      (current_user.customer_admin? && owns_customer_for_environment?(resource)) ||
-        (current_user.project_admin? && owns_project_for_environment?(resource))
+      resource.reseller_uuid == reseller_uuid
+    when Project, Environment, LocalEnvironment
+      resource.respond_to?(:customer_uuid) &&
+        customer_belongs_to_reseller?(resource.customer_uuid, reseller_uuid)
     else
       false
     end
   end
 
-  # :read — index, show
-  def can_read?(resource)
-    return true if can_manage?(resource)
-    return true if current_user.developer? || current_user.viewer?
+  # Check if the resource belongs to the customer-scoped user's customer
+  def customer_owns_resource?(resource)
+    customer_uuid = current_user.customer_uuid
+    return false if customer_uuid.blank?
 
+    case resource
+    when Customer
+      resource.uuid == customer_uuid
+    when Project
+      resource.respond_to?(:customer_uuid) && resource.customer_uuid == customer_uuid
+    when Environment, LocalEnvironment
+      resource.respond_to?(:customer_uuid) && resource.customer_uuid == customer_uuid
+    else
+      false
+    end
+  end
+
+  def customer_belongs_to_reseller?(customer_uuid, reseller_uuid)
+    client = CsInternalApiClient.new
+    response = client.get_customer(uuid: customer_uuid)
+    response.success? && response.data&.dig(:reseller_uuid) == reseller_uuid
+  rescue
     false
-  end
-
-  # Ownership checks
-
-  def owns_customer?(customer)
-    customer.respond_to?(:uuid) &&
-      current_user.customer_uuid == customer.uuid
-  end
-
-  def owns_customer_for_project?(project)
-    project.respond_to?(:customer_uuid) &&
-      current_user.customer_uuid == project.customer_uuid
-  end
-
-  def owns_project?(project)
-    # project_admin scope — checked via project UUID stored on user or session
-    project.respond_to?(:uuid) &&
-      session[:project_uuids]&.include?(project.uuid)
-  end
-
-  def owns_customer_for_environment?(environment)
-    environment.respond_to?(:customer_uuid) &&
-      current_user.customer_uuid == environment.customer_uuid
-  end
-
-  def owns_project_for_environment?(environment)
-    environment.respond_to?(:project_uuid) &&
-      session[:project_uuids]&.include?(environment.project_uuid)
   end
 
   # Returns the numeric privilege level for a role (lower = more privileged)
@@ -110,7 +134,6 @@ module Authorization
   # Check if the user has at least the given minimum role
   def has_role?(minimum_role)
     return false unless current_user
-
     current_user.roles.any? { |r| role_level(r) <= role_level(minimum_role) }
   end
 
@@ -119,5 +142,9 @@ module Authorization
       format.html { render file: Rails.root.join("public/403.html"), status: :forbidden, layout: false }
       format.json { render json: { error: "Forbidden" }, status: :forbidden }
     end
+  end
+
+  def require_platform_admin
+    raise NotAuthorizedError, "Platform admin access required" unless current_user&.platform_admin?
   end
 end

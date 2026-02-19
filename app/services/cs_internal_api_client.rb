@@ -55,6 +55,26 @@ class CsInternalApiClient < ApiClient::Base
   def get_user(uuid:)             = cached("cs:user:#{uuid}", RECORD_CACHE_TTL) { get("/users/#{uuid}") }
   def find_user_by_email(email:)  = get("/users", email: email)
 
+  # Keycloak Users
+  def list_keycloak_users(customer_uuid: nil, reseller_uuid: nil)
+    params = {}
+    params[:customer_uuid] = customer_uuid if customer_uuid
+    params[:reseller_uuid] = reseller_uuid if reseller_uuid
+    get("/keycloak-users", **params)
+  end
+
+  def get_keycloak_user(id:)            = get("/keycloak-users/#{id}")
+  def create_keycloak_user(attrs)       = post("/keycloak-users", attrs)
+  def update_keycloak_user(id:, attrs:) = put("/keycloak-users/#{id}", attrs)
+  def delete_keycloak_user(id:)         = delete("/keycloak-users/#{id}")
+
+  # Keycloak User Roles
+  def get_keycloak_user_roles(user_id:)              = get("/keycloak-users/#{user_id}/roles")
+  def assign_keycloak_user_roles(user_id:, role_names:) = post("/keycloak-users/#{user_id}/roles", { role_names: role_names })
+  def remove_keycloak_user_roles(user_id:, role_names:)
+    wrap { conn.delete("/keycloak-users/#{user_id}/roles") { |req| req.body = { role_names: role_names } } }
+  end
+
   private
 
   attr_reader :conn

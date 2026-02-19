@@ -17,22 +17,30 @@ module SidebarHelper
       active: controller_name == "customers" && action_name == "index"
     }
 
-    items << {
-      icon: "📦", label: "Modules", short_label: "Mod",
-      path: modules_path,
-      active: controller_name.in?(%w[module_definitions module_imports module_updates])
-    }
+    if current_user&.platform_admin?
+      items << {
+        icon: "📦", label: "Modules", short_label: "Mod",
+        path: modules_path,
+        active: controller_name.in?(%w[module_definitions module_imports module_updates])
+      }
 
-    items << {
-      icon: "🔑", label: "Git Credentials", short_label: "Cred",
-      path: git_credentials_path,
-      active: controller_name == "git_credentials"
-    }
+      items << {
+        icon: "🔑", label: "Git Credentials", short_label: "Cred",
+        path: git_credentials_path,
+        active: controller_name == "git_credentials"
+      }
+    end
 
     items << {
       icon: "🏷️", label: "Global Tags", short_label: "Tags",
       path: global_tags_path,
       active: controller_name == "global_tags"
+    }
+
+    items << {
+      icon: "👤", label: "Users", short_label: "Users",
+      path: keycloak_users_path,
+      active: controller_name == "keycloak_users"
     }
 
     items

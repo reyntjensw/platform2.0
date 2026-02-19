@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ModuleImportsController < AuthenticatedController
+  before_action :require_platform_admin
   before_action :set_draft, except: [:new]
 
   # GET /modules/import/new — Start a new import wizard

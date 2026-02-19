@@ -1,0 +1,88 @@
+<%= form_with model: keycloak_user, url: (mode == :edit ? keycloak_user_path(keycloak_user) : keycloak_users_path),
+             method: (mode == :edit ? :patch : :post),
+             data: { controller: "cascading-select",
+                     cascading_select_url_value: customers_for_reseller_keycloak_users_path } do |f| %>
+  <div class="card" style="max-width: 560px;">
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="keycloak_user_email">Email *</label>
+        <%= f.email_field :email, class: "form-input", id: "keycloak_user_email",
+            placeholder: "user@example.com", required: true %>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="form-group">
+          <label class="form-label" for="keycloak_user_first_name">First name *</label>
+          <%= f.text_field :first_name, class: "form-input", id: "keycloak_user_first_name",
+              placeholder: "First name", required: true %>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="keycloak_user_last_name">Last name *</label>
+          <%= f.text_field :last_name, class: "form-input", id: "keycloak_user_last_name",
+              placeholder: "Last name", required: true %>
+        </div>
+      </div>
+
+      <% if current_user.platform_admin? %>
+        <div class="form-group">
+          <label class="form-label" for="keycloak_user_reseller_uuid">Reseller *</label>
+          <select name="keycloak_user[reseller_uuid]" id="keycloak_user_reseller_uuid" class="form-input"
+                  data-cascading-select-target="parent"
+                  data-action="change->cascading-select#parentChanged">
+            <option value="">Select a reseller...</option>
+            <% resellers.each do |r| %>
+              <% r_uuid = r[:uuid] || r["uuid"] %>
+              <% r_name = r[:name] || r["name"] %>
+              <option value="<%= r_uuid %>" <%= "selected" if keycloak_user.reseller_uuid == r_uuid %>><%= r_name %></option>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+
+      <% if current_user.platform_admin? || current_user.reseller_admin? %>
+        <div class="form-group">
+          <label class="form-label" for="keycloak_user_customer_uuid">Customer *</label>
+          <select name="keycloak_user[customer_uuid]" id="keycloak_user_customer_uuid" class="form-input"
+                  data-cascading-select-target="child">
+            <% if current_user.platform_admin? %>
+              <option value="">Select a reseller first...</option>
+            <% else %>
+              <option value="">Select a customer...</option>
+              <% customers.each do |c| %>
+                <% c_uuid = c[:uuid] || c["uuid"] %>
+                <% c_name = c[:name] || c["name"] %>
+                <option value="<%= c_uuid %>" <%= "selected" if keycloak_user.customer_uuid == c_uuid %>><%= c_name %></option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <label class="form-label" for="keycloak_user_role">Role *</label>
+        <select name="keycloak_user[role]" id="keycloak_user_role" class="form-input">
+          <option value="">Select a role...</option>
+          <% assignable_roles.each do |role| %>
+            <option value="<%= role %>" <%= "selected" if keycloak_user.primary_role == role %>><%= role.humanize %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <% if mode == :edit %>
+        <div class="form-group">
+          <label class="form-label" for="keycloak_user_enabled">Enabled</label>
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <%= f.check_box :enabled, id: "keycloak_user_enabled" %>
+            <span style="font-size: 13px; color: var(--text-secondary);">User account is active</span>
+          </label>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="modal-footer">
+      <%= link_to "Cancel", keycloak_users_path, class: "btn btn-ghost" %>
+      <%= f.submit (mode == :edit ? "Save Changes" : "Create User"), class: "btn btn-green" %>
+    </div>
+  </div>
+<% end %>

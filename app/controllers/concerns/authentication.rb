@@ -44,7 +44,8 @@ module Authentication
       sub: session[:sub],
       email: session[:user_email],
       name: session[:user_name],
-      reseller_uuid: session[:reseller_uuid]
+      reseller_uuid: session[:reseller_uuid],
+      customer_uuid: session[:customer_uuid]
     )
     user.roles = session[:roles] || []
     user

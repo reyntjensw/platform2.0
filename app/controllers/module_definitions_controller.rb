@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ModuleDefinitionsController < AuthenticatedController
+  before_action :require_platform_admin
   before_action :set_module, only: [:show, :edit, :update, :deprecate, :destroy, :rescan]
 
   # GET /modules

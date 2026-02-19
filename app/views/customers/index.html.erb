@@ -43,10 +43,12 @@
     <% end %>
 
     <%# Add card %>
-    <div class="entity-card entity-card-add">
-      <div class="entity-add-icon">+</div>
-      <span>New Customer</span>
-    </div>
+    <% if can_create_customer? %>
+      <div class="entity-card entity-card-add">
+        <div class="entity-add-icon">+</div>
+        <span>New Customer</span>
+      </div>
+    <% end %>
   </div>
 <% else %>
   <%= render "shared/empty_state",
