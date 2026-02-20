@@ -11,11 +11,13 @@ module SidebarHelper
       active: controller_name == "resellers"
     }
 
-    items << {
-      icon: "👥", label: "Customers", short_label: "Cust",
-      path: customers_path,
-      active: controller_name == "customers" && action_name == "index"
-    }
+    if current_user&.platform_admin? || current_user&.reseller_admin?
+      items << {
+        icon: "👥", label: "Customers", short_label: "Cust",
+        path: customers_path,
+        active: controller_name == "customers" && action_name == "index"
+      }
+    end
 
     if current_user&.platform_admin?
       items << {

@@ -1,0 +1,12 @@
+<%# Multi-select rendered as checkbox pills — value stored as comma-separated string %>
+<div class="rp-multi-select" data-field="<%= field.name %>">
+  <% selected = (value.is_a?(Array) ? value : value.to_s.split(",").map(&:strip)).reject(&:blank?) %>
+  <% options.each do |opt| %>
+    <div class="rp-pill<%= ' active' if selected.include?(opt[:value].to_s) %>" data-pill-value="<%= opt[:value] %>">
+      <input type="checkbox" name="config[<%= field.name %>][]" value="<%= opt[:value] %>"
+             <%= "checked" if selected.include?(opt[:value].to_s) %>
+             style="display:none;">
+      <span><%= opt[:label] %></span>
+    </div>
+  <% end %>
+</div>

@@ -6,6 +6,7 @@
 
   <form data-action="submit->canvas-main#saveProperties" data-resource-id="<%= resource.id %>">
 
+    <% environment = resource.local_environment %>
     <% user_fields = resource.module_definition.module_fields.user_config.ordered %>
     <% if user_fields.any? %>
       <div class="rp-section">Configuration</div>
@@ -14,7 +15,13 @@
           <label class="rp-field-label">
             <%= field.label %> <% if field.required? %><span class="req">*</span><% end %>
           </label>
-          <%= render partial: "environments/fields/#{field_partial(field)}", locals: { field: field, value: resource.config&.dig(field.name) || field.default_value } %>
+          <% field_value = resource.config&.dig(field.name) || field.default_value %>
+          <% if field.data_source.present? %>
+            <% options = resolve_field_options(field, environment) %>
+            <%= render partial: "environments/fields/#{field_partial(field)}", locals: { field: field, value: field_value, options: options } %>
+          <% else %>
+            <%= render partial: "environments/fields/#{field_partial(field)}", locals: { field: field, value: field_value } %>
+          <% end %>
           <% if resource.validation_errors&.dig(field.name) %>
             <span class="field-error"><%= resource.validation_errors[field.name].join(", ") %></span>
           <% end %>

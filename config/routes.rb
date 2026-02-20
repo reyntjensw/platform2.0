@@ -76,6 +76,7 @@ Rails.application.routes.draw do
       resources :resources, only: [:index, :create, :update, :destroy] do
         member do
           get :properties
+          post :upgrade
         end
       end
       resources :connections, only: [:create, :destroy]

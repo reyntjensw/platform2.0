@@ -131,29 +131,13 @@ class JobStatusPollerService
   def handle_layer_transition(layer, new_status)
     case new_status
     when "completed"
-      # Check if there's a next layer to advance to, or finalize
-      next_layer = @deployment.deployment_layers
-                              .where("index > ?", layer.index)
-                              .ordered.first
-
-      if next_layer
-        @deployment.update!(current_layer: next_layer.index)
-      else
-        finalize_deployment
-      end
+      # Dispatch the next layer or finalize the deployment
+      deploy_service = DeployService.new(@environment, nil)
+      action = @deployment.status == "applying" ? "deploy" : "plan"
+      deploy_service.on_layer_completed(@deployment, layer, action: action)
     when "failed"
-      # Skip subsequent layers and mark deployment as failed
-      @deployment.deployment_layers
-                 .where("index > ?", layer.index)
-                 .update_all(status: "skipped")
-
-      @deployment.update!(
-        status: "failed",
-        completed_at: Time.current,
-        result: (@deployment.result || {}).merge(
-          "error" => "Layer #{layer.index} failed: #{layer.error_details}"
-        )
-      )
+      deploy_service = DeployService.new(@environment, nil)
+      deploy_service.on_layer_failed(@deployment, layer)
     end
   end
 

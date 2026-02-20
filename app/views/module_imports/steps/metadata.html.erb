@@ -28,7 +28,8 @@
       <div class="form-group">
         <label class="form-label" for="description">Description</label>
         <textarea name="description" id="description" class="f50-input" rows="2"
-                  placeholder="Managed Kafka streaming with MSK"><%= @draft.metadata["description"] %></textarea>
+                  placeholder="Managed Kafka streaming with MSK"
+                  data-action="input->module-preview#update" data-module-preview-target="description"><%= @draft.metadata["description"] %></textarea>
       </div>
 
       <div class="form-row">

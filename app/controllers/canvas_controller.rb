@@ -15,6 +15,7 @@ class CanvasController < AuthenticatedController
     @sibling_envs = @project.local_environments.order(:env_type)
 
     @catalog_modules = ModuleDefinition.for_environment(@environment)
+                         .visible_to(@customer)
                          .includes(:module_fields, :module_renderers)
                          .order(:category, :display_name)
 
@@ -42,6 +43,9 @@ class CanvasController < AuthenticatedController
       position_y: r.position_y || 0,
       validation_errors: r.validation_errors,
       application_group_id: r.application_group_id,
+      upgrade_available: r.upgrade_available?,
+      upgrade_report: r.upgrade_report,
+      renderer_ref: r.renderer_ref,
       module_definition: {
         id: r.module_definition.id,
         name: r.module_definition.name,
@@ -50,7 +54,8 @@ class CanvasController < AuthenticatedController
         category: r.module_definition.category,
         cloud_provider: r.module_definition.cloud_provider,
         deployable: r.module_definition.deployable?,
-        allowed_zones: r.module_definition.allowed_zones
+        allowed_zones: r.module_definition.allowed_zones,
+        version: r.module_definition.version
       },
       connections: {
         outgoing: r.outgoing_connections.map { |c| { id: c.id, to_resource_id: c.to_resource_id, connection_type: c.connection_type } },

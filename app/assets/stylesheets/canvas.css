@@ -689,12 +689,22 @@
     inset: 0;
     z-index: 4;
     pointer-events: none;
+    overflow: visible;
+    width: 100%;
+    height: 100%;
 }
 
 .conn-line {
-    stroke: var(--border-light);
-    stroke-width: 1.5;
+    stroke: var(--text-muted);
+    stroke-width: 2;
     fill: none;
+    opacity: 0.7;
+}
+
+.conn-line.active {
+    stroke: var(--green);
+    stroke-width: 2.5;
+    opacity: 1;
 }
 
 .ghost-line {
@@ -1246,6 +1256,40 @@
     border-radius: 5px;
     color: var(--text-primary);
     font-family: 'DM Sans', sans-serif;
+}
+
+/* Dynamic multi-select pills */
+.rp-multi-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.rp-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.rp-pill:hover {
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+.rp-pill.active {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: var(--blue);
+    color: var(--blue);
 }
 
 .rp-number {

@@ -36,8 +36,22 @@ export default function CanvasArea({
       const offset = Math.abs(x2 - x1) * 0.4
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path")
       path.setAttribute("d", `M ${x1} ${y1} C ${x1 + offset} ${y1}, ${x2 - offset} ${y2}, ${x2} ${y2}`)
-      path.setAttribute("class", "conn-line")
+      const isActive = selectedId && (c.from_resource_id === selectedId || c.to_resource_id === selectedId)
+      path.setAttribute("class", `conn-line${isActive ? " active" : ""}`)
       svg.appendChild(path)
+
+      // Draw arrowhead at the target end
+      const angle = Math.atan2(y2 - (y2), x2 - (x2 - offset))
+      const arrowLen = 8
+      const ax1 = x2 - arrowLen * Math.cos(angle - 0.4)
+      const ay1 = y2 - arrowLen * Math.sin(angle - 0.4)
+      const ax2 = x2 - arrowLen * Math.cos(angle + 0.4)
+      const ay2 = y2 - arrowLen * Math.sin(angle + 0.4)
+      const arrow = document.createElementNS("http://www.w3.org/2000/svg", "polygon")
+      arrow.setAttribute("points", `${x2},${y2} ${ax1},${ay1} ${ax2},${ay2}`)
+      arrow.setAttribute("fill", isActive ? "var(--green)" : "var(--text-muted)")
+      arrow.setAttribute("opacity", isActive ? "1" : "0.7")
+      svg.appendChild(arrow)
     })
   }, [connections, resources, selectedId])
 
@@ -107,8 +121,20 @@ export default function CanvasArea({
           const off = Math.abs(x2 - x1) * 0.4
           const path = document.createElementNS("http://www.w3.org/2000/svg", "path")
           path.setAttribute("d", `M ${x1} ${y1} C ${x1 + off} ${y1}, ${x2 - off} ${y2}, ${x2} ${y2}`)
-          path.setAttribute("class", "conn-line")
+          const isActive = selectedId && (c.from_resource_id === selectedId || c.to_resource_id === selectedId)
+          path.setAttribute("class", `conn-line${isActive ? " active" : ""}`)
           svgRef.current.appendChild(path)
+          const angle = Math.atan2(y2 - (y2), x2 - (x2 - off))
+          const arrowLen = 8
+          const ax1 = x2 - arrowLen * Math.cos(angle - 0.4)
+          const ay1 = y2 - arrowLen * Math.sin(angle - 0.4)
+          const ax2 = x2 - arrowLen * Math.cos(angle + 0.4)
+          const ay2 = y2 - arrowLen * Math.sin(angle + 0.4)
+          const arrow = document.createElementNS("http://www.w3.org/2000/svg", "polygon")
+          arrow.setAttribute("points", `${x2},${y2} ${ax1},${ay1} ${ax2},${ay2}`)
+          arrow.setAttribute("fill", isActive ? "var(--green)" : "var(--text-muted)")
+          arrow.setAttribute("opacity", isActive ? "1" : "0.7")
+          svgRef.current.appendChild(arrow)
         })
       }
     }
@@ -236,7 +262,7 @@ export default function CanvasArea({
             {env.name}
           </a>
         ))}
-        <span className="env-tab" style={{ color: "var(--text-muted)", cursor: "default" }}>+</span>
+
       </div>
 
       {/* Connect indicator */}
@@ -302,7 +328,7 @@ export default function CanvasArea({
           })}
 
           {/* SVG connections */}
-          <svg className="conn-svg" ref={svgRef} />
+          <svg className="conn-svg" ref={svgRef} style={{ width: "100%", height: "100%" }} />
 
           {/* Resource blocks */}
           <div ref={blocksRef}>
@@ -326,6 +352,7 @@ export default function CanvasArea({
                     <div className="rb-t">{r.module_definition.display_name}</div>
                   </div>
                   {errCount > 0 && <div className="rb-badge" style={{ background: "var(--accent-red)" }}>!</div>}
+                  {r.upgrade_available && <div className="rb-badge rb-upgrade-badge" title="Upgrade available" style={{ background: "var(--orange)", right: errCount > 0 ? 22 : 4 }}>↑</div>}
                 </div>
               )
             })}

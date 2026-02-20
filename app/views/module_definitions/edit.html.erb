@@ -64,11 +64,29 @@
         <div class="mod-field-row">
           <div class="mod-field">
             <%= f.label :ownership, "Ownership", class: "mod-field__label" %>
-            <%= f.select :ownership, ModuleDefinition::OWNERSHIPS.map { |o| [o.capitalize, o] }, {}, class: "mod-select" %>
+            <%
+              ownership_options = if @user_role == "platform_admin"
+                ModuleDefinition::OWNERSHIPS
+              elsif @user_role == "reseller_admin"
+                %w[reseller customer]
+              else
+                %w[customer]
+              end
+            %>
+            <%= f.select :ownership, ownership_options.map { |o| [o.capitalize, o] }, {}, class: "mod-select" %>
           </div>
           <div class="mod-field">
             <%= f.label :visibility, "Visibility", class: "mod-field__label" %>
-            <%= f.select :visibility, ModuleDefinition::VISIBILITIES.map { |v| [v.capitalize, v] }, {}, class: "mod-select" %>
+            <%
+              visibility_options = if @user_role == "platform_admin"
+                ModuleDefinition::VISIBILITIES
+              elsif @user_role == "reseller_admin"
+                %w[reseller customer]
+              else
+                %w[customer]
+              end
+            %>
+            <%= f.select :visibility, visibility_options.map { |v| [v.capitalize, v] }, {}, class: "mod-select" %>
           </div>
         </div>
         <div class="mod-field">
@@ -81,6 +99,21 @@
               </label>
             <% end %>
             <%= hidden_field_tag "module_definition[allowed_zones][]", "" %>
+          </div>
+        </div>
+        <div class="mod-field">
+          <span class="mod-field__label">Provider Dependencies</span>
+          <p style="font-size:10px;color:var(--text-muted);margin:2px 0 6px">
+            Modules needing kubernetes/helm/kubectl will be deployed in a separate layer after base infrastructure.
+          </p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:2px">
+            <% ModuleDefinition::VALID_PROVIDERS.each do |prov| %>
+              <label class="checkbox-label">
+                <%= check_box_tag "module_definition[provider_dependencies][]", prov, @module_definition.provider_dependencies&.include?(prov) %>
+                <%= prov.capitalize %>
+              </label>
+            <% end %>
+            <%= hidden_field_tag "module_definition[provider_dependencies][]", "" %>
           </div>
         </div>
         <div class="mod-field">
@@ -151,6 +184,33 @@
             <div class="mod-field">
               <%= ff.label :validation, "Validation (JSON)", class: "mod-field__label" %>
               <%= ff.text_field :validation, value: ff.object.validation.present? ? ff.object.validation.to_json : "", class: "mod-input mod-input--mono mod-input--sm" %>
+            </div>
+            <div class="mod-field">
+              <%= ff.label :data_source, "Data Source", class: "mod-field__label" %>
+              <%= ff.select :data_source, [["None (static)", ""]] + DataSourceResolver.registry.keys.sort.map { |ds| [ds.humanize, ds] }, { selected: ff.object.data_source }, class: "mod-select mod-select--sm" %>
+            </div>
+            <div class="dep-config-fields" style="<%= ff.object.classification == 'dependency' ? '' : 'display:none' %>">
+              <div class="mod-field-row">
+                <div class="mod-field">
+                  <label class="mod-field__label">Source Module</label>
+                  <% dep_cfg = ff.object.dependency_config || {} %>
+                  <select name="module_definition[module_fields_attributes][<%= ff.index %>][dependency_config_source_module]"
+                          class="mod-select mod-select--sm">
+                    <option value="">— Any connected module —</option>
+                    <% ModuleDefinition.live.order(:display_name).each do |m| %>
+                      <option value="<%= m.name %>" <%= "selected" if (dep_cfg["source_module"] || dep_cfg["dependency_module"]) == m.name %>><%= m.display_name %> (<%= m.name %>)</option>
+                    <% end %>
+                  </select>
+                </div>
+                <div class="mod-field">
+                  <label class="mod-field__label">Source Output</label>
+                  <input type="text"
+                         name="module_definition[module_fields_attributes][<%= ff.index %>][dependency_config_source_output]"
+                         value="<%= dep_cfg["source_output"] || dep_cfg["dependency_output"] %>"
+                         class="mod-input mod-input--mono mod-input--sm"
+                         placeholder="e.g. vpc_id">
+                </div>
+              </div>
             </div>
           </div>
         <% end %>
@@ -347,4 +407,17 @@
     '</div>';
     btn.insertAdjacentHTML('beforebegin', html);
   }
+
+  // Toggle dependency config fields when classification changes
+  document.addEventListener('change', function(e) {
+    var select = e.target;
+    if (select.name && select.name.indexOf('[classification]') !== -1) {
+      var row = select.closest('.nested-row');
+      if (!row) return;
+      var depFields = row.querySelector('.dep-config-fields');
+      if (depFields) {
+        depFields.style.display = select.value === 'dependency' ? '' : 'none';
+      }
+    }
+  });
 </script>

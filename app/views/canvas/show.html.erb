@@ -20,6 +20,7 @@
     customer: { name: @customer.name },
     siblingEnvs: @sibling_envs.map { |e| { id: e.id, name: e.name, env_type: e.env_type } },
     currentUser: current_user&.name&.split(' ')&.map(&:first)&.join || 'U',
+    userRole: current_user&.roles&.first || 'customer_viewer',
     canManage: can_manage_resource?,
     canvasPath: canvas_path('__ID__'),
     rootPath: root_path

@@ -32,23 +32,25 @@
     </div>
   </div>
   <div class="header-actions" style="flex-wrap:wrap;align-items:center;gap:8px;">
-    <%= link_to "Edit", edit_module_path(@module_definition), class: "btn btn-ghost btn-sm" %>
+    <% if @can_edit %>
+      <%= link_to "Edit", edit_module_path(@module_definition), class: "btn btn-ghost btn-sm" %>
+    <% end %>
     <%= link_to "Updates", module_updates_path(@module_definition), class: "btn btn-ghost btn-sm" %>
-    <% if @module_definition.deployable? %>
+    <% if @can_edit && @module_definition.deployable? %>
       <%= button_to "Re-scan", rescan_module_path(@module_definition), method: :post, class: "btn btn-ghost btn-sm", form: { style: "display:inline;" } %>
     <% end %>
-    <% if @module_definition.status != "deprecated" %>
+    <% if @can_edit && @module_definition.status != "deprecated" %>
       <%= button_to "Deprecate", deprecate_module_path(@module_definition), method: :post,
           class: "btn btn-ghost btn-sm", style: "color:var(--orange);",
           form: { style: "display:inline;" },
           data: { turbo_confirm: "Deprecate #{@module_definition.display_name}? This will show a warning on the canvas and block new instances." } %>
     <% end %>
-    <% if @usage_count == 0 %>
+    <% if @can_edit && @usage_count == 0 %>
       <%= button_to "Delete", module_path(@module_definition), method: :delete,
           class: "btn btn-ghost btn-sm", style: "color:var(--red);",
           form: { style: "display:inline;" },
           data: { turbo_confirm: "Permanently delete #{@module_definition.display_name}?" } %>
-    <% else %>
+    <% elsif @usage_count > 0 %>
       <span style="font-size:11px;color:var(--text-muted);">Used by <%= @usage_count %> resource(s)</span>
     <% end %>
   </div>

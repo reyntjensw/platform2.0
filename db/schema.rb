@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_19_200003) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_20_200001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -54,10 +54,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_19_200003) do
     t.string "cloud_provider", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "reseller_id"
     t.index ["cloud_provider"], name: "index_business_rules_on_cloud_provider"
     t.index ["customer_id"], name: "index_business_rules_on_customer_id"
     t.index ["enabled"], name: "index_business_rules_on_enabled"
     t.index ["name", "scope_type"], name: "index_business_rules_on_name_and_scope_type", unique: true
+    t.index ["reseller_id"], name: "index_business_rules_on_reseller_id"
     t.index ["scope_type"], name: "index_business_rules_on_scope_type"
   end
 
@@ -307,6 +309,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_19_200003) do
     t.string "platform_source"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "data_source"
     t.index ["classification"], name: "index_module_fields_on_classification"
     t.index ["module_definition_id", "name"], name: "index_module_fields_on_module_definition_id_and_name", unique: true
     t.index ["module_definition_id"], name: "index_module_fields_on_module_definition_id"

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ModuleUpdatesController < AuthenticatedController
-  before_action :require_platform_admin
+  before_action :require_platform_admin, only: [:check_updates, :upgrade_all]
+  before_action :require_admin_role, only: [:index, :upgrade_resource]
   # GET /modules/:module_id/updates
   def index
     @module_definition = ModuleDefinition.find(params[:module_id])
@@ -115,5 +116,12 @@ class ModuleUpdatesController < AuthenticatedController
   def redirect_with_alert(message)
     flash[:alert] = message
     redirect_to module_path(params[:module_id]), only_path: true
+  end
+
+  def require_admin_role
+    return if current_user&.platform_admin?
+    return if current_user&.reseller_admin?
+    return if current_user&.customer_admin?
+    raise Authorization::NotAuthorizedError, "You do not have permission to manage module updates"
   end
 end

@@ -152,7 +152,28 @@ class IRBuilder
     vars = {}
     renderer.field_mappings.each do |mapping|
       value = resolve_field_value(resource, mapping)
-      vars[mapping.renderer_variable] = value unless value.nil?
+      next if value.nil?
+
+      field = resource.module_definition.module_fields.find_by(name: mapping.platform_field)
+
+      if field
+        case field.field_type
+        when "list"
+          # Coerce string values to arrays for list-type fields
+          if value == "" || (value.is_a?(String) && value.strip.empty?)
+            value = []
+          elsif value.is_a?(String)
+            # Single string value → wrap in array; comma-separated → split
+            value = value.include?(",") ? value.split(",").map(&:strip) : [value]
+          end
+        when "object"
+          if value == "" || (value.is_a?(String) && value.strip.empty?)
+            value = {}
+          end
+        end
+      end
+
+      vars[mapping.renderer_variable] = value
     end
     vars
   end

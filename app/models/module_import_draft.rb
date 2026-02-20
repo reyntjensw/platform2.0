@@ -28,7 +28,7 @@ class ModuleImportDraft < ApplicationRecord
   end
 
   def needs_auth?
-    import_method == "git_url" && source_url.present? && !public_repo?
+    import_method == "git_url" && source_url.present? && !public_repo? && !ssh_with_platform_key?
   end
 
   def public_repo?
@@ -36,6 +36,16 @@ class ModuleImportDraft < ApplicationRecord
     return true if import_method != "git_url"
     # If we already verified without credentials, it's public
     scan_result&.dig("public") == true
+  end
+
+  # Returns true when the source URL is an SSH URL pointing to a
+  # cloudsisters repo — the pipeline runner has the deploy key bundled.
+  def ssh_with_platform_key?
+    ssh_url? && source_url&.start_with?("git@gitlab.com:cloudsisters")
+  end
+
+  def ssh_url?
+    source_url&.match?(/\Agit@/)
   end
 
   def variables

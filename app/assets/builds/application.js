@@ -31513,8 +31513,20 @@ function CanvasArea({
       const offset = Math.abs(x2 - x1) * 0.4;
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", `M ${x1} ${y1} C ${x1 + offset} ${y1}, ${x2 - offset} ${y2}, ${x2} ${y2}`);
-      path.setAttribute("class", "conn-line");
+      const isActive = selectedId && (c.from_resource_id === selectedId || c.to_resource_id === selectedId);
+      path.setAttribute("class", `conn-line${isActive ? " active" : ""}`);
       svg2.appendChild(path);
+      const angle = Math.atan2(y2 - y2, x2 - (x2 - offset));
+      const arrowLen = 8;
+      const ax1 = x2 - arrowLen * Math.cos(angle - 0.4);
+      const ay1 = y2 - arrowLen * Math.sin(angle - 0.4);
+      const ax2 = x2 - arrowLen * Math.cos(angle + 0.4);
+      const ay2 = y2 - arrowLen * Math.sin(angle + 0.4);
+      const arrow = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      arrow.setAttribute("points", `${x2},${y2} ${ax1},${ay1} ${ax2},${ay2}`);
+      arrow.setAttribute("fill", isActive ? "var(--green)" : "var(--text-muted)");
+      arrow.setAttribute("opacity", isActive ? "1" : "0.7");
+      svg2.appendChild(arrow);
     });
   }, [connections, resources, selectedId]);
   const onPanStart = (0, import_react2.useCallback)((e) => {
@@ -31582,8 +31594,20 @@ function CanvasArea({
           const off = Math.abs(x2 - x1) * 0.4;
           const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
           path.setAttribute("d", `M ${x1} ${y1} C ${x1 + off} ${y1}, ${x2 - off} ${y2}, ${x2} ${y2}`);
-          path.setAttribute("class", "conn-line");
+          const isActive = selectedId && (c.from_resource_id === selectedId || c.to_resource_id === selectedId);
+          path.setAttribute("class", `conn-line${isActive ? " active" : ""}`);
           svgRef.current.appendChild(path);
+          const angle = Math.atan2(y2 - y2, x2 - (x2 - off));
+          const arrowLen = 8;
+          const ax1 = x2 - arrowLen * Math.cos(angle - 0.4);
+          const ay1 = y2 - arrowLen * Math.sin(angle - 0.4);
+          const ax2 = x2 - arrowLen * Math.cos(angle + 0.4);
+          const ay2 = y2 - arrowLen * Math.sin(angle + 0.4);
+          const arrow = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+          arrow.setAttribute("points", `${x2},${y2} ${ax1},${ay1} ${ax2},${ay2}`);
+          arrow.setAttribute("fill", isActive ? "var(--green)" : "var(--text-muted)");
+          arrow.setAttribute("opacity", isActive ? "1" : "0.7");
+          svgRef.current.appendChild(arrow);
         });
       }
     };
@@ -31691,21 +31715,18 @@ function CanvasArea({
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { className: "tool-btn", title: "Fit all", onClick: fitAll, children: "\u25A2" }),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { className: "tool-btn", title: "Search", onClick: onOpenCmd, children: "\u21A9" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "env-tabs-bar", children: [
-          siblingEnvs.map((env) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-            "a",
-            {
-              href: canvasPath.replace("__ID__", env.id),
-              className: `env-tab env-${env.env_type}${env.id === environment.id ? " active" : ""}`,
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "env-dot", style: { background: dotColor[env.env_type] || "var(--text-muted)" } }),
-                env.name
-              ]
-            },
-            env.id
-          )),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "env-tab", style: { color: "var(--text-muted)", cursor: "default" }, children: "+" })
-        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "env-tabs-bar", children: siblingEnvs.map((env) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
+          "a",
+          {
+            href: canvasPath.replace("__ID__", env.id),
+            className: `env-tab env-${env.env_type}${env.id === environment.id ? " active" : ""}`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "env-dot", style: { background: dotColor[env.env_type] || "var(--text-muted)" } }),
+              env.name
+            ]
+          },
+          env.id
+        )) }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: `connect-indicator${connectMode ? " active" : ""}`, children: [
           "\u{1F517} Connect mode \u2014 click a target resource",
           /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { className: "connect-cancel-btn", onClick: cancelConnect, children: "Cancel" })
@@ -31753,7 +31774,7 @@ function CanvasArea({
                       padding: "0 4px"
                     }, children: g.name }) }, g.id);
                   }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("svg", { className: "conn-svg", ref: svgRef }),
+                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("svg", { className: "conn-svg", ref: svgRef, style: { width: "100%", height: "100%" } }),
                   /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { ref: blocksRef, children: resources.map((r) => {
                     const cat = catFor(r.module_definition.category);
                     const errCount = (r.validation_errors || []).length;
@@ -31771,7 +31792,8 @@ function CanvasArea({
                             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rb-n", children: r.name }),
                             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rb-t", children: r.module_definition.display_name })
                           ] }),
-                          errCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rb-badge", style: { background: "var(--accent-red)" }, children: "!" })
+                          errCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rb-badge", style: { background: "var(--accent-red)" }, children: "!" }),
+                          r.upgrade_available && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "rb-badge rb-upgrade-badge", title: "Upgrade available", style: { background: "var(--orange)", right: errCount > 0 ? 22 : 4 }, children: "\u2191" })
                         ]
                       },
                       r.id
@@ -31900,6 +31922,8 @@ function RightPanel({
   selectedId,
   propsHtml,
   resources,
+  connections,
+  deleteConnection,
   deleteResource,
   startConnect,
   apiUrl,
@@ -31909,7 +31933,8 @@ function RightPanel({
   deleteAppGroup,
   assignResourceToGroup,
   selectedGroupId,
-  readOnly
+  readOnly,
+  onResourceUpgraded
 }) {
   const scrollRef = (0, import_react3.useRef)(null);
   const propsRef = (0, import_react3.useRef)(null);
@@ -31917,6 +31942,10 @@ function RightPanel({
   const [newGroupName, setNewGroupName] = (0, import_react3.useState)("");
   const [newGroupColor, setNewGroupColor] = (0, import_react3.useState)("#58a6ff");
   const [saveFlash, setSaveFlash] = (0, import_react3.useState)(null);
+  const [upgradeModalOpen, setUpgradeModalOpen] = (0, import_react3.useState)(false);
+  const [upgradeFields, setUpgradeFields] = (0, import_react3.useState)({});
+  const [upgradeSubmitting, setUpgradeSubmitting] = (0, import_react3.useState)(false);
+  const [upgradeError, setUpgradeError] = (0, import_react3.useState)(null);
   (0, import_react3.useEffect)(() => {
     if (selectedGroupId) setActiveTab("group");
     else setActiveTab("overview");
@@ -31946,6 +31975,13 @@ function RightPanel({
       const formData = new FormData(form);
       const config2 = {};
       for (const [key, value] of formData.entries()) {
+        const arrMatch = key.match(/^config\[(.+)\]\[\]$/);
+        if (arrMatch) {
+          const fieldName = arrMatch[1];
+          if (!config2[fieldName]) config2[fieldName] = [];
+          config2[fieldName].push(value);
+          continue;
+        }
         const m = key.match(/^config\[(.+)\]$/);
         if (m) {
           let v = value;
@@ -31970,6 +32006,15 @@ function RightPanel({
       }
     };
     const handleClick = (e) => {
+      const pill = e.target.closest(".rp-pill");
+      if (pill) {
+        const cb = pill.querySelector("input[type=checkbox]");
+        if (cb) {
+          cb.checked = !cb.checked;
+          pill.classList.toggle("active", cb.checked);
+        }
+        return;
+      }
       const btn = e.target.closest("[data-action]");
       if (!btn) return;
       const action = btn.getAttribute("data-action");
@@ -31987,9 +32032,48 @@ function RightPanel({
       container.removeEventListener("click", handleClick);
     };
   }, [propsHtml, apiUrl, onPropsSaved, deleteResource, startConnect, readOnly]);
+  const selectedResource = selectedId ? resources.find((r) => r.id === selectedId) : null;
+  const handleUpgrade = async () => {
+    if (!selectedResource) return;
+    setUpgradeSubmitting(true);
+    setUpgradeError(null);
+    try {
+      const resp = await fetch(`${apiUrl}/${selectedResource.id}/upgrade`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({ new_config: upgradeFields })
+      });
+      if (resp.ok) {
+        const updated = await resp.json();
+        setUpgradeModalOpen(false);
+        setUpgradeFields({});
+        if (onResourceUpgraded) onResourceUpgraded(updated);
+        if (onPropsSaved) onPropsSaved(selectedResource.id);
+      } else {
+        const data = await resp.json();
+        setUpgradeError(data.error || "Upgrade failed");
+      }
+    } catch (e) {
+      setUpgradeError("Network error");
+    } finally {
+      setUpgradeSubmitting(false);
+    }
+  };
+  const dismissUpgrade = async () => {
+    if (!selectedResource) return;
+    await fetch(`${apiUrl}/${selectedResource.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+      body: JSON.stringify({ upgrade_available: false })
+    });
+    if (onResourceUpgraded) {
+      onResourceUpgraded({ ...selectedResource, upgrade_available: false, upgrade_report: {} });
+    }
+  };
   const selectedGroup = selectedGroupId && appGroups ? appGroups.find((g) => g.id === selectedGroupId) : null;
   const groupMembers = selectedGroup ? resources.filter((r) => r.application_group_id === selectedGroupId) : [];
   const errCount = resources.filter((r) => r.validation_errors && Object.keys(r.validation_errors).length > 0).length;
+  const upgradeCount = resources.filter((r) => r.upgrade_available).length;
   const firstTabLabel = selectedGroupId ? "Group" : "Overview";
   const firstTabId = selectedGroupId ? "group" : "overview";
   return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rpanel", children: [
@@ -32020,8 +32104,8 @@ function RightPanel({
               "errors"
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: "2" }),
-              "warnings"
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: upgradeCount > 0 ? "var(--orange)" : "var(--text-primary)", display: "block" }, children: upgradeCount }),
+              "upgrades"
             ] })
           ] })
         ] }),
@@ -32094,6 +32178,98 @@ function RightPanel({
           border: `1px solid ${saveFlash === "saved" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`
         }, children: saveFlash === "saved" ? "\u2713 Saved" : "\u2717 Save failed" }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { ref: propsRef, dangerouslySetInnerHTML: { __html: purify.sanitize(propsHtml) } }),
+        selectedResource?.upgrade_available && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: {
+          margin: "10px 0",
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "var(--orange-dim, rgba(245,158,11,0.1))",
+          border: "1px solid rgba(245,158,11,0.25)"
+        }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { fontSize: 14 }, children: "\u2191" }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--orange)" }, children: "Module upgrade available" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginBottom: 8 }, children: [
+            selectedResource.module_definition?.display_name,
+            " has a new version.",
+            selectedResource.upgrade_report?.breaking && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--red)", fontWeight: 600 }, children: " Contains breaking changes." })
+          ] }),
+          !readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "button",
+              {
+                className: "btn btn-green btn-sm",
+                onClick: () => {
+                  setUpgradeFields({});
+                  setUpgradeError(null);
+                  setUpgradeModalOpen(true);
+                },
+                style: { fontSize: 11 },
+                children: "Review & Upgrade"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "button",
+              {
+                className: "btn btn-ghost btn-sm",
+                onClick: dismissUpgrade,
+                style: { fontSize: 11 },
+                children: "Dismiss"
+              }
+            )
+          ] })
+        ] }),
+        selectedId && connections && (() => {
+          const resConns = connections.filter((c) => c.from_resource_id === selectedId || c.to_resource_id === selectedId);
+          if (resConns.length === 0) return null;
+          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rp-section", style: { marginBottom: 6 }, children: [
+              "Connections (",
+              resConns.length,
+              ")"
+            ] }),
+            resConns.map((c) => {
+              const isOutgoing = c.from_resource_id === selectedId;
+              const otherId = isOutgoing ? c.to_resource_id : c.from_resource_id;
+              const other = resources.find((r) => r.id === otherId);
+              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: {
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "5px 0",
+                fontSize: 11,
+                borderBottom: "1px solid var(--border)"
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 10, width: 14, textAlign: "center" }, children: isOutgoing ? "\u2192" : "\u2190" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: {
+                  background: "var(--bg-elevated, #1c2740)",
+                  padding: "2px 5px",
+                  borderRadius: 3,
+                  fontSize: 9,
+                  fontWeight: 700
+                }, children: other?.module_definition?.icon || "?" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: other?.name || "Unknown" }),
+                !readOnly && deleteConnection && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "button",
+                  {
+                    onClick: () => deleteConnection(c.id),
+                    style: {
+                      background: "none",
+                      border: "none",
+                      color: "var(--red)",
+                      cursor: "pointer",
+                      fontSize: 10,
+                      padding: "2px 4px",
+                      fontWeight: 600
+                    },
+                    title: "Remove connection",
+                    children: "\u2715"
+                  }
+                )
+              ] }, c.id);
+            })
+          ] });
+        })(),
         appGroups && assignResourceToGroup && !readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "rp-field-label", style: { fontSize: 10, display: "block", marginBottom: 4 }, children: "Application Group" }),
           /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
@@ -32157,7 +32333,121 @@ function RightPanel({
           ] })
         ] })
       ] })
-    ] })
+    ] }),
+    upgradeModalOpen && selectedResource && (() => {
+      const report = selectedResource.upgrade_report || {};
+      const added = report.added || [];
+      const removed = report.removed || [];
+      const changed = report.changed || [];
+      const breakingAdded = added.filter((v) => v.breaking);
+      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+        if (e.target === e.currentTarget) setUpgradeModalOpen(false);
+      }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-panel", style: { maxWidth: 520 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h3", { className: "modal-title", children: [
+            "Upgrade ",
+            selectedResource.module_definition?.display_name
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "modal-close", onClick: () => setUpgradeModalOpen(false), "aria-label": "Close", children: "\xD7" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body", style: { maxHeight: 400, overflowY: "auto" }, children: [
+          report.breaking && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: {
+            padding: "8px 12px",
+            marginBottom: 12,
+            borderRadius: 6,
+            background: "var(--red-dim, rgba(239,68,68,0.1))",
+            border: "1px solid rgba(239,68,68,0.2)",
+            fontSize: 11,
+            color: "var(--red)"
+          }, children: "\u26A0 This upgrade contains breaking changes. Review carefully." }),
+          added.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
+              "Added Variables (",
+              added.length,
+              ")"
+            ] }),
+            added.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "#56d490" }, children: [
+              "+ ",
+              v.name,
+              " ",
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: [
+                "(",
+                v.type,
+                v.default != null ? `, default: ${JSON.stringify(v.default)}` : "",
+                ")"
+              ] }),
+              v.breaking && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--red)", fontSize: 10, marginLeft: 4 }, children: "required" })
+            ] }, v.name))
+          ] }),
+          removed.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
+              "Removed Variables (",
+              removed.length,
+              ")"
+            ] }),
+            removed.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "#fc8181" }, children: [
+              "\u2715 ",
+              v.name
+            ] }, v.name))
+          ] }),
+          changed.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
+              "Changed Variables (",
+              changed.length,
+              ")"
+            ] }),
+            changed.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "var(--orange)" }, children: [
+              "~ ",
+              v.name,
+              ": ",
+              Object.entries(v.changes || {}).map(([k, c]) => `${k} ${JSON.stringify(c.from)} \u2192 ${JSON.stringify(c.to)}`).join(", ")
+            ] }, v.name))
+          ] }),
+          breakingAdded.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginTop: 16, paddingTop: 12, borderTop: "1px solid var(--border)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 8 }, children: "New Required Fields" }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginBottom: 10 }, children: "These fields are required by the new version and have no default value. Please provide values." }),
+            breakingAdded.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "form-group", style: { marginBottom: 10 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "form-label", style: { fontSize: 10 }, children: [
+                v.name,
+                " *"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "input",
+                {
+                  type: "text",
+                  className: "form-input",
+                  style: { fontSize: 12, padding: "6px 10px" },
+                  placeholder: `${v.type || "string"}`,
+                  value: upgradeFields[v.name] || "",
+                  onChange: (e) => setUpgradeFields((prev) => ({ ...prev, [v.name]: e.target.value }))
+                }
+              )
+            ] }, v.name))
+          ] }),
+          upgradeError && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: {
+            padding: "6px 10px",
+            marginTop: 8,
+            borderRadius: 6,
+            fontSize: 11,
+            background: "var(--red-dim, rgba(239,68,68,0.1))",
+            color: "var(--red)",
+            border: "1px solid rgba(239,68,68,0.2)"
+          }, children: upgradeError })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-ghost", onClick: () => setUpgradeModalOpen(false), children: "Cancel" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "button",
+            {
+              className: "btn btn-green",
+              onClick: handleUpgrade,
+              disabled: upgradeSubmitting || breakingAdded.some((v) => !upgradeFields[v.name]),
+              children: upgradeSubmitting ? "Upgrading\u2026" : "Confirm Upgrade"
+            }
+          )
+        ] })
+      ] }) });
+    })()
   ] });
 }
 
@@ -32544,8 +32834,12 @@ function ActionPicker({ selected, onChange }) {
     )) })
   ] });
 }
-function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
+function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
   const isEdit = !!rule;
+  const isPlatformAdmin = userRole === "platform_admin";
+  const isResellerAdmin = userRole === "reseller_admin";
+  const scopeOptions = isPlatformAdmin ? [{ value: "platform", label: "platform" }, { value: "reseller", label: "reseller" }, { value: "customer", label: "customer" }] : isResellerAdmin ? [{ value: "reseller", label: "reseller" }, { value: "customer", label: "customer" }] : [{ value: "customer", label: "customer" }];
+  const defaultScope = rule?.scope_type || scopeOptions[0].value;
   const initIf = isEdit && rule.conditions?.if_conditions?.length ? rule.conditions.if_conditions : [{ ...EMPTY_IF }];
   const initThen = isEdit && rule.conditions?.then_conditions?.length ? rule.conditions.then_conditions : [{ ...EMPTY_THEN }];
   const initActions = isEdit && rule.actions?.action_list?.length ? rule.actions.action_list : [];
@@ -32554,7 +32848,7 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
     description: rule?.description || "",
     severity: rule?.severity || "info",
     rule_type: rule?.rule_type || "network_isolation",
-    scope_type: rule?.scope_type || "platform",
+    scope_type: defaultScope,
     cloud_provider: rule?.cloud_provider || "",
     customer_id: rule?.customer_id || ""
   });
@@ -32657,16 +32951,29 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
             "Scope",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { name: "scope_type", value: form.scope_type, onChange: handleChange, className: "modal-input", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "platform", children: "platform" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "customer", children: "customer" })
-            ] })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("select", { name: "scope_type", value: form.scope_type, onChange: handleChange, className: "modal-input", children: scopeOptions.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: opt.value, children: opt.label }, opt.value)) })
           ] })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-label", children: [
             "Cloud Provider",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", name: "cloud_provider", value: form.cloud_provider, onChange: handleChange, className: "modal-input", placeholder: "aws, azure, multi" })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { display: "flex", gap: 16, marginTop: 6 }, children: ["aws", "azure"].map((cp) => {
+              const checked = form.cloud_provider === cp || form.cloud_provider === "multi";
+              return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 13, color: "var(--text-primary)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "checkbox", checked, onChange: () => {
+                  const other = cp === "aws" ? "azure" : "aws";
+                  const otherChecked = form.cloud_provider === other || form.cloud_provider === "multi";
+                  let next;
+                  if (checked) {
+                    next = otherChecked ? other : "";
+                  } else {
+                    next = otherChecked ? "multi" : cp;
+                  }
+                  setForm((prev) => ({ ...prev, cloud_provider: next }));
+                }, style: { accentColor: cp === "aws" ? "var(--aws)" : "var(--azure)", width: 16, height: 16 } }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `tag tag-${cp}`, children: cp.toUpperCase() })
+              ] }, cp);
+            }) })
           ] }),
           form.scope_type === "customer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
             "Customer ID",
@@ -32715,13 +33022,15 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
     ] })
   ] }) });
 }
-function BusinessRulesScreen({ rulesApiUrl }) {
+function BusinessRulesScreen({ rulesApiUrl, userRole }) {
   const [rules, setRules] = (0, import_react5.useState)([]);
   const [loading, setLoading] = (0, import_react5.useState)(true);
   const [error2, setError] = (0, import_react5.useState)(null);
   const [activeType, setActiveType] = (0, import_react5.useState)(null);
   const [showCreateModal, setShowCreateModal] = (0, import_react5.useState)(false);
   const [editingRule, setEditingRule] = (0, import_react5.useState)(null);
+  const [cloudFilter, setCloudFilter] = (0, import_react5.useState)(null);
+  const [searchQuery, setSearchQuery] = (0, import_react5.useState)("");
   (0, import_react5.useEffect)(() => {
     if (!rulesApiUrl) return;
     setLoading(true);
@@ -32739,9 +33048,17 @@ function BusinessRulesScreen({ rulesApiUrl }) {
   }, [rulesApiUrl]);
   const typeCounts = (0, import_react5.useMemo)(() => countByType(rules), [rules]);
   const filteredRules = (0, import_react5.useMemo)(() => {
-    if (!activeType) return rules;
-    return rules.filter((r) => (r.rule_type || "custom_compliance") === activeType);
-  }, [rules, activeType]);
+    let result = rules;
+    if (activeType) result = result.filter((r) => (r.rule_type || "custom_compliance") === activeType);
+    if (cloudFilter) result = result.filter((r) => r.cloud_provider === cloudFilter || r.cloud_provider === "multi");
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      result = result.filter(
+        (r) => (r.name || "").toLowerCase().includes(q) || (r.description || "").toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [rules, activeType, cloudFilter, searchQuery]);
   const activeLabel = (0, import_react5.useMemo)(() => {
     if (!activeType) return "All";
     for (const cat of CATEGORY_TREE) {
@@ -32846,8 +33163,49 @@ function BusinessRulesScreen({ rulesApiUrl }) {
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-green", onClick: () => setShowCreateModal(true), children: "+ Create Rule" })
       ] }),
-      showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: null, onSaved: handleCreated, onClose: () => setShowCreateModal(false) }),
-      editingRule && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: editingRule, onSaved: handleEdited, onClose: () => setEditingRule(null) }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center", marginBottom: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          "input",
+          {
+            type: "text",
+            className: "modal-input",
+            placeholder: "Search rules by name or description\u2026",
+            value: searchQuery,
+            onChange: (e) => setSearchQuery(e.target.value),
+            style: { flex: 1, maxWidth: 320, margin: 0, padding: "8px 12px", fontSize: 13 }
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "button",
+            {
+              className: `btn btn-sm${cloudFilter === null ? " btn-green" : " btn-ghost"}`,
+              onClick: () => setCloudFilter(null),
+              children: "All"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "button",
+            {
+              className: `btn btn-sm${cloudFilter === "aws" ? " btn-green" : " btn-ghost"}`,
+              style: cloudFilter === "aws" ? { background: "var(--aws)", borderColor: "var(--aws)" } : {},
+              onClick: () => setCloudFilter(cloudFilter === "aws" ? null : "aws"),
+              children: "\u2601\uFE0F AWS"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            "button",
+            {
+              className: `btn btn-sm${cloudFilter === "azure" ? " btn-green" : " btn-ghost"}`,
+              style: cloudFilter === "azure" ? { background: "var(--azure)", borderColor: "var(--azure)" } : {},
+              onClick: () => setCloudFilter(cloudFilter === "azure" ? null : "azure"),
+              children: "\u2601\uFE0F Azure"
+            }
+          )
+        ] })
+      ] }),
+      showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: null, onSaved: handleCreated, onClose: () => setShowCreateModal(false), userRole }),
+      editingRule && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: editingRule, onSaved: handleEdited, onClose: () => setEditingRule(null), userRole }),
       filteredRules.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { padding: 40, textAlign: "center", color: "#8b99b5" }, children: "No business rules configured for this category." }),
       filteredRules.map((rule) => {
         const sev = SEV_CONFIG[rule.severity] || SEV_CONFIG.info;
@@ -32897,7 +33255,7 @@ function BusinessRulesScreen({ rulesApiUrl }) {
             ] }) : line }, i);
           }) }),
           /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rule-meta", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: rule.scope_type === "platform" ? "All envs" : "Customer-specific" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: rule.scope_type === "platform" ? "All envs" : rule.scope_type === "reseller" ? "Reseller-specific" : "Customer-specific" }),
             /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
               "\u{1F464} ",
               rule.scope_type
@@ -34913,6 +35271,7 @@ function CanvasApp({
   customer,
   siblingEnvs,
   currentUser,
+  userRole,
   canManage,
   canvasPath,
   rootPath
@@ -35042,8 +35401,14 @@ function CanvasApp({
     }
   }, [apiUrl, selectedId, deleteConfirmId]);
   const createConnection = (0, import_react12.useCallback)(async (fromId, toId) => {
-    if (canvasLocked || !lockState.isMe) return;
-    if (connections.some((c) => c.from_resource_id === fromId && c.to_resource_id === toId)) return;
+    if (canvasLocked || !lockState.isMe) {
+      addToast("Acquire the canvas lock before connecting resources", "error");
+      return;
+    }
+    if (connections.some((c) => c.from_resource_id === fromId && c.to_resource_id === toId)) {
+      addToast("These resources are already connected", "info");
+      return;
+    }
     const resp = await fetch(connectionsApiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
@@ -35052,12 +35417,23 @@ function CanvasApp({
     if (resp.ok) {
       const conn = await resp.json();
       setConnections((prev) => [...prev, conn]);
+      addToast("Connection created", "info");
+      if (selectedId) {
+        fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } }).then((r) => r.ok ? r.text() : "").then((html2) => setPropsHtml(purify.sanitize(html2)));
+      }
+    } else {
+      const data = await resp.json().catch(() => ({}));
+      addToast(data.error || "Failed to create connection", "error");
     }
-  }, [connectionsApiUrl, connections, canvasLocked, lockState]);
+  }, [connectionsApiUrl, connections, canvasLocked, lockState, addToast]);
   const startConnect = (0, import_react12.useCallback)((id) => {
+    if (canvasLocked || !lockState.isMe) {
+      addToast("Acquire the canvas lock before connecting resources", "error");
+      return;
+    }
     setConnectMode(true);
     setConnectFromId(id || selectedId);
-  }, [selectedId]);
+  }, [selectedId, canvasLocked, lockState, addToast]);
   const completeConnect = (0, import_react12.useCallback)((toId) => {
     if (connectFromId && toId !== connectFromId) {
       createConnection(connectFromId, toId);
@@ -35069,6 +35445,25 @@ function CanvasApp({
     setConnectMode(false);
     setConnectFromId(null);
   }, []);
+  const deleteConnection = (0, import_react12.useCallback)(async (connectionId) => {
+    if (canvasLocked || !lockState.isMe) {
+      addToast("Acquire the canvas lock first", "error");
+      return;
+    }
+    const resp = await fetch(`${connectionsApiUrl}/${connectionId}`, {
+      method: "DELETE",
+      headers: { "X-CSRF-Token": csrf() }
+    });
+    if (resp.ok) {
+      setConnections((prev) => prev.filter((c) => c.id !== connectionId));
+      addToast("Connection removed", "info");
+      if (selectedId) {
+        fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } }).then((r) => r.ok ? r.text() : "").then((html2) => setPropsHtml(purify.sanitize(html2)));
+      }
+    } else {
+      addToast("Failed to remove connection", "error");
+    }
+  }, [connectionsApiUrl, canvasLocked, lockState, addToast, selectedId, apiUrl]);
   const createAppGroup = (0, import_react12.useCallback)(async (name, color2) => {
     const resp = await fetch(applicationGroupsApiUrl, {
       method: "POST",
@@ -35138,7 +35533,6 @@ function CanvasApp({
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-top-right", children: [
         /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: "/modules", className: "btn btn-ghost btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", children: "\u2726 New Environment" }),
         lockState.isMe ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: releaseLock, style: { color: "var(--accent-green)" }, children: "\u{1F513} Editing \xB7 Unlock" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
@@ -35273,6 +35667,8 @@ function CanvasApp({
             selectedId,
             propsHtml,
             resources,
+            connections,
+            deleteConnection,
             deleteResource,
             startConnect: () => startConnect(selectedId),
             apiUrl,
@@ -35284,12 +35680,15 @@ function CanvasApp({
             deleteAppGroup,
             assignResourceToGroup,
             selectedGroupId,
-            readOnly: canvasLocked || !lockState.isMe
+            readOnly: canvasLocked || !lockState.isMe,
+            onResourceUpgraded: (updated) => {
+              setResources((prev) => prev.map((r) => r.id === updated.id ? { ...r, ...updated } : r));
+            }
           }
         )
       ] })
     ] }),
-    activeScreen === "rules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BusinessRulesScreen, { rulesApiUrl: businessRulesApiUrl }),
+    activeScreen === "rules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BusinessRulesScreen, { rulesApiUrl: businessRulesApiUrl, userRole }),
     activeScreen === "promote" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       PromoteScreen,
       {

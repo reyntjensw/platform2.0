@@ -6,9 +6,13 @@ module Api
     def index
       rules = BusinessRule.enabled.for_cloud_provider(@environment.cloud_provider)
       customer = @environment.local_project&.local_customer
+      reseller = customer&.local_reseller
 
       rules = if customer
-        rules.platform_rules.or(BusinessRule.customer_rules(customer.id))
+        base = rules.platform_rules
+        base = base.or(BusinessRule.reseller_rules(reseller.id)) if reseller
+        base = base.or(BusinessRule.customer_rules(customer.id))
+        base
       else
         rules.platform_rules
       end
@@ -38,6 +42,14 @@ module Api
     def create
       rule = BusinessRule.new(business_rule_params)
       rule.cloud_provider ||= @environment.cloud_provider
+
+      # Enforce scope restrictions based on user role
+      if rule.scope_type == "platform" && !current_user&.platform_admin?
+        return render json: { error: "Only platform admins can create platform-scoped rules" }, status: :forbidden
+      end
+      if rule.scope_type == "reseller" && !(current_user&.platform_admin? || current_user&.reseller_admin?)
+        return render json: { error: "Only platform or reseller admins can create reseller-scoped rules" }, status: :forbidden
+      end
 
       if rule.save
         render json: serialize_rule(rule), status: :created
@@ -70,7 +82,8 @@ module Api
         enabled: rule.enabled,
         cloud_provider: rule.cloud_provider,
         scope_type: rule.scope_type,
-        customer_id: rule.customer_id
+        customer_id: rule.customer_id,
+        reseller_id: rule.reseller_id
       }
     end
 
@@ -78,7 +91,7 @@ module Api
       raw = params.require(:business_rule)
       permitted = raw.permit(
         :name, :description, :severity, :rule_type,
-        :scope_type, :cloud_provider, :customer_id,
+        :scope_type, :cloud_provider, :customer_id, :reseller_id,
         conditions: {},
         actions: {}
       )

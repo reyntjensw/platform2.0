@@ -13,10 +13,12 @@ DeploymentLayerStruct = Struct.new(
 class LayerPartitioner
   class CircularDependencyError < StandardError; end
 
-  # Providers that require a cluster to be deployed first
+  # Providers that require a cluster to be deployed first.
+  # Resources needing these providers MUST be in a later layer than
+  # the cluster-producing resource they depend on.
   CLUSTER_DEPENDENT_PROVIDERS = %w[kubernetes helm kubectl].freeze
 
-  # Cluster outputs referenced by dependent layers
+  # Cluster outputs referenced by dependent layers via remote state
   CLUSTER_OUTPUTS = %w[cluster_endpoint cluster_ca_certificate cluster_name].freeze
 
   # @param environment [LocalEnvironment]
@@ -24,171 +26,150 @@ class LayerPartitioner
     @env = environment
   end
 
-  # Partitions resources into ordered deployment layers based on
-  # Connection dependencies and provider requirements.
+  # Partitions resources into ordered deployment layers.
+  #
+  # Strategy: put everything in a single layer UNLESS a resource requires
+  # a provider that depends on another resource being fully deployed first
+  # (e.g., kubernetes/helm providers need an EKS cluster to exist).
+  #
+  # Same-provider dependencies (VPC → Subnet → SG → EC2) all go in one
+  # layer — Terraform handles the internal ordering via module references.
   #
   # @return [Array<DeploymentLayerStruct>] ordered layers
-  # @raise [CircularDependencyError] if cycle detected
   def partition
     resources = @env.resources.includes(:module_definition).to_a
     return [] if resources.empty?
 
-    graph = build_dependency_graph(resources)
-    sorted_ids = topological_sort(resources, graph)
-    layer_assignments = assign_layers(sorted_ids, graph)
-    layer_assignments = resolve_provider_layers(resources, layer_assignments)
-    build_layer_structs(resources, layer_assignments)
+    validate_no_cycles(resources)
+    assign_provider_layers(resources)
   end
 
   private
 
-  # Build adjacency list from Connection model (type: "dependency").
-  # Returns { resource_id => Set<dependency_resource_id> }
-  def build_dependency_graph(resources)
-    resource_ids = resources.map(&:id)
+  # Validates there are no circular dependencies among resources.
+  # Only checks for actual cycles, not linear dependency chains.
+  def validate_no_cycles(resources)
+    resource_ids = resources.map(&:id).to_set
     graph = resource_ids.each_with_object({}) { |id, h| h[id] = Set.new }
 
     Connection.where(connection_type: "dependency")
               .where(from_resource_id: resource_ids, to_resource_id: resource_ids)
               .find_each do |conn|
-      # from_resource depends on to_resource
       graph[conn.from_resource_id].add(conn.to_resource_id)
     end
 
-    graph
-  end
-
-  # Kahn's algorithm — returns topologically sorted resource IDs or raises on cycle.
-  def topological_sort(resources, graph)
-    in_degree = graph.transform_values { 0 }
-    graph.each do |_node, deps|
-      deps.each { |dep| in_degree[dep] = (in_degree[dep] || 0) + 1 }
+    # Kahn's algorithm to detect cycles
+    in_degree = {}
+    graph.each do |node, deps|
+      in_degree[node] ||= 0
+      in_degree[node] += deps.size
     end
 
-    # Start with nodes that have no incoming edges (nothing depends on them
-    # from within this set — but they themselves have no dependencies)
-    queue = graph.keys.select { |id| graph[id].empty? }
-    sorted = []
+    queue = graph.keys.select { |id| in_degree[id] == 0 }
+    visited = 0
 
     until queue.empty?
       node = queue.shift
-      sorted << node
-
-      # Find nodes that depend on this node and decrement their effective in-degree
+      visited += 1
       graph.each do |candidate, deps|
         next unless deps.include?(node)
-
         in_degree[candidate] -= 1
         queue << candidate if in_degree[candidate] == 0
       end
     end
 
-    if sorted.size != graph.size
-      remaining = graph.keys - sorted
+    if visited != graph.size
+      remaining = graph.keys.select { |id| in_degree[id] > 0 }
       raise CircularDependencyError,
             "Circular dependency detected among resources: #{remaining.join(', ')}"
     end
-
-    sorted
   end
 
-  # Assign each resource to the earliest layer where all its dependencies
-  # are in prior layers. Resources with no deps go to layer 0.
-  def assign_layers(sorted_ids, graph)
-    layer_map = {} # resource_id => layer_index
+  # Assigns resources to layers based on provider boundaries only.
+  #
+  # Layer 0: all resources that DON'T need cluster-dependent providers
+  # Layer 1: resources that need kubernetes/helm/kubectl providers
+  #
+  # Within each layer, Terraform handles dependency ordering via
+  # module.xxx references — no need for separate layers.
+  def assign_provider_layers(resources)
+    # Separate resources into those needing cluster providers and those that don't
+    base_resources = []
+    cluster_dependent_resources = []
 
-    sorted_ids.each do |id|
-      deps = graph[id]
-      if deps.empty?
-        layer_map[id] = 0
-      else
-        max_dep_layer = deps.map { |dep_id| layer_map[dep_id] || 0 }.max
-        layer_map[id] = max_dep_layer + 1
-      end
-    end
-
-    layer_map
-  end
-
-  # Resources requiring kubernetes/helm/kubectl providers must be in a layer
-  # after the layer containing the cluster-producing resource they depend on.
-  def resolve_provider_layers(resources, layer_map)
-    resource_by_id = resources.index_by(&:id)
-
-    # Find cluster-producing resources (resources whose dependents need k8s providers)
-    cluster_layer = nil
-    resources.each do |r|
-      provider_deps = r.module_definition.provider_dependencies || []
-      needs_cluster_provider = provider_deps.any? { |p| CLUSTER_DEPENDENT_PROVIDERS.include?(p) }
-      next if needs_cluster_provider
-
-      # A resource that doesn't need cluster providers but has dependents that do
-      # is potentially a cluster producer. We identify cluster producers by checking
-      # if any resource that depends on them needs cluster providers.
-      next unless cluster_layer.nil? || layer_map[r.id] < cluster_layer
-
-      has_cluster_dependent = resources.any? do |other|
-        other_deps = other.module_definition.provider_dependencies || []
-        other_deps.any? { |p| CLUSTER_DEPENDENT_PROVIDERS.include?(p) } &&
-          resource_depends_on?(other.id, r.id, layer_map, resource_by_id)
-      end
-
-      cluster_layer = layer_map[r.id] if has_cluster_dependent
-    end
-
-    return layer_map if cluster_layer.nil?
-
-    # Bump any resource needing cluster-dependent providers to at least cluster_layer + 1
     resources.each do |r|
       provider_deps = r.module_definition.provider_dependencies || []
       needs_cluster = provider_deps.any? { |p| CLUSTER_DEPENDENT_PROVIDERS.include?(p) }
-      next unless needs_cluster
 
-      min_layer = cluster_layer + 1
-      layer_map[r.id] = [layer_map[r.id], min_layer].max
+      if needs_cluster
+        cluster_dependent_resources << r
+      else
+        base_resources << r
+      end
     end
 
-    layer_map
+    # If no cluster-dependent resources, everything goes in one layer
+    if cluster_dependent_resources.empty?
+      return [build_layer_struct(0, base_resources)]
+    end
+
+    # If no base resources (unlikely but possible), cluster deps go in layer 0
+    if base_resources.empty?
+      return [build_layer_struct(0, cluster_dependent_resources)]
+    end
+
+    # Two layers: base infra first, then cluster-dependent resources
+    layers = [build_layer_struct(0, base_resources)]
+
+    # Build remote state refs so layer 1 can read cluster outputs from layer 0
+    remote_refs = build_cross_layer_refs(0, base_resources, cluster_dependent_resources)
+    layers << build_layer_struct(1, cluster_dependent_resources, remote_state_refs: remote_refs)
+
+    layers
   end
 
-  def resource_depends_on?(resource_id, dependency_id, layer_map, resource_by_id)
-    # Check if resource has a direct or indirect dependency on dependency_id
-    # For simplicity, check direct connections
-    Connection.exists?(
-      from_resource_id: resource_id,
-      to_resource_id: dependency_id,
-      connection_type: "dependency"
+  def build_layer_struct(index, resources, remote_state_refs: [])
+    account_id = @env.aws_account_id || @env.azure_subscription_id || @env.gcp_project_id
+    providers = collect_providers(resources)
+    state_key = "#{@env.cloud_provider}/#{account_id}/#{@env.env_type}/layer_#{index}.tfstate"
+
+    DeploymentLayerStruct.new(
+      index: index,
+      resources: resources,
+      required_providers: providers,
+      remote_state_refs: remote_state_refs,
+      state_key: state_key
     )
   end
 
-  def build_layer_structs(resources, layer_map)
-    resource_by_id = resources.index_by(&:id)
+  # Build remote_state_refs for cluster-dependent resources that need
+  # outputs from the base layer (e.g., cluster endpoint, CA cert).
+  def build_cross_layer_refs(base_layer_index, base_resources, dependent_resources)
     account_id = @env.aws_account_id || @env.azure_subscription_id || @env.gcp_project_id
+    base_state_key = "#{@env.cloud_provider}/#{account_id}/#{@env.env_type}/layer_#{base_layer_index}.tfstate"
 
-    # Group resources by layer
-    grouped = layer_map.group_by { |_id, layer| layer }
-                       .sort_by(&:first)
+    # Check if any dependent resource actually connects to a base resource
+    base_ids = base_resources.map(&:id).to_set
+    dep_ids = dependent_resources.map(&:id)
 
-    grouped.map do |index, id_layer_pairs|
-      layer_resources = id_layer_pairs.map { |id, _| resource_by_id[id] }
-      providers = collect_providers(layer_resources)
-      remote_refs = build_remote_state_refs(index, layer_resources, layer_map, resource_by_id)
-      state_key = "#{@env.cloud_provider}/#{account_id}/#{@env.env_type}/layer_#{index}.tfstate"
+    has_cross_ref = Connection.where(
+      connection_type: "dependency",
+      from_resource_id: dep_ids,
+      to_resource_id: base_ids.to_a
+    ).exists?
 
-      DeploymentLayerStruct.new(
-        index: index,
-        resources: layer_resources,
-        required_providers: providers,
-        remote_state_refs: remote_refs,
-        state_key: state_key
-      )
-    end
+    return [] unless has_cross_ref
+
+    [{
+      layer_index: base_layer_index,
+      state_key: base_state_key,
+      outputs: CLUSTER_OUTPUTS
+    }]
   end
 
   # Collect unique providers needed by all resources in a layer
   def collect_providers(layer_resources)
     providers = Set.new
-    # Always include the cloud provider
     providers.add(@env.cloud_provider)
 
     layer_resources.each do |r|
@@ -196,45 +177,5 @@ class LayerPartitioner
     end
 
     providers.to_a.sort
-  end
-
-  # Build remote_state_refs for layers that depend on outputs from previous layers
-  def build_remote_state_refs(current_index, _layer_resources, layer_map, resource_by_id)
-    return [] if current_index == 0
-
-    refs = {}
-    _layer_resources.each do |r|
-      provider_deps = r.module_definition.provider_dependencies || []
-      needs_cluster = provider_deps.any? { |p| CLUSTER_DEPENDENT_PROVIDERS.include?(p) }
-
-      if needs_cluster
-        # Find which previous layer has the cluster
-        layer_map.each do |dep_id, dep_layer|
-          next if dep_layer >= current_index
-
-          dep_resource = resource_by_id[dep_id]
-          next unless dep_resource
-
-          dep_providers = dep_resource.module_definition.provider_dependencies || []
-          is_cluster_producer = !dep_providers.any? { |p| CLUSTER_DEPENDENT_PROVIDERS.include?(p) }
-
-          if is_cluster_producer && Connection.exists?(
-            from_resource_id: r.id,
-            to_resource_id: dep_id,
-            connection_type: "dependency"
-          )
-            account_id = @env.aws_account_id || @env.azure_subscription_id || @env.gcp_project_id
-            refs[dep_layer] ||= {
-              layer_index: dep_layer,
-              state_key: "#{@env.cloud_provider}/#{account_id}/#{@env.env_type}/layer_#{dep_layer}.tfstate",
-              outputs: []
-            }
-            CLUSTER_OUTPUTS.each { |o| refs[dep_layer][:outputs] << o unless refs[dep_layer][:outputs].include?(o) }
-          end
-        end
-      end
-    end
-
-    refs.values
   end
 end

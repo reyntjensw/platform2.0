@@ -88,9 +88,9 @@ class GitCredentialsController < AuthenticatedController
     if current_user.platform_admin?
       nil
     elsif current_user.reseller_admin?
-      Reseller.find_by(uuid: current_user.reseller_uuid)
+      LocalReseller.find_by(id: current_user.reseller_uuid)
     elsif current_user.customer_admin?
-      Customer.find_by(uuid: current_user.customer_uuid)
+      LocalCustomer.find_by(id: current_user.customer_uuid)
     end
   end
 

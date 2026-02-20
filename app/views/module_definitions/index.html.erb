@@ -36,6 +36,13 @@
       <option value="deprecated" <%= 'selected' if params[:status] == 'deprecated' %>>Deprecated</option>
     </select>
 
+    <select class="mod-filter-select" data-action="change->filter#setOwnership" data-filter-target="ownershipSelect">
+      <option value="">All Scopes</option>
+      <option value="platform" <%= 'selected' if params[:ownership] == 'platform' %>>Platform</option>
+      <option value="reseller" <%= 'selected' if params[:ownership] == 'reseller' %>>Reseller</option>
+      <option value="customer" <%= 'selected' if params[:ownership] == 'customer' %>>Customer</option>
+    </select>
+
     <span class="mod-count-badge" data-filter-target="count"><%= @modules.size %> modules</span>
   </div>
 
@@ -43,12 +50,13 @@
     <% if @modules.any? %>
       <table class="mod-tbl mod-tbl--registry">
         <colgroup>
-          <col><col><col><col><col><col><col><col>
+          <col><col><col><col><col><col><col><col><col>
         </colgroup>
         <thead>
           <tr>
             <th>Module</th>
             <th>Cloud</th>
+            <th>Scope</th>
             <th>Category</th>
             <th>Renderers</th>
             <th>Fields</th>
@@ -75,6 +83,14 @@
               </td>
               <td>
                 <span class="mod-cloud-badge mod-cloud-<%= mod.cloud_provider %>"><%= mod.cloud_provider.upcase %></span>
+              </td>
+              <td>
+                <% scope_style = case mod.ownership
+                     when "platform" then "background:rgba(59,130,246,0.1);color:var(--green);border:1px solid rgba(59,130,246,0.2)"
+                     when "reseller" then "background:rgba(139,92,246,0.1);color:#8b5cf6;border:1px solid rgba(139,92,246,0.2)"
+                     when "customer" then "background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2)"
+                   end %>
+                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;<%= scope_style %>"><%= mod.ownership.capitalize %></span>
               </td>
               <td><span class="mod-category-text"><%= mod.category.capitalize %></span></td>
               <td>
@@ -113,7 +129,9 @@
               <td>
                 <div class="mod-actions-cell">
                   <%= link_to "View", module_path(mod), class: "mod-action-btn" %>
-                  <%= link_to "Edit", edit_module_path(mod), class: "mod-action-btn mod-action-btn-primary" %>
+                  <% if @can_edit_ids.include?(mod.id) %>
+                    <%= link_to "Edit", edit_module_path(mod), class: "mod-action-btn mod-action-btn-primary" %>
+                  <% end %>
                 </div>
               </td>
             </tr>

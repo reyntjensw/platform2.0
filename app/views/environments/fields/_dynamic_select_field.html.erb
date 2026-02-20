@@ -1,0 +1,8 @@
+<select class="rp-select" id="field_<%= field.name %>"
+        name="config[<%= field.name %>]" <%= "required" if field.required? %>
+        aria-label="<%= field.label %>">
+  <option value="">Select…</option>
+  <% options.each do |opt| %>
+    <option value="<%= opt[:value] %>" <%= "selected" if value.to_s == opt[:value].to_s %>><%= opt[:label] %></option>
+  <% end %>
+</select>

@@ -10,6 +10,7 @@ class ModuleField < ApplicationRecord
   validates :label, presence: true
   validates :field_type, presence: true, inclusion: { in: FIELD_TYPES }
   validates :classification, presence: true, inclusion: { in: CLASSIFICATIONS }
+  validate :data_source_must_be_known, if: -> { data_source.present? }
 
   scope :ordered, -> { order(:position) }
   scope :user_config, -> { where(classification: "user_config") }
@@ -30,5 +31,17 @@ class ModuleField < ApplicationRecord
     end
   rescue JSON::ParserError
     super(val)
+  end
+
+  def dynamic_options?
+    data_source.present?
+  end
+
+  private
+
+  def data_source_must_be_known
+    return if DataSourceResolver.resolvable?(data_source)
+
+    errors.add(:data_source, "unknown data source '#{data_source}'")
   end
 end

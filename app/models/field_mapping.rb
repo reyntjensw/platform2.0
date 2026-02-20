@@ -9,5 +9,5 @@ class FieldMapping < ApplicationRecord
   validates :platform_field, presence: true, uniqueness: { scope: :module_renderer_id }
   validates :renderer_variable, presence: true
   validates :mapping_type, presence: true, inclusion: { in: MAPPING_TYPES }
-  validates :transform, inclusion: { in: TRANSFORMS }, allow_nil: true
+  validates :transform, inclusion: { in: TRANSFORMS }, allow_blank: true
 end

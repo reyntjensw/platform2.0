@@ -14,9 +14,7 @@
       <%# Import method selector %>
       <div class="import-methods">
         <% [
-          { id: "git_url", icon: "🔗", label: "Git URL", desc: "Clone from a Git repository" },
-          { id: "registry", icon: "📦", label: "Terraform Registry", desc: "Import from registry.terraform.io" },
-          { id: "upload", icon: "📁", label: "File Upload", desc: "Upload .tf files directly" }
+          { id: "git_url", icon: "🔗", label: "Git URL", desc: "Clone from a Git repository" }
         ].each do |method| %>
           <label class="imp-method" data-action="click->import-source#selectMethod" data-import-source-method-param="<%= method[:id] %>">
             <input type="radio" name="import_method" value="<%= method[:id] %>"
@@ -33,9 +31,12 @@
       <div class="source-fields" data-import-source-target="gitFields">
         <div class="form-group">
           <label class="form-label" for="source_url">Git URL</label>
-          <input type="url" name="source_url" id="source_url" class="f50-input"
-                 placeholder="https://github.com/acme-corp/terraform-aws-kafka.git"
+          <input type="text" name="source_url" id="source_url" class="f50-input"
+                 placeholder="https://github.com/org/module.git or git@gitlab.com:org/module.git"
                  value="<%= @draft.source_url %>">
+          <p class="form-hint" style="margin-top:4px;font-size:11px;color:var(--text-muted);">
+            Supports HTTPS and SSH (git@) URLs. CloudSisters repos use the platform SSH key automatically.
+          </p>
         </div>
 
         <div class="form-row">

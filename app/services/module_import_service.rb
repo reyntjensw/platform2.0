@@ -12,14 +12,14 @@ class ModuleImportService
   def save_source(params)
     @draft.update!(
       import_method: params[:import_method] || "git_url",
-      source_url: params[:source_url],
-      source_ref: params[:source_ref],
-      source_subpath: params[:source_subpath],
+      source_url: params[:source_url]&.strip,
+      source_ref: params[:source_ref]&.strip,
+      source_subpath: params[:source_subpath]&.strip,
       engine: params[:engine] || "opentofu",
       cloud_provider: params[:cloud_provider],
-      registry_namespace: params[:registry_namespace],
-      registry_name: params[:registry_name],
-      registry_provider: params[:registry_provider],
+      registry_namespace: params[:registry_namespace]&.strip,
+      registry_name: params[:registry_name]&.strip,
+      registry_provider: params[:registry_provider]&.strip,
       current_step: 2
     )
   end
@@ -39,7 +39,7 @@ class ModuleImportService
 
   # Step 3: Trigger scan and save results
   def run_scan
-    token = @draft.git_credential&.token
+    token = @draft.ssh_url? ? nil : @draft.git_credential&.token
     scanner = ModuleScanService.new
 
     result = scanner.scan(
@@ -47,7 +47,8 @@ class ModuleImportService
       source_ref: @draft.source_ref,
       source_subpath: @draft.source_subpath,
       engine: @draft.engine,
-      git_token: token
+      git_token: token,
+      use_ssh: @draft.ssh_with_platform_key?
     )
 
     if result[:success] && result[:data]["status"] == "success"
@@ -142,7 +143,8 @@ class ModuleImportService
         position: idx,
         locked_in_envs: field_config[:locked_in_envs] || {},
         dependency_config: var["suggested_dependency"],
-        platform_source: classification == "platform_managed" ? infer_platform_source(name) : nil
+        platform_source: classification == "platform_managed" ? infer_platform_source(name) : nil,
+        data_source: field_config[:data_source].presence
       )
     end
   end
@@ -215,14 +217,14 @@ class ModuleImportService
   end
 
   def determine_ownership
-    return "platform" if @draft.owner.nil?
-    return "reseller" if @draft.owner.is_a?(Reseller)
+    return "platform" if @draft.owner_id.nil? && @draft.owner_type.nil?
+    return "reseller" if @draft.owner_type == "LocalReseller"
     "customer"
   end
 
   def determine_visibility
-    return "global" if @draft.owner.nil?
-    return "reseller" if @draft.owner.is_a?(Reseller)
+    return "global" if @draft.owner_id.nil? && @draft.owner_type.nil?
+    return "reseller" if @draft.owner_type == "LocalReseller"
     "customer"
   end
 

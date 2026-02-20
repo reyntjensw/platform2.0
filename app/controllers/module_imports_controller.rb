@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ModuleImportsController < AuthenticatedController
-  before_action :require_platform_admin
+  before_action :require_manage_modules
   before_action :set_draft, except: [:new]
 
   # GET /modules/import/new — Start a new import wizard
@@ -45,6 +45,9 @@ class ModuleImportsController < AuthenticatedController
     service.save_source(source_params)
 
     if @draft.import_method == "registry"
+      redirect_to step_module_import_path(@draft, step: "scan")
+    elsif @draft.ssh_with_platform_key?
+      # CloudSisters SSH repos use the bundled deploy key — skip auth
       redirect_to step_module_import_path(@draft, step: "scan")
     elsif @draft.needs_auth?
       redirect_to step_module_import_path(@draft, step: "auth")
@@ -157,9 +160,16 @@ class ModuleImportsController < AuthenticatedController
   end
 
   def available_credentials
-    host = URI.parse(@draft.source_url || "").host rescue nil
-    scope = GitCredential.active
-    scope = scope.where(host: host) if host.present?
+    if @draft.source_url&.match?(/\Agit@/)
+      # SSH URLs don't use token-based credentials
+      host = @draft.source_url&.match(/\Agit@([^:]+)/)&.captures&.first
+      scope = GitCredential.active.where(credential_type: "ssh_key")
+      scope = scope.where(host: host) if host.present?
+    else
+      host = URI.parse(@draft.source_url || "").host rescue nil
+      scope = GitCredential.active
+      scope = scope.where(host: host) if host.present?
+    end
     scope.order(:name)
   end
 
@@ -167,9 +177,16 @@ class ModuleImportsController < AuthenticatedController
     if current_user.platform_admin?
       nil # Platform module — no owner
     elsif current_user.reseller_admin?
-      Reseller.find_by(uuid: current_user.reseller_uuid)
+      LocalReseller.find_by(id: current_user.reseller_uuid)
     elsif current_user.customer_admin?
-      Customer.find_by(uuid: current_user.customer_uuid)
+      LocalCustomer.find_by(id: current_user.customer_uuid)
     end
+  end
+
+  def require_manage_modules
+    return if current_user&.platform_admin?
+    return if current_user&.reseller_admin?
+    return if current_user&.customer_admin?
+    raise Authorization::NotAuthorizedError, "You do not have permission to import modules"
   end
 end

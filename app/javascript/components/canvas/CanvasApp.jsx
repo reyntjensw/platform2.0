@@ -79,6 +79,7 @@ export default function CanvasApp({
   apiUrl, connectionsApiUrl, businessRulesApiUrl, applicationGroupsApiUrl,
   canvasLockApiUrl,
   environmentId, environment, project, customer, siblingEnvs, currentUser,
+  userRole,
   canManage,
   canvasPath, rootPath
 }) {
@@ -217,8 +218,8 @@ export default function CanvasApp({
   }, [apiUrl, selectedId, deleteConfirmId])
 
   const createConnection = useCallback(async (fromId, toId) => {
-    if (canvasLocked || !lockState.isMe) return
-    if (connections.some(c => c.from_resource_id === fromId && c.to_resource_id === toId)) return
+    if (canvasLocked || !lockState.isMe) { addToast("Acquire the canvas lock before connecting resources", "error"); return }
+    if (connections.some(c => c.from_resource_id === fromId && c.to_resource_id === toId)) { addToast("These resources are already connected", "info"); return }
     const resp = await fetch(connectionsApiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
@@ -227,13 +228,24 @@ export default function CanvasApp({
     if (resp.ok) {
       const conn = await resp.json()
       setConnections(prev => [...prev, conn])
+      addToast("Connection created", "info")
+      // Refresh properties panel to reflect resolved dependency fields
+      if (selectedId) {
+        fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } })
+          .then(r => r.ok ? r.text() : "")
+          .then(html => setPropsHtml(DOMPurify.sanitize(html)))
+      }
+    } else {
+      const data = await resp.json().catch(() => ({}))
+      addToast(data.error || "Failed to create connection", "error")
     }
-  }, [connectionsApiUrl, connections, canvasLocked, lockState])
+  }, [connectionsApiUrl, connections, canvasLocked, lockState, addToast])
 
   const startConnect = useCallback((id) => {
+    if (canvasLocked || !lockState.isMe) { addToast("Acquire the canvas lock before connecting resources", "error"); return }
     setConnectMode(true)
     setConnectFromId(id || selectedId)
-  }, [selectedId])
+  }, [selectedId, canvasLocked, lockState, addToast])
 
   const completeConnect = useCallback((toId) => {
     if (connectFromId && toId !== connectFromId) {
@@ -247,6 +259,26 @@ export default function CanvasApp({
     setConnectMode(false)
     setConnectFromId(null)
   }, [])
+
+  // Delete a connection
+  const deleteConnection = useCallback(async (connectionId) => {
+    if (canvasLocked || !lockState.isMe) { addToast("Acquire the canvas lock first", "error"); return }
+    const resp = await fetch(`${connectionsApiUrl}/${connectionId}`, {
+      method: "DELETE", headers: { "X-CSRF-Token": csrf() }
+    })
+    if (resp.ok) {
+      setConnections(prev => prev.filter(c => c.id !== connectionId))
+      addToast("Connection removed", "info")
+      // Refresh properties panel to reflect cleared dependency fields
+      if (selectedId) {
+        fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } })
+          .then(r => r.ok ? r.text() : "")
+          .then(html => setPropsHtml(DOMPurify.sanitize(html)))
+      }
+    } else {
+      addToast("Failed to remove connection", "error")
+    }
+  }, [connectionsApiUrl, canvasLocked, lockState, addToast, selectedId, apiUrl])
 
   // Application group CRUD
   const createAppGroup = useCallback(async (name, color) => {
@@ -314,7 +346,7 @@ export default function CanvasApp({
         </div>
         <div className="cv-top-right">
           <a href="/modules" className="btn btn-ghost btn-sm" style={{ textDecoration: "none" }}>📦 Modules</a>
-          <button className="btn btn-ghost btn-sm">✦ New Environment</button>
+
           {/* Canvas lock controls */}
           {lockState.isMe ? (
             <button className="btn btn-ghost btn-sm" onClick={releaseLock} style={{ color: "var(--accent-green)" }}>
@@ -435,6 +467,8 @@ export default function CanvasApp({
             selectedId={selectedId}
             propsHtml={propsHtml}
             resources={resources}
+            connections={connections}
+            deleteConnection={deleteConnection}
             deleteResource={deleteResource}
             startConnect={() => startConnect(selectedId)}
             apiUrl={apiUrl}
@@ -449,11 +483,14 @@ export default function CanvasApp({
             assignResourceToGroup={assignResourceToGroup}
             selectedGroupId={selectedGroupId}
             readOnly={canvasLocked || !lockState.isMe}
+            onResourceUpgraded={(updated) => {
+              setResources(prev => prev.map(r => r.id === updated.id ? { ...r, ...updated } : r))
+            }}
           />
         </div>
         </>
       )}
-      {activeScreen === "rules" && <BusinessRulesScreen rulesApiUrl={businessRulesApiUrl} />}
+      {activeScreen === "rules" && <BusinessRulesScreen rulesApiUrl={businessRulesApiUrl} userRole={userRole} />}
       {activeScreen === "promote" && (
         <PromoteScreen
           project={project}

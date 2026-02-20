@@ -185,8 +185,18 @@ function ActionPicker({ selected, onChange }) {
 }
 
 /* ── Shared RuleFormModal (create + edit) ─────────── */
-function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
+function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
   const isEdit = !!rule
+
+  // Determine available scopes based on user role
+  const isPlatformAdmin = userRole === "platform_admin"
+  const isResellerAdmin = userRole === "reseller_admin"
+  const scopeOptions = isPlatformAdmin
+    ? [{ value: "platform", label: "platform" }, { value: "reseller", label: "reseller" }, { value: "customer", label: "customer" }]
+    : isResellerAdmin
+      ? [{ value: "reseller", label: "reseller" }, { value: "customer", label: "customer" }]
+      : [{ value: "customer", label: "customer" }]
+  const defaultScope = rule?.scope_type || scopeOptions[0].value
 
   // Extract initial values from existing rule for edit mode
   const initIf = isEdit && rule.conditions?.if_conditions?.length
@@ -201,7 +211,7 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
     description: rule?.description || "",
     severity: rule?.severity || "info",
     rule_type: rule?.rule_type || "network_isolation",
-    scope_type: rule?.scope_type || "platform",
+    scope_type: defaultScope,
     cloud_provider: rule?.cloud_provider || "",
     customer_id: rule?.customer_id || "",
   })
@@ -299,14 +309,36 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
             </label>
             <label className="modal-label">Scope
               <select name="scope_type" value={form.scope_type} onChange={handleChange} className="modal-input">
-                <option value="platform">platform</option><option value="customer">customer</option>
+                {scopeOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
               </select>
             </label>
           </div>
           <div className="builder-grid">
-            <label className="modal-label">Cloud Provider
-              <input type="text" name="cloud_provider" value={form.cloud_provider} onChange={handleChange} className="modal-input" placeholder="aws, azure, multi" />
-            </label>
+            <div className="modal-label">Cloud Provider
+              <div style={{ display: "flex", gap: 16, marginTop: 6 }}>
+                {["aws", "azure"].map(cp => {
+                  const checked = form.cloud_provider === cp || form.cloud_provider === "multi"
+                  return (
+                    <label key={cp} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 13, color: "var(--text-primary)" }}>
+                      <input type="checkbox" checked={checked} onChange={() => {
+                        const other = cp === "aws" ? "azure" : "aws"
+                        const otherChecked = form.cloud_provider === other || form.cloud_provider === "multi"
+                        let next
+                        if (checked) {
+                          // unchecking this one
+                          next = otherChecked ? other : ""
+                        } else {
+                          // checking this one
+                          next = otherChecked ? "multi" : cp
+                        }
+                        setForm(prev => ({ ...prev, cloud_provider: next }))
+                      }} style={{ accentColor: cp === "aws" ? "var(--aws)" : "var(--azure)", width: 16, height: 16 }} />
+                      <span className={`tag tag-${cp}`}>{cp.toUpperCase()}</span>
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
             {form.scope_type === "customer" && (
               <label className="modal-label">Customer ID
                 <input type="number" name="customer_id" value={form.customer_id} onChange={handleChange} className="modal-input" />
@@ -357,13 +389,15 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose }) {
 }
 
 /* ── main component ──────────────────────────────── */
-export default function BusinessRulesScreen({ rulesApiUrl }) {
+export default function BusinessRulesScreen({ rulesApiUrl, userRole }) {
   const [rules, setRules] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [activeType, setActiveType] = useState(null)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingRule, setEditingRule] = useState(null)
+  const [cloudFilter, setCloudFilter] = useState(null) // null = all, "aws", "azure"
+  const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
     if (!rulesApiUrl) return
@@ -377,9 +411,18 @@ export default function BusinessRulesScreen({ rulesApiUrl }) {
   const typeCounts = useMemo(() => countByType(rules), [rules])
 
   const filteredRules = useMemo(() => {
-    if (!activeType) return rules
-    return rules.filter(r => (r.rule_type || "custom_compliance") === activeType)
-  }, [rules, activeType])
+    let result = rules
+    if (activeType) result = result.filter(r => (r.rule_type || "custom_compliance") === activeType)
+    if (cloudFilter) result = result.filter(r => r.cloud_provider === cloudFilter || r.cloud_provider === "multi")
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase()
+      result = result.filter(r =>
+        (r.name || "").toLowerCase().includes(q) ||
+        (r.description || "").toLowerCase().includes(q)
+      )
+    }
+    return result
+  }, [rules, activeType, cloudFilter, searchQuery])
 
   const activeLabel = useMemo(() => {
     if (!activeType) return "All"
@@ -473,11 +516,38 @@ export default function BusinessRulesScreen({ rulesApiUrl }) {
           <button className="btn btn-green" onClick={() => setShowCreateModal(true)}>+ Create Rule</button>
         </div>
 
+        <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 16 }}>
+          <input
+            type="text"
+            className="modal-input"
+            placeholder="Search rules by name or description…"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            style={{ flex: 1, maxWidth: 320, margin: 0, padding: "8px 12px", fontSize: 13 }}
+          />
+          <div style={{ display: "flex", gap: 6 }}>
+            <button
+              className={`btn btn-sm${cloudFilter === null ? " btn-green" : " btn-ghost"}`}
+              onClick={() => setCloudFilter(null)}
+            >All</button>
+            <button
+              className={`btn btn-sm${cloudFilter === "aws" ? " btn-green" : " btn-ghost"}`}
+              style={cloudFilter === "aws" ? { background: "var(--aws)", borderColor: "var(--aws)" } : {}}
+              onClick={() => setCloudFilter(cloudFilter === "aws" ? null : "aws")}
+            >☁️ AWS</button>
+            <button
+              className={`btn btn-sm${cloudFilter === "azure" ? " btn-green" : " btn-ghost"}`}
+              style={cloudFilter === "azure" ? { background: "var(--azure)", borderColor: "var(--azure)" } : {}}
+              onClick={() => setCloudFilter(cloudFilter === "azure" ? null : "azure")}
+            >☁️ Azure</button>
+          </div>
+        </div>
+
         {showCreateModal && (
-          <RuleFormModal rulesApiUrl={rulesApiUrl} rule={null} onSaved={handleCreated} onClose={() => setShowCreateModal(false)} />
+          <RuleFormModal rulesApiUrl={rulesApiUrl} rule={null} onSaved={handleCreated} onClose={() => setShowCreateModal(false)} userRole={userRole} />
         )}
         {editingRule && (
-          <RuleFormModal rulesApiUrl={rulesApiUrl} rule={editingRule} onSaved={handleEdited} onClose={() => setEditingRule(null)} />
+          <RuleFormModal rulesApiUrl={rulesApiUrl} rule={editingRule} onSaved={handleEdited} onClose={() => setEditingRule(null)} userRole={userRole} />
         )}
 
         {filteredRules.length === 0 && (
@@ -516,7 +586,7 @@ export default function BusinessRulesScreen({ rulesApiUrl }) {
                 </div>
               )}
               <div className="rule-meta">
-                <span>{rule.scope_type === "platform" ? "All envs" : "Customer-specific"}</span>
+                <span>{rule.scope_type === "platform" ? "All envs" : rule.scope_type === "reseller" ? "Reseller-specific" : "Customer-specific"}</span>
                 <span>👤 {rule.scope_type}</span>
                 <span>☁️ {rule.cloud_provider}</span>
               </div>

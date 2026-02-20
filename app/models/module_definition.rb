@@ -36,9 +36,24 @@ class ModuleDefinition < ApplicationRecord
     live.where(cloud_provider: [env.cloud_provider, "multi"])
   }
 
-  scope :visible_to, ->(customer) {
-    where(visibility: "global")
-      .or(where(ownership: "platform"))
+  # Returns modules visible in the canvas catalog.
+  # Platform and global-visibility modules are always visible to everyone.
+  # Modules without an owner (orphaned) are treated as platform-level.
+  # Reseller/customer-scoped modules are filtered by their polymorphic owner.
+  scope :visible_to, ->(local_customer) {
+    # Platform modules, global-visibility modules, and ownerless modules are always visible
+    base = where(ownership: "platform")
+             .or(where(visibility: "global"))
+             .or(where(owner_id: nil))
+    return base unless local_customer
+
+    # Include reseller-owned modules for the customer's reseller
+    reseller = local_customer.local_reseller
+    if reseller
+      base = base.or(where(owner_type: "LocalReseller", owner_id: reseller.id))
+    end
+    # Include customer-owned modules
+    base.or(where(owner_type: "LocalCustomer", owner_id: local_customer.id))
   }
 
   def deployable?
