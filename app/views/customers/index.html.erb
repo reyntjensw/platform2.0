@@ -1,58 +1,146 @@
 <% content_for(:title) { "Customers — Factor Fifty" } %>
 
-<div class="page-header">
-  <div>
-    <h1 class="page-title">Customers</h1>
-  </div>
-  <div class="header-actions">
-    <% if current_user.platform_admin? %>
-      <%= link_to "← Back to Resellers", resellers_path, class: "btn btn-ghost btn-sm" %>
-    <% end %>
-  </div>
-</div>
+<% reseller_name = @reseller&.name || "Reseller" %>
+<% avatar_colors = %w[#56d490 #60a5fa #fbbf24 #a78bfa #f472b6 #34d399] %>
 
-<% if @customers.any? %>
-  <div class="entity-grid">
-    <% @customers.each_with_index do |customer, i| %>
-      <% color = %w[#4fc3f7 #56d490 #f6ad55 #a78bfa #fc8181 #39d2c0][i % 6] %>
-      <% initials = customer.name.to_s.split.map(&:first).join.upcase.first(2) %>
-      <%= link_to customer_path(customer.uuid), class: "entity-card", style: "--accent-color: #{color};", data: { turbo: false } do %>
-        <div class="entity-card-top">
-          <div class="entity-card-icon" style="background: <%= color %>1a; color: <%= color %>;"><%= initials %></div>
-          <div class="entity-card-badges">
-            <% if customer.vat_number.present? %>
-              <span class="entity-badge entity-badge-region">BE</span>
-            <% end %>
-            <% if customer.inactive? %>
-              <span class="entity-badge entity-badge-inactive">Inactive</span>
-            <% else %>
-              <span class="entity-badge entity-badge-active">Active</span>
-            <% end %>
-          </div>
+<div data-controller="entity-filter">
+  <div class="page-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <h1 class="page-title">Customers</h1>
+        <div class="cust-reseller-context">
+          <span class="cust-reseller-dot"></span>
+          <%= reseller_name %>
         </div>
-        <div class="entity-card-name"><%= customer.name %></div>
-        <div class="entity-card-meta"><%= customer.vat_number.presence || "—" %></div>
-        <div class="entity-card-footer">
-          <div class="entity-card-stat">
-            <div class="entity-card-dot" style="background: #56d490;"></div>
-            Projects
-          </div>
-          <span class="entity-card-arrow">→</span>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:5px;">All customer accounts under this reseller</p>
+    </div>
+    <div class="header-actions">
+      <div class="cust-search-field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search customers…"
+               data-entity-filter-target="searchInput"
+               data-action="input->entity-filter#search">
+      </div>
+      <div class="cust-filter-group">
+        <div class="cust-filter-pill active"
+             data-entity-filter-target="pill" data-filter="all"
+             data-action="click->entity-filter#filter">All</div>
+        <div class="cust-filter-pill"
+             data-entity-filter-target="pill" data-filter="active"
+             data-action="click->entity-filter#filter">Active</div>
+        <div class="cust-filter-pill"
+             data-entity-filter-target="pill" data-filter="inactive"
+             data-action="click->entity-filter#filter">Inactive</div>
+      </div>
+      <div class="cust-view-toggle">
+        <div class="cust-view-btn active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div class="cust-view-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+      </div>
+      <% if can_create_customer? %>
+        <div class="btn btn-sm cust-btn-add">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Customer
         </div>
       <% end %>
-    <% end %>
-
-    <%# Add card %>
-    <% if can_create_customer? %>
-      <div class="entity-card entity-card-add">
-        <div class="entity-add-icon">+</div>
-        <span>New Customer</span>
-      </div>
-    <% end %>
+      <% if current_user.platform_admin? %>
+        <%= link_to resellers_path, class: "cust-back-btn" do %>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Resellers
+        <% end %>
+      <% end %>
+    </div>
   </div>
-<% else %>
-  <%= render "shared/empty_state",
-    icon: "👥",
-    title: "No customers yet",
-    description: "No customers found for this reseller." %>
-<% end %>
+
+  <% active_count = @customers.count { |c| !c.inactive? } %>
+
+  <!-- Stats bar -->
+  <div class="cust-stats-bar">
+    <div class="cust-stat-item">
+      <div class="cust-stat-label">Total Customers</div>
+      <div class="cust-stat-val"><%= @customers.size %></div>
+    </div>
+    <div class="cust-stat-divider"></div>
+    <div class="cust-stat-item">
+      <div class="cust-stat-label">Active</div>
+      <div class="cust-stat-val green"><%= active_count %></div>
+    </div>
+    <div class="cust-stat-divider"></div>
+    <div class="cust-stat-item">
+      <div class="cust-stat-label">Inactive</div>
+      <div class="cust-stat-val"><%= @customers.size - active_count %></div>
+    </div>
+    <div class="cust-stat-spacer"></div>
+    <div style="font-size:11.5px;color:var(--text-muted);font-family:var(--font-mono)"><%= reseller_name %> · <%= @customers.size %> accounts</div>
+  </div>
+
+  <% if @customers.any? %>
+    <div class="cust-grid" data-entity-filter-target="grid">
+      <% @customers.each_with_index do |customer, i| %>
+        <% color = customer.inactive? ? "#5a6a8a" : avatar_colors[i % avatar_colors.size] %>
+        <% initials = customer.name.to_s.split.map(&:first).join.upcase.first(2) %>
+        <%= link_to customer_path(customer.uuid),
+              class: "cust-card",
+              style: "animation-delay:#{(0.04 + i * 0.03).round(2)}s",
+              data: { turbo: false, name: customer.name, status: customer.inactive? ? "inactive" : "active" } do %>
+          <div class="cust-card-top">
+            <div class="cust-card-identity">
+              <div class="cust-card-avatar" style="background:<%= color %>1a;color:<%= color %>;border:1px solid <%= color %>33">
+                <%= initials %>
+              </div>
+              <div>
+                <div class="cust-card-name"><%= customer.name %></div>
+                <div class="cust-card-id"><%= customer.vat_number.presence || "No VAT number" %></div>
+              </div>
+            </div>
+            <div class="cust-card-badges">
+              <% if customer.inactive? %>
+                <span class="cust-status-badge inactive"><span class="cust-status-dot"></span>Inactive</span>
+              <% else %>
+                <span class="cust-status-badge active"><span class="cust-status-dot"></span>Active</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="cust-card-footer">
+            <span class="cust-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              Projects
+            </span>
+            <span class="cust-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/></svg>
+              Dashboard
+            </span>
+            <span class="cust-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+              Rightsizing
+            </span>
+            <div class="cust-card-menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <!-- Add customer placeholder (no link) -->
+      <% if can_create_customer? %>
+        <div class="cust-card cust-card-add">
+          <div class="cust-card-add-inner">
+            <div class="cust-card-add-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="cust-card-add-title">Add Customer</div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state",
+      icon: "👥",
+      title: "No customers yet",
+      description: "No customers found for this reseller." %>
+  <% end %>
+</div>

@@ -42,6 +42,11 @@ module Api
       tag = GlobalTag.new(tag_params)
       assign_scope(tag)
       if tag.save
+        AuditLogService.record(
+          action: "created", resource_type: "GlobalTag",
+          resource_uuid: tag.id.to_s,
+          metadata: { key: tag.key, value: tag.value, level: tag.level_label }
+        )
         render json: tag, methods: [:level_label], status: :created
       else
         render json: { errors: tag.errors.full_messages }, status: :unprocessable_entity
@@ -51,6 +56,11 @@ module Api
     # PATCH /api/global_tags/:id
     def update
       if @tag.update(tag_params)
+        AuditLogService.record(
+          action: "updated", resource_type: "GlobalTag",
+          resource_uuid: @tag.id.to_s,
+          metadata: { key: @tag.key, value: @tag.value, level: @tag.level_label }
+        )
         render json: @tag, methods: [:level_label]
       else
         render json: { errors: @tag.errors.full_messages }, status: :unprocessable_entity
@@ -59,13 +69,24 @@ module Api
 
     # DELETE /api/global_tags/:id
     def destroy
+      key = @tag.key
       @tag.destroy!
+      AuditLogService.record(
+        action: "deleted", resource_type: "GlobalTag",
+        resource_uuid: params[:id].to_s,
+        metadata: { key: key }
+      )
       head :no_content
     end
 
     # PATCH /api/global_tags/:id/toggle
     def toggle
       @tag.update!(enabled: !@tag.enabled)
+      AuditLogService.record(
+        action: "updated", resource_type: "GlobalTag",
+        resource_uuid: @tag.id.to_s,
+        metadata: { key: @tag.key, enabled: @tag.enabled, toggled: true }
+      )
       render json: @tag, methods: [:level_label]
     end
 

@@ -40,7 +40,9 @@ class DataSourceResolver
   # Returns the actual AZ names for the environment's region.
   # Static lookup — no API call needed. Covers the common regions.
   def self.resolve_aws_azs(environment:, resource: nil)
-    region = environment.region || "eu-west-1"
+    region = environment.region
+    return [] unless region
+
     count = AWS_AZ_COUNTS[region] || 3
     (("a".."z").first(count)).map do |suffix|
       az = "#{region}#{suffix}"
@@ -52,7 +54,9 @@ class DataSourceResolver
   # Useful for fields like "number of AZs" where the user picks a count
   # and the platform resolves the actual AZ names at deploy time.
   def self.resolve_aws_az_count(environment:, resource: nil)
-    region = environment.region || "eu-west-1"
+    region = environment.region
+    return [] unless region
+
     max = AWS_AZ_COUNTS[region] || 3
     (1..max).map { |n| { value: n.to_s, label: "#{n} AZ#{"s" if n > 1}" } }
   end
@@ -77,7 +81,9 @@ class DataSourceResolver
   end
 
   def self.resolve_azure_azs(environment:, resource: nil)
-    region = environment.region || "westeurope"
+    region = environment.region
+    return [] unless region
+
     count = AZURE_AZ_COUNTS[region] || 3
     (1..count).map { |n| { value: n.to_s, label: "Zone #{n}" } }
   end

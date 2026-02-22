@@ -31,45 +31,83 @@
             <th>User</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Status</th>
-            <% if can_manage_resource? %><th></th><% end %>
+            <th style="text-align:right;">Status</th>
           </tr>
         </thead>
         <tbody>
           <% @users.each_with_index do |user, i| %>
-            <% color = %w[#4fc3f7 #56d490 #f6ad55 #a78bfa #fc8181 #39d2c0][i % 6] %>
-            <% initials = user.display_name.to_s.split.map(&:first).join.upcase.first(2) %>
-            <% initials = "?" if initials.blank? %>
+            <%
+              role = user.primary_role.to_s
+              case role
+              when "platform_admin"
+                avatar_bg = "linear-gradient(135deg,#1a3a2a,#0f2a1a)"
+                avatar_color = "var(--green)"
+                avatar_border = "1px solid rgba(74,222,128,0.3)"
+                badge_bg = "var(--green-dim)"
+                badge_color = "var(--green)"
+                badge_border = "rgba(74,222,128,0.3)"
+              when "reseller_admin"
+                avatar_bg = "linear-gradient(135deg,#2a1a3a,#1a0f2a)"
+                avatar_color = "var(--purple)"
+                avatar_border = "1px solid rgba(139,92,246,0.3)"
+                badge_bg = "var(--purple-dim)"
+                badge_color = "var(--purple)"
+                badge_border = "rgba(139,92,246,0.3)"
+              when "customer_admin"
+                avatar_bg = "linear-gradient(135deg,#1a2a3a,#0f1a2a)"
+                avatar_color = "var(--blue)"
+                avatar_border = "1px solid rgba(59,130,246,0.3)"
+                badge_bg = "var(--blue-dim)"
+                badge_color = "var(--blue)"
+                badge_border = "rgba(59,130,246,0.3)"
+              when "customer_viewer"
+                avatar_bg = "linear-gradient(135deg,#2a2a1a,#1a1a0f)"
+                avatar_color = "var(--orange)"
+                avatar_border = "1px solid rgba(245,158,11,0.3)"
+                badge_bg = "var(--orange-dim)"
+                badge_color = "var(--orange)"
+                badge_border = "rgba(245,158,11,0.3)"
+              else
+                avatar_bg = "linear-gradient(135deg,#1a2235,#151d2e)"
+                avatar_color = "var(--text-secondary)"
+                avatar_border = "1px solid var(--border)"
+                badge_bg = "rgba(139,153,181,0.1)"
+                badge_color = "var(--text-secondary)"
+                badge_border = "var(--border)"
+              end
+              initials = user.display_name.to_s.split.map(&:first).join.upcase.first(2)
+              initials = "?" if initials.blank?
+            %>
             <tr class="mod-tbl__row" data-name="<%= user.display_name.to_s.downcase %> <%= user.email.to_s.downcase %>">
               <td>
                 <div class="mod-cell">
-                  <div class="mod-icon" style="background:<%= color %>1a;color:<%= color %>;"><%= initials %></div>
+                  <div class="mod-icon" style="background:<%= avatar_bg %>;color:<%= avatar_color %>;border:<%= avatar_border %>;border-radius:7px;"><%= initials %></div>
                   <span class="mod-cell-name"><%= user.display_name %></span>
                 </div>
               </td>
-              <td><span style="font-size:12px;color:var(--text-secondary);"><%= user.email %></span></td>
+              <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);"><%= user.email %></span></td>
               <td>
-                <% if user.primary_role.present? %>
-                  <span class="mod-status-badge mod-status-live"><%= user.primary_role.humanize %></span>
+                <% if role.present? %>
+                  <span class="mod-status-badge" style="background:<%= badge_bg %>;color:<%= badge_color %>;border:1px solid <%= badge_border %>;"><%= role.humanize %></span>
                 <% else %>
                   <span style="font-size:11px;color:var(--text-muted);">&#8212;</span>
                 <% end %>
               </td>
               <td>
-                <% if user.enabled %>
-                  <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Active</span>
-                <% else %>
-                  <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Disabled</span>
-                <% end %>
+                <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;">
+                  <% if can_manage_resource? %>
+                    <div class="mod-actions-cell">
+                      <button class="mod-action-btn mod-action-btn-primary" onclick="document.getElementById('edit-user-<%= user.id %>').classList.add('open'); document.body.style.overflow='hidden';">Edit</button>
+                      <button class="mod-action-btn" style="color:var(--red);" onclick="document.getElementById('delete-user-<%= user.id %>').classList.add('open'); document.body.style.overflow='hidden';">Delete</button>
+                    </div>
+                  <% end %>
+                  <% if user.enabled %>
+                    <span class="mod-status-badge mod-status-live"><span class="mod-status-dot"></span>Active</span>
+                  <% else %>
+                    <span class="mod-status-badge mod-status-deprecated"><span class="mod-status-dot"></span>Disabled</span>
+                  <% end %>
+                </div>
               </td>
-              <% if can_manage_resource? %>
-                <td>
-                  <div class="mod-actions-cell">
-                    <button class="mod-action-btn mod-action-btn-primary" onclick="document.getElementById('edit-user-<%= user.id %>').classList.add('open'); document.body.style.overflow='hidden';">Edit</button>
-                    <button class="mod-action-btn" style="color:var(--red);" onclick="document.getElementById('delete-user-<%= user.id %>').classList.add('open'); document.body.style.overflow='hidden';">Delete</button>
-                  </div>
-                </td>
-              <% end %>
             </tr>
           <% end %>
         </tbody>
@@ -84,6 +122,7 @@
 
 <% if can_manage_resource? %>
   <% @users.each do |user| %>
+    <%# Edit modal %>
     <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
       <div id="edit-user-<%= user.id %>" class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
         <div class="modal-panel" style="max-width:560px;">
@@ -135,6 +174,7 @@
         </div>
       </div>
     </div>
+    <%# Delete confirmation modal %>
     <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
       <div id="delete-user-<%= user.id %>" class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
         <div class="modal-panel" style="max-width:420px;">
@@ -156,6 +196,7 @@
     </div>
   <% end %>
 
+  <%# New user modal %>
   <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
     <div id="new-user-modal" class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
       <div class="modal-panel" style="max-width:560px;" data-controller="cascading-select" data-cascading-select-url-value="<%= customers_for_reseller_keycloak_users_path %>">

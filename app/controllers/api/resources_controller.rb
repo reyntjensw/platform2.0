@@ -40,6 +40,11 @@ module Api
       )
 
       if resource.save
+        AuditLogService.record(
+          action: "created", resource_type: "Resource",
+          resource_uuid: resource.id.to_s,
+          metadata: { name: resource.name, module: mod.display_name, zone: zone, environment: @environment.name }
+        )
         render json: serialize_resource(resource).merge(warnings: validation.warnings), status: :created
       else
         render_error(resource.errors.full_messages.join(", "))
@@ -74,6 +79,12 @@ module Api
       end
 
       if @resource.update(permitted)
+        AuditLogService.record(
+          action: "updated", resource_type: "Resource",
+          resource_uuid: @resource.id.to_s,
+          change_data: permitted,
+          metadata: { name: @resource.name, environment: @environment.name }
+        )
         render json: serialize_resource(@resource)
       else
         render_error(@resource.errors.full_messages.join(", "))
@@ -82,7 +93,14 @@ module Api
 
     # DELETE /api/environments/:environment_id/resources/:id
     def destroy
+      name = @resource.name
+      mod_name = @resource.module_definition.display_name
       @resource.destroy!
+      AuditLogService.record(
+        action: "deleted", resource_type: "Resource",
+        resource_uuid: params[:id].to_s,
+        metadata: { name: name, module: mod_name, environment: @environment.name }
+      )
       head :no_content
     end
 
@@ -140,6 +158,12 @@ module Api
         config: merged_config,
         upgrade_available: false,
         upgrade_report: {}
+      )
+
+      AuditLogService.record(
+        action: "upgraded", resource_type: "Resource",
+        resource_uuid: @resource.id.to_s,
+        metadata: { name: @resource.name, version: latest_version.version_ref, environment: @environment.name }
       )
 
       render json: serialize_resource(@resource)

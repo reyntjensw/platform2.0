@@ -43,6 +43,19 @@ class PromotionService
       execute_promotion!(promotion_record, diff_report)
     end
 
+    AuditLogService.record(
+      action: "promoted",
+      resource_type: "Environment",
+      resource_uuid: @target_env.uuid,
+      metadata: {
+        source_env: @source_env.name,
+        target_env: @target_env.name,
+        direction: "#{@source_env.env_type}→#{@target_env.env_type}",
+        promotion_id: promotion_record.id
+      },
+      user: build_audit_user
+    )
+
     promotion_record
   end
 
@@ -259,6 +272,10 @@ class PromotionService
       source_group = ApplicationGroup.find_by(id: entry[:application_group_id])
       group.color = source_group&.color || "#6366f1"
     end
+  end
+
+  def build_audit_user
+    Current.user || OpenStruct.new(uuid: @user_uuid, reseller_uuid: @source_env.try(:reseller_uuid), email: nil, name: nil)
   end
 
   def apply_diff_to_target_temporarily(diff_report, excluded_resource_ids)

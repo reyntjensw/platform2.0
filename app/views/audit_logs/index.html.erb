@@ -1,0 +1,132 @@
+<% content_for(:title) { "Audit Log — Factor Fifty" } %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Audit Log</h1>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+      Track all actions performed across the platform.
+    </p>
+  </div>
+  <div class="header-actions">
+    <span style="font-size:12px;color:var(--text-muted);">
+      Showing <%= @logs.size %> entries
+    </span>
+  </div>
+</div>
+
+<%# Filters %>
+<div class="mod-panel" style="margin-bottom:20px;">
+  <div style="padding:14px 18px;">
+    <%= form_with url: audit_logs_path, method: :get, local: true, style: "display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;" do %>
+      <div>
+        <label class="form-label" style="margin-bottom:4px;display:block;">Action</label>
+        <select name="action_filter" class="mod-input" style="width:auto;min-width:130px;">
+          <option value="">All</option>
+          <% @available_actions.each do |a| %>
+            <option value="<%= a %>" <%= "selected" if params[:action_filter] == a %>><%= a.capitalize %></option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <label class="form-label" style="margin-bottom:4px;display:block;">Resource</label>
+        <select name="resource_type" class="mod-input" style="width:auto;min-width:150px;">
+          <option value="">All</option>
+          <% @available_resource_types.each do |rt| %>
+            <option value="<%= rt %>" <%= "selected" if params[:resource_type] == rt %>><%= rt %></option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <label class="form-label" style="margin-bottom:4px;display:block;">Customer</label>
+        <select name="customer_uuid" class="mod-input" style="width:auto;min-width:180px;">
+          <option value="">All Customers</option>
+          <% @customers.each do |c| %>
+            <option value="<%= c.id %>" <%= "selected" if params[:customer_uuid] == c.id %>><%= c.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <label class="form-label" style="margin-bottom:4px;display:block;">User Search</label>
+        <input type="text" name="user_search" class="mod-input" style="width:auto;min-width:180px;"
+               placeholder="Name or email…" value="<%= params[:user_search] %>">
+      </div>
+      <button type="submit" class="btn btn-ghost btn-sm">Apply</button>
+      <% if params.values_at(:action_filter, :resource_type, :customer_uuid, :user_search).any?(&:present?) %>
+        <a href="<%= audit_logs_path %>" class="btn btn-ghost btn-sm" style="color:var(--text-muted);">Clear</a>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<%# Audit log table %>
+<div class="mod-table-wrap">
+  <% if @logs.any? %>
+    <table class="mod-tbl">
+      <thead>
+        <tr>
+          <th style="width:140px">Timestamp</th>
+          <th style="width:90px">Action</th>
+          <th>Resource</th>
+          <th>User</th>
+          <th>Customer</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @logs.each do |log| %>
+          <tr class="mod-tbl__row">
+            <td>
+              <span style="font-size:12px;font-family:var(--font-mono);color:var(--text-secondary);">
+                <%= log.created_at.strftime("%Y-%m-%d %H:%M") %>
+              </span>
+            </td>
+            <td>
+              <span class="audit-action-badge audit-action-<%= log.action %>">
+                <%= log.action.capitalize %>
+              </span>
+            </td>
+            <td>
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <span style="font-size:12px;font-weight:600;color:var(--text-primary);"><%= log.resource_type %></span>
+                <% if log.resource_uuid.present? %>
+                  <code style="font-size:10px;font-family:var(--font-mono);color:var(--text-muted);"><%= log.resource_uuid.first(8) %>…</code>
+                <% end %>
+              </div>
+            </td>
+            <td>
+              <div style="display:flex;flex-direction:column;gap:1px;">
+                <span style="font-size:12px;color:var(--text-primary);">
+                  <%= log.metadata&.dig("user_name") || "—" %>
+                </span>
+                <span style="font-size:10px;color:var(--text-muted);">
+                  <%= log.metadata&.dig("user_email") || log.user_uuid.first(8) %>
+                </span>
+              </div>
+            </td>
+            <td>
+              <span style="font-size:12px;color:var(--text-secondary);">
+                <%= log.metadata&.dig("customer_name") || "—" %>
+              </span>
+            </td>
+            <td>
+              <% extra = log.metadata&.except("user_name", "user_email", "customer_uuid", "customer_name") %>
+              <% if log.change_data.present? && log.change_data.any? %>
+                <span style="font-size:11px;color:var(--text-muted);">
+                  <%= log.change_data.keys.first(3).join(", ") %><%= "…" if log.change_data.keys.size > 3 %>
+                </span>
+              <% elsif extra.present? && extra.any? %>
+                <span style="font-size:11px;color:var(--text-muted);">
+                  <%= extra.map { |k, v| "#{k}: #{v}" }.first(2).join(", ") %>
+                </span>
+              <% else %>
+                <span style="font-size:11px;color:var(--text-muted);">—</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <%= render "shared/empty_state", icon: "📋", title: "No audit logs found", description: "Try adjusting your filters, or actions will appear here as they happen." %>
+  <% end %>
+</div>

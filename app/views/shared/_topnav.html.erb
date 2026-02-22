@@ -1,4 +1,4 @@
-<%# Top Navigation Bar — nav links on left, avatar on right %>
+<%# Top Navigation Bar — redesigned: customer switcher, SVG icons, config dropdown, search %>
 <nav class="topnav" role="navigation" aria-label="Top navigation">
   <div class="topnav-left">
     <%# Logo: ascending bars + "FACTOR FIFTY" text %>
@@ -9,31 +9,84 @@
       <div class="topnav-logo-text">Factor Fifty</div>
     <% end %>
 
+
+
     <div class="topnav-sep"></div>
 
-    <%# Inline nav links %>
+    <%# Primary nav links with SVG icons %>
     <div class="topnav-links">
       <% sidebar_app_items.each do |item| %>
         <a href="<%= item[:path] %>"
            class="topnav-link<%= ' active' if item[:active] %>"
            aria-current="<%= 'page' if item[:active] %>">
-          <span aria-hidden="true"><%= item[:icon] %></span>
+          <%= topnav_icon_for(item[:label]) %>
           <%= item[:label] %>
         </a>
       <% end %>
 
+      <%# Customer-scoped pages %>
       <% if defined?(@customer) && @customer.present? %>
-        <div class="topnav-sep"></div>
         <a href="<%= customer_dashboards_path(@customer.uuid) %>"
            class="topnav-link<%= ' active' if controller_name == 'dashboards' %>"
            aria-current="<%= 'page' if controller_name == 'dashboards' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8M12 3v4"/></svg>
           Dashboards
+        </a>
+        <a href="<%= customer_savings_path(@customer.uuid) %>"
+           class="topnav-link<%= ' active' if controller_name == 'savings' %>"
+           aria-current="<%= 'page' if controller_name == 'savings' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg>
+          Savings
+        </a>
+        <a href="<%= customer_rightsizing_path(@customer.uuid) %>"
+           class="topnav-link<%= ' active' if controller_name == 'rightsizing' %>"
+           aria-current="<%= 'page' if controller_name == 'rightsizing' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          Rightsizing
         </a>
       <% end %>
     </div>
+
+    <div class="topnav-sep"></div>
+
+    <%# Config dropdown (admin items collapsed) %>
+    <% config_items = topnav_config_items %>
+    <% if config_items.any? %>
+      <div class="topnav-config-dropdown" data-controller="dropdown">
+        <button class="topnav-link topnav-config-trigger<%= ' active' if config_items.any? { |i| i[:active] } %>"
+                type="button"
+                data-action="click->dropdown#toggle"
+                data-dropdown-target="trigger"
+                aria-haspopup="true"
+                aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
+          Config
+          <span class="topnav-badge"><%= config_items.size %></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:10px;height:10px;opacity:0.4" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="topnav-config-menu" data-dropdown-target="menu" role="menu" aria-label="Configuration">
+          <% config_items.each_with_index do |item, idx| %>
+            <% if idx == 1 %>
+              <div class="dropdown-divider"></div>
+            <% end %>
+            <a href="<%= item[:path] %>" class="dropdown-item<%= ' active' if item[:active] %>" role="menuitem">
+              <%= topnav_config_icon_for(item[:icon]) %>
+              <%= item[:label] %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
+  <%# Right side: search + avatar %>
   <div class="topnav-right">
+    <div class="topnav-search" role="button" tabindex="0" aria-label="Search (⌘K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search…</span>
+      <kbd>⌘K</kbd>
+    </div>
+
     <%# User avatar dropdown %>
     <div class="user-dropdown" data-controller="dropdown">
       <button class="avatar"
@@ -62,7 +115,9 @@
           <div class="user-dropdown-sep"></div>
         <% end %>
         <a href="#" class="user-dropdown-item" role="menuitem">Settings</a>
-        <a href="#" class="user-dropdown-item" role="menuitem">Audit Log</a>
+        <% if defined?(current_user) && current_user&.platform_admin? %>
+          <a href="<%= audit_logs_path %>" class="user-dropdown-item" role="menuitem">Audit Log</a>
+        <% end %>
         <div class="user-dropdown-sep"></div>
         <% if defined?(auth_logout_path) %>
           <%= link_to "Logout", auth_logout_path, class: "user-dropdown-item user-dropdown-item-danger", role: "menuitem" %>

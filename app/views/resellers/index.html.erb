@@ -1,42 +1,139 @@
-<% content_for(:title) { "Select Reseller — Factor Fifty" } %>
+<% content_for(:title) { "Resellers — Factor Fifty" } %>
 
-<div class="page-header">
-  <div>
-    <h1 class="page-title">Resellers</h1>
+<div data-controller="entity-filter">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Resellers</h1>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Manage reseller accounts and their customers</p>
+    </div>
+    <div class="header-actions">
+      <div class="res-search-field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search resellers…"
+               data-entity-filter-target="searchInput"
+               data-action="input->entity-filter#search">
+      </div>
+      <div class="res-filter-group">
+        <div class="res-filter-pill active"
+             data-entity-filter-target="pill" data-filter="all"
+             data-action="click->entity-filter#filter">All</div>
+        <div class="res-filter-pill"
+             data-entity-filter-target="pill" data-filter="active"
+             data-action="click->entity-filter#filter">Active</div>
+        <div class="res-filter-pill"
+             data-entity-filter-target="pill" data-filter="inactive"
+             data-action="click->entity-filter#filter">Inactive</div>
+      </div>
+      <div class="res-view-toggle">
+        <div class="res-view-btn active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div class="res-view-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+      </div>
+      <div class="btn btn-sm res-btn-add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Reseller
+      </div>
+    </div>
   </div>
-</div>
 
-<% if @resellers.any? %>
-  <div class="entity-grid">
-    <% @resellers.each_with_index do |reseller, i| %>
-      <% color = %w[#4fc3f7 #56d490 #f6ad55 #a78bfa #fc8181 #39d2c0][i % 6] %>
-      <% initials = reseller.name.to_s.split.map(&:first).join.upcase.first(2) %>
-      <%= link_to customers_path(reseller_uuid: reseller.uuid), class: "entity-card", style: "--accent-color: #{color};", data: { turbo: false } do %>
-        <div class="entity-card-top">
-          <div class="entity-card-icon" style="background: <%= color %>1a; color: <%= color %>;"><%= initials %></div>
-          <div class="entity-card-badges">
+  <% active_count = @resellers.count { |r| !r.inactive? } %>
+
+  <!-- Stats summary -->
+  <div class="res-stats-bar">
+    <div class="res-stat-item">
+      <div class="res-stat-label">Total Resellers</div>
+      <div class="res-stat-val"><%= @resellers.size %></div>
+    </div>
+    <div class="res-stat-divider"></div>
+    <div class="res-stat-item">
+      <div class="res-stat-label">Active</div>
+      <div class="res-stat-val green"><%= active_count %></div>
+    </div>
+    <div class="res-stat-divider"></div>
+    <div class="res-stat-item">
+      <div class="res-stat-label">Total Customers</div>
+      <div class="res-stat-val"><%= @resellers.size > 0 ? "—" : "0" %></div>
+    </div>
+    <div class="res-stat-spacer"></div>
+    <div style="font-size:11.5px;color:var(--text-muted);font-family:var(--font-mono)">Updated just now</div>
+  </div>
+
+  <% if @resellers.any? %>
+    <div class="entity-grid" data-entity-filter-target="grid">
+      <% @resellers.each_with_index do |reseller, i| %>
+        <% color = reseller.inactive? ? "#5a6a8a" : "#56d490" %>
+        <% initials = reseller.name.to_s.split.map(&:first).join.upcase.first(2) %>
+        <%= link_to customers_path(reseller_uuid: reseller.uuid),
+              class: "res-card",
+              style: "animation-delay:#{(0.04 + i * 0.03).round(2)}s",
+              data: { turbo: false, name: reseller.name, status: reseller.inactive? ? "inactive" : "active" } do %>
+          <div class="res-card-header">
+            <div class="res-card-identity">
+              <div class="res-card-avatar" style="background:<%= color %>1a;color:<%= color %>;border:1px solid <%= color %>4d">
+                <%= initials %>
+              </div>
+              <div>
+                <div class="res-card-name"><%= reseller.name %></div>
+                <div class="res-card-desc"><%= reseller.vat_number.presence || "Reseller account" %></div>
+              </div>
+            </div>
             <% if reseller.inactive? %>
-              <span class="entity-badge entity-badge-inactive">Inactive</span>
+              <span class="res-status-badge inactive"><span class="res-status-dot"></span>Inactive</span>
             <% else %>
-              <span class="entity-badge entity-badge-active">Active</span>
+              <span class="res-status-badge active"><span class="res-status-dot"></span>Active</span>
             <% end %>
           </div>
-        </div>
-        <div class="entity-card-name"><%= reseller.name %></div>
-        <div class="entity-card-meta"><%= reseller.vat_number.presence || "—" %></div>
-        <div class="entity-card-footer">
-          <div class="entity-card-stat">
-            <div class="entity-card-dot" style="background: #56d490;"></div>
-            Customers
+
+          <div class="res-card-metrics">
+            <div class="res-metric-cell">
+              <div class="res-metric-label">Customers</div>
+              <div class="res-metric-val">—</div>
+              <div class="res-metric-sub">accounts</div>
+            </div>
           </div>
-          <span class="entity-card-arrow">→</span>
-        </div>
+
+          <div class="res-card-footer">
+            <span class="res-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Customers
+            </span>
+            <span class="res-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/></svg>
+              Dashboard
+            </span>
+            <span class="res-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg>
+              Savings
+            </span>
+            <span class="res-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+              Rightsizing
+            </span>
+            <div class="res-card-menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+            </div>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-<% else %>
-  <%= render "shared/empty_state",
-    icon: "🏢",
-    title: "No resellers found",
-    description: "There are no resellers available." %>
-<% end %>
+
+      <!-- Add reseller placeholder (no link) -->
+      <div class="res-card res-card-add">
+        <div class="res-card-add-inner">
+          <div class="res-card-add-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="res-card-add-title">Add Reseller</div>
+          <div class="res-card-add-sub">Onboard a new reseller account</div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render "shared/empty_state",
+      icon: "🏢",
+      title: "No resellers found",
+      description: "There are no resellers available." %>
+  <% end %>
+</div>

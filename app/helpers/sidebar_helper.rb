@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SidebarHelper
-  # Primary navigation items.
+  # Primary navigation items (shown inline in topnav).
   def sidebar_app_items
     items = []
 
@@ -25,22 +25,31 @@ module SidebarHelper
         path: modules_path,
         active: controller_name.in?(%w[module_definitions module_imports module_updates])
       }
+    end
 
+    items
+  end
+
+  # Config/admin items (shown in the Config dropdown in topnav).
+  def topnav_config_items
+    items = []
+
+    if current_user&.platform_admin?
       items << {
-        icon: "🔑", label: "Git Credentials", short_label: "Cred",
+        icon: "git_credentials", label: "Git Credentials",
         path: git_credentials_path,
         active: controller_name == "git_credentials"
       }
     end
 
     items << {
-      icon: "🏷️", label: "Global Tags", short_label: "Tags",
+      icon: "global_tags", label: "Global Tags",
       path: global_tags_path,
       active: controller_name == "global_tags"
     }
 
     items << {
-      icon: "👤", label: "Users", short_label: "Users",
+      icon: "users", label: "Users",
       path: keycloak_users_path,
       active: controller_name == "keycloak_users"
     }

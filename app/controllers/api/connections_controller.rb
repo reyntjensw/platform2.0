@@ -17,6 +17,17 @@ module Api
         # Auto-resolve dependency fields on the "from" resource that match the "to" resource's module
         resolved_fields = resolve_dependency_fields(from, to)
 
+        AuditLogService.record(
+          action: "created", resource_type: "Connection",
+          resource_uuid: connection.id.to_s,
+          metadata: {
+            from_resource_id: connection.from_resource_id,
+            to_resource_id: connection.to_resource_id,
+            connection_type: connection.connection_type,
+            environment: @environment.name
+          }
+        )
+
         render json: {
           id: connection.id,
           from_resource_id: connection.from_resource_id,
@@ -39,7 +50,22 @@ module Api
       # Clear dependency fields that were resolved from this connection
       clear_dependency_fields(from_resource, connection.to_resource)
 
+      conn_id = connection.id.to_s
+      conn_meta = {
+        from_resource_id: connection.from_resource_id,
+        to_resource_id: connection.to_resource_id,
+        connection_type: connection.connection_type,
+        environment: @environment.name
+      }
+
       connection.destroy!
+
+      AuditLogService.record(
+        action: "deleted", resource_type: "Connection",
+        resource_uuid: conn_id,
+        metadata: conn_meta
+      )
+
       head :no_content
     rescue ActiveRecord::RecordNotFound
       render_error("Connection not found", status: :not_found)

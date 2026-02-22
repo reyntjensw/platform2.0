@@ -68,6 +68,12 @@ class ModuleDefinitionsController < AuthenticatedController
     end
 
     if @module_definition.update(module_definition_params)
+      AuditLogService.record(
+        action: "updated",
+        resource_type: "ModuleDefinition",
+        resource_uuid: @module_definition.id.to_s,
+        metadata: { module_name: @module_definition.display_name }
+      )
       flash[:notice] = "#{@module_definition.display_name} updated successfully"
       redirect_to module_path(@module_definition)
     else
@@ -101,6 +107,12 @@ class ModuleDefinitionsController < AuthenticatedController
     end
 
     @module_definition.destroy!
+    AuditLogService.record(
+      action: "deleted",
+      resource_type: "ModuleDefinition",
+      resource_uuid: @module_definition.id.to_s,
+      metadata: { module_name: @module_definition.display_name }
+    )
     flash[:notice] = "Module deleted"
     redirect_to modules_path
   end
@@ -210,8 +222,8 @@ class ModuleDefinitionsController < AuthenticatedController
         ]
       ]
     )
-    permitted[:allowed_zones] = permitted[:allowed_zones]&.reject(&:blank?)
-    permitted[:provider_dependencies] = permitted[:provider_dependencies]&.reject(&:blank?)
+    permitted[:allowed_zones] = permitted[:allowed_zones]&.reject(&:blank?) || []
+    permitted[:provider_dependencies] = permitted[:provider_dependencies]&.reject(&:blank?) || []
     permitted[:constraints] = JSON.parse(permitted[:constraints]) if permitted[:constraints].is_a?(String)
     permitted[:supported_engines] = JSON.parse(permitted[:supported_engines]) if permitted[:supported_engines].is_a?(String)
 

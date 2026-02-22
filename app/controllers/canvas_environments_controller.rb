@@ -14,7 +14,6 @@ class CanvasEnvironmentsController < AuthenticatedController
 
     env = local_project.local_environments.new(canvas_env_params)
     env.cloud_provider = @project.provider&.downcase || "aws"
-    env.region = @project.region.presence || local_project.default_region || "eu-west-1"
     env.iac_engine = "opentofu"
     env.execution_mode = "platform"
 
@@ -29,6 +28,11 @@ class CanvasEnvironmentsController < AuthenticatedController
     end
 
     if env.save
+      AuditLogService.record(
+        action: "created", resource_type: "CanvasEnvironment",
+        resource_uuid: env.id.to_s,
+        metadata: { name: env.name, project: @project.name, customer: @customer.name }
+      )
       redirect_to customer_project_path(@customer.uuid, @project.uuid),
                   notice: "Canvas environment '#{env.name}' created."
     else
@@ -42,7 +46,13 @@ class CanvasEnvironmentsController < AuthenticatedController
     authorize!(:manage, @project)
 
     name = @canvas_env.name
+    env_id = @canvas_env.id.to_s
     @canvas_env.destroy!
+    AuditLogService.record(
+      action: "deleted", resource_type: "CanvasEnvironment",
+      resource_uuid: env_id,
+      metadata: { name: name, project: @project.name, customer: @customer.name }
+    )
     redirect_to customer_project_path(@customer.uuid, @project.uuid),
                 notice: "Canvas environment '#{name}' deleted."
   end
@@ -65,6 +75,12 @@ class CanvasEnvironmentsController < AuthenticatedController
       @canvas_env.update!(aws_account_id: account_id)
     end
 
+    AuditLogService.record(
+      action: "linked", resource_type: "CanvasEnvironment",
+      resource_uuid: @canvas_env.id.to_s,
+      metadata: { name: @canvas_env.name, account_id: account_id, project: @project.name }
+    )
+
     redirect_to customer_project_path(@customer.uuid, @project.uuid),
                 notice: "Canvas '#{@canvas_env.name}' linked to account #{account_id}.", only_path: true
   end
@@ -74,6 +90,11 @@ class CanvasEnvironmentsController < AuthenticatedController
     authorize!(:manage, @project)
 
     @canvas_env.update!(aws_account_id: nil, azure_subscription_id: nil, aws_role_arn: nil, gcp_project_id: nil)
+    AuditLogService.record(
+      action: "unlinked", resource_type: "CanvasEnvironment",
+      resource_uuid: @canvas_env.id.to_s,
+      metadata: { name: @canvas_env.name, project: @project.name }
+    )
     redirect_to customer_project_path(@customer.uuid, @project.uuid),
                 notice: "Canvas '#{@canvas_env.name}' unlinked from platform environment."
   end

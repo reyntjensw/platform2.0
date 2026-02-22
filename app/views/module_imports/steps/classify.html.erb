@@ -17,7 +17,18 @@
               <th>TF Type</th>
               <th>Default</th>
               <th>Required</th>
-              <th>Classification</th>
+              <th>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span>Classification</span>
+                  <select id="bulk-classify" class="f50-select f50-select--sm" style="width:auto;font-size:10px;padding:4px 8px;">
+                    <option value="">Set all…</option>
+                    <option value="user_config">User config</option>
+                    <option value="dependency">Dependency</option>
+                    <option value="platform_managed">Platform managed</option>
+                    <option value="hidden">Hidden</option>
+                  </select>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -31,7 +42,7 @@
                   <select name="classifications[<%= var["name"] %>]" class="f50-select f50-select--sm">
                     <% %w[user_config dependency platform_managed hidden].each do |cls| %>
                       <option value="<%= cls %>"
-                              <%= "selected" if (@draft.classifications[var["name"]] || var["suggested_classification"]) == cls %>>
+                              <%= "selected" if (@draft.classifications[var["name"]] || var["suggested_classification"] || "hidden") == cls %>>
                         <%= cls.humanize %>
                       </option>
                     <% end %>
@@ -80,3 +91,14 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  document.getElementById('bulk-classify').addEventListener('change', function() {
+    if (!this.value) return;
+    var val = this.value;
+    document.querySelectorAll('select[name^="classifications["]').forEach(function(sel) {
+      sel.value = val;
+    });
+    this.value = '';
+  });
+</script>

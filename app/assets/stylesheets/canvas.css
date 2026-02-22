@@ -187,9 +187,9 @@
 }
 
 .screen-btn.active {
-    background: var(--accent-blue);
-    color: white;
-    border-color: var(--accent-blue);
+    background: var(--accent-green);
+    color: #0a0d13;
+    border-color: var(--accent-green);
 }
 
 /* ── Main 3-column Grid ── */
@@ -2744,7 +2744,7 @@
 .group-filter-tab.active {
     background: var(--accent-blue, #3b82f6);
     border-color: var(--accent-blue, #3b82f6);
-    color: white;
+    color: #0a0d13;
 }
 
 .group-filter-dot {

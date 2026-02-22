@@ -31,6 +31,15 @@ class DeployService
       deployment.update!(status: "completed", completed_at: Time.current)
     end
 
+    AuditLogService.record(
+      action: "deployed",
+      resource_type: "Environment",
+      resource_uuid: @environment.id.to_s,
+      metadata: { deployment_id: deployment.id, version: deployment.version, layers: deployment.total_layers,
+                  environment_name: @environment.name },
+      user: @user
+    )
+
     deployment
   rescue LayerPartitioner::CircularDependencyError => e
     deployment&.update!(status: "failed", result: { error: e.message })

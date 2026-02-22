@@ -1,110 +1,169 @@
-<% content_for(:title) { "#{@customer.name} — Factor Fifty" } %>
+<% content_for(:title) { "#{@customer.name} — Projects — Factor Fifty" } %>
 
-<div class="page-header">
-  <div>
-    <h1 class="page-title">Projects</h1>
-  </div>
-  <div class="header-actions">
-    <% if can_manage_resource? %>
-      <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape">
-        <button class="btn btn-green btn-sm" data-action="click->modal#open">+ New Project</button>
-
-        <%# ── New Project Modal ── %>
-        <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#backdropClose">
-          <div class="modal-panel" data-controller="project-form"
-               data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
-            <div class="modal-header">
-              <h3 class="modal-title">New Project</h3>
-              <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
-            </div>
-
-            <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label class="form-label" for="project_name">Project name *</label>
-                  <input type="text" name="project[name]" id="project_name"
-                         class="form-input" placeholder="Enter project name" required>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                  <div class="form-group">
-                    <label class="form-label" for="project_provider">Cloud provider *</label>
-                    <select name="project[provider]" id="project_provider" class="form-input" required
-                            data-project-form-target="provider"
-                            data-action="change->project-form#providerChanged">
-                      <option value="">Select a provider...</option>
-                      <option value="AWS">AWS</option>
-                      <option value="Azure">Azure</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="project_region">Project region *</label>
-                    <select name="project[region]" id="project_region" class="form-input" required
-                            data-project-form-target="region">
-                      <option value="">Select a provider first</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
-                <%= f.submit "Create", class: "btn btn-green" %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
+<% aws_count = @projects.count { |p| p.provider.to_s.downcase == "aws" } %>
+<% azure_count = @projects.count { |p| p.provider.to_s.downcase == "azure" } %>
 
 <div data-controller="project-list">
-  <% if @projects.any? %>
-    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
-      <input type="text" class="form-input" placeholder="Search projects…"
-             data-project-list-target="search" data-action="input->project-list#filter"
-             style="flex:1;max-width:320px;">
-      <select class="form-input" style="width:auto;"
-              data-project-list-target="sort" data-action="change->project-list#sort">
-        <option value="name">Sort by name</option>
-        <option value="provider">Sort by provider</option>
-      </select>
-      <span style="font-size:12px;color:var(--text-muted);white-space:nowrap;">
-        <span data-project-list-target="count"><%= @projects.size %></span> projects
-      </span>
+  <div class="page-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <h1 class="page-title">Projects</h1>
+        <div class="proj-customer-context">
+          <span class="proj-customer-dot"></span>
+          <%= @customer.name %>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:5px;">All cloud projects for this customer</p>
     </div>
+    <div class="header-actions">
+      <div class="proj-search-field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search projects…"
+               data-project-list-target="search"
+               data-action="input->project-list#filter">
+      </div>
+      <div class="proj-filter-group">
+        <div class="proj-filter-pill active"
+             data-project-list-target="pill" data-filter="all"
+             data-action="click->project-list#filterByProvider">All</div>
+        <div class="proj-filter-pill"
+             data-project-list-target="pill" data-filter="aws"
+             data-action="click->project-list#filterByProvider">AWS</div>
+        <div class="proj-filter-pill"
+             data-project-list-target="pill" data-filter="azure"
+             data-action="click->project-list#filterByProvider">Azure</div>
+      </div>
+      <div class="proj-view-toggle">
+        <div class="proj-view-btn active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div class="proj-view-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+      </div>
+      <% if can_manage_resource? %>
+        <div data-controller="modal" data-action="keydown@document->modal#closeOnEscape" id="new-project-modal-scope">
+          <button class="btn btn-sm proj-btn-add" id="proj-new-btn" data-action="click->modal#open">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Project
+          </button>
 
-    <div class="entity-grid" data-project-list-target="grid">
+          <%# ── New Project Modal ── %>
+          <div class="modal-overlay proj-modal" data-modal-target="overlay" data-action="click->modal#backdropClose">
+            <div class="modal-panel" data-controller="project-form"
+                 data-project-form-regions-url-value="<%= regions_customer_projects_path(@customer.uuid) %>">
+              <div class="modal-header">
+                <h3 class="modal-title">New Project</h3>
+                <button class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+              </div>
+
+              <%= form_with url: customer_projects_path(@customer.uuid), method: :post do |f| %>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label class="form-label" for="project_name">Project name *</label>
+                    <input type="text" name="project[name]" id="project_name"
+                           class="form-input" placeholder="Enter project name" required>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                      <label class="form-label" for="project_provider">Cloud provider *</label>
+                      <select name="project[provider]" id="project_provider" class="form-input" required
+                              data-project-form-target="provider"
+                              data-action="change->project-form#providerChanged">
+                        <option value="">Select a provider...</option>
+                        <option value="AWS">AWS</option>
+                        <option value="Azure">Azure</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="project_region">Project region *</label>
+                      <select name="project[region]" id="project_region" class="form-input" required
+                              data-project-form-target="region">
+                        <option value="">Select a provider first</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-ghost" data-action="click->modal#close">Cancel</button>
+                  <%= f.submit "Create", class: "btn btn-green" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="proj-stats-bar">
+    <div class="proj-stat-item">
+      <div class="proj-stat-label">Total Projects</div>
+      <div class="proj-stat-val" data-project-list-target="count"><%= @projects.size %></div>
+    </div>
+    <div class="proj-stat-divider"></div>
+    <div class="proj-stat-item">
+      <div class="proj-stat-label">AWS</div>
+      <div class="proj-stat-val aws"><%= aws_count %></div>
+    </div>
+    <div class="proj-stat-divider"></div>
+    <div class="proj-stat-item">
+      <div class="proj-stat-label">Azure</div>
+      <div class="proj-stat-val azure"><%= azure_count %></div>
+    </div>
+    <div class="proj-stat-spacer"></div>
+    <div style="font-size:11.5px;color:var(--text-muted);font-family:var(--font-mono)"><%= @customer.name %> · <%= @projects.size %> projects</div>
+  </div>
+
+  <% if @projects.any? %>
+    <div class="proj-grid" data-project-list-target="grid">
       <% @projects.sort_by { |p| p.name.to_s.downcase }.each_with_index do |project, i| %>
         <% provider = project.provider.to_s.downcase %>
-        <% color = provider == "azure" ? "#0078d4" : "#ff9900" %>
         <%= link_to customer_project_path(@customer.uuid, project.uuid),
-              class: "entity-card", style: "--accent-color: #{color};",
-              data: { project_list_target: "card", name: project.name, provider: project.provider } do %>
-          <div class="entity-card-top">
-            <div class="entity-card-name"><%= project.name %></div>
-            <% if project.provider.present? %>
-              <%= render "shared/provider_icon", provider: project.provider %>
-            <% end %>
-          </div>
-          <div class="entity-card-meta"><%= project.status.presence || "unknown" %></div>
-          <div class="entity-card-footer">
-            <div class="entity-card-stat">
-              <div class="entity-card-dot" style="background: <%= color %>;"></div>
-              <%= provider.upcase %>
+              class: "proj-card",
+              style: "animation-delay:#{(0.04 + i * 0.03).round(2)}s",
+              data: { turbo: false, project_list_target: "card", name: project.name, provider: provider } do %>
+          <div class="proj-card-accent <%= provider %>"></div>
+          <div class="proj-card-body">
+            <div class="proj-card-top-row">
+              <div class="proj-card-name"><%= project.name %></div>
+              <span class="proj-provider-badge <%= provider %>"><%= provider.upcase %></span>
             </div>
-            <span class="entity-card-arrow">→</span>
+            <div class="proj-card-region">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <%= project.region.presence || "unknown region" %>
+            </div>
+          </div>
+          <div class="proj-card-footer">
+            <span class="proj-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/></svg>
+              Dashboard
+            </span>
+            <span class="proj-quick-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+              Rightsizing
+            </span>
+            <div class="proj-card-menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+            </div>
           </div>
         <% end %>
       <% end %>
 
       <%# Add card %>
       <% if can_manage_resource? %>
-        <div class="entity-card entity-card-add" data-controller="modal" data-action="click->modal#open" style="cursor:pointer;">
-          <div class="entity-add-icon">+</div>
-          <span>New Project</span>
+        <div class="proj-card proj-card-add" style="cursor:pointer"
+             onclick="document.getElementById('proj-new-btn').click()">
+          <div class="proj-card-add-inner">
+            <div class="proj-card-add-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="proj-card-add-title">New Project</div>
+          </div>
         </div>
       <% end %>
     </div>

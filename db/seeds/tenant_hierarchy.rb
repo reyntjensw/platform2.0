@@ -27,7 +27,6 @@ end
     e.name = env_type == "prd" ? "production" : (env_type == "acc" ? "acceptance" : "development")
     e.cloud_provider = "aws"
     e.iac_engine = "opentofu"
-    e.region = "eu-west-1"
     e.aws_account_id = account_ids[env_type]
     e.aws_role_arn = "arn:aws:iam::#{account_ids[env_type]}:role/f50-deploy"
     e.config = { default_tags: { environment: e.name, env_type: env_type } }

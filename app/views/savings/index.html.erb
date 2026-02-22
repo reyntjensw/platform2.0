@@ -1,0 +1,14 @@
+<% content_for(:title) { "Savings — #{@customer.name} — Factor Fifty" } %>
+
+<%
+  savings_props = {
+    customerUuid: @customer.uuid,
+    customerName: @customer.name,
+    savingsApiUrl: "/customers/#{@customer.uuid}/api/savings"
+  }
+%>
+
+<div data-controller="react"
+     data-react-component-value="SavingsPage"
+     data-react-props-value="<%= savings_props.to_json %>">
+</div>

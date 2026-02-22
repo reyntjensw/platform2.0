@@ -34,6 +34,12 @@ module Api
       )
       lock.save!
 
+      AuditLogService.record(
+        action: "acquired", resource_type: "CanvasLock",
+        resource_uuid: @environment.id.to_s,
+        metadata: { environment: @environment.name, device_id: device_id }
+      )
+
       render json: lock_json(lock), status: :created
     end
 
@@ -46,6 +52,11 @@ module Api
       end
 
       lock.update!(expires_at: lock_expiry)
+      AuditLogService.record(
+        action: "renewed", resource_type: "CanvasLock",
+        resource_uuid: @environment.id.to_s,
+        metadata: { environment: @environment.name, device_id: device_id }
+      )
       render json: lock_json(lock)
     end
 
@@ -70,6 +81,11 @@ module Api
       end
 
       lock.destroy
+      AuditLogService.record(
+        action: "released", resource_type: "CanvasLock",
+        resource_uuid: @environment.id.to_s,
+        metadata: { environment: @environment.name, device_id: device_id }
+      )
       render json: { status: "ok", message: "Lock released" }
     end
 

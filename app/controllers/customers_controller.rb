@@ -29,6 +29,10 @@ class CustomersController < AuthenticatedController
     end
 
     @reseller_uuid = reseller_uuid
+
+    # Load reseller details for display
+    reseller_response = @client.get_reseller(uuid: reseller_uuid)
+    @reseller = reseller_response.success? ? Reseller.from_api(reseller_response.data) : nil
   end
 
   # GET /customers/:uuid

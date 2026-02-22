@@ -1,0 +1,14 @@
+<% content_for(:title) { "Rightsizing — #{@customer.name} — Factor Fifty" } %>
+
+<%
+  rightsizing_props = {
+    customerUuid: @customer.uuid,
+    customerName: @customer.name,
+    rightsizingApiUrl: "/customers/#{@customer.uuid}/api/rightsizing"
+  }
+%>
+
+<div data-controller="react"
+     data-react-component-value="RightsizingPage"
+     data-react-props-value="<%= rightsizing_props.to_json %>">
+</div>

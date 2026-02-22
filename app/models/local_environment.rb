@@ -25,6 +25,11 @@ class LocalEnvironment < ApplicationRecord
   delegate :local_customer, to: :local_project
   delegate :local_reseller, to: :local_customer, allow_nil: true
 
+  # Region lives on the project — delegate so all existing callers keep working
+  def region
+    local_project&.default_region
+  end
+
   # Expose customer_uuid for authorization checks.
   # The local_customer.slug stores the platform customer UUID.
   def customer_uuid

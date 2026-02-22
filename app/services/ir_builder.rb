@@ -163,8 +163,15 @@ class IRBuilder
           if value == "" || (value.is_a?(String) && value.strip.empty?)
             value = []
           elsif value.is_a?(String)
-            # Single string value → wrap in array; comma-separated → split
-            value = value.include?(",") ? value.split(",").map(&:strip) : [value]
+            # Dependency refs (module.xxx.output, var.xxx, etc.) already resolve
+            # to the correct type at Terraform plan time — don't wrap in an array
+            # or we get list-in-list errors.
+            if mapping.mapping_type == "dependency_ref"
+              # pass through as-is
+            else
+              # Single string value → wrap in array; comma-separated → split
+              value = value.include?(",") ? value.split(",").map(&:strip) : [value]
+            end
           end
         when "object"
           if value == "" || (value.is_a?(String) && value.strip.empty?)

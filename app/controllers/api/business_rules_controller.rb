@@ -32,6 +32,11 @@ module Api
       end
 
       if rule.update(update_params)
+        AuditLogService.record(
+          action: "updated", resource_type: "BusinessRule",
+          resource_uuid: rule.id.to_s,
+          metadata: { name: rule.name, scope: rule.scope_type }
+        )
         render json: serialize_rule(rule)
       else
         render_error(rule.errors.full_messages.join(", "))
@@ -52,6 +57,11 @@ module Api
       end
 
       if rule.save
+        AuditLogService.record(
+          action: "created", resource_type: "BusinessRule",
+          resource_uuid: rule.id.to_s,
+          metadata: { name: rule.name, scope: rule.scope_type }
+        )
         render json: serialize_rule(rule), status: :created
       else
         render_error(rule.errors.full_messages.join(", "))
@@ -61,7 +71,13 @@ module Api
     # DELETE /api/environments/:environment_id/business_rules/:id
     def destroy
       rule = BusinessRule.find(params[:id])
+      name = rule.name
       rule.destroy!
+      AuditLogService.record(
+        action: "deleted", resource_type: "BusinessRule",
+        resource_uuid: params[:id].to_s,
+        metadata: { name: name }
+      )
       render json: { message: "Rule deleted" }, status: :ok
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Rule not found" }, status: :not_found

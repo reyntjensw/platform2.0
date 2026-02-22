@@ -67,3 +67,9 @@ application.register("cmd-palette", CmdPaletteController)
 import CascadingSelectController from "./cascading_select_controller"
 application.register("cascading-select", CascadingSelectController)
 
+import EntityFilterController from "./entity_filter_controller"
+application.register("entity-filter", EntityFilterController)
+
+import DocumentationController from "./documentation_controller"
+application.register("documentation", DocumentationController)
+

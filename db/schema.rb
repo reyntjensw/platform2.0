@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_20_200001) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -31,7 +31,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_20_200001) do
     t.string "action", null: false
     t.string "resource_type", null: false
     t.uuid "resource_uuid"
-    t.jsonb "changes", default: {}
+    t.jsonb "change_data", default: {}
     t.jsonb "metadata", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -221,7 +221,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_20_200001) do
     t.string "env_type", null: false
     t.string "cloud_provider", null: false
     t.string "iac_engine", default: "opentofu", null: false
-    t.string "region"
     t.string "aws_account_id"
     t.string "aws_role_arn"
     t.string "azure_subscription_id"

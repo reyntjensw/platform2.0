@@ -32,6 +32,13 @@ class CostApiClient < ApiClient::Base
   def top_services(params)
     post("/cost/top_services", params)
   end
+  def commitments(params)
+    post("/cost-savings/commitments", params)
+  end
+
+  def savings_metrics(params)
+    post("/cost-savings/metrics", params)
+  end
 
   def accounts(customer_uuid, provider: nil)
     params = provider ? { provider: provider } : {}

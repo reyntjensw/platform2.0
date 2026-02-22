@@ -151,6 +151,29 @@ class PlatformApiClient < ApiClient::Base
     get("/public/azure/vm-skus", location: location, subscription_id: subscription_id)
   end
 
+  # ---------------------------------------------------------------------------
+  # Documentation
+  # ---------------------------------------------------------------------------
+
+  def aws_documentation(account_id:, region:)
+    get("/documentation/#{region}/#{account_id}")
+  end
+
+  # ---------------------------------------------------------------------------
+  # Cost Optimization
+  # ---------------------------------------------------------------------------
+
+  def commitment_plan_details(customer_uuid:, plan_uuid:)
+    get("/cost_optimization/commitment_plans/detailed/#{customer_uuid}/#{plan_uuid}")
+  end
+
+  def apply_commitment_plan(customer_uuid:, plan_uuid:)
+    post("/cost_optimization/commitment_plans/apply", {
+      customer_uuid: customer_uuid,
+      plan_uuid: plan_uuid
+    })
+  end
+
   private
 
   attr_reader :conn

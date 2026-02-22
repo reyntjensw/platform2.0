@@ -1,8 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import {
-  Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend,
-} from 'chart.js'
 import { createDashboardApi, createWidgetApi, createCostApi } from './api'
 import {
   useDashboards, useDashboard, useCreateDashboard, useUpdateDashboard, useDeleteDashboard,
@@ -14,8 +11,6 @@ import GlobalMonthSelector from './GlobalMonthSelector'
 import AddWidgetModal, { CHART_TYPES } from './AddWidgetModal'
 import CreateDashboardModal from './CreateDashboardModal'
 import WidgetCard from './WidgetCard'
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend)
 
 const CURRENT_YEAR = new Date().getFullYear()
 const CURRENT_MONTH = new Date().getMonth() + 1

@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   # React mounting test page
   get "react_test" => "pages#react_test"
 
+  # Audit Log
+  resources :audit_logs, only: [:index]
+
   # Pipeline Runner Admin
   resources :runners, only: [:index]
 
@@ -180,6 +183,12 @@ Rails.application.routes.draw do
     # Financial Dashboard HTML view
     resources :dashboards, controller: "dashboards", only: [:index]
 
+    # Savings / Cost Optimization
+    get "savings", to: "savings#index", as: :savings
+
+    # Rightsizing
+    get "rightsizing", to: "rightsizing#index", as: :rightsizing
+
     # Financial Dashboard API
     namespace :api, module: "api/customer" do
       resources :dashboards, only: [:index, :show, :create, :update, :destroy] do
@@ -198,6 +207,17 @@ Rails.application.routes.draw do
       post   "cost/top_services",               to: "cost#top_services"
       get    "cost/accounts",                   to: "cost#accounts"
       get    "cost/services",                   to: "cost#services"
+
+      # Savings proxy endpoints
+      post   "savings/commitments",             to: "savings#commitments"
+      post   "savings/metrics",                 to: "savings#metrics"
+      get    "savings/plan/:plan_uuid",         to: "savings#plan"
+      post   "savings/apply_plan",              to: "savings#apply_plan"
+
+      # Documentation proxy endpoints
+      post   "documentation/generate",          to: "documentation#generate"
+      get    "documentation/status/:task_id",   to: "documentation#status"
+      get    "documentation/aws/:account_id",   to: "documentation#aws_doc"
     end
   end
 end

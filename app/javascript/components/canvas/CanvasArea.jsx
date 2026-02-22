@@ -15,6 +15,8 @@ export default function CanvasArea({
   const blocksRef = useRef(null)
   const panningRef = useRef(false)
   const dragRef = useRef(null)
+  const rubberBandRef = useRef(null)
+  const mouseCanvasRef = useRef({ x: 0, y: 0 })
 
   const setZoom = useCallback((z) => {
     setZoomState(Math.max(0.3, Math.min(2.0, z)))
@@ -55,6 +57,45 @@ export default function CanvasArea({
     })
   }, [connections, resources, selectedId])
 
+  // Rubber-band line during connect mode
+  useEffect(() => {
+    if (!connectMode || !connectFromId || !viewportRef.current) {
+      if (rubberBandRef.current) { rubberBandRef.current.remove(); rubberBandRef.current = null }
+      return
+    }
+    const fromEl = blocksRef.current?.querySelector(`[data-rid="${connectFromId}"]`)
+    if (!fromEl) return
+
+    const onMove = (e) => {
+      const vpRect = viewportRef.current.getBoundingClientRect()
+      const mx = (e.clientX - vpRect.left) / zoom
+      const my = (e.clientY - vpRect.top) / zoom
+      mouseCanvasRef.current = { x: mx, y: my }
+
+      const x1 = parseFloat(fromEl.style.left) + fromEl.offsetWidth / 2
+      const y1 = parseFloat(fromEl.style.top) + fromEl.offsetHeight / 2
+      const offset = Math.abs(mx - x1) * 0.3
+
+      if (!rubberBandRef.current && svgRef.current) {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path")
+        path.setAttribute("class", "conn-line rubber-band")
+        svgRef.current.appendChild(path)
+        rubberBandRef.current = path
+      }
+      if (rubberBandRef.current) {
+        rubberBandRef.current.setAttribute("d",
+          `M ${x1} ${y1} C ${x1 + offset} ${y1}, ${mx - offset} ${my}, ${mx} ${my}`
+        )
+      }
+    }
+
+    document.addEventListener("mousemove", onMove)
+    return () => {
+      document.removeEventListener("mousemove", onMove)
+      if (rubberBandRef.current) { rubberBandRef.current.remove(); rubberBandRef.current = null }
+    }
+  }, [connectMode, connectFromId, zoom])
+
   // Pan handlers
   const onPanStart = useCallback((e) => {
     if (e.target.closest(".rb") || e.target.closest(".subnet") || e.button !== 0) return
@@ -82,9 +123,19 @@ export default function CanvasArea({
     setZoom(zoom + delta)
   }, [zoom, setZoom])
 
-  // Drag resource block
+  // Drag resource block (Alt+click starts connect mode)
   const onBlockMouseDown = useCallback((e, resource) => {
-    if (e.button !== 0 || connectMode || readOnly) return
+    if (e.button !== 0 || readOnly) return
+
+    // Alt+click starts a connection from this resource
+    if (e.altKey && !connectMode) {
+      e.preventDefault()
+      e.stopPropagation()
+      startConnect(resource.id)
+      return
+    }
+
+    if (connectMode) return
     e.preventDefault()
     e.stopPropagation()
     const el = e.currentTarget
@@ -151,7 +202,7 @@ export default function CanvasArea({
     }
     document.addEventListener("mousemove", onMove)
     document.addEventListener("mouseup", onUp)
-  }, [connectMode, zoom, connections, updateResourcePosition, readOnly])
+  }, [connectMode, zoom, connections, updateResourcePosition, readOnly, startConnect])
 
   const onBlockClick = useCallback((e, resource) => {
     e.stopPropagation()
@@ -164,6 +215,14 @@ export default function CanvasArea({
 
   // Drop from catalog
   const onDragOver = (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy" }
+
+  // Escape key cancels connect mode
+  useEffect(() => {
+    if (!connectMode) return
+    const onKey = (e) => { if (e.key === "Escape") cancelConnect() }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
+  }, [connectMode, cancelConnect])
   const onDrop = (e) => {
     e.preventDefault()
     if (readOnly) return
@@ -267,8 +326,8 @@ export default function CanvasArea({
 
       {/* Connect indicator */}
       <div className={`connect-indicator${connectMode ? " active" : ""}`}>
-        🔗 Connect mode — click a target resource
-        <button className="connect-cancel-btn" onClick={cancelConnect}>Cancel</button>
+        🔗 Connecting from <strong>{connectFromId ? (resources.find(r => r.id === connectFromId)?.name || "…") : "…"}</strong> — click a target resource
+        <button className="connect-cancel-btn" onClick={cancelConnect}>Cancel (Esc)</button>
       </div>
 
       {/* Transform container */}
