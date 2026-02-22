@@ -193,7 +193,7 @@ function PlanSearch({ value, onChange, onSearch, isLoading }) {
 }
 
 // ── Savings Plan Card ──────────────────────────────────────────────────────────
-function SavingsPlanCard({ plan }) {
+function SavingsPlanCard({ plan, onViewDetails }) {
   const isRecommended = plan.popular
   return (
     <div className={`sv-plan-card${isRecommended ? ' recommended' : ''}`}>
@@ -261,7 +261,7 @@ function SavingsPlanCard({ plan }) {
       </div>
 
       <div className="sv-plan-footer">
-        <button className={`sv-btn-apply${isRecommended ? ' primary' : ' secondary'}`}>Apply Plan</button>
+        <button className={`sv-btn-apply${isRecommended ? ' primary' : ' secondary'}`} onClick={() => onViewDetails(plan)}>View Details</button>
       </div>
     </div>
   )
@@ -646,6 +646,30 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
 
   const plans = DEMO_PLANS
 
+  const handleViewDetails = (plan) => {
+    setPlanData({
+      summary: {
+        plan_uuid: plan.id,
+        total_monthly_before_cost: plan.monthlyCostWithout,
+        after_cost_hourly: plan.monthlyCostWith / 730,
+        services: [],
+        regions: [],
+      },
+      detailed_items: [
+        {
+          offer: { display_name: plan.name, instance_type: '—', region: 'Global' },
+          payment_option: plan.flexibility.upfront === '$0K' ? 'No Upfront' : 'Partial Upfront',
+          recommended_quantity: 1,
+          monthly_cost: plan.monthlyCostWith,
+          monthly_savings: plan.netMonthlySavings,
+          total_savings: plan.annualSavings,
+          discount_rate: plan.discountPct / 100,
+          breakeven_hours: parseFloat(plan.flexibility.breakeven.replace(/[^0-9.]/g, '')) || null,
+        },
+      ],
+    })
+  }
+
   return (
     <div className="sv-page">
       <div className="sv-page-header">
@@ -670,7 +694,7 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
 
       <div className="sv-section-title">Savings Plans</div>
       <div className="sv-plans-grid">
-        {plans.map((plan) => <SavingsPlanCard key={plan.id} plan={plan} />)}
+        {plans.map((plan) => <SavingsPlanCard key={plan.id} plan={plan} onViewDetails={handleViewDetails} />)}
       </div>
 
       <CommitmentInventory items={inventory} isLoading={commitmentsLoading} />

@@ -15,12 +15,17 @@ class LocalEnvironment < ApplicationRecord
   has_many :promotion_records_as_target, class_name: "PromotionRecord", foreign_key: :target_environment_id, dependent: :nullify
   has_many :canvas_locks, foreign_key: :environment_id, dependent: :destroy
   has_many :global_tags, as: :taggable, dependent: :destroy
+  has_one :canvas_custom_code, dependent: :destroy
 
   validates :name, presence: true
   validates :env_type, presence: true, inclusion: { in: ENV_TYPES }
   validates :cloud_provider, presence: true, inclusion: { in: CLOUD_PROVIDERS }
   validates :iac_engine, presence: true, inclusion: { in: IAC_ENGINES }
   validates :execution_mode, presence: true, inclusion: { in: EXECUTION_MODES }
+
+  scope :active, -> { where(flagged_for_deletion_at: nil) }
+  scope :flagged_for_deletion, -> { where.not(flagged_for_deletion_at: nil) }
+  scope :deletion_due, -> { flagged_for_deletion.where(flagged_for_deletion_at: ..14.days.ago) }
 
   delegate :local_customer, to: :local_project
   delegate :local_reseller, to: :local_customer, allow_nil: true
@@ -41,4 +46,5 @@ class LocalEnvironment < ApplicationRecord
   def gcp? = cloud_provider == "gcp"
   def platform_runner? = execution_mode == "platform"
   def private_runner? = execution_mode == "private"
+  def flagged_for_deletion? = flagged_for_deletion_at.present?
 end

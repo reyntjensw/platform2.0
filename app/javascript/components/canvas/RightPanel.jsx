@@ -1,11 +1,12 @@
 import React, { useRef, useCallback, useEffect, useState } from "react"
 import DOMPurify from "dompurify"
 import { csrf } from "./constants"
+import CodePanel from "./CodeScreen"
 
 export default function RightPanel({
   selectedId, propsHtml, resources, connections, deleteConnection, deleteResource, startConnect, apiUrl, onPropsSaved,
   appGroups, createAppGroup, deleteAppGroup, assignResourceToGroup, selectedGroupId,
-  readOnly, onResourceUpgraded
+  readOnly, onResourceUpgraded, environmentId, onCodeTabChange, onCodeExpandToggle, codeExpanded, userRole
 }) {
   const scrollRef = useRef(null)
   const propsRef = useRef(null)
@@ -18,6 +19,21 @@ export default function RightPanel({
   const [upgradeSubmitting, setUpgradeSubmitting] = useState(false)
   const [upgradeError, setUpgradeError] = useState(null)
 
+  const [validItems, setValidItems] = useState(null)
+  const [validSummary, setValidSummary] = useState({ errors: 0, warnings: 0 })
+  const [validLoading, setValidLoading] = useState(false)
+
+  // Fetch validation data when Valid tab is active or resources change
+  useEffect(() => {
+    if (!environmentId) return
+    setValidLoading(true)
+    fetch(`/api/environments/${environmentId}/canvas_validations`)
+      .then(r => r.ok ? r.json() : { items: [], summary: { errors: 0, warnings: 0 } })
+      .then(data => { setValidItems(data.items || []); setValidSummary(data.summary || { errors: 0, warnings: 0 }) })
+      .catch(() => { setValidItems([]); setValidSummary({ errors: 0, warnings: 0 }) })
+      .finally(() => setValidLoading(false))
+  }, [environmentId, resources.length])
+
   // Switch to overview/group tab when group filter changes
   useEffect(() => {
     if (selectedGroupId) setActiveTab("group")
@@ -28,6 +44,11 @@ export default function RightPanel({
   useEffect(() => {
     if (selectedId) setActiveTab("props")
   }, [selectedId])
+
+  // Notify parent when code tab is active (for panel expansion)
+  useEffect(() => {
+    if (onCodeTabChange) onCodeTabChange(activeTab === "code")
+  }, [activeTab, onCodeTabChange])
 
   // Intercept form submissions and button clicks from the server-rendered properties HTML
   useEffect(() => {
@@ -173,11 +194,18 @@ export default function RightPanel({
         <button className={`rp-tab${activeTab === firstTabId ? " active" : ""}`} onClick={() => setActiveTab(firstTabId)}>{firstTabLabel}</button>
         <button className={`rp-tab${activeTab === "props" ? " active" : ""}`} onClick={() => setActiveTab("props")}>Props</button>
         <button className={`rp-tab${activeTab === "valid" ? " active" : ""}`} onClick={() => setActiveTab("valid")}>
-          Valid <span style={{ color: "var(--accent-red)", fontSize: 9 }}>● 2</span>
+          Valid {validSummary.errors > 0 && <span style={{ color: "var(--accent-red)", fontSize: 9 }}>● {validSummary.errors}</span>}
+          {validSummary.errors === 0 && validSummary.warnings > 0 && <span style={{ color: "var(--accent-orange)", fontSize: 9 }}>● {validSummary.warnings}</span>}
         </button>
+        {userRole === "platform_admin" && (
+          <button className={`rp-tab${activeTab === "code" ? " active" : ""}`} onClick={() => setActiveTab("code")}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 10, height: 10, verticalAlign: "middle", marginRight: 3 }}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Code
+          </button>
+        )}
       </div>
 
-      <div className="rp-scroll" ref={scrollRef}>
+      <div className="rp-scroll" ref={scrollRef} style={activeTab === "code" ? { display: "none" } : undefined}>
 
         {/* Overview Tab — "All Resources" selected */}
         {activeTab === "overview" && (
@@ -407,33 +435,46 @@ export default function RightPanel({
         {activeTab === "valid" && (
           <div>
             <div className="rp-section">Real-time Validation</div>
-            <div className="vi err">
-              <div className="vi-icon">!</div>
-              <div><strong>Missing encryption</strong><span>S3 "static-assets" needs SSE enabled. Rule: data-encryption-at-rest</span></div>
-            </div>
-            <div className="vi wrn">
-              <div className="vi-icon">⚠</div>
-              <div><strong>Single-AZ database</strong><span>RDS "app-postgres" needs Multi-AZ for production per business rule.</span></div>
-            </div>
-            <div className="vi ok">
-              <div className="vi-icon">✓</div>
-              <div><strong>No public databases</strong><span>All databases in private subnets.</span></div>
-            </div>
-            <div className="vi ok">
-              <div className="vi-icon">✓</div>
-              <div><strong>VPC peering valid</strong><span>Cross-env ref to shared-services reachable.</span></div>
-            </div>
-            <div className="vi ok">
-              <div className="vi-icon">✓</div>
-              <div><strong>Security groups defined</strong><span>All resources have associated SGs.</span></div>
-            </div>
-            <div className="vi ok">
-              <div className="vi-icon">✓</div>
-              <div><strong>Tagging compliance</strong><span>Required tags: env, team, cost-center present.</span></div>
-            </div>
+            {validLoading && <div style={{ fontSize: 11, color: "var(--text-muted)", padding: "12px 0" }}>Checking…</div>}
+            {!validLoading && validItems && validItems.length === 0 && (
+              <div className="vi ok">
+                <div className="vi-icon">✓</div>
+                <div><strong>All checks passed</strong><span>No issues detected.</span></div>
+              </div>
+            )}
+            {!validLoading && validItems && validItems.map((item, i) => {
+              const cls = item.severity === "error" ? "err" : item.severity === "warning" ? "wrn" : "ok"
+              const icon = item.severity === "error" ? "!" : item.severity === "warning" ? "⚠" : "✓"
+              return (
+                <div key={i} className={`vi ${cls}`}>
+                  <div className="vi-icon">{icon}</div>
+                  <div><strong>{item.title}</strong><span>{item.message}</span></div>
+                </div>
+              )
+            })}
+            {!validLoading && validItems && validItems.length > 0 && (
+              <div style={{ marginTop: 12 }}>
+                <button
+                  className="rp-btn"
+                  style={{ fontSize: 10, background: "var(--bg-tertiary)", color: "var(--text-secondary)", border: "1px solid var(--border)", width: "100%" }}
+                  onClick={() => {
+                    setValidLoading(true)
+                    fetch(`/api/environments/${environmentId}/canvas_validations`)
+                      .then(r => r.ok ? r.json() : { items: [], summary: { errors: 0, warnings: 0 } })
+                      .then(data => { setValidItems(data.items || []); setValidSummary(data.summary || { errors: 0, warnings: 0 }) })
+                      .finally(() => setValidLoading(false))
+                  }}
+                >↻ Re-check</button>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* Code Tab — fills the panel, not inside rp-scroll */}
+      {activeTab === "code" && environmentId && (
+        <CodePanel environmentId={environmentId} expanded={codeExpanded} onExpandToggle={onCodeExpandToggle} readOnly={readOnly} />
+      )}
 
       {/* Upgrade Modal */}
       {upgradeModalOpen && selectedResource && (() => {

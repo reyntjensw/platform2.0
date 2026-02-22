@@ -25,6 +25,12 @@ module SidebarHelper
         path: modules_path,
         active: controller_name.in?(%w[module_definitions module_imports module_updates])
       }
+
+      items << {
+        icon: "🚀", label: "Runners", short_label: "Run",
+        path: runners_path,
+        active: controller_name == "runners"
+      }
     end
 
     items

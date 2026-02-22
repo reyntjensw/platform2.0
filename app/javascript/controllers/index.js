@@ -73,3 +73,7 @@ application.register("entity-filter", EntityFilterController)
 import DocumentationController from "./documentation_controller"
 application.register("documentation", DocumentationController)
 
+
+import GlobalTagDeleteController from "./global_tag_delete_controller"
+application.register("global-tag-delete", GlobalTagDeleteController)
+

@@ -1,0 +1,15 @@
+<% content_for(:title) { "Security — #{@customer.name} — Factor Fifty" } %>
+
+<%
+  security_props = {
+    customerName: @customer.name,
+    environmentName: @environment_name,
+    projectName: @project_name,
+    environmentUuid: @environment_uuid,
+  }
+%>
+
+<div data-controller="react"
+     data-react-component-value="SecurityDashboard"
+     data-react-props-value="<%= security_props.to_json %>">
+</div>

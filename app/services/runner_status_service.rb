@@ -23,6 +23,12 @@ class RunnerStatusService
                 scan_all_runners
               end
 
+    # Filter out runners whose TTL has already expired (DynamoDB TTL
+    # deletion is best-effort and can lag behind, so we exclude them
+    # on the read side to avoid showing stale records in the UI).
+    now_epoch = Time.current.to_i
+    runners.reject! { |r| r[:ttl] && r[:ttl] > 0 && r[:ttl] < now_epoch }
+
     # Enrich with computed liveness based on heartbeat freshness
     cutoff = Time.current - STALE_THRESHOLD
     runners.each do |r|
@@ -51,6 +57,7 @@ class RunnerStatusService
     return unless @table_name
 
     cutoff = Time.current - STALE_THRESHOLD
+    now_epoch = Time.current.to_i
 
     runners = @account_id ? query_runners_for_account(@account_id) : scan_all_runners
 
@@ -81,6 +88,13 @@ class RunnerStatusService
           expression_attribute_values: { ":ttl" => expire_at }
         )
         Rails.logger.info("RunnerStatusService: Backfilled TTL on offline runner #{runner[:runner_id]}")
+      elsif runner[:status] == "offline" && runner[:ttl] && runner[:ttl] < now_epoch
+        # TTL has expired but DynamoDB hasn't deleted it yet — force delete
+        dynamodb_client.delete_item(
+          table_name: @table_name,
+          key: { "PK" => pk, "SK" => sk }
+        )
+        Rails.logger.info("RunnerStatusService: Force-deleted expired runner #{runner[:runner_id]} (TTL expired #{Time.at(runner[:ttl])})")
       end
     end
   rescue Aws::DynamoDB::Errors::ServiceError => e

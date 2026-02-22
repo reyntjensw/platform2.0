@@ -50,6 +50,10 @@ class CostApiClient < ApiClient::Base
     get("/cost/services/#{customer_uuid}", params)
   end
 
+  def inventory_resources(customer_uuid, body)
+    post("/inventory/customers/#{customer_uuid}/resources/by-tag/grouped", body)
+  end
+
   private
 
   attr_reader :conn

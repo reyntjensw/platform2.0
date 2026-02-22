@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RunnersController < AuthenticatedController
+  before_action :require_platform_admin
+
   # GET /runners
   # Admin view: lists all registered runners with version, status,
   # and last heartbeat. Highlights outdated runners.

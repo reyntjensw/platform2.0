@@ -32,6 +32,43 @@ class EnvironmentsController < AuthenticatedController
     end
   end
 
+  # PATCH /customers/:customer_uuid/projects/:project_uuid/environments/:uuid
+  def update
+    authorize!(:manage, Environment.new(project_uuid: @project.uuid, customer_uuid: @customer.uuid))
+
+    env_uuid = params[:uuid]
+    attrs = {}
+    attrs[:name] = params[:environment_name] if params[:environment_name].present?
+    attrs[:environment_type] = params[:sla] if params[:sla].present?
+
+    # Update platform API environment
+    if attrs.any?
+      response = @client.update_environment(uuid: env_uuid, attrs: attrs)
+      unless response.success?
+        redirect_to customer_project_path(@customer.uuid, @project.uuid),
+                    alert: "Failed to update environment: #{response.error}"
+        return
+      end
+    end
+
+    # Update execution_mode on LocalEnvironment (platform_admin only)
+    if params[:execution_mode].present? && current_user.platform_admin?
+      # Look up the platform env to get the account_id for local_env lookup
+      env_response = @client.get_environment(uuid: env_uuid)
+      if env_response.success?
+        account_id = env_response.data["account_id"]
+        local_env = LocalEnvironment.find_by(aws_account_id: account_id) ||
+                    LocalEnvironment.find_by(azure_subscription_id: account_id)
+        if local_env && LocalEnvironment::EXECUTION_MODES.include?(params[:execution_mode])
+          local_env.update!(execution_mode: params[:execution_mode])
+        end
+      end
+    end
+
+    redirect_to customer_project_path(@customer.uuid, @project.uuid),
+                notice: "Environment updated."
+  end
+
   private
 
   def create_aws_environment

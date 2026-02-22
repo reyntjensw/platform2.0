@@ -28,3 +28,13 @@ production:
     class: RunnerCleanupJob
     queue: default
     schedule: every 5 minutes
+
+  hierarchy_sync:
+    class: HierarchySyncJob
+    queue: default
+    schedule: every hour
+
+  # flagged_deletion_cleanup:
+  #   class: FlaggedDeletionCleanupJob
+  #   queue: default
+  #   schedule: at 3am every day

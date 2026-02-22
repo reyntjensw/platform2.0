@@ -94,15 +94,15 @@ class GlobalTagsController < AuthenticatedController
   def build_level_options
     levels = [{ label: "Platform (all deployments)", type: nil, id: nil, current: @scope_record.nil? }]
 
-    LocalReseller.order(:name).each do |r|
+    LocalReseller.active.order(:name).each do |r|
       levels << { label: "Reseller: #{r.name}", type: "LocalReseller", id: r.id, current: @scope_record == r }
     end
 
-    LocalCustomer.includes(:local_reseller).order(:name).each do |c|
+    LocalCustomer.active.includes(:local_reseller).order(:name).each do |c|
       levels << { label: "Customer: #{c.name} (#{c.local_reseller&.name})", type: "LocalCustomer", id: c.id, current: @scope_record == c }
     end
 
-    LocalProject.includes(local_customer: :local_reseller).order(:name).each do |p|
+    LocalProject.active.includes(local_customer: :local_reseller).order(:name).each do |p|
       levels << { label: "Project: #{p.name} (#{p.local_customer&.name})", type: "LocalProject", id: p.id, current: @scope_record == p }
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_22_200001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -61,6 +61,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
     t.index ["name", "scope_type"], name: "index_business_rules_on_name_and_scope_type", unique: true
     t.index ["reseller_id"], name: "index_business_rules_on_reseller_id"
     t.index ["scope_type"], name: "index_business_rules_on_scope_type"
+  end
+
+  create_table "canvas_custom_codes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "local_environment_id", null: false
+    t.text "code", default: "", null: false
+    t.string "language", default: "hcl", null: false
+    t.jsonb "validation_result", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["local_environment_id"], name: "index_canvas_custom_codes_on_local_environment_id", unique: true
   end
 
   create_table "canvas_locks", force: :cascade do |t|
@@ -211,6 +221,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
     t.datetime "synced_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "flagged_for_deletion_at"
     t.index ["local_reseller_id"], name: "index_local_customers_on_local_reseller_id"
     t.index ["slug"], name: "index_local_customers_on_slug"
   end
@@ -234,6 +245,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
     t.string "current_version", default: "0.0.0"
     t.string "gcp_project_id"
     t.string "execution_mode", default: "platform", null: false
+    t.datetime "flagged_for_deletion_at"
     t.index ["cloud_provider"], name: "index_local_environments_on_cloud_provider"
     t.index ["env_type"], name: "index_local_environments_on_env_type"
     t.index ["local_project_id"], name: "index_local_environments_on_local_project_id"
@@ -248,6 +260,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
     t.datetime "synced_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "flagged_for_deletion_at"
     t.index ["cloud_provider"], name: "index_local_projects_on_cloud_provider"
     t.index ["local_customer_id"], name: "index_local_projects_on_local_customer_id"
     t.index ["slug"], name: "index_local_projects_on_slug"
@@ -261,6 +274,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
     t.datetime "synced_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "flagged_for_deletion_at"
     t.index ["slug"], name: "index_local_resellers_on_slug", unique: true
   end
 
@@ -462,6 +476,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_22_000001) do
   end
 
   add_foreign_key "application_groups", "local_environments"
+  add_foreign_key "canvas_custom_codes", "local_environments"
   add_foreign_key "canvas_locks", "local_environments", column: "environment_id"
   add_foreign_key "connections", "resources", column: "from_resource_id", on_delete: :cascade
   add_foreign_key "connections", "resources", column: "to_resource_id", on_delete: :cascade

@@ -248,9 +248,15 @@
                     Canvas linked
                   </div>
                 <% end %>
+                <% if local_env&.private_runner? %>
+                  <div class="env-canvas-tag" style="background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.2);color:var(--amber);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Private runner
+                  </div>
+                <% end %>
               </div>
               <div class="env-card-footer">
-                <span class="env-quick-link" onclick="openEditEnvModal('<%= env.name %>', '<%= env.account_id %>', '<%= env.environment_type %>', '<%= env.uuid %>')">
+                <span class="env-quick-link" onclick="openEditEnvModal('<%= env.name %>', '<%= env.account_id %>', '<%= env.environment_type %>', '<%= env.uuid %>', '<%= local_env&.execution_mode || 'platform' %>')">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                   Edit
                 </span>
@@ -272,6 +278,14 @@
                     Documentation
                   </span>
                 <% end %>
+                <a class="env-quick-link" href="<%= customer_security_dashboard_path(@customer.uuid, env.uuid, env_name: env.name, project_name: @project.name) %>" style="text-decoration:none;color:inherit;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Security
+                </a>
+                <a class="env-quick-link" href="<%= customer_inventory_dashboard_path(@customer.uuid, env.uuid, env_name: env.name, project_name: @project.name, account_id: env.account_id) %>" style="text-decoration:none;color:inherit;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  Inventory
+                </a>
                 <div class="env-card-menu" style="position:relative;" onclick="toggleEnvMenu(this, event)">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
                   <div class="env-card-dropdown" style="display:none;">
@@ -287,7 +301,7 @@
                         View Documentation
                       </div>
                     <% end %>
-                    <div class="env-dropdown-item" onclick="openEditEnvModal('<%= env.name %>', '<%= env.account_id %>', '<%= env.environment_type %>', '<%= env.uuid %>')">
+                    <div class="env-dropdown-item" onclick="openEditEnvModal('<%= env.name %>', '<%= env.account_id %>', '<%= env.environment_type %>', '<%= env.uuid %>', '<%= local_env&.execution_mode || 'platform' %>')">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                       Edit Environment
                     </div>
@@ -366,7 +380,9 @@
     <%# ══════════════════════════════════════════════
         CANVAS ENVIRONMENTS SECTION
         ══════════════════════════════════════════════ %>
-    <% canvas_envs = LocalEnvironment.includes(local_project: :local_customer).order(:env_type) %>
+    <% canvas_envs = current_user.platform_admin? ?
+         LocalEnvironment.includes(local_project: :local_customer).order(:env_type) :
+         LocalEnvironment.active.includes(local_project: :local_customer).order(:env_type) %>
     <div class="env-section">
       <div class="env-section-header">
         <div class="env-section-title-row">
@@ -400,7 +416,12 @@
               <div class="env-card-body">
                 <div class="env-card-top-row">
                   <div class="env-card-name"><%= cenv.name.capitalize %></div>
-                  <span class="env-badge <%= badge_class %>"><%= cenv.env_type.upcase %></span>
+                  <div style="display:flex;gap:4px;align-items:center;">
+                    <% if cenv.flagged_for_deletion? %>
+                      <span class="env-badge env-badge-flagged">Flagged for deletion</span>
+                    <% end %>
+                    <span class="env-badge <%= badge_class %>"><%= cenv.env_type.upcase %></span>
+                  </div>
                 </div>
                 <div class="canvas-meta">
                   <div class="canvas-meta-row">
@@ -612,11 +633,13 @@
         document.getElementById('link-canvas-modal').style.display = 'flex';
       }
 
-      function openEditEnvModal(name, accountId, envType, uuid) {
+      function openEditEnvModal(name, accountId, envType, uuid, executionMode) {
         document.getElementById('edit-env-name').value = name || '';
         document.getElementById('edit-env-account-id').value = accountId || '';
         var sel = document.getElementById('edit-env-sla');
         if (sel) { for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === envType) { sel.selectedIndex = i; break; } } }
+        var emSel = document.getElementById('edit-env-execution-mode');
+        if (emSel && executionMode) { for (var i = 0; i < emSel.options.length; i++) { if (emSel.options[i].value === executionMode) { emSel.selectedIndex = i; break; } } }
         var basePath = '<%= customer_project_environments_path(params[:customer_uuid], @project.uuid) %>';
         document.getElementById('edit-env-form').action = basePath + '/' + uuid;
         document.getElementById('edit-env-modal').style.display = 'flex';
@@ -676,6 +699,16 @@
                 <option value="unmanaged">Unmanaged</option>
               </select>
             </div>
+            <% if current_user.platform_admin? %>
+              <div class="form-group">
+                <label class="form-label">Runner Mode</label>
+                <select name="execution_mode" id="edit-env-execution-mode" class="form-input">
+                  <option value="platform">Platform (shared runners)</option>
+                  <option value="private">Private (dedicated runner)</option>
+                </select>
+                <span style="font-size:11px;color:var(--text-muted);margin-top:2px;display:block;">Private runners only process jobs for this account.</span>
+              </div>
+            <% end %>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-ghost" onclick="document.getElementById('edit-env-modal').style.display='none'">Cancel</button>

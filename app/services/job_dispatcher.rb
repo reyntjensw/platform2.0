@@ -3,8 +3,10 @@
 class JobDispatcher
   class DispatchError < StandardError; end
 
-  # Queue URL pattern: configurable base with provider-region suffix
-  QUEUE_BASE = ENV.fetch("SQS_QUEUE_BASE_URL", "https://sqs.eu-west-1.amazonaws.com/123456789012")
+  # Single central FIFO queue for all pipeline jobs — set per environment (dev/acc/prod)
+  def self.queue_url
+    ENV.fetch("SQS_PIPELINE_QUEUE_URL")
+  end
 
   def initialize
     @sqs = Aws::SQS::Client.new(
@@ -51,12 +53,11 @@ class JobDispatcher
   private
 
   def publish_job(job_body)
-    queue_url = queue_url_for(job_body[:cloud_provider], job_body[:region])
     account_id = job_body[:account_id].to_s
     execution_mode = job_body[:execution_mode] || "platform"
 
     @sqs.send_message(
-      queue_url: queue_url,
+      queue_url: self.class.queue_url,
       message_body: job_body.to_json,
       message_group_id: account_id,
       message_deduplication_id: job_body[:job_id],
@@ -69,13 +70,6 @@ class JobDispatcher
     job_body[:job_id]
   rescue Aws::SQS::Errors::ServiceError => e
     raise DispatchError, "Failed to publish job to SQS: #{e.message}"
-  end
-
-  def queue_url_for(provider, region)
-    # Shared FIFO queue per cloud provider region
-    # e.g., factorfiftyv2-pipeline-aws-eu-west-1.fifo
-    queue_name = "factorfiftyv2-pipeline-#{provider}-#{region}.fifo"
-    "#{QUEUE_BASE}/#{queue_name}"
   end
 
   def clear_dynamo_status(body, layer)

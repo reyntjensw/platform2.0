@@ -2758,3 +2758,15 @@
     font-size: 9px;
     opacity: 0.7;
 }
+
+/* Code panel expanded — wider right column */
+.cv-main-code {
+    grid-template-columns: 260px 1fr 480px;
+    transition: grid-template-columns 0.2s ease;
+}
+
+/* Code panel extra-wide — for focused editing */
+.cv-main-code-wide {
+    grid-template-columns: 260px 1fr 700px;
+    transition: grid-template-columns 0.2s ease;
+}

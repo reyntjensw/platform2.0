@@ -11,7 +11,13 @@ class LocalProject < ApplicationRecord
   validates :slug, presence: true
   validates :cloud_provider, presence: true, inclusion: { in: CLOUD_PROVIDERS }
 
+  scope :active, -> { where(flagged_for_deletion_at: nil) }
+  scope :flagged_for_deletion, -> { where.not(flagged_for_deletion_at: nil) }
+  scope :deletion_due, -> { flagged_for_deletion.where(flagged_for_deletion_at: ..14.days.ago) }
+
   before_validation :generate_slug, if: -> { slug.blank? && name.present? }
+
+  def flagged_for_deletion? = flagged_for_deletion_at.present?
 
   private
 

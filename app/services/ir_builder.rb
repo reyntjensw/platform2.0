@@ -32,6 +32,7 @@ class IRBuilder
       backend: layer_backend_block(layer),
       tags: TagMergerService.merge(@reseller, @customer, @project, @env),
       modules: layer_modules_block(layer),
+      custom_code: custom_code_block,
       layer_context: layer_context_block(layer),
       git_credentials: git_credentials_block,
       callback_url: callback_url(deployment)
@@ -225,6 +226,17 @@ class IRBuilder
     GitCredential.where(active: true).map do |cred|
       { host: cred.host, token: cred.token }
     end
+  end
+
+  def custom_code_block
+    record = @env.canvas_custom_code
+    return nil unless record&.code.present?
+
+    {
+      filename: "custom.tf",
+      language: record.language || "hcl",
+      content: record.code
+    }
   end
 
   def callback_url(deployment)

@@ -121,6 +121,10 @@ export default function CanvasApp({
   // Delete confirmation
   const [deleteConfirmId, setDeleteConfirmId] = useState(null)
 
+  // Code panel expanded state
+  const [codePanelExpanded, setCodePanelExpanded] = useState(false)
+  const [codePanelWide, setCodePanelWide] = useState(false)
+
   // Canvas locking
   const { lockState, acquire: acquireLock, release: releaseLock, acquiring: acquiringLock } = useCanvasLock(canvasLockApiUrl)
   const canvasLocked = lockState.locked && !lockState.isMe
@@ -436,7 +440,7 @@ export default function CanvasApp({
               onClose={() => setShowCreateGroupModal(false)}
             />
           )}
-          <div className="cv-main">
+          <div className={`cv-main${codePanelExpanded ? (codePanelWide ? " cv-main-code-wide" : " cv-main-code") : ""}`}>
           <CatalogPanel
             modules={catalogModules}
             cloudFilter={cloudFilter}
@@ -472,6 +476,10 @@ export default function CanvasApp({
             deleteResource={deleteResource}
             startConnect={() => startConnect(selectedId)}
             apiUrl={apiUrl}
+            environmentId={environmentId}
+            onCodeTabChange={setCodePanelExpanded}
+            onCodeExpandToggle={() => setCodePanelWide(w => !w)}
+            codeExpanded={codePanelWide}
             onPropsSaved={(id) => {
               fetch(`${apiUrl}/${id}/properties`, { headers: { Accept: "text/html" } })
                 .then(r => r.ok ? r.text() : "")
@@ -483,6 +491,7 @@ export default function CanvasApp({
             assignResourceToGroup={assignResourceToGroup}
             selectedGroupId={selectedGroupId}
             readOnly={canvasLocked || !lockState.isMe}
+            userRole={userRole}
             onResourceUpgraded={(updated) => {
               setResources(prev => prev.map(r => r.id === updated.id ? { ...r, ...updated } : r))
             }}

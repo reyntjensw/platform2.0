@@ -86,6 +86,13 @@ Rails.application.routes.draw do
       resources :business_rules, only: [:index, :update, :create, :destroy]
       resources :application_groups, only: [:index, :create, :update, :destroy]
 
+      # Custom code (single record per environment)
+      get    "custom_code", to: "custom_codes#show"
+      put    "custom_code", to: "custom_codes#update"
+
+      # Canvas validation (combined pre-deploy + field checks)
+      get    "canvas_validations", to: "canvas_validations#show"
+
       # Deployments (approval gate)
       resources :deployments, only: [:show, :create] do
         collection do
@@ -161,7 +168,7 @@ Rails.application.routes.draw do
       collection do
         get :regions
       end
-      resources :environments, param: :uuid, only: [:create] do
+      resources :environments, param: :uuid, only: [:create, :update] do
         collection do
           post :validate
         end
@@ -188,6 +195,12 @@ Rails.application.routes.draw do
 
     # Rightsizing
     get "rightsizing", to: "rightsizing#index", as: :rightsizing
+
+    # Security Dashboard (environment-scoped)
+    get "security/:environment_uuid", to: "security#show", as: :security_dashboard
+
+    # Inventory Dashboard (environment-scoped)
+    get "inventory/:environment_uuid", to: "inventory#show", as: :inventory_dashboard
 
     # Financial Dashboard API
     namespace :api, module: "api/customer" do
@@ -218,6 +231,9 @@ Rails.application.routes.draw do
       post   "documentation/generate",          to: "documentation#generate"
       get    "documentation/status/:task_id",   to: "documentation#status"
       get    "documentation/aws/:account_id",   to: "documentation#aws_doc"
+
+      # Inventory proxy endpoints
+      post   "inventory/resources",             to: "inventory#resources"
     end
   end
 end

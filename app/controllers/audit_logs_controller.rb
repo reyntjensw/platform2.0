@@ -26,6 +26,6 @@ class AuditLogsController < AuthenticatedController
 
     @available_actions = AuditLog::ACTIONS
     @available_resource_types = AuditLog.distinct.pluck(:resource_type).sort
-    @customers = LocalCustomer.order(:name)
+    @customers = LocalCustomer.active.order(:name)
   end
 end

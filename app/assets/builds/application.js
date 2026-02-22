@@ -1921,7 +1921,7 @@ var require_react_dom_development = __commonJS({
         return dispatcher;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React18 = require_react(), Internals = {
+      var React20 = require_react(), Internals = {
         d: {
           f: noop2,
           r: function() {
@@ -1939,7 +1939,7 @@ var require_react_dom_development = __commonJS({
         },
         p: 0,
         findDOMNode: null
-      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React18.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React20.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
         "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
       );
@@ -3474,7 +3474,7 @@ var require_react_dom_client_development = __commonJS({
         "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
       }
       function validateOptionProps(element, props) {
-        null == props.value && ("object" === typeof props.children && null !== props.children ? React18.Children.forEach(props.children, function(child) {
+        null == props.value && ("object" === typeof props.children && null !== props.children ? React20.Children.forEach(props.children, function(child) {
           null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
             "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
           ));
@@ -19106,14 +19106,14 @@ var require_react_dom_client_development = __commonJS({
         ));
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var Scheduler = require_scheduler(), React18 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+      var Scheduler = require_scheduler(), React20 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
       /* @__PURE__ */ Symbol.for("react.scope");
       var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
       /* @__PURE__ */ Symbol.for("react.legacy_hidden");
       /* @__PURE__ */ Symbol.for("react.tracing_marker");
       var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
       /* @__PURE__ */ Symbol.for("react.view_transition");
-      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React18.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React20.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
         pending: false,
         data: null,
         method: null,
@@ -21901,7 +21901,7 @@ var require_react_dom_client_development = __commonJS({
         }
       };
       (function() {
-        var isomorphicReactPackageVersion = React18.version;
+        var isomorphicReactPackageVersion = React20.version;
         if ("19.2.4" !== isomorphicReactPackageVersion)
           throw Error(
             'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.4\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -22255,18 +22255,18 @@ var require_react_jsx_runtime_development = __commonJS({
       function isValidElement(object) {
         return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
       }
-      var React18 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React18.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+      var React20 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React20.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
         return null;
       };
-      React18 = {
+      React20 = {
         react_stack_bottom_frame: function(callStackForError) {
           return callStackForError();
         }
       };
       var specialPropKeyWarningShown;
       var didWarnAboutElementRef = {};
-      var unknownOwnerDebugStack = React18.react_stack_bottom_frame.bind(
-        React18,
+      var unknownOwnerDebugStack = React20.react_stack_bottom_frame.bind(
+        React20,
         UnknownOwner
       )();
       var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -30328,7 +30328,7 @@ var hello_controller_default = class extends Controller {
 };
 
 // app/javascript/controllers/react_controller.ts
-var import_react25 = __toESM(require_react());
+var import_react28 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // app/javascript/components/HelloWorld.tsx
@@ -30345,7 +30345,7 @@ function HelloWorld({ name = "World" }) {
 }
 
 // app/javascript/components/canvas/CanvasApp.jsx
-var import_react12 = __toESM(require_react());
+var import_react13 = __toESM(require_react());
 
 // node_modules/dompurify/dist/purify.es.mjs
 var {
@@ -31975,8 +31975,404 @@ function Minimap({ resources, zoom, pan, setPan, transformRef }) {
 }
 
 // app/javascript/components/canvas/RightPanel.jsx
+var import_react4 = __toESM(require_react());
+
+// app/javascript/components/canvas/CodeScreen.jsx
 var import_react3 = __toESM(require_react());
 var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+function validateHcl(code) {
+  const errors = [];
+  if (!code.trim()) return errors;
+  const lines = code.split("\n");
+  let braces = 0, brackets = 0, parens = 0;
+  let inString = false, stringChar = null, inBlockComment = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i], trimmed = line.trim(), ln = i + 1;
+    if (!trimmed) continue;
+    if (inBlockComment) {
+      if (line.indexOf("*/") !== -1) inBlockComment = false;
+      continue;
+    }
+    if (trimmed.startsWith("#") || trimmed.startsWith("//")) continue;
+    if (trimmed.startsWith("/*")) {
+      if (!trimmed.includes("*/")) inBlockComment = true;
+      continue;
+    }
+    for (let j = 0; j < line.length; j++) {
+      const ch = line[j], prev = j > 0 ? line[j - 1] : "";
+      if (inString) {
+        if (ch === stringChar && prev !== "\\") inString = false;
+        continue;
+      }
+      if (ch === "#" || ch === "/" && line[j + 1] === "/") break;
+      if (ch === "/" && line[j + 1] === "*") {
+        inBlockComment = true;
+        break;
+      }
+      if (ch === '"' || ch === "'") {
+        inString = true;
+        stringChar = ch;
+        continue;
+      }
+      if (ch === "{") braces++;
+      if (ch === "}") braces--;
+      if (ch === "[") brackets++;
+      if (ch === "]") brackets--;
+      if (ch === "(") parens++;
+      if (ch === ")") parens--;
+      if (braces < 0) errors.push({ line: ln, message: "Unexpected closing brace '}'" });
+      if (brackets < 0) errors.push({ line: ln, message: "Unexpected closing bracket ']'" });
+      if (parens < 0) errors.push({ line: ln, message: "Unexpected closing parenthesis ')'" });
+    }
+    if (inString) {
+      errors.push({ line: ln, message: "Unclosed string literal" });
+      inString = false;
+    }
+  }
+  if (braces > 0) errors.push({ line: lines.length, message: `${braces} unclosed brace(s) '{'` });
+  if (brackets > 0) errors.push({ line: lines.length, message: `${brackets} unclosed bracket(s) '['` });
+  if (parens > 0) errors.push({ line: lines.length, message: `${parens} unclosed parenthesis '('` });
+  if (inBlockComment) errors.push({ line: lines.length, message: "Unclosed block comment '/*'" });
+  const seen = /* @__PURE__ */ new Map();
+  const namePattern = /^(resource|data|variable|output|module)\s+"([^"]+)"(?:\s+"([^"]+)")?/;
+  for (let i = 0; i < lines.length; i++) {
+    const match = lines[i].trim().match(namePattern);
+    if (match) {
+      const key = match[3] ? `${match[1]}.${match[2]}.${match[3]}` : `${match[1]}.${match[2]}`;
+      if (seen.has(key)) errors.push({ line: i + 1, message: `Duplicate ${match[1]} "${match[3] || match[2]}" (first on line ${seen.get(key)})` });
+      else seen.set(key, i + 1);
+    }
+  }
+  return errors;
+}
+var HCL_KEYWORDS = /* @__PURE__ */ new Set([
+  "resource",
+  "data",
+  "variable",
+  "output",
+  "module",
+  "provider",
+  "terraform",
+  "locals",
+  "moved",
+  "import",
+  "check"
+]);
+var HCL_BUILTINS = /* @__PURE__ */ new Set([
+  "true",
+  "false",
+  "null",
+  "each",
+  "self",
+  "count",
+  "path",
+  "var",
+  "local",
+  "data",
+  "module",
+  "terraform"
+]);
+var HCL_TYPES = /* @__PURE__ */ new Set([
+  "string",
+  "number",
+  "bool",
+  "list",
+  "map",
+  "set",
+  "object",
+  "tuple",
+  "any"
+]);
+var HCL_ATTR_KEYWORDS = /* @__PURE__ */ new Set([
+  "for_each",
+  "count",
+  "depends_on",
+  "lifecycle",
+  "provisioner",
+  "connection",
+  "source",
+  "version",
+  "providers",
+  "type",
+  "default",
+  "description",
+  "sensitive",
+  "nullable",
+  "validation",
+  "value",
+  "condition",
+  "error_message"
+]);
+function highlightHclLine(line) {
+  const parts = [];
+  let i = 0;
+  while (i < line.length) {
+    if (line[i] === "#" || line[i] === "/" && line[i + 1] === "/") {
+      parts.push(`<span class="ce-hl-comment">${escHtml(line.slice(i))}</span>`);
+      return parts.join("");
+    }
+    if (line[i] === "/" && line[i + 1] === "*") {
+      parts.push(`<span class="ce-hl-comment">${escHtml(line.slice(i))}</span>`);
+      return parts.join("");
+    }
+    if (line[i] === '"') {
+      let j = i + 1;
+      while (j < line.length && !(line[j] === '"' && line[j - 1] !== "\\")) j++;
+      j = Math.min(j + 1, line.length);
+      const str = line.slice(i, j);
+      const highlighted = escHtml(str).replace(
+        /\$\{([^}]*)\}/g,
+        '<span class="ce-hl-interp">${$1}</span>'
+      );
+      parts.push(`<span class="ce-hl-string">${highlighted}</span>`);
+      i = j;
+      continue;
+    }
+    if (/\d/.test(line[i]) && (i === 0 || /[\s=\[({,]/.test(line[i - 1]))) {
+      let j = i;
+      while (j < line.length && /[\d.]/.test(line[j])) j++;
+      parts.push(`<span class="ce-hl-number">${escHtml(line.slice(i, j))}</span>`);
+      i = j;
+      continue;
+    }
+    if (/[a-zA-Z_]/.test(line[i])) {
+      let j = i;
+      while (j < line.length && /[a-zA-Z0-9_]/.test(line[j])) j++;
+      const word = line.slice(i, j);
+      if (HCL_KEYWORDS.has(word)) {
+        parts.push(`<span class="ce-hl-keyword">${escHtml(word)}</span>`);
+      } else if (HCL_TYPES.has(word)) {
+        parts.push(`<span class="ce-hl-type">${escHtml(word)}</span>`);
+      } else if (HCL_ATTR_KEYWORDS.has(word)) {
+        parts.push(`<span class="ce-hl-attr">${escHtml(word)}</span>`);
+      } else if (HCL_BUILTINS.has(word)) {
+        parts.push(`<span class="ce-hl-builtin">${escHtml(word)}</span>`);
+      } else {
+        const rest = line.slice(j).trimStart();
+        if (rest[0] === "(") {
+          parts.push(`<span class="ce-hl-func">${escHtml(word)}</span>`);
+        } else {
+          parts.push(escHtml(word));
+        }
+      }
+      i = j;
+      continue;
+    }
+    if ("{}[]()".includes(line[i])) {
+      parts.push(`<span class="ce-hl-bracket">${escHtml(line[i])}</span>`);
+      i++;
+      continue;
+    }
+    if ("=!<>".includes(line[i])) {
+      parts.push(`<span class="ce-hl-op">${escHtml(line[i])}</span>`);
+      i++;
+      continue;
+    }
+    parts.push(escHtml(line[i]));
+    i++;
+  }
+  return parts.join("");
+}
+function escHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function highlightCode(code) {
+  return code.split("\n").map(highlightHclLine).join("\n");
+}
+function CodePanel({ environmentId, expanded, onExpandToggle, readOnly }) {
+  const [code, setCode] = (0, import_react3.useState)("");
+  const [savedCode, setSavedCode] = (0, import_react3.useState)("");
+  const [loading, setLoading] = (0, import_react3.useState)(true);
+  const [saving, setSaving] = (0, import_react3.useState)(false);
+  const [errors, setErrors] = (0, import_react3.useState)([]);
+  const [showProblems, setShowProblems] = (0, import_react3.useState)(true);
+  const textareaRef = (0, import_react3.useRef)(null);
+  const highlightRef = (0, import_react3.useRef)(null);
+  const saveTimerRef = (0, import_react3.useRef)(null);
+  const apiUrl = `/api/environments/${environmentId}/custom_code`;
+  const isDirty = code !== savedCode;
+  const lineCount = Math.max(code.split("\n").length, 15);
+  const errorLines = (0, import_react3.useMemo)(() => new Set(errors.map((e) => e.line)), [errors]);
+  const highlighted = (0, import_react3.useMemo)(() => highlightCode(code), [code]);
+  (0, import_react3.useEffect)(() => {
+    fetch(apiUrl).then((r) => r.json()).then((data) => {
+      setCode(data.code || "");
+      setSavedCode(data.code || "");
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, [apiUrl]);
+  (0, import_react3.useEffect)(() => {
+    const t = setTimeout(() => setErrors(validateHcl(code)), 300);
+    return () => clearTimeout(t);
+  }, [code]);
+  const doSave = (0, import_react3.useCallback)(async (codeToSave) => {
+    if (readOnly) return;
+    setSaving(true);
+    try {
+      const resp = await fetch(apiUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
+        body: JSON.stringify({ code: codeToSave, language: "hcl" })
+      });
+      if (resp.ok) {
+        const d = await resp.json();
+        setSavedCode(d.code);
+      }
+    } finally {
+      setSaving(false);
+    }
+  }, [apiUrl, readOnly]);
+  (0, import_react3.useEffect)(() => {
+    if (readOnly || code === savedCode) return;
+    clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => doSave(code), 1500);
+    return () => clearTimeout(saveTimerRef.current);
+  }, [code, savedCode, doSave, readOnly]);
+  (0, import_react3.useEffect)(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        if (!readOnly && code !== savedCode) {
+          clearTimeout(saveTimerRef.current);
+          doSave(code);
+        }
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [code, savedCode, doSave, readOnly]);
+  const handleKeyDown = (0, import_react3.useCallback)((e) => {
+    if (readOnly) return;
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const ta = e.target, start2 = ta.selectionStart, end = ta.selectionEnd;
+      setCode(ta.value.substring(0, start2) + "  " + ta.value.substring(end));
+      requestAnimationFrame(() => {
+        ta.selectionStart = ta.selectionEnd = start2 + 2;
+      });
+    }
+  }, [readOnly]);
+  const syncScroll = (0, import_react3.useCallback)(() => {
+    if (highlightRef.current && textareaRef.current) {
+      highlightRef.current.scrollTop = textareaRef.current.scrollTop;
+      highlightRef.current.scrollLeft = textareaRef.current.scrollLeft;
+    }
+  }, []);
+  if (loading) return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { padding: 20, textAlign: "center", color: "var(--text-muted)", fontSize: 11 }, children: "Loading\u2026" });
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-panel", children: [
+    readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-lock-banner", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "10", height: "10", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2", ry: "2" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" })
+      ] }),
+      "Acquire the canvas lock to edit"
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-bar", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ce-lang-badge", children: "HCL" }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-file-label", children: "custom.tf" }),
+      isDirty && !readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-unsaved-dot" }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { flex: 1 } }),
+      saving && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-save-status", children: "Saving\u2026" }),
+      !saving && !isDirty && savedCode && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-save-status saved", children: "\u2713 Saved" }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+        "button",
+        {
+          className: "ce-validate-btn",
+          onClick: () => {
+            setErrors(validateHcl(code));
+            setShowProblems(true);
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "10", height: "10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("path", { d: "M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" }) }),
+            "Validate"
+          ]
+        }
+      ),
+      onExpandToggle && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "ce-expand-btn", onClick: onExpandToggle, title: expanded ? "Collapse editor" : "Expand editor", children: expanded ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "10", height: "10", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("polyline", { points: "4 14 10 14 10 20" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("polyline", { points: "20 10 14 10 14 4" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("line", { x1: "14", y1: "10", x2: "21", y2: "3" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("line", { x1: "3", y1: "21", x2: "10", y2: "14" })
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "10", height: "10", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("polyline", { points: "15 3 21 3 21 9" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("polyline", { points: "9 21 3 21 3 15" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("line", { x1: "21", y1: "3", x2: "14", y2: "10" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("line", { x1: "3", y1: "21", x2: "10", y2: "14" })
+      ] }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-editor", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ce-gutter", "aria-hidden": "true", children: Array.from({ length: lineCount }, (_, i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: `ce-ln${errorLines.has(i + 1) ? " ce-ln-err" : ""}`, children: i + 1 }, i + 1)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-editor-wrap", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "pre",
+          {
+            ref: highlightRef,
+            className: "ce-highlight",
+            "aria-hidden": "true",
+            dangerouslySetInnerHTML: { __html: highlighted + "\n" }
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "textarea",
+          {
+            ref: textareaRef,
+            className: "ce-textarea",
+            value: code,
+            onChange: readOnly ? void 0 : ((e) => setCode(e.target.value)),
+            onKeyDown: handleKeyDown,
+            onScroll: syncScroll,
+            readOnly,
+            spellCheck: false,
+            autoComplete: "off",
+            autoCorrect: "off",
+            autoCapitalize: "off",
+            placeholder: readOnly ? "" : '# Custom HCL for this environment\n# Appended to generated config\n\n# resource "aws_s3_bucket" "custom" {\n#   bucket = "my-bucket"\n# }'
+          }
+        )
+      ] })
+    ] }),
+    showProblems && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-problems", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-prob-head", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Problems" }),
+        errors.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-prob-count", children: errors.length }),
+        errors.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-prob-ok", children: "\u2713" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { flex: 1 } }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "ce-prob-close", onClick: () => setShowProblems(false), children: "\xD7" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ce-prob-body", children: errors.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ce-prob-empty", children: "No problems detected" }) : errors.map((err, i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-prob-row", onClick: () => {
+        if (!textareaRef.current) return;
+        const lines = code.split("\n");
+        let pos = 0;
+        for (let l = 0; l < err.line - 1 && l < lines.length; l++) pos += lines[l].length + 1;
+        textareaRef.current.focus();
+        textareaRef.current.setSelectionRange(pos, pos + (lines[err.line - 1]?.length || 0));
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "var(--red)", strokeWidth: "2", width: "10", height: "10", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("circle", { cx: "12", cy: "12", r: "10" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("line", { x1: "15", y1: "9", x2: "9", y2: "15" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("line", { x1: "9", y1: "9", x2: "15", y2: "15" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ce-prob-msg", children: err.message }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "ce-prob-loc", children: [
+          "Ln ",
+          err.line
+        ] })
+      ] }, i)) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "ce-statusbar", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "HCL" }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { children: [
+        code.length,
+        " chars"
+      ] }),
+      readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--text-muted)" }, children: "\u{1F512} Read-only" }),
+      !readOnly && isDirty && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--orange)" }, children: "\u25CF Modified" })
+    ] })
+  ] });
+}
+
+// app/javascript/components/canvas/RightPanel.jsx
+var import_jsx_runtime5 = __toESM(require_jsx_runtime());
 function RightPanel({
   selectedId,
   propsHtml,
@@ -31993,26 +32389,48 @@ function RightPanel({
   assignResourceToGroup,
   selectedGroupId,
   readOnly,
-  onResourceUpgraded
+  onResourceUpgraded,
+  environmentId,
+  onCodeTabChange,
+  onCodeExpandToggle,
+  codeExpanded,
+  userRole
 }) {
-  const scrollRef = (0, import_react3.useRef)(null);
-  const propsRef = (0, import_react3.useRef)(null);
-  const [activeTab, setActiveTab] = (0, import_react3.useState)("overview");
-  const [newGroupName, setNewGroupName] = (0, import_react3.useState)("");
-  const [newGroupColor, setNewGroupColor] = (0, import_react3.useState)("#58a6ff");
-  const [saveFlash, setSaveFlash] = (0, import_react3.useState)(null);
-  const [upgradeModalOpen, setUpgradeModalOpen] = (0, import_react3.useState)(false);
-  const [upgradeFields, setUpgradeFields] = (0, import_react3.useState)({});
-  const [upgradeSubmitting, setUpgradeSubmitting] = (0, import_react3.useState)(false);
-  const [upgradeError, setUpgradeError] = (0, import_react3.useState)(null);
-  (0, import_react3.useEffect)(() => {
+  const scrollRef = (0, import_react4.useRef)(null);
+  const propsRef = (0, import_react4.useRef)(null);
+  const [activeTab, setActiveTab] = (0, import_react4.useState)("overview");
+  const [newGroupName, setNewGroupName] = (0, import_react4.useState)("");
+  const [newGroupColor, setNewGroupColor] = (0, import_react4.useState)("#58a6ff");
+  const [saveFlash, setSaveFlash] = (0, import_react4.useState)(null);
+  const [upgradeModalOpen, setUpgradeModalOpen] = (0, import_react4.useState)(false);
+  const [upgradeFields, setUpgradeFields] = (0, import_react4.useState)({});
+  const [upgradeSubmitting, setUpgradeSubmitting] = (0, import_react4.useState)(false);
+  const [upgradeError, setUpgradeError] = (0, import_react4.useState)(null);
+  const [validItems, setValidItems] = (0, import_react4.useState)(null);
+  const [validSummary, setValidSummary] = (0, import_react4.useState)({ errors: 0, warnings: 0 });
+  const [validLoading, setValidLoading] = (0, import_react4.useState)(false);
+  (0, import_react4.useEffect)(() => {
+    if (!environmentId) return;
+    setValidLoading(true);
+    fetch(`/api/environments/${environmentId}/canvas_validations`).then((r) => r.ok ? r.json() : { items: [], summary: { errors: 0, warnings: 0 } }).then((data) => {
+      setValidItems(data.items || []);
+      setValidSummary(data.summary || { errors: 0, warnings: 0 });
+    }).catch(() => {
+      setValidItems([]);
+      setValidSummary({ errors: 0, warnings: 0 });
+    }).finally(() => setValidLoading(false));
+  }, [environmentId, resources.length]);
+  (0, import_react4.useEffect)(() => {
     if (selectedGroupId) setActiveTab("group");
     else setActiveTab("overview");
   }, [selectedGroupId]);
-  (0, import_react3.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
     if (selectedId) setActiveTab("props");
   }, [selectedId]);
-  (0, import_react3.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
+    if (onCodeTabChange) onCodeTabChange(activeTab === "code");
+  }, [activeTab, onCodeTabChange]);
+  (0, import_react4.useEffect)(() => {
     const container = propsRef.current;
     if (!container || !apiUrl) return;
     if (readOnly) {
@@ -32135,88 +32553,102 @@ function RightPanel({
   const upgradeCount = resources.filter((r) => r.upgrade_available).length;
   const firstTabLabel = selectedGroupId ? "Group" : "Overview";
   const firstTabId = selectedGroupId ? "group" : "overview";
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rpanel", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rp-tabs", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: `rp-tab${activeTab === firstTabId ? " active" : ""}`, onClick: () => setActiveTab(firstTabId), children: firstTabLabel }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: `rp-tab${activeTab === "props" ? " active" : ""}`, onClick: () => setActiveTab("props"), children: "Props" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: `rp-tab${activeTab === "valid" ? " active" : ""}`, onClick: () => setActiveTab("valid"), children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "rpanel", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "rp-tabs", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: `rp-tab${activeTab === firstTabId ? " active" : ""}`, onClick: () => setActiveTab(firstTabId), children: firstTabLabel }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: `rp-tab${activeTab === "props" ? " active" : ""}`, onClick: () => setActiveTab("props"), children: "Props" }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: `rp-tab${activeTab === "valid" ? " active" : ""}`, onClick: () => setActiveTab("valid"), children: [
         "Valid ",
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--accent-red)", fontSize: 9 }, children: "\u25CF 2" })
+        validSummary.errors > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { style: { color: "var(--accent-red)", fontSize: 9 }, children: [
+          "\u25CF ",
+          validSummary.errors
+        ] }),
+        validSummary.errors === 0 && validSummary.warnings > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { style: { color: "var(--accent-orange)", fontSize: 9 }, children: [
+          "\u25CF ",
+          validSummary.warnings
+        ] })
+      ] }),
+      userRole === "platform_admin" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: `rp-tab${activeTab === "code" ? " active" : ""}`, onClick: () => setActiveTab("code"), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", style: { width: 10, height: 10, verticalAlign: "middle", marginRight: 3 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("polyline", { points: "16 18 22 12 16 6" }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("polyline", { points: "8 6 2 12 8 18" })
+        ] }),
+        "Code"
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rp-scroll", ref: scrollRef, children: [
-      activeTab === "overview" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { border: "1px solid var(--accent-green, #3fb950)", borderRadius: 8, padding: 14, marginBottom: 16 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 14, fontWeight: 700 }, children: "All Resources" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "rp-scroll", ref: scrollRef, style: activeTab === "code" ? { display: "none" } : void 0, children: [
+      activeTab === "overview" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { padding: "8px 0" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { border: "1px solid var(--accent-green, #3fb950)", borderRadius: 8, padding: 14, marginBottom: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 14, fontWeight: 700 }, children: "All Resources" }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: [
             "Full view of all ",
             resources.length,
             " resources across all groups."
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", gap: 20, marginTop: 10 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: resources.length }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", gap: 20, marginTop: 10 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: resources.length }),
               "total"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: errCount > 0 ? "var(--accent-red)" : "var(--text-primary)", display: "block" }, children: errCount }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { style: { fontSize: 18, color: errCount > 0 ? "var(--accent-red)" : "var(--text-primary)", display: "block" }, children: errCount }),
               "errors"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: upgradeCount > 0 ? "var(--orange)" : "var(--text-primary)", display: "block" }, children: upgradeCount }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { style: { fontSize: 18, color: upgradeCount > 0 ? "var(--orange)" : "var(--text-primary)", display: "block" }, children: upgradeCount }),
               "upgrades"
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rp-section", children: "By Group" }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "rp-section", children: "By Group" }),
         appGroups && appGroups.map((g) => {
           const count = resources.filter((r) => r.application_group_id === g.id).length;
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "8px 0", fontSize: 12, borderBottom: "1px solid var(--border)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { width: 28, height: 28, borderRadius: 6, background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { width: 10, height: 10, borderRadius: 2, background: g.color } }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: g.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 11 }, children: count })
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, padding: "8px 0", fontSize: 12, borderBottom: "1px solid var(--border)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { width: 28, height: 28, borderRadius: 6, background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { width: 10, height: 10, borderRadius: 2, background: g.color } }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: g.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 11 }, children: count })
           ] }, g.id);
         }),
-        (!appGroups || appGroups.length === 0) && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "12px 0" }, children: "No groups yet. Use the + button in the filter bar to create one." })
+        (!appGroups || appGroups.length === 0) && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "12px 0" }, children: "No groups yet. Use the + button in the filter bar to create one." })
       ] }),
-      activeTab === "group" && selectedGroup && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { width: 14, height: 14, borderRadius: 3, background: selectedGroup.color } }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 14, fontWeight: 700 }, children: selectedGroup.name })
+      activeTab === "group" && selectedGroup && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { padding: "8px 0" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { width: 14, height: 14, borderRadius: 3, background: selectedGroup.color } }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 14, fontWeight: 700 }, children: selectedGroup.name })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", gap: 20, marginTop: 10, marginBottom: 14 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: groupMembers.length }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", gap: 20, marginTop: 10, marginBottom: 14 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: groupMembers.length }),
             "resources"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: groupMembers.reduce((n, r) => n + (r.connections?.outgoing?.length || 0) + (r.connections?.incoming?.length || 0), 0) }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: groupMembers.reduce((n, r) => n + (r.connections?.outgoing?.length || 0) + (r.connections?.incoming?.length || 0), 0) }),
             "connections"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: groupMembers.filter((r) => r.validation_errors && Object.keys(r.validation_errors).length > 0).length }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { style: { fontSize: 18, color: "var(--text-primary)", display: "block" }, children: groupMembers.filter((r) => r.validation_errors && Object.keys(r.validation_errors).length > 0).length }),
             "errors"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rp-section", children: "Resources in this group" }),
-        groupMembers.map((r) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "6px 0", fontSize: 11, borderBottom: "1px solid var(--border, #21262d)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { background: "var(--bg-tertiary)", padding: "2px 5px", borderRadius: 3, fontSize: 9, fontWeight: 700 }, children: r.module_definition?.icon || r.module_definition?.name?.substring(0, 3).toUpperCase() }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: r.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 9 }, children: r.module_definition?.display_name })
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "rp-section", children: "Resources in this group" }),
+        groupMembers.map((r) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "6px 0", fontSize: 11, borderBottom: "1px solid var(--border, #21262d)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { background: "var(--bg-tertiary)", padding: "2px 5px", borderRadius: 3, fontSize: 9, fontWeight: 700 }, children: r.module_definition?.icon || r.module_definition?.name?.substring(0, 3).toUpperCase() }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: r.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 9 }, children: r.module_definition?.display_name })
         ] }, r.id)),
-        groupMembers.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "8px 0" }, children: "No resources assigned to this group yet." }),
+        groupMembers.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "8px 0" }, children: "No resources assigned to this group yet." }),
         (() => {
           const memberIds = new Set(groupMembers.map((r) => r.id));
           const crossRefs = resources.filter((r) => !memberIds.has(r.id) && r.application_group_id && ((r.connections?.outgoing || []).some((c) => memberIds.has(c.to_resource_id)) || (r.connections?.incoming || []).some((c) => memberIds.has(c.from_resource_id))));
           if (crossRefs.length === 0) return null;
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rp-section", style: { marginTop: 12 }, children: "Ghost refs (other groups)" }),
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "rp-section", style: { marginTop: 12 }, children: "Ghost refs (other groups)" }),
             crossRefs.map((r) => {
               const rGroup = appGroups.find((g) => g.id === r.application_group_id);
-              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "5px 0", fontSize: 11, opacity: 0.7 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { background: "var(--bg-tertiary)", padding: "2px 5px", borderRadius: 3, fontSize: 9, fontWeight: 700 }, children: r.module_definition?.icon || r.module_definition?.name?.substring(0, 3).toUpperCase() }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { flex: 1 }, children: r.name }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { color: rGroup?.color || "var(--text-muted)", fontSize: 9 }, children: [
+              return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "5px 0", fontSize: 11, opacity: 0.7 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { background: "var(--bg-tertiary)", padding: "2px 5px", borderRadius: 3, fontSize: 9, fontWeight: 700 }, children: r.module_definition?.icon || r.module_definition?.name?.substring(0, 3).toUpperCase() }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { flex: 1 }, children: r.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { style: { color: rGroup?.color || "var(--text-muted)", fontSize: 9 }, children: [
                   rGroup?.name || "\u2014",
                   " \u2192"
                 ] })
@@ -32225,8 +32657,8 @@ function RightPanel({
           ] });
         })()
       ] }),
-      activeTab === "props" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { children: !selectedId ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { textAlign: "center", color: "var(--text-muted)", padding: "40px 10px", fontSize: 11 }, children: "Select a resource to view properties" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-        saveFlash && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: {
+      activeTab === "props" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { children: !selectedId ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { textAlign: "center", color: "var(--text-muted)", padding: "40px 10px", fontSize: 11 }, children: "Select a resource to view properties" }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+        saveFlash && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: {
           padding: "6px 10px",
           marginBottom: 8,
           borderRadius: 6,
@@ -32236,25 +32668,25 @@ function RightPanel({
           color: saveFlash === "saved" ? "var(--accent-green)" : "var(--accent-red)",
           border: `1px solid ${saveFlash === "saved" ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`
         }, children: saveFlash === "saved" ? "\u2713 Saved" : "\u2717 Save failed" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { ref: propsRef, dangerouslySetInnerHTML: { __html: purify.sanitize(propsHtml) } }),
-        selectedResource?.upgrade_available && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: {
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { ref: propsRef, dangerouslySetInnerHTML: { __html: purify.sanitize(propsHtml) } }),
+        selectedResource?.upgrade_available && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: {
           margin: "10px 0",
           padding: "10px 12px",
           borderRadius: 8,
           background: "var(--orange-dim, rgba(245,158,11,0.1))",
           border: "1px solid rgba(245,158,11,0.25)"
         }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { fontSize: 14 }, children: "\u2191" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--orange)" }, children: "Module upgrade available" })
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { fontSize: 14 }, children: "\u2191" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--orange)" }, children: "Module upgrade available" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginBottom: 8 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginBottom: 8 }, children: [
             selectedResource.module_definition?.display_name,
             " has a new version.",
-            selectedResource.upgrade_report?.breaking && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--red)", fontWeight: 600 }, children: " Contains breaking changes." })
+            selectedResource.upgrade_report?.breaking && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: "var(--red)", fontWeight: 600 }, children: " Contains breaking changes." })
           ] }),
-          !readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          !readOnly && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
               "button",
               {
                 className: "btn btn-green btn-sm",
@@ -32267,7 +32699,7 @@ function RightPanel({
                 children: "Review & Upgrade"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
               "button",
               {
                 className: "btn btn-ghost btn-sm",
@@ -32281,8 +32713,8 @@ function RightPanel({
         selectedId && connections && (() => {
           const resConns = connections.filter((c) => c.from_resource_id === selectedId || c.to_resource_id === selectedId);
           if (resConns.length === 0) return null;
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rp-section", style: { marginBottom: 6 }, children: [
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "rp-section", style: { marginBottom: 6 }, children: [
               "Connections (",
               resConns.length,
               ")"
@@ -32291,7 +32723,7 @@ function RightPanel({
               const isOutgoing = c.from_resource_id === selectedId;
               const otherId = isOutgoing ? c.to_resource_id : c.from_resource_id;
               const other = resources.find((r) => r.id === otherId);
-              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: {
+              return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: {
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
@@ -32299,16 +32731,16 @@ function RightPanel({
                 fontSize: 11,
                 borderBottom: "1px solid var(--border)"
               }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 10, width: 14, textAlign: "center" }, children: isOutgoing ? "\u2192" : "\u2190" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: {
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 10, width: 14, textAlign: "center" }, children: isOutgoing ? "\u2192" : "\u2190" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: {
                   background: "var(--bg-elevated, #1c2740)",
                   padding: "2px 5px",
                   borderRadius: 3,
                   fontSize: 9,
                   fontWeight: 700
                 }, children: other?.module_definition?.icon || "?" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: other?.name || "Unknown" }),
-                !readOnly && deleteConnection && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { flex: 1, fontWeight: 500 }, children: other?.name || "Unknown" }),
+                !readOnly && deleteConnection && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
                   "button",
                   {
                     onClick: () => deleteConnection(c.id),
@@ -32329,9 +32761,9 @@ function RightPanel({
             })
           ] });
         })(),
-        appGroups && assignResourceToGroup && !readOnly && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "rp-field-label", style: { fontSize: 10, display: "block", marginBottom: 4 }, children: "Application Group" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+        appGroups && assignResourceToGroup && !readOnly && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { padding: "8px 0", borderTop: "1px solid var(--border)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "rp-field-label", style: { fontSize: 10, display: "block", marginBottom: 4 }, children: "Application Group" }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
             "select",
             {
               className: "rp-select",
@@ -32340,77 +32772,70 @@ function RightPanel({
               onChange: (e) => assignResourceToGroup(selectedId, e.target.value || null),
               "aria-label": "Application Group",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "", children: "None" }),
-                appGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: g.id, children: g.name }, g.id))
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "", children: "None" }),
+                appGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: g.id, children: g.name }, g.id))
               ]
             }
           )
         ] })
       ] }) }),
-      activeTab === "valid" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rp-section", children: "Real-time Validation" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "vi err", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "vi-icon", children: "!" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Missing encryption" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: 'S3 "static-assets" needs SSE enabled. Rule: data-encryption-at-rest' })
+      activeTab === "valid" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "rp-section", children: "Real-time Validation" }),
+        validLoading && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", padding: "12px 0" }, children: "Checking\u2026" }),
+        !validLoading && validItems && validItems.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "vi ok", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "vi-icon", children: "\u2713" }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "All checks passed" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: "No issues detected." })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "vi wrn", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "vi-icon", children: "\u26A0" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Single-AZ database" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: 'RDS "app-postgres" needs Multi-AZ for production per business rule.' })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "vi ok", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "vi-icon", children: "\u2713" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "No public databases" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "All databases in private subnets." })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "vi ok", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "vi-icon", children: "\u2713" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "VPC peering valid" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Cross-env ref to shared-services reachable." })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "vi ok", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "vi-icon", children: "\u2713" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Security groups defined" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "All resources have associated SGs." })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "vi ok", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "vi-icon", children: "\u2713" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Tagging compliance" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Required tags: env, team, cost-center present." })
-          ] })
-        ] })
+        !validLoading && validItems && validItems.map((item, i) => {
+          const cls = item.severity === "error" ? "err" : item.severity === "warning" ? "wrn" : "ok";
+          const icon = item.severity === "error" ? "!" : item.severity === "warning" ? "\u26A0" : "\u2713";
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: `vi ${cls}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "vi-icon", children: icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: item.title }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: item.message })
+            ] })
+          ] }, i);
+        }),
+        !validLoading && validItems && validItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { marginTop: 12 }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+          "button",
+          {
+            className: "rp-btn",
+            style: { fontSize: 10, background: "var(--bg-tertiary)", color: "var(--text-secondary)", border: "1px solid var(--border)", width: "100%" },
+            onClick: () => {
+              setValidLoading(true);
+              fetch(`/api/environments/${environmentId}/canvas_validations`).then((r) => r.ok ? r.json() : { items: [], summary: { errors: 0, warnings: 0 } }).then((data) => {
+                setValidItems(data.items || []);
+                setValidSummary(data.summary || { errors: 0, warnings: 0 });
+              }).finally(() => setValidLoading(false));
+            },
+            children: "\u21BB Re-check"
+          }
+        ) })
       ] })
     ] }),
+    activeTab === "code" && environmentId && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(CodePanel, { environmentId, expanded: codeExpanded, onExpandToggle: onCodeExpandToggle, readOnly }),
     upgradeModalOpen && selectedResource && (() => {
       const report = selectedResource.upgrade_report || {};
       const added = report.added || [];
       const removed = report.removed || [];
       const changed = report.changed || [];
       const breakingAdded = added.filter((v) => v.breaking);
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
         if (e.target === e.currentTarget) setUpgradeModalOpen(false);
-      }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-panel", style: { maxWidth: 520 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h3", { className: "modal-title", children: [
+      }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-panel", style: { maxWidth: 520 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h3", { className: "modal-title", children: [
             "Upgrade ",
             selectedResource.module_definition?.display_name
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "modal-close", onClick: () => setUpgradeModalOpen(false), "aria-label": "Close", children: "\xD7" })
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "modal-close", onClick: () => setUpgradeModalOpen(false), "aria-label": "Close", children: "\xD7" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body", style: { maxHeight: 400, overflowY: "auto" }, children: [
-          report.breaking && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: {
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-body", style: { maxHeight: 400, overflowY: "auto" }, children: [
+          report.breaking && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: {
             padding: "8px 12px",
             marginBottom: 12,
             borderRadius: 6,
@@ -32419,58 +32844,58 @@ function RightPanel({
             fontSize: 11,
             color: "var(--red)"
           }, children: "\u26A0 This upgrade contains breaking changes. Review carefully." }),
-          added.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginBottom: 12 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
+          added.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
               "Added Variables (",
               added.length,
               ")"
             ] }),
-            added.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "#56d490" }, children: [
+            added.map((v) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "#56d490" }, children: [
               "+ ",
               v.name,
               " ",
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: [
                 "(",
                 v.type,
                 v.default != null ? `, default: ${JSON.stringify(v.default)}` : "",
                 ")"
               ] }),
-              v.breaking && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { color: "var(--red)", fontSize: 10, marginLeft: 4 }, children: "required" })
+              v.breaking && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: "var(--red)", fontSize: 10, marginLeft: 4 }, children: "required" })
             ] }, v.name))
           ] }),
-          removed.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginBottom: 12 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
+          removed.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
               "Removed Variables (",
               removed.length,
               ")"
             ] }),
-            removed.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "#fc8181" }, children: [
+            removed.map((v) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "#fc8181" }, children: [
               "\u2715 ",
               v.name
             ] }, v.name))
           ] }),
-          changed.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginBottom: 12 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
+          changed.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { marginBottom: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }, children: [
               "Changed Variables (",
               changed.length,
               ")"
             ] }),
-            changed.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "var(--orange)" }, children: [
+            changed.map((v) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontSize: 12, fontFamily: "var(--font-mono)", padding: "3px 0", color: "var(--orange)" }, children: [
               "~ ",
               v.name,
               ": ",
               Object.entries(v.changes || {}).map(([k, c]) => `${k} ${JSON.stringify(c.from)} \u2192 ${JSON.stringify(c.to)}`).join(", ")
             ] }, v.name))
           ] }),
-          breakingAdded.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { marginTop: 16, paddingTop: 12, borderTop: "1px solid var(--border)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 8 }, children: "New Required Fields" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginBottom: 10 }, children: "These fields are required by the new version and have no default value. Please provide values." }),
-            breakingAdded.map((v) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "form-group", style: { marginBottom: 10 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "form-label", style: { fontSize: 10 }, children: [
+          breakingAdded.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { marginTop: 16, paddingTop: 12, borderTop: "1px solid var(--border)" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 11, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 8 }, children: "New Required Fields" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginBottom: 10 }, children: "These fields are required by the new version and have no default value. Please provide values." }),
+            breakingAdded.map((v) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "form-group", style: { marginBottom: 10 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("label", { className: "form-label", style: { fontSize: 10 }, children: [
                 v.name,
                 " *"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
                 "input",
                 {
                   type: "text",
@@ -32483,7 +32908,7 @@ function RightPanel({
               )
             ] }, v.name))
           ] }),
-          upgradeError && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: {
+          upgradeError && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: {
             padding: "6px 10px",
             marginTop: 8,
             borderRadius: 6,
@@ -32493,9 +32918,9 @@ function RightPanel({
             border: "1px solid rgba(239,68,68,0.2)"
           }, children: upgradeError })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-ghost", onClick: () => setUpgradeModalOpen(false), children: "Cancel" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-footer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-ghost", onClick: () => setUpgradeModalOpen(false), children: "Cancel" }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
             "button",
             {
               className: "btn btn-green",
@@ -32511,8 +32936,8 @@ function RightPanel({
 }
 
 // app/javascript/components/canvas/CommandPalette.jsx
-var import_react4 = __toESM(require_react());
-var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+var import_react5 = __toESM(require_react());
+var import_jsx_runtime6 = __toESM(require_jsx_runtime());
 var GROUP_COLORS = ["#58a6ff", "#3fb950", "#d29922", "#f85149", "#bc8cff", "#39d2c0", "#f778ba", "#79c0ff"];
 function CommandPalette({
   resources,
@@ -32524,13 +32949,13 @@ function CommandPalette({
   onSelectGroup,
   onCreateGroup
 }) {
-  const [query, setQuery] = (0, import_react4.useState)("");
-  const [highlightIndex, setHighlightIndex] = (0, import_react4.useState)(-1);
-  const [creatingGroup, setCreatingGroup] = (0, import_react4.useState)(false);
-  const [newGroupColor, setNewGroupColor] = (0, import_react4.useState)(GROUP_COLORS[0]);
-  const inputRef = (0, import_react4.useRef)(null);
-  const resultsRef = (0, import_react4.useRef)(null);
-  (0, import_react4.useEffect)(() => {
+  const [query, setQuery] = (0, import_react5.useState)("");
+  const [highlightIndex, setHighlightIndex] = (0, import_react5.useState)(-1);
+  const [creatingGroup, setCreatingGroup] = (0, import_react5.useState)(false);
+  const [newGroupColor, setNewGroupColor] = (0, import_react5.useState)(GROUP_COLORS[0]);
+  const inputRef = (0, import_react5.useRef)(null);
+  const resultsRef = (0, import_react5.useRef)(null);
+  (0, import_react5.useEffect)(() => {
     inputRef.current?.focus();
   }, []);
   const q = query.toLowerCase().trim();
@@ -32544,7 +32969,7 @@ function CommandPalette({
     ...showCreateGroup ? [{ type: "create-group", id: "__create_group__" }] : [],
     ...matchedModules.map((m) => ({ type: "module", id: m.id, module: m }))
   ];
-  const handleCreateGroup = (0, import_react4.useCallback)(async () => {
+  const handleCreateGroup = (0, import_react5.useCallback)(async () => {
     if (!q) return;
     setCreatingGroup(true);
     const group = await onCreateGroup(q, newGroupColor);
@@ -32554,7 +32979,7 @@ function CommandPalette({
       onClose();
     }
   }, [q, newGroupColor, onCreateGroup, onSelectGroup, onClose]);
-  const onKeyDown = (0, import_react4.useCallback)((e) => {
+  const onKeyDown = (0, import_react5.useCallback)((e) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setHighlightIndex((i) => Math.min(i + 1, allItems.length - 1));
@@ -32572,10 +32997,10 @@ function CommandPalette({
       } else if (item?.type === "create-group") handleCreateGroup();
     } else if (e.key === "Escape") onClose();
   }, [allItems, highlightIndex, onSelectResource, onAddModule, onSelectGroup, onClose, handleCreateGroup]);
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-overlay open", onClick: (e) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-overlay open", onClick: (e) => {
     if (e.target === e.currentTarget) onClose();
-  }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-panel", onClick: (e) => e.stopPropagation(), children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+  }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-panel", onClick: (e) => e.stopPropagation(), children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       "input",
       {
         ref: inputRef,
@@ -32589,9 +33014,9 @@ function CommandPalette({
         onKeyDown
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-results", ref: resultsRef, children: [
-      matchedResources.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-section", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-results", ref: resultsRef, children: [
+      matchedResources.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-section", children: [
           "Resources (",
           resources.length,
           ")"
@@ -32599,29 +33024,29 @@ function CommandPalette({
         matchedResources.map((r, i) => {
           const cat = catFor(r.module_definition.category);
           const idx = i;
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
             "div",
             {
               className: `cmd-item${idx === highlightIndex ? " highlighted" : ""}`,
               onClick: () => onSelectResource(r.id),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-icon", style: { background: cat.bg, color: cat.color }, children: r.module_definition.icon || "?" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-name", children: r.name }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-hint", children: r.module_definition.display_name })
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-icon", style: { background: cat.bg, color: cat.color }, children: r.module_definition.icon || "?" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-name", children: r.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-hint", children: r.module_definition.display_name })
               ]
             },
             r.id
           );
         })
       ] }),
-      (matchedGroups.length > 0 || showCreateGroup) && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-section", children: [
+      (matchedGroups.length > 0 || showCreateGroup) && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-section", children: [
           "App Groups",
           appGroups?.length ? ` (${appGroups.length})` : ""
         ] }),
         matchedGroups.map((g, i) => {
           const idx = matchedResources.length + i;
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
             "div",
             {
               className: `cmd-item${idx === highlightIndex ? " highlighted" : ""}`,
@@ -32632,9 +33057,9 @@ function CommandPalette({
                 }
               },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-icon", style: { background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { width: 10, height: 10, borderRadius: 2, background: g.color } }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-name", children: g.name }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-item-hint", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-icon", style: { background: g.color + "22", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { width: 10, height: 10, borderRadius: 2, background: g.color } }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-name", children: g.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-item-hint", children: [
                   resources.filter((r) => r.application_group_id === g.id).length,
                   " resources"
                 ] })
@@ -32645,16 +33070,16 @@ function CommandPalette({
         }),
         showCreateGroup && (() => {
           const idx = matchedResources.length + matchedGroups.length;
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
             "div",
             {
               className: `cmd-item${idx === highlightIndex ? " highlighted" : ""}`,
               onClick: handleCreateGroup,
               style: { opacity: creatingGroup ? 0.5 : 1 },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-icon", style: { fontSize: 10 }, children: "+" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-name", style: { flex: 1 }, children: creatingGroup ? "Creating\u2026" : `Create group "${query.trim()}"` }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { display: "flex", gap: 3, alignItems: "center" }, children: GROUP_COLORS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-icon", style: { fontSize: 10 }, children: "+" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-name", style: { flex: 1 }, children: creatingGroup ? "Creating\u2026" : `Create group "${query.trim()}"` }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { display: "flex", gap: 3, alignItems: "center" }, children: GROUP_COLORS.map((c) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
                   "button",
                   {
                     type: "button",
@@ -32681,29 +33106,29 @@ function CommandPalette({
           );
         })()
       ] }),
-      matchedModules.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-section", children: q ? "Add Module" : "Quick Add" }),
+      matchedModules.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-section", children: q ? "Add Module" : "Quick Add" }),
         matchedModules.map((m, i) => {
           const idx = matchedResources.length + matchedGroups.length + (showCreateGroup ? 1 : 0) + i;
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
             "div",
             {
               className: `cmd-item${idx === highlightIndex ? " highlighted" : ""}`,
               onClick: () => onAddModule(m.id),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-icon", style: { fontSize: 10 }, children: "+" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-item-name", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-icon", style: { fontSize: 10 }, children: "+" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-item-name", children: [
                   "Add ",
                   m.display_name || m.name
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "cmd-item-hint", children: m.category })
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "cmd-item-hint", children: m.category })
               ]
             },
             m.id
           );
         })
       ] }),
-      allItems.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "cmd-empty", children: [
+      allItems.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "cmd-empty", children: [
         'No results for "',
         query,
         '"'
@@ -32713,8 +33138,8 @@ function CommandPalette({
 }
 
 // app/javascript/components/canvas/BusinessRulesScreen.jsx
-var import_react5 = __toESM(require_react());
-var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+var import_react6 = __toESM(require_react());
+var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 var SEV_CONFIG = {
   block: { label: "BLOCKS DEPLOY", className: "sev-block" },
   warn: { label: "WARNING", className: "sev-warn" },
@@ -32822,21 +33247,21 @@ function countByType(rules) {
 }
 function ConditionRow({ condition, onChange, onRemove, prefix }) {
   const isMulti = ["IN", "NOT_IN"].includes(condition.operator);
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-row", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "builder-keyword", children: prefix }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-row", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "builder-keyword", children: prefix }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
       "select",
       {
         className: "builder-select",
         value: condition.field,
         onChange: (e) => onChange({ ...condition, field: e.target.value }),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "", children: "field\u2026" }),
-          CONDITION_FIELDS.map((f) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: f.value, children: f.label }, f.value))
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: "", children: "field\u2026" }),
+          CONDITION_FIELDS.map((f) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: f.value, children: f.label }, f.value))
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       "select",
       {
         className: "builder-select builder-select--op",
@@ -32847,10 +33272,10 @@ function ConditionRow({ condition, onChange, onRemove, prefix }) {
           const newVal = multi ? Array.isArray(condition.value) ? condition.value : condition.value ? [condition.value] : [] : Array.isArray(condition.value) ? condition.value[0] || "" : condition.value;
           onChange({ ...condition, operator: newOp, value: newVal });
         },
-        children: OPERATORS.map((o) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: o.value, children: o.label }, o.value))
+        children: OPERATORS.map((o) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: o.value, children: o.label }, o.value))
       }
     ),
-    isMulti ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    isMulti ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       "input",
       {
         className: "builder-input",
@@ -32859,7 +33284,7 @@ function ConditionRow({ condition, onChange, onRemove, prefix }) {
         value: Array.isArray(condition.value) ? condition.value.join(", ") : "",
         onChange: (e) => onChange({ ...condition, value: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) })
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    ) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       "input",
       {
         className: "builder-input",
@@ -32872,16 +33297,16 @@ function ConditionRow({ condition, onChange, onRemove, prefix }) {
         }
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-remove", onClick: onRemove, "aria-label": "Remove condition", children: "\xD7" })
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "builder-remove", onClick: onRemove, "aria-label": "Remove condition", children: "\xD7" })
   ] });
 }
 function ActionPicker({ selected, onChange }) {
   const toggle = (val) => {
     onChange(selected.includes(val) ? selected.filter((s) => s !== val) : [...selected, val]);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-actions", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "builder-keyword", children: "ACTION" }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-action-chips", children: ACTION_OPTIONS.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-actions", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "builder-keyword", children: "ACTION" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "builder-action-chips", children: ACTION_OPTIONS.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       "button",
       {
         type: "button",
@@ -32902,7 +33327,7 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
   const initIf = isEdit && rule.conditions?.if_conditions?.length ? rule.conditions.if_conditions : [{ ...EMPTY_IF }];
   const initThen = isEdit && rule.conditions?.then_conditions?.length ? rule.conditions.then_conditions : [{ ...EMPTY_THEN }];
   const initActions = isEdit && rule.actions?.action_list?.length ? rule.actions.action_list : [];
-  const [form, setForm] = (0, import_react5.useState)({
+  const [form, setForm] = (0, import_react6.useState)({
     name: rule?.name || "",
     description: rule?.description || "",
     severity: rule?.severity || "info",
@@ -32911,11 +33336,11 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
     cloud_provider: rule?.cloud_provider || "",
     customer_id: rule?.customer_id || ""
   });
-  const [ifConditions, setIfConditions] = (0, import_react5.useState)(initIf);
-  const [thenConditions, setThenConditions] = (0, import_react5.useState)(initThen);
-  const [actionList, setActionList] = (0, import_react5.useState)(initActions);
-  const [submitting, setSubmitting] = (0, import_react5.useState)(false);
-  const [errorMsg, setErrorMsg] = (0, import_react5.useState)(null);
+  const [ifConditions, setIfConditions] = (0, import_react6.useState)(initIf);
+  const [thenConditions, setThenConditions] = (0, import_react6.useState)(initThen);
+  const [actionList, setActionList] = (0, import_react6.useState)(initActions);
+  const [submitting, setSubmitting] = (0, import_react6.useState)(false);
+  const [errorMsg, setErrorMsg] = (0, import_react6.useState)(null);
   const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   const updateCondition = (arr, setArr, idx, val) => {
     const next = [...arr];
@@ -32926,7 +33351,7 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
     if (arr.length <= 1) return;
     setArr(arr.filter((_, i) => i !== idx));
   };
-  const preview = (0, import_react5.useMemo)(() => {
+  const preview = (0, import_react6.useMemo)(() => {
     const conds = { if_conditions: ifConditions.filter((c) => c.field), then_conditions: thenConditions.filter((c) => c.field) };
     return ruleToPseudoCode(conds, { action_list: actionList });
   }, [ifConditions, thenConditions, actionList]);
@@ -32972,54 +33397,54 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
       setSubmitting(false);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
     if (e.target === e.currentTarget) onClose();
-  }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-panel", style: { maxWidth: 640, maxHeight: "85vh", overflow: "auto" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h3", { className: "modal-title", children: [
+  }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-panel", style: { maxWidth: 640, maxHeight: "85vh", overflow: "auto" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h3", { className: "modal-title", children: [
         isEdit ? "Edit" : "Create",
         " Business Rule"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "\xD7" })
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "\xD7" })
     ] }),
-    errorMsg && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { color: "var(--red)", marginBottom: 12, fontSize: 12, padding: "0 24px" }, children: errorMsg }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-body", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+    errorMsg && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { color: "var(--red)", marginBottom: 12, fontSize: 12, padding: "0 24px" }, children: errorMsg }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-body", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "modal-label", children: [
             "Name",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", name: "name", value: form.name, onChange: handleChange, required: true, className: "modal-input" })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "text", name: "name", value: form.name, onChange: handleChange, required: true, className: "modal-input" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "modal-label", children: [
             "Severity",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("select", { name: "severity", value: form.severity, onChange: handleChange, className: "modal-input", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "block", children: "block" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "warn", children: "warn" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "info", children: "info" })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("select", { name: "severity", value: form.severity, onChange: handleChange, className: "modal-input", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: "block", children: "block" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: "warn", children: "warn" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: "info", children: "info" })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "modal-label", children: [
           "Description",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("textarea", { name: "description", value: form.description, onChange: handleChange, rows: 2, className: "modal-input" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("textarea", { name: "description", value: form.description, onChange: handleChange, rows: 2, className: "modal-input" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "modal-label", children: [
             "Rule Type",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("select", { name: "rule_type", value: form.rule_type, onChange: handleChange, className: "modal-input", children: CATEGORY_TREE.flatMap((cat) => cat.types.map((t) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: t, children: cat.labels[t] }, t))) })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("select", { name: "rule_type", value: form.rule_type, onChange: handleChange, className: "modal-input", children: CATEGORY_TREE.flatMap((cat) => cat.types.map((t) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: t, children: cat.labels[t] }, t))) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "modal-label", children: [
             "Scope",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("select", { name: "scope_type", value: form.scope_type, onChange: handleChange, className: "modal-input", children: scopeOptions.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: opt.value, children: opt.label }, opt.value)) })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("select", { name: "scope_type", value: form.scope_type, onChange: handleChange, className: "modal-input", children: scopeOptions.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: opt.value, children: opt.label }, opt.value)) })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-grid", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-label", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-grid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-label", children: [
             "Cloud Provider",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { display: "flex", gap: 16, marginTop: 6 }, children: ["aws", "azure"].map((cp) => {
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { display: "flex", gap: 16, marginTop: 6 }, children: ["aws", "azure"].map((cp) => {
               const checked = form.cloud_provider === cp || form.cloud_provider === "multi";
-              return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 13, color: "var(--text-primary)" }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "checkbox", checked, onChange: () => {
+              return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 13, color: "var(--text-primary)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "checkbox", checked, onChange: () => {
                   const other = cp === "aws" ? "azure" : "aws";
                   const otherChecked = form.cloud_provider === other || form.cloud_provider === "multi";
                   let next;
@@ -33030,19 +33455,19 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
                   }
                   setForm((prev) => ({ ...prev, cloud_provider: next }));
                 }, style: { accentColor: cp === "aws" ? "var(--aws)" : "var(--azure)", width: 16, height: 16 } }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `tag tag-${cp}`, children: cp.toUpperCase() })
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: `tag tag-${cp}`, children: cp.toUpperCase() })
               ] }, cp);
             }) })
           ] }),
-          form.scope_type === "customer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "modal-label", children: [
+          form.scope_type === "customer" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "modal-label", children: [
             "Customer ID",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "number", name: "customer_id", value: form.customer_id, onChange: handleChange, className: "modal-input" })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "number", name: "customer_id", value: form.customer_id, onChange: handleChange, className: "modal-input" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-section", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-section-title", children: "Rule Builder" }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-group", children: [
-            ifConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-section", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "builder-section-title", children: "Rule Builder" }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-group", children: [
+            ifConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               ConditionRow,
               {
                 condition: c,
@@ -33052,10 +33477,10 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
               },
               i
             )),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-add", onClick: () => setIfConditions((prev) => [...prev, { ...EMPTY_IF }]), children: "+ Add IF condition" })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "builder-add", onClick: () => setIfConditions((prev) => [...prev, { ...EMPTY_IF }]), children: "+ Add IF condition" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-group", children: [
-            thenConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-group", children: [
+            thenConditions.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               ConditionRow,
               {
                 condition: c,
@@ -33065,32 +33490,32 @@ function RuleFormModal({ rulesApiUrl, rule, onSaved, onClose, userRole }) {
               },
               i
             )),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "builder-add", onClick: () => setThenConditions((prev) => [...prev, { ...EMPTY_THEN }]), children: "+ Add THEN condition" })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "builder-add", onClick: () => setThenConditions((prev) => [...prev, { ...EMPTY_THEN }]), children: "+ Add THEN condition" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ActionPicker, { selected: actionList, onChange: setActionList })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(ActionPicker, { selected: actionList, onChange: setActionList })
         ] }),
-        preview && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "builder-preview", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "builder-preview-title", children: "Preview" }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("pre", { className: "rule-code", style: { margin: 0 }, children: preview })
+        preview && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "builder-preview", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "builder-preview-title", children: "Preview" }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { className: "rule-code", style: { margin: 0 }, children: preview })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-footer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", className: "btn btn-green", disabled: submitting, children: submitting ? isEdit ? "Saving\u2026" : "Creating\u2026" : isEdit ? "Save Changes" : "Create Rule" })
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "submit", className: "btn btn-green", disabled: submitting, children: submitting ? isEdit ? "Saving\u2026" : "Creating\u2026" : isEdit ? "Save Changes" : "Create Rule" })
       ] })
     ] })
   ] }) });
 }
 function BusinessRulesScreen({ rulesApiUrl, userRole }) {
-  const [rules, setRules] = (0, import_react5.useState)([]);
-  const [loading, setLoading] = (0, import_react5.useState)(true);
-  const [error2, setError] = (0, import_react5.useState)(null);
-  const [activeType, setActiveType] = (0, import_react5.useState)(null);
-  const [showCreateModal, setShowCreateModal] = (0, import_react5.useState)(false);
-  const [editingRule, setEditingRule] = (0, import_react5.useState)(null);
-  const [cloudFilter, setCloudFilter] = (0, import_react5.useState)(null);
-  const [searchQuery, setSearchQuery] = (0, import_react5.useState)("");
-  (0, import_react5.useEffect)(() => {
+  const [rules, setRules] = (0, import_react6.useState)([]);
+  const [loading, setLoading] = (0, import_react6.useState)(true);
+  const [error2, setError] = (0, import_react6.useState)(null);
+  const [activeType, setActiveType] = (0, import_react6.useState)(null);
+  const [showCreateModal, setShowCreateModal] = (0, import_react6.useState)(false);
+  const [editingRule, setEditingRule] = (0, import_react6.useState)(null);
+  const [cloudFilter, setCloudFilter] = (0, import_react6.useState)(null);
+  const [searchQuery, setSearchQuery] = (0, import_react6.useState)("");
+  (0, import_react6.useEffect)(() => {
     if (!rulesApiUrl) return;
     setLoading(true);
     setError(null);
@@ -33105,8 +33530,8 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
       setLoading(false);
     });
   }, [rulesApiUrl]);
-  const typeCounts = (0, import_react5.useMemo)(() => countByType(rules), [rules]);
-  const filteredRules = (0, import_react5.useMemo)(() => {
+  const typeCounts = (0, import_react6.useMemo)(() => countByType(rules), [rules]);
+  const filteredRules = (0, import_react6.useMemo)(() => {
     let result = rules;
     if (activeType) result = result.filter((r) => (r.rule_type || "custom_compliance") === activeType);
     if (cloudFilter) result = result.filter((r) => r.cloud_provider === cloudFilter || r.cloud_provider === "multi");
@@ -33118,7 +33543,7 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
     }
     return result;
   }, [rules, activeType, cloudFilter, searchQuery]);
-  const activeLabel = (0, import_react5.useMemo)(() => {
+  const activeLabel = (0, import_react6.useMemo)(() => {
     if (!activeType) return "All";
     for (const cat of CATEGORY_TREE) {
       if (cat.labels[activeType]) return cat.labels[activeType];
@@ -33161,12 +33586,12 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
     }
   };
   if (loading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "rules-layout", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { padding: 40, textAlign: "center", width: "100%" }, children: "Loading business rules\u2026" }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "rules-layout", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { padding: 40, textAlign: "center", width: "100%" }, children: "Loading business rules\u2026" }) });
   }
   if (error2) {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "rules-layout", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { padding: 40, textAlign: "center", width: "100%" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Failed to load business rules." }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-green", onClick: () => {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "rules-layout", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { padding: 40, textAlign: "center", width: "100%" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: "Failed to load business rules." }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-green", onClick: () => {
         setLoading(true);
         setError(null);
         fetch(rulesApiUrl).then((r) => r.json()).then((data) => {
@@ -33179,17 +33604,17 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
       }, children: "Retry" })
     ] }) });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rules-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rules-sidebar", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `rnav${!activeType ? " active" : ""}`, onClick: () => setActiveType(null), children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rules-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rules-sidebar", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `rnav${!activeType ? " active" : ""}`, onClick: () => setActiveType(null), children: [
         "All Rules ",
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "rc", children: rules.length })
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "rc", children: rules.length })
       ] }),
       CATEGORY_TREE.map((cat) => {
         const sectionCount = cat.types.reduce((sum, t) => sum + (typeCounts[t] || 0), 0);
         if (sectionCount === 0) return null;
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rcat-title", children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rcat-title", children: [
             cat.icon,
             " ",
             cat.section
@@ -33197,33 +33622,33 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
           cat.types.map((t) => {
             const c = typeCounts[t] || 0;
             if (c === 0) return null;
-            return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `rnav${activeType === t ? " active" : ""}`, onClick: () => setActiveType(t), children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `rnav${activeType === t ? " active" : ""}`, onClick: () => setActiveType(t), children: [
               cat.labels[t],
               " ",
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "rc", children: c })
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "rc", children: c })
             ] }, t);
           })
         ] }, cat.section);
       })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rules-main", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h2", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rules-main", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h2", { children: [
             activeLabel,
             " Rules"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rules-subtitle", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rules-subtitle", children: [
             filteredRules.length,
             " rule",
             filteredRules.length !== 1 ? "s" : "",
             " \xB7 Applied to: All environments"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-green", onClick: () => setShowCreateModal(true), children: "+ Create Rule" })
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-green", onClick: () => setShowCreateModal(true), children: "+ Create Rule" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center", marginBottom: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center", marginBottom: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
           "input",
           {
             type: "text",
@@ -33234,8 +33659,8 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
             style: { flex: 1, maxWidth: 320, margin: 0, padding: "8px 12px", fontSize: 13 }
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
             "button",
             {
               className: `btn btn-sm${cloudFilter === null ? " btn-green" : " btn-ghost"}`,
@@ -33243,7 +33668,7 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
               children: "All"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
             "button",
             {
               className: `btn btn-sm${cloudFilter === "aws" ? " btn-green" : " btn-ghost"}`,
@@ -33252,7 +33677,7 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
               children: "\u2601\uFE0F AWS"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
             "button",
             {
               className: `btn btn-sm${cloudFilter === "azure" ? " btn-green" : " btn-ghost"}`,
@@ -33263,17 +33688,17 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
           )
         ] })
       ] }),
-      showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: null, onSaved: handleCreated, onClose: () => setShowCreateModal(false), userRole }),
-      editingRule && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(RuleFormModal, { rulesApiUrl, rule: editingRule, onSaved: handleEdited, onClose: () => setEditingRule(null), userRole }),
-      filteredRules.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { style: { padding: 40, textAlign: "center", color: "#8b99b5" }, children: "No business rules configured for this category." }),
+      showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(RuleFormModal, { rulesApiUrl, rule: null, onSaved: handleCreated, onClose: () => setShowCreateModal(false), userRole }),
+      editingRule && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(RuleFormModal, { rulesApiUrl, rule: editingRule, onSaved: handleEdited, onClose: () => setEditingRule(null), userRole }),
+      filteredRules.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { padding: 40, textAlign: "center", color: "#8b99b5" }, children: "No business rules configured for this category." }),
       filteredRules.map((rule) => {
         const sev = SEV_CONFIG[rule.severity] || SEV_CONFIG.info;
         const pseudo = getRulePseudoCode(rule);
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rule-card", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rule-head", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `sev ${sev.className}`, children: sev.label }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "rule-name", children: rule.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rule-card", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rule-head", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: `sev ${sev.className}`, children: sev.label }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "rule-name", children: rule.name }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               "button",
               {
                 className: "btn btn-ghost btn-sm",
@@ -33283,7 +33708,7 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
                 children: "Edit"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               "button",
               {
                 className: "btn btn-danger btn-sm",
@@ -33292,7 +33717,7 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
                 children: "Delete"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               "div",
               {
                 className: `rp-toggle${rule.enabled ? " on" : ""}`,
@@ -33304,22 +33729,22 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "rule-desc", children: rule.description }),
-          pseudo && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "rule-code", children: pseudo.split("\n").map((line, i) => {
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "rule-desc", children: rule.description }),
+          pseudo && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "rule-code", children: pseudo.split("\n").map((line, i) => {
             const keyword = line.match(/^(IF|THEN|AND|ACTION:)/);
-            return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { children: keyword ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "rc-keyword", children: keyword[1] }),
+            return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { children: keyword ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "rc-keyword", children: keyword[1] }),
               " ",
               line.slice(keyword[1].length)
             ] }) : line }, i);
           }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "rule-meta", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: rule.scope_type === "platform" ? "All envs" : rule.scope_type === "reseller" ? "Reseller-specific" : "Customer-specific" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rule-meta", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: rule.scope_type === "platform" ? "All envs" : rule.scope_type === "reseller" ? "Reseller-specific" : "Customer-specific" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
               "\u{1F464} ",
               rule.scope_type
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
               "\u2601\uFE0F ",
               rule.cloud_provider
             ] })
@@ -33331,8 +33756,8 @@ function BusinessRulesScreen({ rulesApiUrl, userRole }) {
 }
 
 // app/javascript/components/canvas/PromoteScreen.jsx
-var import_react6 = __toESM(require_react());
-var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+var import_react7 = __toESM(require_react());
+var import_jsx_runtime8 = __toESM(require_jsx_runtime());
 var ENV_DOTS = { dev: "var(--accent-green)", acc: "var(--accent-orange)", prd: "var(--accent-red)" };
 function timeAgo(dateStr) {
   if (!dateStr) return "never";
@@ -33345,20 +33770,20 @@ function timeAgo(dateStr) {
   return `${days}d ago`;
 }
 function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) {
-  const [environments, setEnvironments] = (0, import_react6.useState)([]);
-  const [changeCounts, setChangeCounts] = (0, import_react6.useState)({});
-  const [loading, setLoading] = (0, import_react6.useState)(true);
-  const [error2, setError] = (0, import_react6.useState)(null);
-  const [diffView, setDiffView] = (0, import_react6.useState)(null);
-  const [diffReport, setDiffReport] = (0, import_react6.useState)(null);
-  const [diffLoading, setDiffLoading] = (0, import_react6.useState)(false);
-  const [appGroupFilter, setAppGroupFilter] = (0, import_react6.useState)(null);
-  const [excludedIds, setExcludedIds] = (0, import_react6.useState)(/* @__PURE__ */ new Set());
-  const [planOutput, setPlanOutput] = (0, import_react6.useState)(null);
-  const [planLoading, setPlanLoading] = (0, import_react6.useState)(false);
-  const [promoting, setPromoting] = (0, import_react6.useState)(false);
-  const [promotionResult, setPromotionResult] = (0, import_react6.useState)(null);
-  const fetchPipeline = (0, import_react6.useCallback)(async () => {
+  const [environments, setEnvironments] = (0, import_react7.useState)([]);
+  const [changeCounts, setChangeCounts] = (0, import_react7.useState)({});
+  const [loading, setLoading] = (0, import_react7.useState)(true);
+  const [error2, setError] = (0, import_react7.useState)(null);
+  const [diffView, setDiffView] = (0, import_react7.useState)(null);
+  const [diffReport, setDiffReport] = (0, import_react7.useState)(null);
+  const [diffLoading, setDiffLoading] = (0, import_react7.useState)(false);
+  const [appGroupFilter, setAppGroupFilter] = (0, import_react7.useState)(null);
+  const [excludedIds, setExcludedIds] = (0, import_react7.useState)(/* @__PURE__ */ new Set());
+  const [planOutput, setPlanOutput] = (0, import_react7.useState)(null);
+  const [planLoading, setPlanLoading] = (0, import_react7.useState)(false);
+  const [promoting, setPromoting] = (0, import_react7.useState)(false);
+  const [promotionResult, setPromotionResult] = (0, import_react7.useState)(null);
+  const fetchPipeline = (0, import_react7.useCallback)(async () => {
     if (!promotionsApiUrl) return;
     setLoading(true);
     setError(null);
@@ -33373,10 +33798,10 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       setLoading(false);
     }
   }, [promotionsApiUrl]);
-  (0, import_react6.useEffect)(() => {
+  (0, import_react7.useEffect)(() => {
     fetchPipeline();
   }, [fetchPipeline]);
-  (0, import_react6.useEffect)(() => {
+  (0, import_react7.useEffect)(() => {
     if (environments.length < 2 || !promotionsApiUrl) return;
     const pairs = [];
     for (let i = 0; i < environments.length - 1; i++) {
@@ -33396,7 +33821,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       }
     });
   }, [environments, promotionsApiUrl]);
-  const openDiff = (0, import_react6.useCallback)(async (sourceEnv, targetEnv) => {
+  const openDiff = (0, import_react7.useCallback)(async (sourceEnv, targetEnv) => {
     setDiffView({ sourceEnv, targetEnv });
     setDiffReport(null);
     setDiffLoading(true);
@@ -33415,7 +33840,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       setDiffLoading(false);
     }
   }, [promotionsApiUrl]);
-  (0, import_react6.useEffect)(() => {
+  (0, import_react7.useEffect)(() => {
     if (!diffView) return;
     const { sourceEnv, targetEnv } = diffView;
     setDiffLoading(true);
@@ -33430,14 +33855,14 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       setDiffLoading(false);
     }).catch(() => setDiffLoading(false));
   }, [appGroupFilter]);
-  const toggleExclude = (0, import_react6.useCallback)((resourceId) => {
+  const toggleExclude = (0, import_react7.useCallback)((resourceId) => {
     setExcludedIds((prev) => {
       const next = new Set(prev);
       next.has(resourceId) ? next.delete(resourceId) : next.add(resourceId);
       return next;
     });
   }, []);
-  const handlePreview = (0, import_react6.useCallback)(async () => {
+  const handlePreview = (0, import_react7.useCallback)(async () => {
     if (!diffView) return;
     setPlanLoading(true);
     setPlanOutput(null);
@@ -33461,7 +33886,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       setPlanLoading(false);
     }
   }, [diffView, promotionsApiUrl, appGroupFilter, excludedIds]);
-  const handlePromote = (0, import_react6.useCallback)(async () => {
+  const handlePromote = (0, import_react7.useCallback)(async () => {
     if (!diffView) return;
     setPromoting(true);
     setPromotionResult(null);
@@ -33490,7 +33915,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       setPromoting(false);
     }
   }, [diffView, promotionsApiUrl, appGroupFilter, excludedIds, fetchPipeline]);
-  const handleApprovePromote = (0, import_react6.useCallback)(async () => {
+  const handleApprovePromote = (0, import_react7.useCallback)(async () => {
     if (!diffView) return;
     setPromoting(true);
     setPromotionResult(null);
@@ -33528,7 +33953,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       setPromoting(false);
     }
   }, [diffView, promotionsApiUrl, appGroupFilter, excludedIds, fetchPipeline]);
-  const appGroups = (0, import_react6.useMemo)(() => {
+  const appGroups = (0, import_react7.useMemo)(() => {
     if (!diffReport) return [];
     const groups = /* @__PURE__ */ new Map();
     const allItems = [...diffReport.added || [], ...diffReport.modified || [], ...diffReport.removed || []];
@@ -33539,7 +33964,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
     });
     return [...groups.entries()].map(([id, name]) => ({ id, name }));
   }, [diffReport]);
-  const diffItems = (0, import_react6.useMemo)(() => {
+  const diffItems = (0, import_react7.useMemo)(() => {
     if (!diffReport) return [];
     return [
       ...(diffReport.added || []).map((r) => ({ ...r, type: "add" })),
@@ -33549,23 +33974,23 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
   }, [diffReport]);
   const isPrd = diffView?.targetEnv?.env_type === "prd";
   if (loading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "promote-layout", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Environment Promotion Pipeline" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "promote-subtitle", children: "Loading pipeline\u2026" })
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "promote-layout", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Environment Promotion Pipeline" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "promote-subtitle", children: "Loading pipeline\u2026" })
     ] });
   }
   if (error2 && !environments.length) {
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "promote-layout", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Environment Promotion Pipeline" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "promote-subtitle", style: { color: "var(--accent-red)" }, children: error2 })
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "promote-layout", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Environment Promotion Pipeline" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "promote-subtitle", style: { color: "var(--accent-red)" }, children: error2 })
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "promote-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Environment Promotion Pipeline" }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "promote-subtitle", children: "Compare, diff, and promote infrastructure changes across environments." }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "pipeline", children: environments.map((env, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_react6.default.Fragment, { children: [
-      i > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "arrow-col", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "promote-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Environment Promotion Pipeline" }),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "promote-subtitle", children: "Compare, diff, and promote infrastructure changes across environments." }),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "pipeline", children: environments.map((env, i) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_react7.default.Fragment, { children: [
+      i > 0 && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "arrow-col", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
           "button",
           {
             className: "promote-btn2",
@@ -33574,8 +33999,8 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
             children: "Promote \u2192"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "arrow-line" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "arrow-note", children: (() => {
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "arrow-line" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "arrow-note", children: (() => {
           const key = `${environments[i - 1].id}-${env.id}`;
           const count = changeCounts[key];
           if (count === void 0) return "\u2026";
@@ -33583,31 +34008,31 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
           return `${count} change${count !== 1 ? "s" : ""}`;
         })() })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `stage${env.id === environment?.id ? " active-s" : ""}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-head", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "env-dot", style: { background: ENV_DOTS[env.env_type] || "var(--text-muted)" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "stage-name", children: env.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-ver", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: `stage${env.id === environment?.id ? " active-s" : ""}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "stage-head", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "env-dot", style: { background: ENV_DOTS[env.env_type] || "var(--text-muted)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "stage-name", children: env.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "stage-ver", children: [
             "v",
             env.version || "0.0.0"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-meta", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "stage-meta", children: [
           "Last deployed: ",
           timeAgo(env.last_deployed_at)
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "stage-meta", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "stage-meta", children: [
           env.resource_count,
           " resources"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "stage-chips", children: Object.entries(env.resource_summary || {}).map(([cat, count]) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "chip", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "stage-chips", children: Object.entries(env.resource_summary || {}).map(([cat, count]) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "chip", children: [
           cat,
           " \xD7",
           count
         ] }, cat)) })
       ] })
     ] }, env.id)) }),
-    promotionResult && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: {
+    promotionResult && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: {
       padding: "10px 14px",
       borderRadius: 6,
       marginBottom: 16,
@@ -33616,17 +34041,17 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
       border: `1px solid ${promotionResult.error ? "var(--accent-red)" : "var(--accent-green)"}`,
       color: promotionResult.error ? "var(--accent-red)" : "var(--accent-green)"
     }, children: promotionResult.error ? `Promotion failed: ${promotionResult.error}` : `Promotion ${promotionResult.status || "completed"} successfully` }),
-    diffView && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-box", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-head", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h3", { children: [
+    diffView && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "diff-box", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "diff-head", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("h3", { children: [
               "Diff: ",
               diffView.sourceEnv.name,
               " \u2192 ",
               diffView.targetEnv.name
             ] }),
-            appGroups.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+            appGroups.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
               "select",
               {
                 value: appGroupFilter || "",
@@ -33640,43 +34065,43 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
                   color: "var(--text-primary)"
                 },
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: "", children: "All Resources" }),
-                  appGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("option", { value: g.id, children: g.name }, g.id))
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "", children: "All Resources" }),
+                  appGroups.map((g) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: g.id, children: g.name }, g.id))
                 ]
               }
             )
           ] }),
-          diffReport && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-stats", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "a", children: [
+          diffReport && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "diff-stats", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "a", children: [
               "+",
               diffReport.summary?.added || 0,
               " added"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "m", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "m", children: [
               "~",
               diffReport.summary?.modified || 0,
               " modified"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "r", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "r", children: [
               "-",
               diffReport.summary?.removed || 0,
               " removed"
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "diff-body", children: [
-          diffLoading && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", padding: 8 }, children: "Loading diff\u2026" }),
-          !diffLoading && diffItems.length === 0 && diffReport && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", padding: 8 }, children: "No changes detected \u2014 environments are in sync." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "diff-body", children: [
+          diffLoading && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", padding: 8 }, children: "Loading diff\u2026" }),
+          !diffLoading && diffItems.length === 0 && diffReport && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", padding: 8 }, children: "No changes detected \u2014 environments are in sync." }),
           diffItems.map((item, idx) => {
             const rid = item.resource_id || item.resource_name || idx;
             const isExcluded = excludedIds.has(rid);
-            return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+            return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
               "div",
               {
                 className: `ditem d${item.type[0]}`,
                 style: isExcluded ? { opacity: 0.4, textDecoration: "line-through" } : {},
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                     "input",
                     {
                       type: "checkbox",
@@ -33686,14 +34111,14 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
                       style: { marginRight: 4, cursor: "pointer" }
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "dbadge", children: item.type === "add" ? "added" : item.type === "mod" ? "modified" : "removed" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("strong", { children: item.resource_name || item.name }),
-                    item.module_name && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "dbadge", children: item.type === "add" ? "added" : item.type === "mod" ? "modified" : "removed" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("strong", { children: item.resource_name || item.name }),
+                    item.module_name && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
                       " \u2014 ",
                       item.module_name
                     ] }),
-                    item.type === "mod" && item.changes && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { style: { fontSize: 10, color: "var(--text-muted)", marginLeft: 6 }, children: [
+                    item.type === "mod" && item.changes && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { style: { fontSize: 10, color: "var(--text-muted)", marginLeft: 6 }, children: [
                       "(",
                       Object.keys(item.changes).join(", "),
                       ")"
@@ -33706,7 +34131,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
           })
         ] })
       ] }),
-      planOutput && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: {
+      planOutput && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: {
         marginTop: 12,
         background: "var(--bg-tertiary)",
         border: "1px solid var(--border)",
@@ -33715,12 +34140,12 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
         maxHeight: 300,
         overflowY: "auto"
       }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: 11, fontWeight: 600, marginBottom: 8, color: "var(--text-secondary)" }, children: "Preview Plan Output" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { style: { fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-primary)", margin: 0, whiteSpace: "pre-wrap" }, children: planOutput })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 11, fontWeight: 600, marginBottom: 8, color: "var(--text-secondary)" }, children: "Preview Plan Output" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("pre", { style: { fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-primary)", margin: 0, whiteSpace: "pre-wrap" }, children: planOutput })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end", alignItems: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-ghost", onClick: () => setDiffView(null), children: "\u2190 Back" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end", alignItems: "center" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "btn btn-ghost", onClick: () => setDiffView(null), children: "\u2190 Back" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
           "button",
           {
             className: "btn btn-ghost",
@@ -33729,7 +34154,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
             children: planLoading ? "Loading plan\u2026" : "Preview Plan"
           }
         ),
-        isPrd ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        isPrd ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
           "button",
           {
             className: "btn btn-green",
@@ -33737,7 +34162,7 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
             disabled: promoting || !diffReport,
             children: promoting ? "Promoting\u2026" : "Approve & Promote"
           }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        ) : /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
           "button",
           {
             className: "btn btn-green",
@@ -33752,8 +34177,8 @@ function PromoteScreen({ project, environment, siblingEnvs, promotionsApiUrl }) 
 }
 
 // app/javascript/components/canvas/TemplatesScreen.jsx
-var import_react7 = __toESM(require_react());
-var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+var import_react8 = __toESM(require_react());
+var import_jsx_runtime9 = __toESM(require_jsx_runtime());
 var FILTERS = ["All", "AWS", "Azure", "Multi-Cloud", "Starter", "Production-Ready", "My Templates"];
 var TEMPLATES = [
   {
@@ -33830,13 +34255,13 @@ var TEMPLATES = [
   }
 ];
 function TemplatesScreen() {
-  const [activeFilter, setActiveFilter] = (0, import_react7.useState)("All");
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Environment Templates" }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "btn btn-green", children: "+ Create Template" })
+  const [activeFilter, setActiveFilter] = (0, import_react8.useState)("All");
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "tpl-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h2", { children: "Environment Templates" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { className: "btn btn-green", children: "+ Create Template" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-filters", children: FILTERS.map((f) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "tpl-filters", children: FILTERS.map((f) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
       "div",
       {
         className: `fchip${activeFilter === f ? " active" : ""}`,
@@ -33845,18 +34270,18 @@ function TemplatesScreen() {
       },
       f
     )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-grid", children: [
-      TEMPLATES.map((t, i) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-card", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-preview", children: [
-          t.blocks.map((b, j) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-block", style: { background: b.bg, color: b.color }, children: b.label }, j)),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: `tpl-badge ${t.badgeClass}`, children: t.badge })
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "tpl-grid", children: [
+      TEMPLATES.map((t, i) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "tpl-card", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "tpl-preview", children: [
+          t.blocks.map((b, j) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "tpl-block", style: { background: b.bg, color: b.color }, children: b.label }, j)),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: `tpl-badge ${t.badgeClass}`, children: t.badge })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-body", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-title", children: t.title }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-desc", children: t.desc }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tpl-foot", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-tags", children: t.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "tpl-tag", children: tag }, tag)) }),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "tpl-uses", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "tpl-body", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "tpl-title", children: t.title }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "tpl-desc", children: t.desc }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "tpl-foot", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "tpl-tags", children: t.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "tpl-tag", children: tag }, tag)) }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "tpl-uses", children: [
               "Used ",
               t.uses,
               "\xD7"
@@ -33864,18 +34289,18 @@ function TemplatesScreen() {
           ] })
         ] })
       ] }, i)),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "tpl-card tpl-card-empty", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { textAlign: "center", padding: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 24, marginBottom: 8, opacity: 0.3 }, children: "+" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 13, fontWeight: 600, color: "var(--text-secondary)" }, children: "Save current environment as template" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 4 }, children: "Share with your team or across customers" })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "tpl-card tpl-card-empty", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { textAlign: "center", padding: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { fontSize: 24, marginBottom: 8, opacity: 0.3 }, children: "+" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { fontSize: 13, fontWeight: 600, color: "var(--text-secondary)" }, children: "Save current environment as template" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 4 }, children: "Share with your team or across customers" })
       ] }) })
     ] })
   ] });
 }
 
 // app/javascript/components/canvas/ImportScreen.jsx
-var import_react8 = __toESM(require_react());
-var import_jsx_runtime9 = __toESM(require_jsx_runtime());
+var import_react9 = __toESM(require_react());
+var import_jsx_runtime10 = __toESM(require_jsx_runtime());
 var METHODS = [
   { id: "scan", icon: "\u2601", iconClass: "scan", title: "Cloud Account Scan", desc: "Connect your AWS or Azure account and auto-discover all resources. Generates diagram and IaC code." },
   { id: "upload", icon: "\u2B06", iconClass: "upload", title: "Upload IaC Files", desc: "Upload existing Terraform, CloudFormation, or Bicep files. We'll parse and visualize them." },
@@ -33890,30 +34315,30 @@ var STEPS = [
   { num: "6", status: "", title: "Review & Adopt", desc: "Review generated code, run plan to verify zero-diff, then adopt into F50 management" }
 ];
 function ImportScreen() {
-  const [selected, setSelected] = (0, import_react8.useState)("scan");
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "import-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h2", { children: "Import Existing Infrastructure" }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "import-subtitle", children: "Bring your existing cloud resources into Factor Fifty for management and visualization." }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "import-methods", children: METHODS.map((m) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+  const [selected, setSelected] = (0, import_react9.useState)("scan");
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "import-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h2", { children: "Import Existing Infrastructure" }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "import-subtitle", children: "Bring your existing cloud resources into Factor Fifty for management and visualization." }),
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "import-methods", children: METHODS.map((m) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
       "div",
       {
         className: `imp-method${selected === m.id ? " sel" : ""}`,
         onClick: () => setSelected(m.id),
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: `imp-icon ${m.iconClass}`, children: m.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "imp-title", children: m.title }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "imp-desc", children: m.desc })
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `imp-icon ${m.iconClass}`, children: m.icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "imp-title", children: m.title }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "imp-desc", children: m.desc })
         ]
       },
       m.id
     )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "import-steps", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h3", { children: "Cloud Account Scan \u2014 Progress" }),
-      STEPS.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: `istep${s.status ? ` ${s.status}` : ""}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "snum", children: s.num }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h4", { children: s.title }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { children: s.desc })
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "import-steps", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "Cloud Account Scan \u2014 Progress" }),
+      STEPS.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: `istep${s.status ? ` ${s.status}` : ""}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "snum", children: s.num }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h4", { children: s.title }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { children: s.desc })
         ] })
       ] }, i))
     ] })
@@ -33921,8 +34346,8 @@ function ImportScreen() {
 }
 
 // app/javascript/components/canvas/DeployScreen.jsx
-var import_react9 = __toESM(require_react());
-var import_jsx_runtime10 = __toESM(require_jsx_runtime());
+var import_react10 = __toESM(require_react());
+var import_jsx_runtime11 = __toESM(require_jsx_runtime());
 var ENGINES = [
   { id: "tofu", logo: "OT", logoClass: "tofu", name: "OpenTofu", desc: "Open-source IaC", enabled: true },
   { id: "cfn", logo: "CF", logoClass: "cfn", name: "CloudFormation", desc: "AWS-native stacks", enabled: false },
@@ -34039,31 +34464,31 @@ function getPipelineStepStates(checks, deployResult) {
   return states;
 }
 function DeployScreen({ environmentId, canManage = true }) {
-  const [selectedEngine] = (0, import_react9.useState)("tofu");
-  const [checks, setChecks] = (0, import_react9.useState)(null);
-  const [loading, setLoading] = (0, import_react9.useState)(false);
-  const [deploying, setDeploying] = (0, import_react9.useState)(false);
-  const [deployResult, setDeployResult] = (0, import_react9.useState)(null);
-  const [error2, setError] = (0, import_react9.useState)(null);
-  const [runnerConnected, setRunnerConnected] = (0, import_react9.useState)(false);
-  const [runnerLoading, setRunnerLoading] = (0, import_react9.useState)(true);
-  const [expandedLayers, setExpandedLayers] = (0, import_react9.useState)({});
-  const [layerLogs, setLayerLogs] = (0, import_react9.useState)({});
-  const [loadingLogs, setLoadingLogs] = (0, import_react9.useState)({});
-  const [layerPlans, setLayerPlans] = (0, import_react9.useState)({});
-  const [loadingPlans, setLoadingPlans] = (0, import_react9.useState)({});
-  const [showPlanModal, setShowPlanModal] = (0, import_react9.useState)(false);
-  const [showCostModal, setShowCostModal] = (0, import_react9.useState)(false);
-  const [showApplyModal, setShowApplyModal] = (0, import_react9.useState)(false);
-  const [infracostData, setInfracostData] = (0, import_react9.useState)(null);
-  const [loadingInfracost, setLoadingInfracost] = (0, import_react9.useState)(false);
-  const planFetchedRef = (0, import_react9.useRef)({});
-  const [checksExpanded, setChecksExpanded] = (0, import_react9.useState)(false);
-  const [planSearch, setPlanSearch] = (0, import_react9.useState)("");
-  const [applySearch, setApplySearch] = (0, import_react9.useState)("");
-  const applyLogsFetchedRef = (0, import_react9.useRef)({});
+  const [selectedEngine] = (0, import_react10.useState)("tofu");
+  const [checks, setChecks] = (0, import_react10.useState)(null);
+  const [loading, setLoading] = (0, import_react10.useState)(false);
+  const [deploying, setDeploying] = (0, import_react10.useState)(false);
+  const [deployResult, setDeployResult] = (0, import_react10.useState)(null);
+  const [error2, setError] = (0, import_react10.useState)(null);
+  const [runnerConnected, setRunnerConnected] = (0, import_react10.useState)(false);
+  const [runnerLoading, setRunnerLoading] = (0, import_react10.useState)(true);
+  const [expandedLayers, setExpandedLayers] = (0, import_react10.useState)({});
+  const [layerLogs, setLayerLogs] = (0, import_react10.useState)({});
+  const [loadingLogs, setLoadingLogs] = (0, import_react10.useState)({});
+  const [layerPlans, setLayerPlans] = (0, import_react10.useState)({});
+  const [loadingPlans, setLoadingPlans] = (0, import_react10.useState)({});
+  const [showPlanModal, setShowPlanModal] = (0, import_react10.useState)(false);
+  const [showCostModal, setShowCostModal] = (0, import_react10.useState)(false);
+  const [showApplyModal, setShowApplyModal] = (0, import_react10.useState)(false);
+  const [infracostData, setInfracostData] = (0, import_react10.useState)(null);
+  const [loadingInfracost, setLoadingInfracost] = (0, import_react10.useState)(false);
+  const planFetchedRef = (0, import_react10.useRef)({});
+  const [checksExpanded, setChecksExpanded] = (0, import_react10.useState)(false);
+  const [planSearch, setPlanSearch] = (0, import_react10.useState)("");
+  const [applySearch, setApplySearch] = (0, import_react10.useState)("");
+  const applyLogsFetchedRef = (0, import_react10.useRef)({});
   const apiBase = `/api/environments/${environmentId}/deployments`;
-  const checkRunnerStatus = (0, import_react9.useCallback)(async () => {
+  const checkRunnerStatus = (0, import_react10.useCallback)(async () => {
     setRunnerLoading(true);
     try {
       const resp = await fetch(`${apiBase}/runner_status`);
@@ -34076,7 +34501,7 @@ function DeployScreen({ environmentId, canManage = true }) {
       setRunnerLoading(false);
     }
   }, [apiBase]);
-  const runPreChecks = (0, import_react9.useCallback)(async () => {
+  const runPreChecks = (0, import_react10.useCallback)(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -34093,12 +34518,12 @@ function DeployScreen({ environmentId, canManage = true }) {
       setLoading(false);
     }
   }, [apiBase]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     runPreChecks();
     checkRunnerStatus();
   }, [runPreChecks, checkRunnerStatus]);
   const hasBlockers = checks && checks.some((c) => c.status === "failed");
-  const triggerPlan = (0, import_react9.useCallback)(async () => {
+  const triggerPlan = (0, import_react10.useCallback)(async () => {
     setDeploying(true);
     setDeployResult(null);
     setError(null);
@@ -34120,7 +34545,7 @@ function DeployScreen({ environmentId, canManage = true }) {
       setDeploying(false);
     }
   }, [environmentId]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (!deployResult?.id) return;
     const terminal = ["completed", "failed", "rejected", "planned"];
     if (terminal.includes(deployResult.status)) return;
@@ -34137,7 +34562,7 @@ function DeployScreen({ environmentId, canManage = true }) {
     }, 3e3);
     return () => clearInterval(interval);
   }, [deployResult?.id, deployResult?.status, apiBase]);
-  const approveDeployment = (0, import_react9.useCallback)(async (deploymentId) => {
+  const approveDeployment = (0, import_react10.useCallback)(async (deploymentId) => {
     try {
       const resp = await fetch(`${apiBase}/${deploymentId}/approve`, {
         method: "PATCH",
@@ -34154,7 +34579,7 @@ function DeployScreen({ environmentId, canManage = true }) {
       setError("Network error approving deployment");
     }
   }, [apiBase]);
-  const rejectDeployment = (0, import_react9.useCallback)(async (deploymentId) => {
+  const rejectDeployment = (0, import_react10.useCallback)(async (deploymentId) => {
     try {
       const resp = await fetch(`${apiBase}/${deploymentId}/reject`, {
         method: "PATCH",
@@ -34171,10 +34596,10 @@ function DeployScreen({ environmentId, canManage = true }) {
       setError("Network error rejecting deployment");
     }
   }, [apiBase]);
-  const toggleLayer = (0, import_react9.useCallback)((layerIndex) => {
+  const toggleLayer = (0, import_react10.useCallback)((layerIndex) => {
     setExpandedLayers((prev) => ({ ...prev, [layerIndex]: !prev[layerIndex] }));
   }, []);
-  const fetchLayerLogs = (0, import_react9.useCallback)(async (deploymentId, layerIndex, force = false) => {
+  const fetchLayerLogs = (0, import_react10.useCallback)(async (deploymentId, layerIndex, force = false) => {
     const key = `${deploymentId}-${layerIndex}`;
     if (!force && layerLogs[key]) return;
     setLoadingLogs((prev) => ({ ...prev, [key]: true }));
@@ -34190,7 +34615,7 @@ function DeployScreen({ environmentId, canManage = true }) {
       setLoadingLogs((prev) => ({ ...prev, [key]: false }));
     }
   }, [apiBase, layerLogs]);
-  const fetchLayerPlan = (0, import_react9.useCallback)(async (deploymentId, layerIndex) => {
+  const fetchLayerPlan = (0, import_react10.useCallback)(async (deploymentId, layerIndex) => {
     const key = `${deploymentId}-${layerIndex}`;
     setLoadingPlans((prev) => ({ ...prev, [key]: true }));
     try {
@@ -34217,7 +34642,7 @@ function DeployScreen({ environmentId, canManage = true }) {
       setLoadingPlans((prev) => ({ ...prev, [key]: false }));
     }
   }, [apiBase, deployResult]);
-  const fetchInfracostData = (0, import_react9.useCallback)(async (deploymentId) => {
+  const fetchInfracostData = (0, import_react10.useCallback)(async (deploymentId) => {
     setLoadingInfracost(true);
     try {
       const resp = await fetch(`${apiBase}/${deploymentId}/infracost`);
@@ -34238,7 +34663,7 @@ function DeployScreen({ environmentId, canManage = true }) {
       setLoadingInfracost(false);
     }
   }, [apiBase, deployResult]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (!deployResult?.id) return;
     if (!["planned", "completed", "applying"].includes(deployResult.status)) return;
     const key = `${deployResult.id}-0`;
@@ -34246,12 +34671,12 @@ function DeployScreen({ environmentId, canManage = true }) {
     planFetchedRef.current[key] = true;
     fetchLayerPlan(deployResult.id, 0);
   }, [deployResult?.id, deployResult?.status, fetchLayerPlan]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (deployResult?.status === "applying") {
       setShowApplyModal(true);
     }
   }, [deployResult?.status]);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     if (!showApplyModal || !deployResult?.id) return;
     if (!["applying", "completed", "failed"].includes(deployResult.status)) return;
     const isTerminal = deployResult.status === "completed" || deployResult.status === "failed";
@@ -34275,10 +34700,10 @@ function DeployScreen({ environmentId, canManage = true }) {
     }, 5e3);
     return () => clearInterval(logPollInterval);
   }, [showApplyModal, deployResult?.id, deployResult?.status, deployResult?.layers, fetchLayerLogs]);
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { flex: 1, overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "deploy-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h2", { children: "Deploy Configuration" }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "deploy-subtitle", children: "Select your IaC engine and review the deployment pipeline. The engine is decoupled from your diagram." }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "engine-grid", children: ENGINES.map((e) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { flex: 1, overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "deploy-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { children: "Deploy Configuration" }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "deploy-subtitle", children: "Select your IaC engine and review the deployment pipeline. The engine is decoupled from your diagram." }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "engine-grid", children: ENGINES.map((e) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
       "div",
       {
         className: `eng-opt${selectedEngine === e.id ? " sel" : ""}${!e.enabled ? " disabled" : ""}`,
@@ -34286,28 +34711,28 @@ function DeployScreen({ environmentId, canManage = true }) {
         style: !e.enabled ? { opacity: 0.4, cursor: "not-allowed", pointerEvents: "none" } : {},
         title: !e.enabled ? "Coming soon" : "",
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `eng-logo ${e.logoClass}`, children: e.logo }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "eng-name", children: e.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "eng-desc", children: e.desc }),
-          !e.enabled && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 9, color: "var(--text-muted)", marginTop: 4 }, children: "Coming soon" })
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: `eng-logo ${e.logoClass}`, children: e.logo }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "eng-name", children: e.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "eng-desc", children: e.desc }),
+          !e.enabled && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 9, color: "var(--text-muted)", marginTop: 4 }, children: "Coming soon" })
         ]
       },
       e.id
     )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "pipe-box", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "pipe-head", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: "Deployment Pipeline" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Engine-agnostic orchestration" })
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "pipe-box", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "pipe-head", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { children: "Deployment Pipeline" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Engine-agnostic orchestration" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pipe-steps", children: PIPE_STEPS.map((s, i) => {
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "pipe-steps", children: PIPE_STEPS.map((s, i) => {
         const stepStates = getPipelineStepStates(checks, deployResult);
         const state = stepStates[s.key];
         const stateClass = state === "completed" ? "pstep--done" : state === "active" ? "pstep--active" : state === "failed" ? "pstep--fail" : "";
         const stateIcon = state === "completed" ? "\u2713" : state === "active" ? "\u27F3" : state === "failed" ? "\u2717" : null;
         const isClickable = (s.key === "plan" || s.key === "cost") && state === "completed" && deployResult || s.key === "apply" && (state === "active" || state === "completed" || state === "failed") && deployResult;
-        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_react9.default.Fragment, { children: [
-          i > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `pconnector${state === "completed" || state === "active" && i > 0 ? " pconnector--done" : ""}` }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_react10.default.Fragment, { children: [
+          i > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: `pconnector${state === "completed" || state === "active" && i > 0 ? " pconnector--done" : ""}` }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
             "div",
             {
               className: `pstep ${stateClass}`,
@@ -34330,9 +34755,9 @@ function DeployScreen({ environmentId, canManage = true }) {
               style: isClickable ? { cursor: "pointer" } : void 0,
               title: isClickable ? "Click to view plan output" : void 0,
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-icon", children: stateIcon ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "pstep-state", children: stateIcon }) : s.icon }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-name", children: s.name }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "pstep-detail", children: s.detail })
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "pstep-icon", children: stateIcon ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "pstep-state", children: stateIcon }) : s.icon }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "pstep-name", children: s.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "pstep-detail", children: s.detail })
               ]
             }
           )
@@ -34345,38 +34770,38 @@ function DeployScreen({ environmentId, canManage = true }) {
       const totalCount = allChecks ? allChecks.length : 0;
       const allPassed = passedCount === totalCount;
       const scoreColor = !allChecks ? "var(--text-muted)" : allPassed ? "var(--accent-green)" : "var(--accent-yellow, #e8a735)";
-      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "checks-box", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "checks-box", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
           "div",
           {
             style: { display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" },
             onClick: () => setChecksExpanded((prev) => !prev),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 10, color: "var(--text-muted)" }, children: checksExpanded ? "\u25BC" : "\u25B6" }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { style: { margin: 0 }, children: "Pre-Deploy Checks" }),
-                allChecks && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 11, fontWeight: 600, color: scoreColor }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 10, color: "var(--text-muted)" }, children: checksExpanded ? "\u25BC" : "\u25B6" }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { margin: 0 }, children: "Pre-Deploy Checks" }),
+                allChecks && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 11, fontWeight: 600, color: scoreColor }, children: [
                   passedCount,
                   "/",
                   totalCount,
                   " passed"
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: (e) => {
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: (e) => {
                 e.stopPropagation();
                 runPreChecks();
               }, disabled: loading, children: loading ? "Running\u2026" : "\u21BB Re-run checks" })
             ]
           }
         ),
-        error2 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--accent-red)", fontSize: 12, padding: "8px 0" }, children: error2 }),
-        loading && !checks && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12, padding: "16px 0" }, children: "Running pre-deployment checks\u2026" }),
-        checksExpanded && allChecks && allChecks.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "chk", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: `chk-s ${STATUS_CLASS[c.status] || "pend"}`, children: STATUS_ICON[c.status] || "\u25CC" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+        error2 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { color: "var(--accent-red)", fontSize: 12, padding: "8px 0" }, children: error2 }),
+        loading && !checks && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12, padding: "16px 0" }, children: "Running pre-deployment checks\u2026" }),
+        checksExpanded && allChecks && allChecks.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "chk", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: `chk-s ${STATUS_CLASS[c.status] || "pend"}`, children: STATUS_ICON[c.status] || "\u25CC" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
             c.name,
             " ",
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
               "\u2014 ",
               c.message
             ] })
@@ -34384,26 +34809,26 @@ function DeployScreen({ environmentId, canManage = true }) {
         ] }, i))
       ] });
     })(),
-    deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 12, padding: 16, borderRadius: 8, border: `1px solid ${deployResult.status === "failed" ? "var(--accent-red)" : deployResult.status === "completed" || deployResult.status === "planned" ? "var(--accent-green)" : "var(--border)"}`, fontSize: 12 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+    deployResult && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginTop: 12, padding: 16, borderRadius: 8, border: `1px solid ${deployResult.status === "failed" ? "var(--accent-red)" : deployResult.status === "completed" || deployResult.status === "planned" ? "var(--accent-green)" : "var(--border)"}`, fontSize: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
           "Deployment ",
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("code", { children: deployResult.id?.slice(0, 8) }),
-          deployResult.version && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { marginLeft: 8, color: "var(--accent-cyan)", fontWeight: 600 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { children: deployResult.id?.slice(0, 8) }),
+          deployResult.version && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { marginLeft: 8, color: "var(--accent-cyan)", fontWeight: 600 }, children: [
             "v",
             deployResult.version
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: `mtag ${deployResult.status === "failed" ? "mtag--err" : deployResult.status === "completed" || deployResult.status === "planned" ? "mtag--ok" : "mtag--warn"}`, children: deployResult.status })
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: `mtag ${deployResult.status === "failed" ? "mtag--err" : deployResult.status === "completed" || deployResult.status === "planned" ? "mtag--ok" : "mtag--warn"}`, children: deployResult.status })
       ] }),
-      deployResult.result?.error && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "8px 10px", marginBottom: 8, borderRadius: 4, background: "rgba(255,60,60,0.08)", border: "1px solid rgba(255,60,60,0.2)", color: "var(--accent-red)", fontSize: 11, whiteSpace: "pre-wrap", fontFamily: "monospace" }, children: deployResult.result.error }),
-      deployResult.layers && deployResult.layers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 8 }, children: deployResult.layers.map((layer, i) => {
+      deployResult.result?.error && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "8px 10px", marginBottom: 8, borderRadius: 4, background: "rgba(255,60,60,0.08)", border: "1px solid rgba(255,60,60,0.2)", color: "var(--accent-red)", fontSize: 11, whiteSpace: "pre-wrap", fontFamily: "monospace" }, children: deployResult.result.error }),
+      deployResult.layers && deployResult.layers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginTop: 8 }, children: deployResult.layers.map((layer, i) => {
         const isExpanded = expandedLayers[layer.index];
         const logKey = `${deployResult.id}-${layer.index}`;
         const logs = layerLogs[logKey];
         const isLoadingLog = loadingLogs[logKey];
-        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 6, border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 6, border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
             "div",
             {
               onClick: () => {
@@ -34412,21 +34837,21 @@ function DeployScreen({ environmentId, canManage = true }) {
               },
               style: { display: "flex", gap: 8, alignItems: "center", padding: "8px 10px", fontSize: 11, cursor: "pointer", background: layer.status === "failed" ? "rgba(255,60,60,0.05)" : "transparent" },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 14, textAlign: "center", fontSize: 10, color: "var(--text-muted)" }, children: isExpanded ? "\u25BC" : "\u25B6" }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 16, textAlign: "center" }, children: layer.status === "completed" ? "\u2713" : layer.status === "failed" ? "\u2717" : layer.status === "dispatched" || layer.status === "executing" ? "\u27F3" : "\u25CC" }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { width: 14, textAlign: "center", fontSize: 10, color: "var(--text-muted)" }, children: isExpanded ? "\u25BC" : "\u25B6" }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { width: 16, textAlign: "center" }, children: layer.status === "completed" ? "\u2713" : layer.status === "failed" ? "\u2717" : layer.status === "dispatched" || layer.status === "executing" ? "\u27F3" : "\u25CC" }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
                   "Layer ",
                   layer.index
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
                   "\u2014 ",
                   layer.status
                 ] }),
-                layer.duration && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)", marginLeft: "auto" }, children: [
+                layer.duration && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: "var(--text-muted)", marginLeft: "auto" }, children: [
                   layer.duration.toFixed(1),
                   "s"
                 ] }),
-                layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--accent-red)", marginLeft: 8, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: [
+                layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: "var(--accent-red)", marginLeft: 8, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: [
                   "(",
                   layer.error_details,
                   ")"
@@ -34434,38 +34859,38 @@ function DeployScreen({ environmentId, canManage = true }) {
               ]
             }
           ),
-          isExpanded && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { padding: "4px 10px 10px 38px", borderTop: "1px solid var(--border)" }, children: [
-            layer.steps && layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 8 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Steps" }),
-              layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center", padding: "2px 0", fontSize: 11 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 14, textAlign: "center" }, children: STEP_STATUS_ICON[step.status] || "\u25CC" }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace" }, children: step.name }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
+          isExpanded && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "4px 10px 10px 38px", borderTop: "1px solid var(--border)" }, children: [
+            layer.steps && layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 8 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Steps" }),
+              layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center", padding: "2px 0", fontSize: 11 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { width: 14, textAlign: "center" }, children: STEP_STATUS_ICON[step.status] || "\u25CC" }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontFamily: "monospace" }, children: step.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
                   "\u2014 ",
                   step.status
                 ] }),
-                step.duration != null && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)", marginLeft: "auto" }, children: [
+                step.duration != null && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: "var(--text-muted)", marginLeft: "auto" }, children: [
                   step.duration.toFixed(2),
                   "s"
                 ] })
               ] }, si))
             ] }),
-            layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 8 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--accent-red)", marginBottom: 4 }, children: "Error" }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "6px 8px", borderRadius: 4, background: "rgba(255,60,60,0.06)", border: "1px solid rgba(255,60,60,0.15)", fontFamily: "monospace", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word" }, children: layer.error_details })
+            layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 8 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 10, color: "var(--accent-red)", marginBottom: 4 }, children: "Error" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "6px 8px", borderRadius: 4, background: "rgba(255,60,60,0.06)", border: "1px solid rgba(255,60,60,0.15)", fontFamily: "monospace", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word" }, children: layer.error_details })
             ] }),
-            isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "Loading logs\u2026" }),
-            logs && Object.keys(logs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Execution Logs" }),
-              Object.entries(logs).filter(([stepName]) => !HIDDEN_LOGS.has(stepName)).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginBottom: 4 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
+            isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "Loading logs\u2026" }),
+            logs && Object.keys(logs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Execution Logs" }),
+              Object.entries(logs).filter(([stepName]) => !HIDDEN_LOGS.has(stepName)).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("details", { style: { marginBottom: 4 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
                   stepName,
                   "/out.log"
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-secondary, #1a1a2e)", color: "var(--text-primary, #e8ecf4)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-secondary, #1a1a2e)", color: "var(--text-primary, #e8ecf4)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
               ] }, stepName))
             ] }),
-            logs && Object.keys(logs).length === 0 && !isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "No logs available yet" })
+            logs && Object.keys(logs).length === 0 && !isLoadingLog && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "No logs available yet" })
           ] })
         ] }, i);
       }) }),
@@ -34474,37 +34899,37 @@ function DeployScreen({ environmentId, canManage = true }) {
         const monthly = parseFloat(cost.totalMonthlyCost || 0);
         const currency = cost.currency || "USD";
         const layers = cost.layers || [];
-        return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 8, padding: "10px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "rgba(0,200,150,0.04)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: layers.length > 0 ? 6 : 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "\u{1F4B0} Estimated Monthly Cost" }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600, color: monthly > 0 ? "var(--accent-cyan)" : "var(--text-muted)" }, children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginTop: 8, padding: "10px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "rgba(0,200,150,0.04)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: layers.length > 0 ? 6 : 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "\u{1F4B0} Estimated Monthly Cost" }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 14, fontWeight: 600, color: monthly > 0 ? "var(--accent-cyan)" : "var(--text-muted)" }, children: [
               currency === "USD" ? "$" : currency,
               " ",
               monthly.toFixed(2),
               " / mo"
             ] })
           ] }),
-          layers.length > 1 && layers.map((lc, i) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "var(--text-muted)", padding: "2px 0" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+          layers.length > 1 && layers.map((lc, i) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "var(--text-muted)", padding: "2px 0" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
               "Layer ",
               lc.layer_index
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
               "$",
               parseFloat(lc.totalMonthlyCost || 0).toFixed(2)
             ] })
           ] }, i))
         ] });
       })(),
-      deployResult.approval_status === "pending_approval" && canManage && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginTop: 10, display: "flex", gap: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => approveDeployment(deployResult.id), children: "\u2713 Approve & Apply" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => rejectDeployment(deployResult.id), children: "\u2717 Reject" })
+      deployResult.approval_status === "pending_approval" && canManage && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginTop: 10, display: "flex", gap: 8 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => approveDeployment(deployResult.id), children: "\u2713 Approve & Apply" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => rejectDeployment(deployResult.id), children: "\u2717 Reject" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }, children: (() => {
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }, children: (() => {
       const pipelineRunning = deployResult && !["completed", "failed", "rejected"].includes(deployResult.status);
       const isDisabled = deploying || hasBlockers || !runnerConnected || pipelineRunning;
-      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
         "button",
         {
           className: "btn btn-green",
@@ -34516,7 +34941,7 @@ function DeployScreen({ environmentId, canManage = true }) {
         }
       );
     })() }),
-    showPlanModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    showPlanModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
       "div",
       {
         style: { position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" },
@@ -34524,18 +34949,18 @@ function DeployScreen({ environmentId, canManage = true }) {
           setShowPlanModal(false);
           setPlanSearch("");
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
           "div",
           {
             style: { width: "80%", maxWidth: 900, maxHeight: "80vh", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-secondary, #1a1a2e)", display: "flex", flexDirection: "column", overflow: "hidden" },
             onClick: (e) => e.stopPropagation(),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
                   "\u{1F4E6} Plan Output \u2014 Deployment v",
                   deployResult.version
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                   "button",
                   {
                     onClick: () => {
@@ -34548,7 +34973,7 @@ function DeployScreen({ environmentId, canManage = true }) {
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "10px 20px 0", borderBottom: "1px solid var(--border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "10px 20px 0", borderBottom: "1px solid var(--border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                 "input",
                 {
                   type: "text",
@@ -34559,19 +34984,19 @@ function DeployScreen({ environmentId, canManage = true }) {
                   style: { width: "100%", padding: "8px 10px", fontSize: 12, borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", outline: "none", marginBottom: 10 }
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: (deployResult.layers || []).map((layer) => {
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: (deployResult.layers || []).map((layer) => {
                 const key = `${deployResult.id}-${layer.index}`;
                 const plan = layerPlans[key];
                 const isLoading = loadingPlans[key];
                 const search = planSearch.trim().toLowerCase();
                 if (search && plan && !plan.toLowerCase().includes(search)) return null;
-                return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 16 }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 8 }, children: [
+                return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 16 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 8 }, children: [
                     "Layer ",
                     layer.index
                   ] }),
-                  isLoading && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading plan\u2026" }),
-                  plan ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: 0, padding: 14, borderRadius: 6, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.6 }, children: search ? plan.split("\n").filter((line) => line.toLowerCase().includes(search)).join("\n") : plan }) : !isLoading ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No plan output available" }) : null
+                  isLoading && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading plan\u2026" }),
+                  plan ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: { margin: 0, padding: 14, borderRadius: 6, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.6 }, children: search ? plan.split("\n").filter((line) => line.toLowerCase().includes(search)).join("\n") : plan }) : !isLoading ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No plan output available" }) : null
                 ] }, layer.index);
               }) })
             ]
@@ -34579,23 +35004,23 @@ function DeployScreen({ environmentId, canManage = true }) {
         )
       }
     ),
-    showCostModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    showCostModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
       "div",
       {
         style: { position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" },
         onClick: () => setShowCostModal(false),
-        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
           "div",
           {
             style: { width: "80%", maxWidth: 900, maxHeight: "80vh", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-secondary, #1a1a2e)", display: "flex", flexDirection: "column", overflow: "hidden" },
             onClick: (e) => e.stopPropagation(),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
                   "\u{1F4B0} Cost Estimate \u2014 Deployment v",
                   deployResult.version
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                   "button",
                   {
                     onClick: () => setShowCostModal(false),
@@ -34605,38 +35030,38 @@ function DeployScreen({ environmentId, canManage = true }) {
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: [
-                loadingInfracost && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading cost data\u2026" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: [
+                loadingInfracost && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading cost data\u2026" }),
                 infracostData && infracostData.map((layer) => {
                   const cost = layer.cost_data;
-                  if (!cost) return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 16 }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 8 }, children: [
+                  if (!cost) return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 16 }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)", marginBottom: 8 }, children: [
                       "Layer ",
                       layer.layer_index
                     ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No cost data available" })
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No cost data available" })
                   ] }, layer.layer_index);
                   const monthly = parseFloat(cost.totalMonthlyCost || 0);
                   const currency = cost.currency || "USD";
                   const projects = cost.projects || [];
-                  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 20 }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)" }, children: [
+                  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 20 }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)" }, children: [
                         "Layer ",
                         layer.layer_index
                       ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 16, fontWeight: 600, color: monthly > 0 ? "var(--accent-cyan)" : "var(--text-muted)" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 16, fontWeight: 600, color: monthly > 0 ? "var(--accent-cyan)" : "var(--text-muted)" }, children: [
                         currency === "USD" ? "$" : currency,
                         " ",
                         monthly.toFixed(2),
                         " / mo"
                       ] })
                     ] }),
-                    projects.map((proj, pi) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginBottom: 12 }, children: (proj.breakdown?.resources || []).map((res, ri) => {
+                    projects.map((proj, pi) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginBottom: 12 }, children: (proj.breakdown?.resources || []).map((res, ri) => {
                       const resCost = parseFloat(res.monthlyCost || 0);
-                      return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", padding: "4px 0", fontSize: 11, borderBottom: "1px solid var(--border)" }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace" }, children: res.name }),
-                        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: resCost > 0 ? "var(--text-primary)" : "var(--text-muted)" }, children: [
+                      return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", padding: "4px 0", fontSize: 11, borderBottom: "1px solid var(--border)" }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontFamily: "monospace" }, children: res.name }),
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: resCost > 0 ? "var(--text-primary)" : "var(--text-muted)" }, children: [
                           "$",
                           resCost.toFixed(2)
                         ] })
@@ -34644,14 +35069,14 @@ function DeployScreen({ environmentId, canManage = true }) {
                     }) }, pi))
                   ] }, layer.layer_index);
                 }),
-                !loadingInfracost && !infracostData && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No cost data available" })
+                !loadingInfracost && !infracostData && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No cost data available" })
               ] })
             ]
           }
         )
       }
     ),
-    showApplyModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    showApplyModal && deployResult && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
       "div",
       {
         style: { position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" },
@@ -34659,21 +35084,21 @@ function DeployScreen({ environmentId, canManage = true }) {
           setShowApplyModal(false);
           setApplySearch("");
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
           "div",
           {
             style: { width: "80%", maxWidth: 900, maxHeight: "80vh", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-secondary, #1a1a2e)", display: "flex", flexDirection: "column", overflow: "hidden" },
             onClick: (e) => e.stopPropagation(),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 20px", borderBottom: "1px solid var(--border)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 14, fontWeight: 600 }, children: [
                     "\u{1F680} Apply Output \u2014 Deployment v",
                     deployResult.version
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: `mtag ${deployResult.status === "failed" ? "mtag--err" : deployResult.status === "completed" ? "mtag--ok" : "mtag--warn"}`, style: { fontSize: 10 }, children: deployResult.status })
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: `mtag ${deployResult.status === "failed" ? "mtag--err" : deployResult.status === "completed" ? "mtag--ok" : "mtag--warn"}`, style: { fontSize: 10 }, children: deployResult.status })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                   "button",
                   {
                     onClick: () => {
@@ -34686,7 +35111,7 @@ function DeployScreen({ environmentId, canManage = true }) {
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "10px 20px 0", borderBottom: "1px solid var(--border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "10px 20px 0", borderBottom: "1px solid var(--border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                 "input",
                 {
                   type: "text",
@@ -34697,7 +35122,7 @@ function DeployScreen({ environmentId, canManage = true }) {
                   style: { width: "100%", padding: "8px 10px", marginBottom: 10, borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 12, outline: "none" }
                 }
               ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { flex: 1, overflow: "auto", padding: 20 }, children: [
                 (deployResult.layers || []).map((layer) => {
                   const isApplyLayer = ["applying", "completed", "failed"].includes(deployResult.status);
                   if (!isApplyLayer) return null;
@@ -34710,53 +35135,53 @@ function DeployScreen({ environmentId, canManage = true }) {
                   const otherLogs = logs ? Object.fromEntries(Object.entries(logs).filter(([k]) => k !== "tofu_apply" && !HIDDEN_LOGS.has(k))) : null;
                   const search = applySearch.trim().toLowerCase();
                   if (search && applyLog && !applyLog.toLowerCase().includes(search)) return null;
-                  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginBottom: 16 }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { color: stepColor(layer.status), fontSize: 14 }, children: stepIcon(layer.status) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)" }, children: [
+                  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 16 }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { color: stepColor(layer.status), fontSize: 14 }, children: stepIcon(layer.status) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--accent-cyan)" }, children: [
                         "Layer ",
                         layer.index
                       ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
                         "\u2014 ",
                         layer.status
                       ] }),
-                      layer.status === "executing" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontSize: 10, color: "var(--accent-cyan)", animation: "pulse 1.5s infinite" }, children: "running\u2026" })
+                      layer.status === "executing" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 10, color: "var(--accent-cyan)", animation: "pulse 1.5s infinite" }, children: "running\u2026" })
                     ] }),
-                    layer.steps && layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginBottom: 10, padding: "8px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)" }, children: layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", gap: 8, alignItems: "center", padding: "4px 0", fontSize: 11 }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { width: 16, textAlign: "center", color: stepColor(step.status) }, children: stepIcon(step.status) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { fontFamily: "monospace", flex: 1 }, children: step.name }),
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: step.status }),
-                      step.duration != null && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: [
+                    layer.steps && layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginBottom: 10, padding: "8px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-primary, #0a0e1a)" }, children: layer.steps.filter((s) => !HIDDEN_APPLY_STEPS.has(s.name)).map((step, si) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 8, alignItems: "center", padding: "4px 0", fontSize: 11 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { width: 16, textAlign: "center", color: stepColor(step.status) }, children: stepIcon(step.status) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontFamily: "monospace", flex: 1 }, children: step.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: step.status }),
+                      step.duration != null && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 10 }, children: [
                         step.duration.toFixed(2),
                         "s"
                       ] })
                     ] }, si)) }),
-                    layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { padding: "8px 10px", marginBottom: 8, borderRadius: 4, background: "rgba(255,60,60,0.08)", border: "1px solid rgba(255,60,60,0.2)", color: "var(--accent-red)", fontSize: 11, whiteSpace: "pre-wrap", fontFamily: "monospace" }, children: layer.error_details }),
-                    isLoadingLog && !applyLog && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading apply output\u2026" }),
+                    layer.error_details && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "8px 10px", marginBottom: 8, borderRadius: 4, background: "rgba(255,60,60,0.08)", border: "1px solid rgba(255,60,60,0.2)", color: "var(--accent-red)", fontSize: 11, whiteSpace: "pre-wrap", fontFamily: "monospace" }, children: layer.error_details }),
+                    isLoadingLog && !applyLog && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "Loading apply output\u2026" }),
                     applyLog ? (() => {
                       const formatted = formatApplyLog(applyLog);
                       const displayed = search ? formatted.split("\n").filter((line) => line.toLowerCase().includes(search)).join("\n") : formatted;
-                      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: 0, padding: 14, borderRadius: 6, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.6, maxHeight: 400, overflow: "auto" }, children: displayed });
-                    })() : !isLoadingLog && logs ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No apply output available yet" }) : null,
-                    otherLogs && Object.keys(otherLogs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginTop: 8 }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", color: "var(--text-muted)" }, children: [
+                      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: { margin: 0, padding: 14, borderRadius: 6, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 11, whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)", lineHeight: 1.6, maxHeight: 400, overflow: "auto" }, children: displayed });
+                    })() : !isLoadingLog && logs ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: "No apply output available yet" }) : null,
+                    otherLogs && Object.keys(otherLogs).length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("details", { style: { marginTop: 8 }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("summary", { style: { fontSize: 11, cursor: "pointer", color: "var(--text-muted)" }, children: [
                         "Other execution logs (",
                         Object.keys(otherLogs).length,
                         ")"
                       ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 6 }, children: Object.entries(otherLogs).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { style: { marginBottom: 4 }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("summary", { style: { fontSize: 10, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginTop: 6 }, children: Object.entries(otherLogs).map(([stepName, logContent]) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("details", { style: { marginBottom: 4 }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("summary", { style: { fontSize: 10, cursor: "pointer", fontFamily: "monospace", color: "var(--text-muted)" }, children: [
                           stepName,
                           "/out.log"
                         ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: { margin: "4px 0", padding: "8px", borderRadius: 4, background: "var(--bg-primary, #0a0e1a)", color: "var(--text-primary, #e8ecf4)", fontSize: 10, maxHeight: 300, overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word", border: "1px solid var(--border)" }, children: logContent })
                       ] }, stepName)) })
                     ] })
                   ] }, layer.index);
                 }),
-                deployResult.status === "completed" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 12, padding: "10px 14px", borderRadius: 6, border: "1px solid var(--accent-green)", background: "rgba(0,200,100,0.06)", fontSize: 12, color: "var(--accent-green)", textAlign: "center" }, children: "\u2713 Apply completed successfully" }),
-                deployResult.status === "failed" && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { marginTop: 12, padding: "10px 14px", borderRadius: 6, border: "1px solid var(--accent-red)", background: "rgba(255,60,60,0.06)", fontSize: 12, color: "var(--accent-red)", textAlign: "center" }, children: "\u2717 Apply failed" })
+                deployResult.status === "completed" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginTop: 12, padding: "10px 14px", borderRadius: 6, border: "1px solid var(--accent-green)", background: "rgba(0,200,100,0.06)", fontSize: 12, color: "var(--accent-green)", textAlign: "center" }, children: "\u2713 Apply completed successfully" }),
+                deployResult.status === "failed" && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { marginTop: 12, padding: "10px 14px", borderRadius: 6, border: "1px solid var(--accent-red)", background: "rgba(255,60,60,0.06)", fontSize: 12, color: "var(--accent-red)", textAlign: "center" }, children: "\u2717 Apply failed" })
               ] })
             ]
           }
@@ -34767,43 +35192,43 @@ function DeployScreen({ environmentId, canManage = true }) {
 }
 
 // app/javascript/components/canvas/GlobalTagsScreen.jsx
-var import_react10 = __toESM(require_react());
-var import_jsx_runtime11 = __toESM(require_jsx_runtime());
+var import_react11 = __toESM(require_react());
+var import_jsx_runtime12 = __toESM(require_jsx_runtime());
 function GlobalTagsScreen({ environmentId, environment, project, customer }) {
-  const [levels, setLevels] = (0, import_react10.useState)([]);
-  const [mergedTags, setMergedTags] = (0, import_react10.useState)({});
-  const [loading, setLoading] = (0, import_react10.useState)(true);
-  const [activeLevel, setActiveLevel] = (0, import_react10.useState)(null);
-  const [tags, setTags] = (0, import_react10.useState)([]);
-  const [newKey, setNewKey] = (0, import_react10.useState)("");
-  const [newValue, setNewValue] = (0, import_react10.useState)("");
-  const [newDesc, setNewDesc] = (0, import_react10.useState)("");
-  const [saving, setSaving] = (0, import_react10.useState)(false);
-  const [editingId, setEditingId] = (0, import_react10.useState)(null);
-  const [editValue, setEditValue] = (0, import_react10.useState)("");
-  const [view, setView] = (0, import_react10.useState)("levels");
-  const fetchByLevel = (0, import_react10.useCallback)(async () => {
+  const [levels, setLevels] = (0, import_react11.useState)([]);
+  const [mergedTags, setMergedTags] = (0, import_react11.useState)({});
+  const [loading, setLoading] = (0, import_react11.useState)(true);
+  const [activeLevel, setActiveLevel] = (0, import_react11.useState)(null);
+  const [tags, setTags] = (0, import_react11.useState)([]);
+  const [newKey, setNewKey] = (0, import_react11.useState)("");
+  const [newValue, setNewValue] = (0, import_react11.useState)("");
+  const [newDesc, setNewDesc] = (0, import_react11.useState)("");
+  const [saving, setSaving] = (0, import_react11.useState)(false);
+  const [editingId, setEditingId] = (0, import_react11.useState)(null);
+  const [editValue, setEditValue] = (0, import_react11.useState)("");
+  const [view, setView] = (0, import_react11.useState)("levels");
+  const fetchByLevel = (0, import_react11.useCallback)(async () => {
     if (!environmentId) return;
     const resp = await fetch(`/api/global_tags/by_level?environment_id=${environmentId}`, {
       headers: { Accept: "application/json" }
     });
     if (resp.ok) setLevels(await resp.json());
   }, [environmentId]);
-  const fetchMerged = (0, import_react10.useCallback)(async () => {
+  const fetchMerged = (0, import_react11.useCallback)(async () => {
     if (!environmentId) return;
     const resp = await fetch(`/api/global_tags/merged?environment_id=${environmentId}`, {
       headers: { Accept: "application/json" }
     });
     if (resp.ok) setMergedTags(await resp.json());
   }, [environmentId]);
-  const fetchScopedTags = (0, import_react10.useCallback)(async (scopeType, scopeId) => {
+  const fetchScopedTags = (0, import_react11.useCallback)(async (scopeType, scopeId) => {
     const params = scopeType && scopeId ? `?scope_type=${scopeType}&scope_id=${scopeId}` : "";
     const resp = await fetch(`/api/global_tags${params}`, {
       headers: { Accept: "application/json" }
     });
     if (resp.ok) setTags(await resp.json());
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     Promise.all([fetchByLevel(), fetchMerged()]).then(() => setLoading(false));
   }, [fetchByLevel, fetchMerged]);
   const selectLevel = (level) => {
@@ -34876,26 +35301,26 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
   };
   const mergedEntries = Object.entries(mergedTags).sort(([a], [b]) => a.localeCompare(b));
   if (loading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "60px 48px", textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "Loading tags\u2026" });
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { padding: "60px 48px", textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "Loading tags\u2026" });
   }
   if (activeLevel) {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: backToLevels, style: { marginBottom: 12 }, children: "\u2190 Back to overview" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: activeLevel.level }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted)" }, children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { marginBottom: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: backToLevels, style: { marginBottom: 12 }, children: "\u2190 Back to overview" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: activeLevel.level }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted)" }, children: [
           tags.length,
           " tag",
           tags.length !== 1 ? "s" : "",
           " at this level"
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: panelStyle, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginTop: 0, marginBottom: 12 }, children: "Add Tag" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("form", { onSubmit: addTag, style: { display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: labelStyle, children: "Key *" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: panelStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { style: { fontSize: 13, fontWeight: 600, marginTop: 0, marginBottom: 12 }, children: "Add Tag" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: addTag, style: { display: "flex", gap: 10, alignItems: "flex-end", flexWrap: "wrap" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: labelStyle, children: "Key *" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
               "input",
               {
                 type: "text",
@@ -34908,9 +35333,9 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: labelStyle, children: "Value *" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { style: { flex: "1 1 160px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: labelStyle, children: "Value *" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
               "input",
               {
                 type: "text",
@@ -34923,9 +35348,9 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { flex: "2 1 200px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: labelStyle, children: "Description" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { style: { flex: "2 1 200px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: labelStyle, children: "Description" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
               "input",
               {
                 type: "text",
@@ -34937,7 +35362,7 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
             "button",
             {
               type: "submit",
@@ -34948,18 +35373,18 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
           )
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { ...panelStyle, padding: 0, marginTop: 16, overflow: "hidden" }, children: tags.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "No tags at this level yet." }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("table", { style: tableStyle, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: theadRowStyle, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: thStyle, children: "Key" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: thStyle, children: "Value" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: thStyle, children: "Description" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { ...thStyle, textAlign: "center", width: 70 }, children: "Status" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { style: { ...thStyle, textAlign: "right", width: 160 } })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { ...panelStyle, padding: 0, marginTop: 16, overflow: "hidden" }, children: tags.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { padding: 40, textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "No tags at this level yet." }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("table", { style: tableStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { style: theadRowStyle, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: thStyle, children: "Key" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: thStyle, children: "Value" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: thStyle, children: "Description" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: { ...thStyle, textAlign: "center", width: 70 }, children: "Status" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("th", { style: { ...thStyle, textAlign: "right", width: 160 } })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("tbody", { children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)", opacity: tag.enabled ? 1 : 0.5 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: tdStyle, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: codeStyle, children: tag.key }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: tdStyle, children: editingId === tag.id ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("tbody", { children: tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("tr", { style: { borderBottom: "1px solid var(--border)", opacity: tag.enabled ? 1 : 0.5 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { style: tdStyle, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { style: codeStyle, children: tag.key }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { style: tdStyle, children: editingId === tag.id ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
               "input",
               {
                 type: "text",
@@ -34974,9 +35399,9 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
                 }
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => saveEdit(tag), style: { fontSize: 11 }, children: "Save" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => setEditingId(null), style: { fontSize: 11 }, children: "Cancel" })
-          ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => saveEdit(tag), style: { fontSize: 11 }, children: "Save" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => setEditingId(null), style: { fontSize: 11 }, children: "Cancel" })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
             "code",
             {
               style: { fontFamily: "var(--font-mono)", fontSize: 12, cursor: "pointer" },
@@ -34985,28 +35410,28 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
               children: tag.value
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { ...tdStyle, fontSize: 11, color: "var(--text-muted)" }, children: tag.description }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("td", { style: { ...tdStyle, textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: tag.enabled ? badgeActive : badgeDisabled, children: tag.enabled ? "Active" : "Disabled" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("td", { style: { ...tdStyle, textAlign: "right", display: "flex", gap: 4, justifyContent: "flex-end" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => toggleTag(tag), style: { fontSize: 11 }, children: tag.enabled ? "Disable" : "Enable" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-danger btn-sm", onClick: () => deleteTag(tag), style: { fontSize: 11 }, children: "Delete" })
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { style: { ...tdStyle, fontSize: 11, color: "var(--text-muted)" }, children: tag.description }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("td", { style: { ...tdStyle, textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: tag.enabled ? badgeActive : badgeDisabled, children: tag.enabled ? "Active" : "Disabled" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("td", { style: { ...tdStyle, textAlign: "right", display: "flex", gap: 4, justifyContent: "flex-end" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => toggleTag(tag), style: { fontSize: 11 }, children: tag.enabled ? "Disable" : "Enable" }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-danger btn-sm", onClick: () => deleteTag(tag), style: { fontSize: 11 }, children: "Delete" })
           ] })
         ] }, tag.id)) })
       ] }) })
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: "Global Tags" }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted)" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { padding: "32px 48px", maxWidth: 900, margin: "0 auto", color: "var(--text-primary)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 4 }, children: "Global Tags" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { style: { fontSize: 12, color: "var(--text-muted)" }, children: [
           "Tags for ",
           environment?.name || "this environment",
           " \u2014 merged from Platform \u2192 Reseller \u2192 Customer \u2192 Project \u2192 Environment."
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", gap: 6 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
             className: `btn btn-sm ${view === "levels" ? "btn-green" : "btn-ghost"}`,
@@ -35014,7 +35439,7 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
             children: "By Level"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
             className: `btn btn-sm ${view === "merged" ? "btn-green" : "btn-ghost"}`,
@@ -35026,19 +35451,19 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
     ] }),
     view === "levels" ? (
       /* Level cards */
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 12 }, children: levels.map((level, i) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: panelStyle, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: level.tags.length > 0 ? 12 : 0 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, margin: 0 }, children: level.level }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 12 }, children: levels.map((level, i) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: panelStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: level.tags.length > 0 ? 12 : 0 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { style: { fontSize: 14, fontWeight: 600, margin: 0 }, children: level.level }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
               level.tags.length,
               " tag",
               level.tags.length !== 1 ? "s" : ""
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => selectLevel(level), children: "Edit \u2192" })
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => selectLevel(level), children: "Edit \u2192" })
         ] }),
-        level.tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 }, children: level.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { style: {
+        level.tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 }, children: level.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { style: {
           display: "inline-flex",
           alignItems: "center",
           gap: 4,
@@ -35049,27 +35474,27 @@ function GlobalTagsScreen({ environmentId, environment, project, customer }) {
           fontSize: 11,
           opacity: tag.enabled ? 1 : 0.4
         }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { fontFamily: "var(--font-mono)", color: "var(--text-primary)" }, children: tag.key }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { color: "var(--text-muted)" }, children: "=" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { fontFamily: "var(--font-mono)", color: "var(--text-secondary)" }, children: tag.value }),
-          !tag.enabled && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { style: { fontSize: 9, color: "var(--red)", fontWeight: 600 }, children: "OFF" })
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { style: { fontFamily: "var(--font-mono)", color: "var(--text-primary)" }, children: tag.key }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: { color: "var(--text-muted)" }, children: "=" }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { style: { fontFamily: "var(--font-mono)", color: "var(--text-secondary)" }, children: tag.value }),
+          !tag.enabled && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: { fontSize: 9, color: "var(--red)", fontWeight: 600 }, children: "OFF" })
         ] }, tag.id)) })
       ] }, i)) })
     ) : (
       /* Merged preview */
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: panelStyle, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 12 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("h3", { style: { fontSize: 13, fontWeight: 600, margin: 0 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: panelStyle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { marginBottom: 12 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("h3", { style: { fontSize: 13, fontWeight: 600, margin: 0 }, children: [
             "Merged Tags for ",
             environment?.name
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: [
             "Final tag set applied during deployment (",
             mergedEntries.length,
             " tags)."
           ] })
         ] }),
-        mergedEntries.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: 20, textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "No enabled tags across any level." }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("pre", { style: {
+        mergedEntries.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { padding: 20, textAlign: "center", color: "var(--text-muted)", fontSize: 13 }, children: "No enabled tags across any level." }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("pre", { style: {
           fontFamily: "var(--font-mono)",
           fontSize: 12,
           padding: 16,
@@ -35126,7 +35551,7 @@ var badgeDisabled = {
 };
 
 // app/javascript/components/canvas/useCanvasLock.js
-var import_react11 = __toESM(require_react());
+var import_react12 = __toESM(require_react());
 var HEARTBEAT_INTERVAL = 3e4;
 var STATUS_POLL_INTERVAL = 15e3;
 function generateDeviceId() {
@@ -35138,12 +35563,12 @@ function generateDeviceId() {
   return id;
 }
 function useCanvasLock(lockApiUrl) {
-  const [lockState, setLockState] = (0, import_react11.useState)({ locked: false, holder: null, isMe: false });
-  const [acquiring, setAcquiring] = (0, import_react11.useState)(false);
-  const deviceId = (0, import_react11.useRef)(generateDeviceId()).current;
-  const heartbeatRef = (0, import_react11.useRef)(null);
-  const pollRef = (0, import_react11.useRef)(null);
-  const fetchStatus = (0, import_react11.useCallback)(async () => {
+  const [lockState, setLockState] = (0, import_react12.useState)({ locked: false, holder: null, isMe: false });
+  const [acquiring, setAcquiring] = (0, import_react12.useState)(false);
+  const deviceId = (0, import_react12.useRef)(generateDeviceId()).current;
+  const heartbeatRef = (0, import_react12.useRef)(null);
+  const pollRef = (0, import_react12.useRef)(null);
+  const fetchStatus = (0, import_react12.useCallback)(async () => {
     try {
       const resp = await fetch(`${lockApiUrl}/status`);
       if (!resp.ok) return;
@@ -35160,14 +35585,14 @@ function useCanvasLock(lockApiUrl) {
     } catch {
     }
   }, [lockApiUrl, deviceId]);
-  (0, import_react11.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     fetchStatus();
     pollRef.current = setInterval(() => {
       if (!lockState.isMe) fetchStatus();
     }, STATUS_POLL_INTERVAL);
     return () => clearInterval(pollRef.current);
   }, [fetchStatus, lockState.isMe]);
-  const acquire = (0, import_react11.useCallback)(async () => {
+  const acquire = (0, import_react12.useCallback)(async () => {
     setAcquiring(true);
     try {
       const resp = await fetch(`${lockApiUrl}/acquire`, {
@@ -35209,7 +35634,7 @@ function useCanvasLock(lockApiUrl) {
       setAcquiring(false);
     }
   }, [lockApiUrl, deviceId, fetchStatus]);
-  const release = (0, import_react11.useCallback)(async () => {
+  const release = (0, import_react12.useCallback)(async () => {
     clearInterval(heartbeatRef.current);
     try {
       await fetch(`${lockApiUrl}/release`, {
@@ -35222,7 +35647,7 @@ function useCanvasLock(lockApiUrl) {
     setLockState({ locked: false, holder: null, isMe: false });
     fetchStatus();
   }, [lockApiUrl, deviceId, fetchStatus]);
-  (0, import_react11.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     const onUnload = () => {
       if (lockState.isMe) {
         navigator.sendBeacon(
@@ -35249,12 +35674,12 @@ function useCanvasLock(lockApiUrl) {
 }
 
 // app/javascript/components/canvas/CanvasApp.jsx
-var import_jsx_runtime12 = __toESM(require_jsx_runtime());
+var import_jsx_runtime13 = __toESM(require_jsx_runtime());
 var GROUP_COLORS2 = ["#58a6ff", "#3fb950", "#d29922", "#f85149", "#bc8cff", "#39d2c0", "#f778ba", "#79c0ff"];
 function CreateGroupModal({ onCreate, onClose }) {
-  const [name, setName] = (0, import_react12.useState)("");
-  const [color, setColor] = (0, import_react12.useState)(GROUP_COLORS2[0]);
-  const [submitting, setSubmitting] = (0, import_react12.useState)(false);
+  const [name, setName] = (0, import_react13.useState)("");
+  const [color, setColor] = (0, import_react13.useState)(GROUP_COLORS2[0]);
+  const [submitting, setSubmitting] = (0, import_react13.useState)(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name.trim()) return;
@@ -35262,18 +35687,18 @@ function CreateGroupModal({ onCreate, onClose }) {
     await onCreate(name.trim(), color);
     setSubmitting(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
     if (e.target === e.currentTarget) onClose();
-  }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-panel", style: { maxWidth: 360 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { className: "modal-title", children: "Create Application Group" }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "\xD7" })
+  }, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-panel", style: { maxWidth: 360 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h3", { className: "modal-title", children: "Create Application Group" }),
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "\xD7" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-body", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-group", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "form-label", children: "Name *" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-body", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "form-group", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label", children: "Name *" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
             "input",
             {
               type: "text",
@@ -35286,9 +35711,9 @@ function CreateGroupModal({ onCreate, onClose }) {
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-group", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("label", { className: "form-label", children: "Color" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { display: "flex", gap: 8, marginTop: 6 }, children: GROUP_COLORS2.map((c) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "form-group", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label", children: "Color" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { display: "flex", gap: 8, marginTop: 6 }, children: GROUP_COLORS2.map((c) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
             "button",
             {
               type: "button",
@@ -35308,9 +35733,9 @@ function CreateGroupModal({ onCreate, onClose }) {
           )) })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-footer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "submit", className: "btn btn-green", disabled: !name.trim() || submitting, children: submitting ? "Creating\u2026" : "Create Group" })
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "submit", className: "btn btn-green", disabled: !name.trim() || submitting, children: submitting ? "Creating\u2026" : "Create Group" })
       ] })
     ] })
   ] }) });
@@ -35335,46 +35760,48 @@ function CanvasApp({
   canvasPath,
   rootPath
 }) {
-  const [resources, setResources] = (0, import_react12.useState)(initialResources || []);
-  const [connections, setConnections] = (0, import_react12.useState)(initialConnections || []);
-  const [selectedId, setSelectedId] = (0, import_react12.useState)(null);
-  const [cmdOpen, setCmdOpen] = (0, import_react12.useState)(false);
-  const [propsHtml, setPropsHtml] = (0, import_react12.useState)("");
-  const [cloudFilter, setCloudFilter] = (0, import_react12.useState)(null);
+  const [resources, setResources] = (0, import_react13.useState)(initialResources || []);
+  const [connections, setConnections] = (0, import_react13.useState)(initialConnections || []);
+  const [selectedId, setSelectedId] = (0, import_react13.useState)(null);
+  const [cmdOpen, setCmdOpen] = (0, import_react13.useState)(false);
+  const [propsHtml, setPropsHtml] = (0, import_react13.useState)("");
+  const [cloudFilter, setCloudFilter] = (0, import_react13.useState)(null);
   const VALID_SCREENS = ["canvas", "rules", "promote", "templates", "import", "deploy", "global_tags"];
   const screenFromHash = () => {
     const h = window.location.hash.replace("#", "");
     return VALID_SCREENS.includes(h) ? h : "canvas";
   };
-  const [activeScreen, setActiveScreenRaw] = (0, import_react12.useState)(screenFromHash);
-  const setActiveScreen = (0, import_react12.useCallback)((id) => {
+  const [activeScreen, setActiveScreenRaw] = (0, import_react13.useState)(screenFromHash);
+  const setActiveScreen = (0, import_react13.useCallback)((id) => {
     setActiveScreenRaw(id);
     window.history.replaceState(null, "", id === "canvas" ? window.location.pathname : `#${id}`);
   }, []);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     const onHash = () => setActiveScreenRaw(screenFromHash());
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
-  const [toasts, setToasts] = (0, import_react12.useState)([]);
-  const [connectMode, setConnectMode] = (0, import_react12.useState)(false);
-  const [connectFromId, setConnectFromId] = (0, import_react12.useState)(null);
-  const [appGroups, setAppGroups] = (0, import_react12.useState)([]);
-  const [selectedGroupId, setSelectedGroupId] = (0, import_react12.useState)(null);
-  const [showCreateGroupModal, setShowCreateGroupModal] = (0, import_react12.useState)(false);
-  const [deleteConfirmId, setDeleteConfirmId] = (0, import_react12.useState)(null);
+  const [toasts, setToasts] = (0, import_react13.useState)([]);
+  const [connectMode, setConnectMode] = (0, import_react13.useState)(false);
+  const [connectFromId, setConnectFromId] = (0, import_react13.useState)(null);
+  const [appGroups, setAppGroups] = (0, import_react13.useState)([]);
+  const [selectedGroupId, setSelectedGroupId] = (0, import_react13.useState)(null);
+  const [showCreateGroupModal, setShowCreateGroupModal] = (0, import_react13.useState)(false);
+  const [deleteConfirmId, setDeleteConfirmId] = (0, import_react13.useState)(null);
+  const [codePanelExpanded, setCodePanelExpanded] = (0, import_react13.useState)(false);
+  const [codePanelWide, setCodePanelWide] = (0, import_react13.useState)(false);
   const { lockState, acquire: acquireLock, release: releaseLock, acquiring: acquiringLock } = useCanvasLock(canvasLockApiUrl);
   const canvasLocked = lockState.locked && !lockState.isMe;
-  (0, import_react12.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     if (!applicationGroupsApiUrl) return;
     fetch(applicationGroupsApiUrl).then((r) => r.ok ? r.json() : []).then(setAppGroups);
   }, [applicationGroupsApiUrl]);
-  const addToast = (0, import_react12.useCallback)((message, type = "info") => {
+  const addToast = (0, import_react13.useCallback)((message, type = "info") => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 5e3);
   }, []);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     const handler = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
@@ -35384,18 +35811,18 @@ function CanvasApp({
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     if (!selectedId) {
       setPropsHtml("");
       return;
     }
     fetch(`${apiUrl}/${selectedId}/properties`, { headers: { Accept: "text/html" } }).then((r) => r.ok ? r.text() : "").then((html2) => setPropsHtml(purify.sanitize(html2)));
   }, [selectedId, apiUrl]);
-  const selectResource = (0, import_react12.useCallback)((id) => {
+  const selectResource = (0, import_react13.useCallback)((id) => {
     setSelectedId(id === selectedId ? null : id);
   }, [selectedId]);
-  const deselectAll = (0, import_react12.useCallback)(() => setSelectedId(null), []);
-  const addResource = (0, import_react12.useCallback)(async (moduleId, posX, posY) => {
+  const deselectAll = (0, import_react13.useCallback)(() => setSelectedId(null), []);
+  const addResource = (0, import_react13.useCallback)(async (moduleId, posX, posY) => {
     if (canvasLocked) {
       addToast("Canvas is locked by " + (lockState.holder?.user_name || lockState.holder?.user_email || "another user"), "error");
       return;
@@ -35429,7 +35856,7 @@ function CanvasApp({
       }
     }
   }, [apiUrl, addToast, canvasLocked, lockState]);
-  const updateResourcePosition = (0, import_react12.useCallback)(async (id, x, y) => {
+  const updateResourcePosition = (0, import_react13.useCallback)(async (id, x, y) => {
     if (canvasLocked || !lockState.isMe) return;
     setResources((prev) => prev.map((r) => r.id === id ? { ...r, position_x: x, position_y: y } : r));
     await fetch(`${apiUrl}/${id}`, {
@@ -35438,14 +35865,14 @@ function CanvasApp({
       body: JSON.stringify({ position_x: x, position_y: y })
     });
   }, [apiUrl, canvasLocked, lockState]);
-  const deleteResource = (0, import_react12.useCallback)(async (id) => {
+  const deleteResource = (0, import_react13.useCallback)(async (id) => {
     if (canvasLocked || !lockState.isMe) {
       addToast("Acquire the canvas lock before editing", "error");
       return;
     }
     setDeleteConfirmId(id);
   }, [canvasLocked, lockState, addToast]);
-  const confirmDeleteResource = (0, import_react12.useCallback)(async () => {
+  const confirmDeleteResource = (0, import_react13.useCallback)(async () => {
     const id = deleteConfirmId;
     if (!id) return;
     setDeleteConfirmId(null);
@@ -35459,7 +35886,7 @@ function CanvasApp({
       if (selectedId === id) setSelectedId(null);
     }
   }, [apiUrl, selectedId, deleteConfirmId]);
-  const createConnection = (0, import_react12.useCallback)(async (fromId, toId) => {
+  const createConnection = (0, import_react13.useCallback)(async (fromId, toId) => {
     if (canvasLocked || !lockState.isMe) {
       addToast("Acquire the canvas lock before connecting resources", "error");
       return;
@@ -35485,7 +35912,7 @@ function CanvasApp({
       addToast(data.error || "Failed to create connection", "error");
     }
   }, [connectionsApiUrl, connections, canvasLocked, lockState, addToast]);
-  const startConnect = (0, import_react12.useCallback)((id) => {
+  const startConnect = (0, import_react13.useCallback)((id) => {
     if (canvasLocked || !lockState.isMe) {
       addToast("Acquire the canvas lock before connecting resources", "error");
       return;
@@ -35493,18 +35920,18 @@ function CanvasApp({
     setConnectMode(true);
     setConnectFromId(id || selectedId);
   }, [selectedId, canvasLocked, lockState, addToast]);
-  const completeConnect = (0, import_react12.useCallback)((toId) => {
+  const completeConnect = (0, import_react13.useCallback)((toId) => {
     if (connectFromId && toId !== connectFromId) {
       createConnection(connectFromId, toId);
     }
     setConnectMode(false);
     setConnectFromId(null);
   }, [connectFromId, createConnection]);
-  const cancelConnect = (0, import_react12.useCallback)(() => {
+  const cancelConnect = (0, import_react13.useCallback)(() => {
     setConnectMode(false);
     setConnectFromId(null);
   }, []);
-  const deleteConnection = (0, import_react12.useCallback)(async (connectionId) => {
+  const deleteConnection = (0, import_react13.useCallback)(async (connectionId) => {
     if (canvasLocked || !lockState.isMe) {
       addToast("Acquire the canvas lock first", "error");
       return;
@@ -35523,7 +35950,7 @@ function CanvasApp({
       addToast("Failed to remove connection", "error");
     }
   }, [connectionsApiUrl, canvasLocked, lockState, addToast, selectedId, apiUrl]);
-  const createAppGroup = (0, import_react12.useCallback)(async (name, color) => {
+  const createAppGroup = (0, import_react13.useCallback)(async (name, color) => {
     const resp = await fetch(applicationGroupsApiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
@@ -35536,7 +35963,7 @@ function CanvasApp({
     }
     return null;
   }, [applicationGroupsApiUrl]);
-  const deleteAppGroup = (0, import_react12.useCallback)(async (groupId) => {
+  const deleteAppGroup = (0, import_react13.useCallback)(async (groupId) => {
     const resp = await fetch(`${applicationGroupsApiUrl}/${groupId}`, {
       method: "DELETE",
       headers: { "X-CSRF-Token": csrf() }
@@ -35548,7 +35975,7 @@ function CanvasApp({
       ));
     }
   }, [applicationGroupsApiUrl]);
-  const assignResourceToGroup = (0, import_react12.useCallback)(async (resourceId, groupId) => {
+  const assignResourceToGroup = (0, import_react13.useCallback)(async (resourceId, groupId) => {
     const resp = await fetch(`${apiUrl}/${resourceId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "X-CSRF-Token": csrf() },
@@ -35564,35 +35991,35 @@ function CanvasApp({
       })));
     }
   }, [apiUrl]);
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-app", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("nav", { className: "cv-topbar", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("a", { href: rootPath, className: "cv-logo", style: { textDecoration: "none", color: "inherit" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-logo-bars", "aria-hidden": "true", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", {})
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "cv-app", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("nav", { className: "cv-topbar", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("a", { href: rootPath, className: "cv-logo", style: { textDecoration: "none", color: "inherit" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "cv-logo-bars", "aria-hidden": "true", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", {})
           ] }),
           "Factor Fifty"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-breadcrumb", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: customer.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "cv-breadcrumb", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: customer.name }),
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "\u203A" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: project.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: "\u203A" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: project.name }),
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "\u203A" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "curr", children: environment.name })
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: "\u203A" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "curr", children: environment.name })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-top-right", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("a", { href: "/modules", className: "btn btn-ghost btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
-        lockState.isMe ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: releaseLock, style: { color: "var(--accent-green)" }, children: "\u{1F513} Editing \xB7 Unlock" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "cv-top-right", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("a", { href: "/modules", className: "btn btn-ghost btn-sm", style: { textDecoration: "none" }, children: "\u{1F4E6} Modules" }),
+        lockState.isMe ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: releaseLock, style: { color: "var(--accent-green)" }, children: "\u{1F513} Editing \xB7 Unlock" }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "button",
           {
             className: "btn btn-green btn-sm",
@@ -35601,11 +36028,11 @@ function CanvasApp({
             children: acquiringLock ? "Acquiring\u2026" : canvasLocked ? `\u{1F512} Locked by ${lockState.holder?.user_name || lockState.holder?.user_email || "someone"}` : "\u{1F512} Lock to Edit"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => setActiveScreen("deploy"), children: "\u25B6 Deploy" }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cv-avatar", children: currentUser || "U" })
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "btn btn-green btn-sm", onClick: () => setActiveScreen("deploy"), children: "\u25B6 Deploy" }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "cv-avatar", children: currentUser || "U" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "screen-selector", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "screen-selector", children: [
       { id: "canvas", label: "\u2460 Canvas & Guardrails" },
       { id: "rules", label: "\u2461 Business Rules" },
       { id: "promote", label: "\u2462 Promote & Sync" },
@@ -35613,7 +36040,7 @@ function CanvasApp({
       { id: "import", label: "\u2464 Import" },
       { id: "deploy", label: "\u2465 Deploy & IaC Engine" },
       { id: "global_tags", label: "\u{1F3F7}\uFE0F Global Tags" }
-    ].map((s) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    ].map((s) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "button",
       {
         className: `screen-btn${activeScreen === s.id ? " active" : ""}`,
@@ -35622,8 +36049,8 @@ function CanvasApp({
       },
       s.id
     )) }),
-    activeScreen === "canvas" && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
-      canvasLocked && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-lock-banner", style: {
+    activeScreen === "canvas" && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+      canvasLocked && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "cv-lock-banner", style: {
         background: "var(--accent-orange, #d29922)",
         color: "#000",
         padding: "8px 16px",
@@ -35637,37 +36064,37 @@ function CanvasApp({
         lockState.holder?.user_name || lockState.holder?.user_email || "another user",
         ". View-only mode until they release the lock."
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "group-filter-bar", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "group-filter-bar", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
           "button",
           {
             className: `group-filter-tab${!selectedGroupId ? " active" : ""}`,
             onClick: () => setSelectedGroupId(null),
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-dot", style: { background: "var(--text-muted)" } }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "group-filter-dot", style: { background: "var(--text-muted)" } }),
               "All Resources ",
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-count", children: resources.length })
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "group-filter-count", children: resources.length })
             ]
           }
         ),
         appGroups.map((g) => {
           const count = resources.filter((r) => r.application_group_id === g.id).length;
-          return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
             "button",
             {
               className: `group-filter-tab${selectedGroupId === g.id ? " active" : ""}`,
               onClick: () => setSelectedGroupId(selectedGroupId === g.id ? null : g.id),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-dot", style: { background: g.color } }),
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "group-filter-dot", style: { background: g.color } }),
                 g.name,
                 " ",
-                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "group-filter-count", children: count })
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "group-filter-count", children: count })
               ]
             },
             g.id
           );
         }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "button",
           {
             className: "group-filter-tab",
@@ -35677,7 +36104,7 @@ function CanvasApp({
           }
         )
       ] }),
-      showCreateGroupModal && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      showCreateGroupModal && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
         CreateGroupModal,
         {
           onCreate: async (name, color) => {
@@ -35687,8 +36114,8 @@ function CanvasApp({
           onClose: () => setShowCreateGroupModal(false)
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "cv-main", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: `cv-main${codePanelExpanded ? codePanelWide ? " cv-main-code-wide" : " cv-main-code" : ""}`, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           CatalogPanel,
           {
             modules: catalogModules,
@@ -35697,7 +36124,7 @@ function CanvasApp({
             onAddResource: addResource
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           CanvasArea,
           {
             resources: selectedGroupId ? resources.filter((r) => r.application_group_id === selectedGroupId) : resources,
@@ -35720,7 +36147,7 @@ function CanvasApp({
             readOnly: canvasLocked || !lockState.isMe
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           RightPanel,
           {
             selectedId,
@@ -35731,6 +36158,10 @@ function CanvasApp({
             deleteResource,
             startConnect: () => startConnect(selectedId),
             apiUrl,
+            environmentId,
+            onCodeTabChange: setCodePanelExpanded,
+            onCodeExpandToggle: () => setCodePanelWide((w) => !w),
+            codeExpanded: codePanelWide,
             onPropsSaved: (id) => {
               fetch(`${apiUrl}/${id}/properties`, { headers: { Accept: "text/html" } }).then((r) => r.ok ? r.text() : "").then((html2) => setPropsHtml(purify.sanitize(html2)));
             },
@@ -35740,6 +36171,7 @@ function CanvasApp({
             assignResourceToGroup,
             selectedGroupId,
             readOnly: canvasLocked || !lockState.isMe,
+            userRole,
             onResourceUpgraded: (updated) => {
               setResources((prev) => prev.map((r) => r.id === updated.id ? { ...r, ...updated } : r));
             }
@@ -35747,8 +36179,8 @@ function CanvasApp({
         )
       ] })
     ] }),
-    activeScreen === "rules" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BusinessRulesScreen, { rulesApiUrl: businessRulesApiUrl, userRole }),
-    activeScreen === "promote" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    activeScreen === "rules" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(BusinessRulesScreen, { rulesApiUrl: businessRulesApiUrl, userRole }),
+    activeScreen === "promote" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       PromoteScreen,
       {
         project,
@@ -35757,11 +36189,11 @@ function CanvasApp({
         promotionsApiUrl: `/api/projects/${project.id}/promotions`
       }
     ),
-    activeScreen === "templates" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TemplatesScreen, {}),
-    activeScreen === "import" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ImportScreen, {}),
-    activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DeployScreen, { environmentId, canManage }),
-    activeScreen === "global_tags" && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(GlobalTagsScreen, { environmentId, environment, project, customer }),
-    cmdOpen && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    activeScreen === "templates" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(TemplatesScreen, {}),
+    activeScreen === "import" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ImportScreen, {}),
+    activeScreen === "deploy" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DeployScreen, { environmentId, canManage }),
+    activeScreen === "global_tags" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(GlobalTagsScreen, { environmentId, environment, project, customer }),
+    cmdOpen && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       CommandPalette,
       {
         resources,
@@ -35785,37 +36217,37 @@ function CanvasApp({
     ),
     deleteConfirmId && (() => {
       const res = resources.find((r) => r.id === deleteConfirmId);
-      return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
+      return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "modal-overlay", style: { display: "flex" }, onClick: (e) => {
         if (e.target === e.currentTarget) setDeleteConfirmId(null);
-      }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-panel", style: { maxWidth: 420 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-header", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h3", { className: "modal-title", style: { color: "var(--red)" }, children: "Delete Resource" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "modal-close", onClick: () => setDeleteConfirmId(null), "aria-label": "Close", children: "\xD7" })
+      }, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-panel", style: { maxWidth: 420 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h3", { className: "modal-title", style: { color: "var(--red)" }, children: "Delete Resource" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "modal-close", onClick: () => setDeleteConfirmId(null), "aria-label": "Close", children: "\xD7" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("p", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("p", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: [
           "Are you sure you want to delete ",
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: { fontWeight: 600, color: "var(--text-primary)" }, children: res?.name || "this resource" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { style: { fontWeight: 600, color: "var(--text-primary)" }, children: res?.name || "this resource" }),
           "? This will also remove all its connections."
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "modal-footer", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: () => setDeleteConfirmId(null), children: "Cancel" }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn btn-danger", onClick: confirmDeleteResource, children: "Delete" })
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "modal-footer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: () => setDeleteConfirmId(null), children: "Cancel" }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn btn-danger", onClick: confirmDeleteResource, children: "Delete" })
         ] })
       ] }) });
     })(),
-    toasts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "cv-toasts", children: toasts.map((t) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: `cv-toast cv-toast-${t.type}`, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { children: [
+    toasts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "cv-toasts", children: toasts.map((t) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: `cv-toast cv-toast-${t.type}`, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { children: [
         t.type === "error" ? "\u{1F6AB}" : "\u26A0\uFE0F",
         " ",
         t.message
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "cv-toast-close", onClick: () => setToasts((prev) => prev.filter((x) => x.id !== t.id)), children: "\xD7" })
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "cv-toast-close", onClick: () => setToasts((prev) => prev.filter((x) => x.id !== t.id)), children: "\xD7" })
     ] }, t.id)) })
   ] });
 }
 
 // app/javascript/components/dashboard/FinancialDashboard.jsx
-var import_react20 = __toESM(require_react());
+var import_react21 = __toESM(require_react());
 
 // node_modules/@tanstack/query-core/build/modern/subscribable.js
 var Subscribable = class {
@@ -38403,13 +38835,13 @@ var QueryClient = class {
 };
 
 // node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js
-var React12 = __toESM(require_react(), 1);
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-var QueryClientContext = React12.createContext(
+var React13 = __toESM(require_react(), 1);
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var QueryClientContext = React13.createContext(
   void 0
 );
 var useQueryClient = (queryClient4) => {
-  const client = React12.useContext(QueryClientContext);
+  const client = React13.useContext(QueryClientContext);
   if (queryClient4) {
     return queryClient4;
   }
@@ -38422,24 +38854,24 @@ var QueryClientProvider = ({
   client,
   children
 }) => {
-  React12.useEffect(() => {
+  React13.useEffect(() => {
     client.mount();
     return () => {
       client.unmount();
     };
   }, [client]);
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(QueryClientContext.Provider, { value: client, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(QueryClientContext.Provider, { value: client, children });
 };
 
 // node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js
-var React13 = __toESM(require_react(), 1);
-var IsRestoringContext = React13.createContext(false);
-var useIsRestoring = () => React13.useContext(IsRestoringContext);
+var React14 = __toESM(require_react(), 1);
+var IsRestoringContext = React14.createContext(false);
+var useIsRestoring = () => React14.useContext(IsRestoringContext);
 var IsRestoringProvider = IsRestoringContext.Provider;
 
 // node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js
-var React14 = __toESM(require_react(), 1);
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var React15 = __toESM(require_react(), 1);
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 function createValue() {
   let isReset = false;
   return {
@@ -38454,11 +38886,11 @@ function createValue() {
     }
   };
 }
-var QueryErrorResetBoundaryContext = React14.createContext(createValue());
-var useQueryErrorResetBoundary = () => React14.useContext(QueryErrorResetBoundaryContext);
+var QueryErrorResetBoundaryContext = React15.createContext(createValue());
+var useQueryErrorResetBoundary = () => React15.useContext(QueryErrorResetBoundaryContext);
 
 // node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js
-var React15 = __toESM(require_react(), 1);
+var React16 = __toESM(require_react(), 1);
 var ensurePreventErrorBoundaryRetry = (options, errorResetBoundary, query) => {
   const throwOnError = query?.state.error && typeof options.throwOnError === "function" ? shouldThrowError(options.throwOnError, [query.state.error, query]) : options.throwOnError;
   if (options.suspense || options.experimental_prefetchInRender || throwOnError) {
@@ -38468,7 +38900,7 @@ var ensurePreventErrorBoundaryRetry = (options, errorResetBoundary, query) => {
   }
 };
 var useClearResetErrorBoundary = (errorResetBoundary) => {
-  React15.useEffect(() => {
+  React16.useEffect(() => {
     errorResetBoundary.clearReset();
   }, [errorResetBoundary]);
 };
@@ -38504,7 +38936,7 @@ var fetchOptimistic = (defaultedOptions, observer, errorResetBoundary) => observ
 });
 
 // node_modules/@tanstack/react-query/build/modern/useBaseQuery.js
-var React16 = __toESM(require_react(), 1);
+var React17 = __toESM(require_react(), 1);
 function useBaseQuery(options, Observer, queryClient4) {
   if (true) {
     if (typeof options !== "object" || Array.isArray(options)) {
@@ -38533,7 +38965,7 @@ function useBaseQuery(options, Observer, queryClient4) {
   ensurePreventErrorBoundaryRetry(defaultedOptions, errorResetBoundary, query);
   useClearResetErrorBoundary(errorResetBoundary);
   const isNewCacheEntry = !client.getQueryCache().get(defaultedOptions.queryHash);
-  const [observer] = React16.useState(
+  const [observer] = React17.useState(
     () => new Observer(
       client,
       defaultedOptions
@@ -38541,8 +38973,8 @@ function useBaseQuery(options, Observer, queryClient4) {
   );
   const result = observer.getOptimisticResult(defaultedOptions);
   const shouldSubscribe = !isRestoring && options.subscribed !== false;
-  React16.useSyncExternalStore(
-    React16.useCallback(
+  React17.useSyncExternalStore(
+    React17.useCallback(
       (onStoreChange) => {
         const unsubscribe = shouldSubscribe ? observer.subscribe(notifyManager.batchCalls(onStoreChange)) : noop;
         observer.updateResult();
@@ -38553,7 +38985,7 @@ function useBaseQuery(options, Observer, queryClient4) {
     () => observer.getCurrentResult(),
     () => observer.getCurrentResult()
   );
-  React16.useEffect(() => {
+  React17.useEffect(() => {
     observer.setOptions(defaultedOptions);
   }, [defaultedOptions, observer]);
   if (shouldSuspend(defaultedOptions, result)) {
@@ -38594,27 +39026,27 @@ function useQuery(options, queryClient4) {
 }
 
 // node_modules/@tanstack/react-query/build/modern/useMutation.js
-var React17 = __toESM(require_react(), 1);
+var React18 = __toESM(require_react(), 1);
 function useMutation(options, queryClient4) {
   const client = useQueryClient(queryClient4);
-  const [observer] = React17.useState(
+  const [observer] = React18.useState(
     () => new MutationObserver2(
       client,
       options
     )
   );
-  React17.useEffect(() => {
+  React18.useEffect(() => {
     observer.setOptions(options);
   }, [observer, options]);
-  const result = React17.useSyncExternalStore(
-    React17.useCallback(
+  const result = React18.useSyncExternalStore(
+    React18.useCallback(
       (onStoreChange) => observer.subscribe(notifyManager.batchCalls(onStoreChange)),
       [observer]
     ),
     () => observer.getCurrentResult(),
     () => observer.getCurrentResult()
   );
-  const mutate = React17.useCallback(
+  const mutate = React18.useCallback(
     (variables, mutateOptions) => {
       observer.mutate(variables, mutateOptions).catch(noop);
     },
@@ -38848,16 +39280,16 @@ function transformAccountSpendToChartData(response) {
 }
 
 // app/javascript/components/dashboard/DashboardSelector.jsx
-var import_react13 = __toESM(require_react());
-var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+var import_react14 = __toESM(require_react());
+var import_jsx_runtime16 = __toESM(require_jsx_runtime());
 function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreate, onRename, onDelete }) {
-  const [open, setOpen] = (0, import_react13.useState)(false);
-  const [editingId, setEditingId] = (0, import_react13.useState)(null);
-  const [editName, setEditName] = (0, import_react13.useState)("");
-  const [confirmDeleteId, setConfirmDeleteId] = (0, import_react13.useState)(null);
-  const ref = (0, import_react13.useRef)(null);
-  const confirmRef = (0, import_react13.useRef)(null);
-  (0, import_react13.useEffect)(() => {
+  const [open, setOpen] = (0, import_react14.useState)(false);
+  const [editingId, setEditingId] = (0, import_react14.useState)(null);
+  const [editName, setEditName] = (0, import_react14.useState)("");
+  const [confirmDeleteId, setConfirmDeleteId] = (0, import_react14.useState)(null);
+  const ref = (0, import_react14.useRef)(null);
+  const confirmRef = (0, import_react14.useRef)(null);
+  (0, import_react14.useEffect)(() => {
     const h = (e) => {
       if (ref.current && !ref.current.contains(e.target) && !(confirmRef.current && confirmRef.current.contains(e.target))) {
         setOpen(false);
@@ -38888,13 +39320,13 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
       setOpen(false);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-      isLoading ? "\u2026" : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: current?.name || "Select Dashboard" }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "\u25BE" })
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { ref, style: { position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+      isLoading ? "\u2026" : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: current?.name || "Select Dashboard" }),
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { fontSize: 10, color: "var(--text-muted)" }, children: "\u25BE" })
     ] }),
-    open && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 6, minWidth: 260, zIndex: 100, boxShadow: "var(--shadow)", border: "1px solid var(--border)" }, children: [
-      dashboards.map((d) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    open && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 6, minWidth: 260, zIndex: 100, boxShadow: "var(--shadow)", border: "1px solid var(--border)" }, children: [
+      dashboards.map((d) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         "div",
         {
           onClick: () => {
@@ -38904,7 +39336,7 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
             }
           },
           style: { display: "flex", alignItems: "center", gap: 8, padding: "8px 10px", background: d.id === currentId ? "var(--blue-dim)" : "transparent", borderRadius: "var(--radius-sm)", cursor: "pointer" },
-          children: editingId === d.id ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+          children: editingId === d.id ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
             "input",
             {
               autoFocus: true,
@@ -38919,11 +39351,11 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
               className: "form-input",
               style: { flex: 1, padding: "4px 8px", fontSize: 13 }
             }
-          ) : /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { flex: 1, color: "var(--text-primary)", fontSize: 13, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: d.name }),
-            d.is_default && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "badge badge-dev", style: { fontSize: 9 }, children: "Default" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: (e) => startEdit(d, e), style: { background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 4, fontSize: 12 }, children: "\u270E" }),
-            !d.is_default && dashboards.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { onClick: (e) => {
+          ) : /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { flex: 1, color: "var(--text-primary)", fontSize: 13, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: d.name }),
+            d.is_default && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "badge badge-dev", style: { fontSize: 9 }, children: "Default" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: (e) => startEdit(d, e), style: { background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 4, fontSize: 12 }, children: "\u270E" }),
+            !d.is_default && dashboards.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: (e) => {
               e.stopPropagation();
               setConfirmDeleteId(d.id);
             }, style: { background: "none", border: "none", color: "var(--red)", cursor: "pointer", padding: 4, fontSize: 12 }, children: "\u2715" })
@@ -38931,7 +39363,7 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
         },
         d.id
       )),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { borderTop: "1px solid var(--border)", marginTop: 6, paddingTop: 6 }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { style: { borderTop: "1px solid var(--border)", marginTop: 6, paddingTop: 6 }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
         "button",
         {
           onClick: () => {
@@ -38943,27 +39375,27 @@ function DashboardSelector({ dashboards, currentId, isLoading, onSelect, onCreat
         }
       ) })
     ] }),
-    confirmDeleteId && deleteTarget && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { ref: confirmRef, className: "modal-panel", style: { maxWidth: 400 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "modal-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "modal-title", children: "Delete Dashboard" }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: () => setConfirmDeleteId(null), children: "\xD7" })
+    confirmDeleteId && deleteTarget && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { ref: confirmRef, className: "modal-panel", style: { maxWidth: 400 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "modal-header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "modal-title", children: "Delete Dashboard" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: () => setConfirmDeleteId(null), children: "\xD7" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("p", { style: { color: "var(--text-primary)", fontSize: 13, margin: 0 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("p", { style: { color: "var(--text-primary)", fontSize: 13, margin: 0 }, children: [
         "Are you sure you want to delete ",
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { fontWeight: 600 }, children: deleteTarget.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { fontWeight: 600 }, children: deleteTarget.name }),
         "? This will remove all its widgets and cannot be undone."
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "modal-footer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: "btn btn-ghost", onClick: () => setConfirmDeleteId(null), children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { className: "btn btn-danger", onClick: handleConfirmDelete, children: "Delete" })
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { className: "btn btn-ghost", onClick: () => setConfirmDeleteId(null), children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { className: "btn btn-danger", onClick: handleConfirmDelete, children: "Delete" })
       ] })
     ] }) })
   ] });
 }
 
 // app/javascript/components/dashboard/GlobalMonthSelector.jsx
-var import_react14 = __toESM(require_react());
-var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+var import_react15 = __toESM(require_react());
+var import_jsx_runtime17 = __toESM(require_jsx_runtime());
 var CURRENT_YEAR = (/* @__PURE__ */ new Date()).getFullYear();
 var CURRENT_MONTH = (/* @__PURE__ */ new Date()).getMonth() + 1;
 var MONTH_NAMES2 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -38974,20 +39406,20 @@ function GlobalMonthSelector({ year, month, onChange }) {
     month === 12 ? onChange(year + 1, 1) : onChange(year, month + 1);
   };
   const isCurrent = year === CURRENT_YEAR && month === CURRENT_MONTH;
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: "4px 8px", border: "1px solid var(--border)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: goToPrev, "aria-label": "Previous month", style: { display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, background: "var(--bg-input)", border: "none", color: "var(--text-secondary)", cursor: "pointer", borderRadius: "var(--radius-sm)" }, children: "\u2039" }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { style: { minWidth: 90, textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { style: { fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: "4px 8px", border: "1px solid var(--border)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { onClick: goToPrev, "aria-label": "Previous month", style: { display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, background: "var(--bg-input)", border: "none", color: "var(--text-secondary)", cursor: "pointer", borderRadius: "var(--radius-sm)" }, children: "\u2039" }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { style: { minWidth: 90, textAlign: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("span", { style: { fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }, children: [
       MONTH_NAMES2[month - 1],
       " ",
       year
     ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: goToNext, disabled: isCurrent, "aria-label": "Next month", style: { display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, background: isCurrent ? "transparent" : "var(--bg-input)", border: "none", color: isCurrent ? "var(--text-muted)" : "var(--text-secondary)", cursor: isCurrent ? "default" : "pointer", borderRadius: "var(--radius-sm)" }, children: "\u203A" })
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { onClick: goToNext, disabled: isCurrent, "aria-label": "Next month", style: { display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, background: isCurrent ? "transparent" : "var(--bg-input)", border: "none", color: isCurrent ? "var(--text-muted)" : "var(--text-secondary)", cursor: isCurrent ? "default" : "pointer", borderRadius: "var(--radius-sm)" }, children: "\u203A" })
   ] });
 }
 
 // app/javascript/components/dashboard/AddWidgetModal.jsx
-var import_react15 = __toESM(require_react());
-var import_jsx_runtime17 = __toESM(require_jsx_runtime());
+var import_react16 = __toESM(require_react());
+var import_jsx_runtime18 = __toESM(require_jsx_runtime());
 var CHART_TYPES = [
   { type: "daily-spend", label: "Daily Spend", icon: "\u{1F4B0}" },
   { type: "service-breakdown", label: "Service Breakdown", icon: "\u{1F4CA}" },
@@ -38997,20 +39429,20 @@ var CHART_TYPES = [
   { type: "monthly-spend-trend", label: "Monthly Spend (6 Months)", icon: "\u{1F4C5}" }
 ];
 function AddWidgetModal({ onAdd, onClose }) {
-  const ref = (0, import_react15.useRef)(null);
-  (0, import_react15.useEffect)(() => {
+  const ref = (0, import_react16.useRef)(null);
+  (0, import_react16.useEffect)(() => {
     const h = (e) => {
       if (ref.current && !ref.current.contains(e.target)) onClose();
     };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { ref, className: "modal-panel", style: { maxWidth: 420 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "modal-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h3", { className: "modal-title", children: "Add Widget" }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: onClose, children: "\xD7" })
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { ref, className: "modal-panel", style: { maxWidth: 420 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { className: "modal-title", children: "Add Widget" }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: onClose, children: "\xD7" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "modal-body", style: { display: "flex", flexDirection: "column", gap: 8 }, children: CHART_TYPES.map((ct) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-body", style: { display: "flex", flexDirection: "column", gap: 8 }, children: CHART_TYPES.map((ct) => /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
       "button",
       {
         onClick: () => {
@@ -39019,27 +39451,27 @@ function AddWidgetModal({ onAdd, onClose }) {
         },
         style: { display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", background: "var(--bg-input)", border: "1px solid var(--border)", borderRadius: "var(--radius)", color: "var(--text-primary)", cursor: "pointer", fontSize: 13, textAlign: "left", transition: "border-color 0.15s" },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { style: { fontSize: 20 }, children: ct.icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: 20 }, children: ct.icon }),
           ct.label
         ]
       },
       ct.type
     )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "modal-footer", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { className: "btn btn-ghost", onClick: onClose, children: "Cancel" }) })
+    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-footer", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { className: "btn btn-ghost", onClick: onClose, children: "Cancel" }) })
   ] }) });
 }
 
 // app/javascript/components/dashboard/CreateDashboardModal.jsx
-var import_react16 = __toESM(require_react());
-var import_jsx_runtime18 = __toESM(require_jsx_runtime());
+var import_react17 = __toESM(require_react());
+var import_jsx_runtime19 = __toESM(require_jsx_runtime());
 function CreateDashboardModal({ onConfirm, onClose }) {
-  const [name, setName] = (0, import_react16.useState)("");
-  const inputRef = (0, import_react16.useRef)(null);
-  const panelRef = (0, import_react16.useRef)(null);
-  (0, import_react16.useEffect)(() => {
+  const [name, setName] = (0, import_react17.useState)("");
+  const inputRef = (0, import_react17.useRef)(null);
+  const panelRef = (0, import_react17.useRef)(null);
+  (0, import_react17.useEffect)(() => {
     inputRef.current?.focus();
   }, []);
-  (0, import_react16.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     const h = (e) => {
       if (panelRef.current && !panelRef.current.contains(e.target)) onClose();
     };
@@ -39051,15 +39483,15 @@ function CreateDashboardModal({ onConfirm, onClose }) {
     const trimmed = name.trim();
     if (trimmed) onConfirm(trimmed);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { ref: panelRef, className: "modal-panel", style: { maxWidth: 420 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { className: "modal-title", children: "Create Dashboard" }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: onClose, children: "\xD7" })
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "modal-overlay open", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { ref: panelRef, className: "modal-panel", style: { maxWidth: 420 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h3", { className: "modal-title", children: "Create Dashboard" }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { className: "modal-close", "aria-label": "Close", onClick: onClose, children: "\xD7" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "form-group", style: { marginBottom: 0 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { className: "form-label", htmlFor: "dashboard-name", children: "Dashboard Name *" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "modal-body", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "form-group", style: { marginBottom: 0 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("label", { className: "form-label", htmlFor: "dashboard-name", children: "Dashboard Name *" }),
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
           "input",
           {
             ref: inputRef,
@@ -39073,50 +39505,21 @@ function CreateDashboardModal({ onConfirm, onClose }) {
           }
         )
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-footer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "submit", className: "btn btn-green", disabled: !name.trim(), children: "Create" })
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "modal-footer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "button", className: "btn btn-ghost", onClick: onClose, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { type: "submit", className: "btn btn-green", disabled: !name.trim(), children: "Create" })
       ] })
     ] })
   ] }) });
 }
 
 // app/javascript/components/dashboard/WidgetCard.jsx
-var import_react19 = __toESM(require_react());
+var import_react20 = __toESM(require_react());
 
 // app/javascript/components/dashboard/WidgetAccountFilter.jsx
-var import_react17 = __toESM(require_react());
-var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-function WidgetAccountFilter({ accounts, selected, onChange, isLoading }) {
-  const [open, setOpen] = (0, import_react17.useState)(false);
-  const ref = (0, import_react17.useRef)(null);
-  (0, import_react17.useEffect)(() => {
-    const h = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
-  }, []);
-  const toggle = (id) => onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--green)" : void 0, color: selected.length > 0 ? "var(--green)" : void 0 }, children: [
-      "\u23F7 ",
-      selected.length > 0 ? `${selected.length} accounts` : "All accounts"
-    ] }),
-    open && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 200, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 250, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : accounts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No accounts" }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
-      accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)", fontFamily: "var(--font-mono)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("input", { type: "checkbox", checked: selected.includes(acc), onChange: () => toggle(acc) }),
-        acc
-      ] }, acc)),
-      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--green)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
-    ] }) })
-  ] });
-}
-
-// app/javascript/components/dashboard/WidgetServiceFilter.jsx
 var import_react18 = __toESM(require_react());
 var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-function WidgetServiceFilter({ services, selected, onChange, isLoading }) {
+function WidgetAccountFilter({ accounts, selected, onChange, isLoading }) {
   const [open, setOpen] = (0, import_react18.useState)(false);
   const ref = (0, import_react18.useRef)(null);
   (0, import_react18.useEffect)(() => {
@@ -39128,22 +39531,51 @@ function WidgetServiceFilter({ services, selected, onChange, isLoading }) {
   }, []);
   const toggle = (id) => onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
   return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--purple)" : void 0, color: selected.length > 0 ? "var(--purple)" : void 0 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--green)" : void 0, color: selected.length > 0 ? "var(--green)" : void 0 }, children: [
+      "\u23F7 ",
+      selected.length > 0 ? `${selected.length} accounts` : "All accounts"
+    ] }),
+    open && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 200, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 250, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : accounts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No accounts" }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)", fontFamily: "var(--font-mono)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("input", { type: "checkbox", checked: selected.includes(acc), onChange: () => toggle(acc) }),
+        acc
+      ] }, acc)),
+      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--green)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
+    ] }) })
+  ] });
+}
+
+// app/javascript/components/dashboard/WidgetServiceFilter.jsx
+var import_react19 = __toESM(require_react());
+var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+function WidgetServiceFilter({ services, selected, onChange, isLoading }) {
+  const [open, setOpen] = (0, import_react19.useState)(false);
+  const ref = (0, import_react19.useRef)(null);
+  (0, import_react19.useEffect)(() => {
+    const h = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+  const toggle = (id) => onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { ref, style: { position: "relative" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("button", { onClick: () => setOpen(!open), className: "btn btn-ghost btn-sm", style: { fontSize: 11, padding: "4px 10px", borderColor: selected.length > 0 ? "var(--purple)" : void 0, color: selected.length > 0 ? "var(--purple)" : void 0 }, children: [
       "\u23F7 ",
       selected.length > 0 ? `${selected.length} services` : "All services"
     ] }),
-    open && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 240, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 300, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : services.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No services" }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-      services.map((svc) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("input", { type: "checkbox", checked: selected.includes(svc), onChange: () => toggle(svc) }),
-        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: svc })
+    open && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { position: "absolute", top: "100%", left: 0, marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 8, minWidth: 240, zIndex: 50, boxShadow: "var(--shadow)", border: "1px solid var(--border)", maxHeight: 300, overflowY: "auto" }, children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "Loading\u2026" }) : services.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 11, padding: 8 }, children: "No services" }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+      services.map((svc) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, padding: "5px 8px", cursor: "pointer", fontSize: 11, color: "var(--text-primary)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("input", { type: "checkbox", checked: selected.includes(svc), onChange: () => toggle(svc) }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: svc })
       ] }, svc)),
-      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--purple)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
+      selected.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("button", { onClick: () => onChange([]), style: { width: "100%", padding: "5px 8px", background: "none", border: "none", color: "var(--purple)", fontSize: 10.5, cursor: "pointer", borderTop: "1px solid var(--border)", marginTop: 4 }, children: "Clear all" })
     ] }) })
   ] });
 }
 
 // app/javascript/components/dashboard/WidgetCard.jsx
-var import_jsx_runtime21 = __toESM(require_jsx_runtime());
+var import_jsx_runtime22 = __toESM(require_jsx_runtime());
 var DEFAULT_PROVIDER = "aws";
 var CHART_COLORS = [
   "#4ade80",
@@ -39173,15 +39605,15 @@ function fmtFullCurrency(val, symbol = "\u20AC") {
   return `${symbol} ${val.toLocaleString(void 0, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 }
 function DropdownMenu({ items, onSelect, onClose }) {
-  const ref = (0, import_react19.useRef)(null);
-  (0, import_react19.useEffect)(() => {
+  const ref = (0, import_react20.useRef)(null);
+  (0, import_react20.useEffect)(() => {
     const h = (e) => {
       if (ref.current && !ref.current.contains(e.target)) onClose();
     };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { ref, style: { position: "absolute", right: 0, top: "100%", marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 4, minWidth: 160, zIndex: 100, boxShadow: "var(--shadow)", border: "1px solid var(--border)" }, children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { ref, style: { position: "absolute", right: 0, top: "100%", marginTop: 4, background: "var(--bg-card)", borderRadius: "var(--radius)", padding: 4, minWidth: 160, zIndex: 100, boxShadow: "var(--shadow)", border: "1px solid var(--border)" }, children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "button",
     {
       onClick: () => {
@@ -39190,7 +39622,7 @@ function DropdownMenu({ items, onSelect, onClose }) {
       },
       style: { display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "6px 10px", background: "none", border: "none", color: item.danger ? "var(--red)" : "var(--text-primary)", borderRadius: "var(--radius-sm)", cursor: "pointer", fontSize: 12, textAlign: "left", lineHeight: 1.3 },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { fontSize: 13, width: 16, textAlign: "center", flexShrink: 0 }, children: item.icon }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { style: { fontSize: 13, width: 16, textAlign: "center", flexShrink: 0 }, children: item.icon }),
         item.label
       ]
     },
@@ -39198,7 +39630,7 @@ function DropdownMenu({ items, onSelect, onClose }) {
   )) });
 }
 function SvgBarChart({ labels, values, highlightLast, yFormatter, barColor = "#4ade80" }) {
-  const [hovered, setHovered] = (0, import_react19.useState)(null);
+  const [hovered, setHovered] = (0, import_react20.useState)(null);
   const maxVal = Math.max(...values, 1);
   const padTop = 24, padBot = 24, padLeft = 36, padRight = 8;
   const w = 600, h = 180;
@@ -39208,7 +39640,7 @@ function SvgBarChart({ labels, values, highlightLast, yFormatter, barColor = "#4
   const barW = Math.max(4, (plotW - barGap * labels.length) / labels.length);
   const gridLines = 5;
   const avg = values.reduce((a, b) => a + b, 0) / (values.filter((v) => v > 0).length || 1);
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "svg",
     {
       viewBox: `0 0 ${w} ${h}`,
@@ -39218,9 +39650,9 @@ function SvgBarChart({ labels, values, highlightLast, yFormatter, barColor = "#4
         Array.from({ length: gridLines + 1 }).map((_, i) => {
           const y = padTop + plotH / gridLines * i;
           const val = maxVal - maxVal / gridLines * i;
-          return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("g", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("line", { x1: padLeft, y1: y, x2: w - padRight, y2: y, stroke: "rgba(255,255,255,0.05)", strokeWidth: "1" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("text", { x: padLeft - 6, y: y + 3, fontFamily: MONO, fontSize: "9", fill: "#64748b", textAnchor: "end", children: yFormatter ? yFormatter(val) : fmt(val) })
+          return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("g", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("line", { x1: padLeft, y1: y, x2: w - padRight, y2: y, stroke: "rgba(255,255,255,0.05)", strokeWidth: "1" }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("text", { x: padLeft - 6, y: y + 3, fontFamily: MONO, fontSize: "9", fill: "#64748b", textAnchor: "end", children: yFormatter ? yFormatter(val) : fmt(val) })
           ] }, i);
         }),
         values.map((val, i) => {
@@ -39233,9 +39665,9 @@ function SvgBarChart({ labels, values, highlightLast, yFormatter, barColor = "#4
           const isHov = hovered === i;
           const fill = isZero ? "rgba(28,34,53,0.5)" : isHigh ? "#fbbf24" : isLast ? barColor : `${barColor}99`;
           const shadow2 = isLast ? `drop-shadow(0 0 6px ${barColor})` : void 0;
-          return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("g", { onMouseEnter: () => setHovered(i), style: { cursor: val > 0 ? "pointer" : "default" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("rect", { x: x - 1, y: padTop, width: barW + 2, height: plotH + padBot, fill: "transparent" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("g", { onMouseEnter: () => setHovered(i), style: { cursor: val > 0 ? "pointer" : "default" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("rect", { x: x - 1, y: padTop, width: barW + 2, height: plotH + padBot, fill: "transparent" }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
               "rect",
               {
                 x,
@@ -39248,9 +39680,9 @@ function SvgBarChart({ labels, values, highlightLast, yFormatter, barColor = "#4
                 opacity: isHov && !isZero ? 1 : isHigh ? 0.85 : 1
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("text", { x: x + barW / 2, y: h - 4, fontFamily: MONO, fontSize: "9", fill: isLast ? barColor : "#64748b", textAnchor: "middle", children: labels[i] }),
-            (isHov && val > 0 || isLast && val > 0) && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("g", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("text", { x: x + barW / 2, y: h - 4, fontFamily: MONO, fontSize: "9", fill: isLast ? barColor : "#64748b", textAnchor: "middle", children: labels[i] }),
+            (isHov && val > 0 || isLast && val > 0) && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("g", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
                 "rect",
                 {
                   x: x + barW / 2 - 28,
@@ -39263,7 +39695,7 @@ function SvgBarChart({ labels, values, highlightLast, yFormatter, barColor = "#4
                   strokeWidth: "0.5"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
                 "text",
                 {
                   x: x + barW / 2,
@@ -39298,22 +39730,22 @@ function SvgMonthlyTrend({ data }) {
     const y = padTop + plotH - d.value / maxVal * plotH;
     return { x, y, ...d };
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("svg", { viewBox: `0 0 ${w} ${h}`, style: { width: "100%", height: "100%", overflow: "visible" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("svg", { viewBox: `0 0 ${w} ${h}`, style: { width: "100%", height: "100%", overflow: "visible" }, children: [
     [0, 0.25, 0.5, 0.75, 1].map((pct, i) => {
       const y = padTop + plotH * (1 - pct);
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("line", { x1: padLeft, y1: y, x2: w - padRight, y2: y, stroke: "rgba(255,255,255,0.05)", strokeWidth: "1" }, i);
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("line", { x1: padLeft, y1: y, x2: w - padRight, y2: y, stroke: "rgba(255,255,255,0.05)", strokeWidth: "1" }, i);
     }),
     [0, 0.25, 0.5, 0.75, 1].map((pct, i) => {
       const y = padTop + plotH * (1 - pct);
       const val = maxVal * pct;
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("text", { x: padLeft - 6, y: y + 3, fontFamily: MONO, fontSize: "9", fill: "#64748b", textAnchor: "end", children: `${(val / 1e3).toFixed(0)}k` }, i);
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("text", { x: padLeft - 6, y: y + 3, fontFamily: MONO, fontSize: "9", fill: "#64748b", textAnchor: "end", children: `${(val / 1e3).toFixed(0)}k` }, i);
     }),
     points.map((p, i) => {
       const barH = p.value / maxVal * plotH;
       const isLast = i === points.length - 1;
       const isHigh = p.value > avg * 1.15;
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("g", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("g", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           "rect",
           {
             x: p.x - barW / 2,
@@ -39324,7 +39756,7 @@ function SvgMonthlyTrend({ data }) {
             fill: isHigh && !isLast ? "rgba(251,191,36,0.25)" : isLast ? "rgba(74,222,128,0.35)" : "rgba(74,222,128,0.2)"
           }
         ),
-        isLast && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        isLast && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           "rect",
           {
             x: p.x - barW / 2,
@@ -39340,7 +39772,7 @@ function SvgMonthlyTrend({ data }) {
         )
       ] }, i);
     }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
       "polyline",
       {
         points: points.map((p) => `${p.x},${p.y}`).join(" "),
@@ -39353,8 +39785,8 @@ function SvgMonthlyTrend({ data }) {
     points.map((p, i) => {
       const isLast = i === points.length - 1;
       const isHigh = p.value > avg * 1.15;
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("g", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("g", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           "circle",
           {
             cx: p.x,
@@ -39363,7 +39795,7 @@ function SvgMonthlyTrend({ data }) {
             fill: isHigh && !isLast ? "rgba(251,191,36,0.9)" : isLast ? "#4ade80" : "rgba(74,222,128,0.8)"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           "text",
           {
             x: p.x,
@@ -39375,7 +39807,7 @@ function SvgMonthlyTrend({ data }) {
             children: fmt(p.value)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
           "text",
           {
             x: p.x,
@@ -39398,12 +39830,12 @@ function SvgDonut({ slices, centerLabel, centerSub, showSpend, currencySymbol = 
   const r = 50, cx = 70, cy = 70, circumference = 2 * Math.PI * r;
   const total = slices.reduce((a, s) => a + s.value, 0) || 1;
   let offset = 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 20, height: "100%" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("svg", { viewBox: "0 0 140 140", style: { width: 140, height: 140, flexShrink: 0 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("circle", { cx, cy, r, fill: "none", stroke: "#1c2235", strokeWidth: "28" }),
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 20, height: "100%" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("svg", { viewBox: "0 0 140 140", style: { width: 140, height: 140, flexShrink: 0 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("circle", { cx, cy, r, fill: "none", stroke: "#1c2235", strokeWidth: "28" }),
       slices.map((s, i) => {
         const len = s.value / total * circumference;
-        const el = /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+        const el = /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
           "circle",
           {
             cx,
@@ -39422,17 +39854,17 @@ function SvgDonut({ slices, centerLabel, centerSub, showSpend, currencySymbol = 
         offset += len;
         return el;
       }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("text", { x: cx, y: cy - 4, fontFamily: MONO, fontSize: "14", fontWeight: "600", fill: "#e2e8f0", textAnchor: "middle", children: centerLabel }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("text", { x: cx, y: cy + 12, fontFamily: MONO, fontSize: "8", fill: "#64748b", textAnchor: "middle", children: centerSub })
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("text", { x: cx, y: cy - 4, fontFamily: MONO, fontSize: "14", fontWeight: "600", fill: "#e2e8f0", textAnchor: "middle", children: centerLabel }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("text", { x: cx, y: cy + 12, fontFamily: MONO, fontSize: "8", fill: "#64748b", textAnchor: "middle", children: centerSub })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { flex: 1, display: "flex", flexDirection: "column", gap: 6, overflow: "auto", maxHeight: "100%", paddingRight: 4 }, children: slices.map((s, i) => {
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { flex: 1, display: "flex", flexDirection: "column", gap: 6, overflow: "auto", maxHeight: "100%", paddingRight: 4 }, children: slices.map((s, i) => {
       const pct = total > 0 ? Math.round(s.value / total * 100) : 0;
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "3px 0", flexShrink: 0 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { width: 8, height: 8, borderRadius: 2, background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 } }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { fontSize: 12, color: "#94a3b8", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: s.name }),
-        showSpend && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { fontFamily: MONO, fontSize: 11, color: "#94a3b8", flexShrink: 0 }, children: fmtFullCurrency(s.value, currencySymbol) }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { width: 50, height: 3, background: "#1c2235", borderRadius: 2, flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { height: "100%", borderRadius: 2, width: `${pct}%`, background: CHART_COLORS[i % CHART_COLORS.length], opacity: 0.6 } }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { fontFamily: MONO, fontSize: 11, color: "#64748b", flexShrink: 0, minWidth: 30, textAlign: "right" }, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "3px 0", flexShrink: 0 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { width: 8, height: 8, borderRadius: 2, background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 } }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { fontSize: 12, color: "#94a3b8", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: s.name }),
+        showSpend && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { fontFamily: MONO, fontSize: 11, color: "#94a3b8", flexShrink: 0 }, children: fmtFullCurrency(s.value, currencySymbol) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { width: 50, height: 3, background: "#1c2235", borderRadius: 2, flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { height: "100%", borderRadius: 2, width: `${pct}%`, background: CHART_COLORS[i % CHART_COLORS.length], opacity: 0.6 } }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { fontFamily: MONO, fontSize: 11, color: "#64748b", flexShrink: 0, minWidth: 30, textAlign: "right" }, children: [
           pct,
           "%"
         ] })
@@ -39444,29 +39876,29 @@ function TopServicesTable({ data }) {
   const rows = data?.services || [];
   const maxCost = Math.max(...rows.map((r) => r.total_cost), 1);
   const thStyle2 = { textAlign: "left", padding: "0 0 10px 0", fontFamily: MONO, fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#64748b", borderBottom: "1px solid rgba(255,255,255,0.07)" };
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { height: "100%", overflow: "auto" }, children: [
-    data?.date && /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { color: "#64748b", fontSize: 11, marginBottom: 8 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { height: "100%", overflow: "auto" }, children: [
+    data?.date && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { color: "#64748b", fontSize: 11, marginBottom: 8 }, children: [
       "Data for: ",
       data.date
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: thStyle2, children: "Service" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: { ...thStyle2, padding: "0 12px 10px 0", width: 80 } }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: { ...thStyle2, textAlign: "right" }, children: "MTD Cost" }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("th", { style: { ...thStyle2, textAlign: "right" }, children: "Items" })
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: thStyle2, children: "Service" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: { ...thStyle2, padding: "0 12px 10px 0", width: 80 } }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: { ...thStyle2, textAlign: "right" }, children: "MTD Cost" }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("th", { style: { ...thStyle2, textAlign: "right" }, children: "Items" })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tbody", { children: [
-        rows.map((row, i) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("tr", { style: { borderBottom: i < rows.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { style: { padding: "9px 0", fontSize: 12.5, color: "#94a3b8" }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { width: 6, height: 6, borderRadius: "50%", background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 } }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tbody", { children: [
+        rows.map((row, i) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("tr", { style: { borderBottom: i < rows.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { style: { padding: "9px 0", fontSize: 12.5, color: "#94a3b8" }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { width: 6, height: 6, borderRadius: "50%", background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 } }),
             row.service
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { style: { padding: "9px 12px 9px 0" }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { height: 4, background: "#1c2235", borderRadius: 2 }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { height: "100%", borderRadius: 2, width: `${row.total_cost / maxCost * 100}%`, background: CHART_COLORS[i % CHART_COLORS.length], opacity: 0.6 } }) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { style: { padding: "9px 0", fontFamily: MONO, fontSize: 12, color: "#e2e8f0", textAlign: "right" }, children: fmtFull(row.total_cost) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { style: { padding: "9px 0", color: "#64748b", textAlign: "right", fontSize: 12 }, children: row.line_items?.toLocaleString() ?? "\u2014" })
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { style: { padding: "9px 12px 9px 0" }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { height: 4, background: "#1c2235", borderRadius: 2 }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { height: "100%", borderRadius: 2, width: `${row.total_cost / maxCost * 100}%`, background: CHART_COLORS[i % CHART_COLORS.length], opacity: 0.6 } }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { style: { padding: "9px 0", fontFamily: MONO, fontSize: 12, color: "#e2e8f0", textAlign: "right" }, children: fmtFull(row.total_cost) }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { style: { padding: "9px 0", color: "#64748b", textAlign: "right", fontSize: 12 }, children: row.line_items?.toLocaleString() ?? "\u2014" })
         ] }, i)),
-        rows.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("td", { colSpan: 4, style: { padding: 16, textAlign: "center", color: "#64748b" }, children: "No data" }) })
+        rows.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("td", { colSpan: 4, style: { padding: 16, textAlign: "center", color: "#64748b" }, children: "No data" }) })
       ] })
     ] })
   ] });
@@ -39490,7 +39922,7 @@ function WidgetCard({
   onDrop,
   onDragEnd
 }) {
-  const [menuOpen, setMenuOpen] = (0, import_react19.useState)(false);
+  const [menuOpen, setMenuOpen] = (0, import_react20.useState)(false);
   const accountIds = widget.query_config?.account_ids || [];
   const serviceIds = widget.query_config?.service_ids || [];
   const effectiveAccountIds = accountIds.length > 0 ? accountIds : accounts;
@@ -39529,18 +39961,18 @@ function WidgetCard({
   const handleAccountFilterChange = (ids) => onUpdate(widget.id, { query_config: { ...widget.query_config, account_ids: ids } });
   const handleServiceFilterChange = (ids) => onUpdate(widget.id, { query_config: { ...widget.query_config, service_ids: ids } });
   const renderChart = () => {
-    if (isLoading) return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "Loading\u2026" });
+    if (isLoading) return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "Loading\u2026" });
     if (widget.chart_type === "daily-spend" && dailyChart) {
       const vals = dailyChart.datasets[0]?.data || [];
       const avg = vals.reduce((a, b) => a + b, 0) / (vals.filter((v) => v > 0).length || 1);
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { height: "100%", display: "flex", flexDirection: "column" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { flex: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SvgBarChart, { labels: dailyChart.labels, values: vals, highlightLast: true }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.07)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(LegendItem, { color: "rgba(74,222,128,0.6)", label: "Normal spend" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(LegendItem, { color: "#fbbf24", label: "Above average" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(LegendItem, { color: "#4ade80", label: "Today (projected)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(LegendItem, { color: "rgba(28,34,53,0.5)", label: "Weekend / no data" }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { marginLeft: "auto", fontFamily: MONO, fontSize: 10.5, color: "#64748b" }, children: [
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { height: "100%", display: "flex", flexDirection: "column" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { flex: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SvgBarChart, { labels: dailyChart.labels, values: vals, highlightLast: true }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.07)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LegendItem, { color: "rgba(74,222,128,0.6)", label: "Normal spend" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LegendItem, { color: "#fbbf24", label: "Above average" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LegendItem, { color: "#4ade80", label: "Today (projected)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(LegendItem, { color: "rgba(28,34,53,0.5)", label: "Weekend / no data" }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { marginLeft: "auto", fontFamily: MONO, fontSize: 10.5, color: "#64748b" }, children: [
             "Avg: ",
             fmt(avg),
             "/day"
@@ -39549,7 +39981,7 @@ function WidgetCard({
       ] });
     }
     if (widget.chart_type === "monthly-spend-trend" && monthlyChart) {
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SvgMonthlyTrend, { data: monthlyChart });
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SvgMonthlyTrend, { data: monthlyChart });
     }
     if (widget.chart_type === "service-breakdown" && serviceChart) {
       const slices = serviceChart.datasets.map((ds) => ({
@@ -39557,7 +39989,7 @@ function WidgetCard({
         value: ds.data.reduce((a, b) => a + b, 0)
       }));
       const total = slices.reduce((a, s) => a + s.value, 0);
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SvgDonut, { slices, centerLabel: fmt(total), centerSub: "MTD" });
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SvgDonut, { slices, centerLabel: fmt(total), centerSub: "MTD" });
     }
     if (widget.chart_type === "storage-spend" && storageChart) {
       const slices = storageChart.datasets.map((ds) => ({
@@ -39565,21 +39997,21 @@ function WidgetCard({
         value: ds.data.reduce((a, b) => a + b, 0)
       }));
       const total = slices.reduce((a, s) => a + s.value, 0);
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SvgDonut, { slices, centerLabel: fmt(total), centerSub: "Storage" });
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SvgDonut, { slices, centerLabel: fmt(total), centerSub: "Storage" });
     }
     if (widget.chart_type === "account-distribution" && acctDistChart) {
       const slices = acctDistChart.map((d) => ({ name: d.name, value: d.value }));
       const total = slices.reduce((a, s) => a + s.value, 0);
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SvgDonut, { slices, centerLabel: fmtDollar(total), centerSub: "accounts", showSpend: true, currencySymbol: "$" });
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SvgDonut, { slices, centerLabel: fmtDollar(total), centerSub: "accounts", showSpend: true, currencySymbol: "$" });
     }
     if (widget.chart_type === "top-services") {
-      return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(TopServicesTable, { data: topSvcData });
+      return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TopServicesTable, { data: topSvcData });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "No data" });
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }, children: "No data" });
   };
   const showAccountFilter = !["monthly-spend-trend", "account-distribution"].includes(widget.chart_type);
   const showServiceFilter = !["monthly-spend-trend", "storage-spend", "account-distribution", "top-services"].includes(widget.chart_type);
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "div",
     {
       draggable: true,
@@ -39598,23 +40030,23 @@ function WidgetCard({
         transition: "all 0.2s ease"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: {
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           padding: "14px 18px",
           borderBottom: "1px solid var(--border)"
         }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { color: isDragging ? "#4ade80" : "var(--text-muted)", cursor: "grab", opacity: 0.4, fontSize: 14 }, children: "\u283F" }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { fontSize: 13.5, fontWeight: 600, color: "var(--text-primary)" }, children: widget.title }),
-            widget.is_saved && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { color: "#4ade80", fontSize: 14 }, children: "\u2605" })
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { style: { color: isDragging ? "#4ade80" : "var(--text-muted)", cursor: "grab", opacity: 0.4, fontSize: 14 }, children: "\u283F" }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { style: { fontSize: 13.5, fontWeight: 600, color: "var(--text-primary)" }, children: widget.title }),
+            widget.is_saved && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { style: { color: "#4ade80", fontSize: 14 }, children: "\u2605" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
-            showAccountFilter && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(WidgetAccountFilter, { accounts, selected: accountIds, onChange: handleAccountFilterChange, isLoading: accountsLoading }),
-            showServiceFilter && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(WidgetServiceFilter, { services, selected: serviceIds, onChange: handleServiceFilterChange, isLoading: servicesLoading }),
-            /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { position: "relative" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+            showAccountFilter && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WidgetAccountFilter, { accounts, selected: accountIds, onChange: handleAccountFilterChange, isLoading: accountsLoading }),
+            showServiceFilter && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(WidgetServiceFilter, { services, selected: serviceIds, onChange: handleServiceFilterChange, isLoading: servicesLoading }),
+            /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { position: "relative" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
                 "button",
                 {
                   onClick: () => setMenuOpen(!menuOpen),
@@ -39622,24 +40054,24 @@ function WidgetCard({
                   children: "\u22EE"
                 }
               ),
-              menuOpen && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(DropdownMenu, { items: menuItems, onSelect: handleMenuAction, onClose: () => setMenuOpen(false) })
+              menuOpen && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenu, { items: menuItems, onSelect: handleMenuAction, onClose: () => setMenuOpen(false) })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { padding: 18, height: widget.is_expanded ? 400 : 250 }, children: renderChart() })
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { padding: 18, height: widget.is_expanded ? 400 : 250 }, children: renderChart() })
       ]
     }
   );
 }
 function LegendItem({ color, label }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "#64748b" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 } }),
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "#64748b" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 } }),
     label
   ] });
 }
 
 // app/javascript/components/dashboard/FinancialDashboard.jsx
-var import_jsx_runtime22 = __toESM(require_jsx_runtime());
+var import_jsx_runtime23 = __toESM(require_jsx_runtime());
 var CURRENT_YEAR2 = (/* @__PURE__ */ new Date()).getFullYear();
 var CURRENT_MONTH2 = (/* @__PURE__ */ new Date()).getMonth() + 1;
 var DEFAULT_PROVIDER2 = "aws";
@@ -39647,9 +40079,9 @@ var queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 5 * 6e4, retry: 1 } }
 });
 function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerName }) {
-  const dashboardApi = (0, import_react20.useMemo)(() => createDashboardApi(dashboardsApiUrl), [dashboardsApiUrl]);
-  const widgetApi = (0, import_react20.useMemo)(() => createWidgetApi(dashboardsApiUrl), [dashboardsApiUrl]);
-  const costApi = (0, import_react20.useMemo)(() => createCostApi(costApiUrl, customerUuid), [costApiUrl, customerUuid]);
+  const dashboardApi = (0, import_react21.useMemo)(() => createDashboardApi(dashboardsApiUrl), [dashboardsApiUrl]);
+  const widgetApi = (0, import_react21.useMemo)(() => createWidgetApi(dashboardsApiUrl), [dashboardsApiUrl]);
+  const costApi = (0, import_react21.useMemo)(() => createCostApi(costApiUrl, customerUuid), [costApiUrl, customerUuid]);
   const { data: dashboards = [], isLoading: dashboardsLoading } = useDashboards(dashboardApi);
   const createDashboardMut = useCreateDashboard(dashboardApi);
   const updateDashboardMut = useUpdateDashboard(dashboardApi);
@@ -39658,21 +40090,21 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
   const updateWidgetMut = useUpdateWidget(widgetApi);
   const deleteWidgetMut = useDeleteWidget(widgetApi);
   const reorderWidgetsMut = useReorderWidgets(dashboardApi);
-  const [currentDashboardId, setCurrentDashboardId] = (0, import_react20.useState)(null);
-  const [showAddModal, setShowAddModal] = (0, import_react20.useState)(false);
-  const [showCreateModal, setShowCreateModal] = (0, import_react20.useState)(false);
-  const [draggedWidgetId, setDraggedWidgetId] = (0, import_react20.useState)(null);
-  const [dragOverWidgetId, setDragOverWidgetId] = (0, import_react20.useState)(null);
-  (0, import_react20.useEffect)(() => {
+  const [currentDashboardId, setCurrentDashboardId] = (0, import_react21.useState)(null);
+  const [showAddModal, setShowAddModal] = (0, import_react21.useState)(false);
+  const [showCreateModal, setShowCreateModal] = (0, import_react21.useState)(false);
+  const [draggedWidgetId, setDraggedWidgetId] = (0, import_react21.useState)(null);
+  const [dragOverWidgetId, setDragOverWidgetId] = (0, import_react21.useState)(null);
+  (0, import_react21.useEffect)(() => {
     if (dashboards.length > 0 && !currentDashboardId) {
       const def = dashboards.find((d) => d.is_default) || dashboards[0];
       setCurrentDashboardId(def.id);
     }
   }, [dashboards, currentDashboardId]);
   const { data: currentDashboard, isLoading: dashboardLoading } = useDashboard(dashboardApi, currentDashboardId);
-  const [globalMonth, setGlobalMonth] = (0, import_react20.useState)(CURRENT_MONTH2);
-  const [globalYear, setGlobalYear] = (0, import_react20.useState)(CURRENT_YEAR2);
-  (0, import_react20.useEffect)(() => {
+  const [globalMonth, setGlobalMonth] = (0, import_react21.useState)(CURRENT_MONTH2);
+  const [globalYear, setGlobalYear] = (0, import_react21.useState)(CURRENT_YEAR2);
+  (0, import_react21.useEffect)(() => {
     if (currentDashboard?.layout_config) {
       setGlobalMonth(currentDashboard.layout_config.globalMonth || CURRENT_MONTH2);
       setGlobalYear(currentDashboard.layout_config.globalYear || CURRENT_YEAR2);
@@ -39682,17 +40114,17 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
   const { data: servicesData, isLoading: servicesLoading } = useDistinctServices(costApi, DEFAULT_PROVIDER2);
   const accounts = accountsData?.accounts || [];
   const services = servicesData?.services || [];
-  const selectDashboard = (0, import_react20.useCallback)((id) => setCurrentDashboardId(id), []);
-  const openCreateModal = (0, import_react20.useCallback)(() => setShowCreateModal(true), []);
-  const createDashboard = (0, import_react20.useCallback)(async (name) => {
+  const selectDashboard = (0, import_react21.useCallback)((id) => setCurrentDashboardId(id), []);
+  const openCreateModal = (0, import_react21.useCallback)(() => setShowCreateModal(true), []);
+  const createDashboard = (0, import_react21.useCallback)(async (name) => {
     const result = await createDashboardMut.mutateAsync({ name });
     setCurrentDashboardId(result.id);
     setShowCreateModal(false);
   }, [createDashboardMut]);
-  const renameDashboard = (0, import_react20.useCallback)((id, name) => {
+  const renameDashboard = (0, import_react21.useCallback)((id, name) => {
     updateDashboardMut.mutate({ id, name });
   }, [updateDashboardMut]);
-  const deleteDashboard = (0, import_react20.useCallback)((id) => {
+  const deleteDashboard = (0, import_react21.useCallback)((id) => {
     if (dashboards.length <= 1) return;
     deleteDashboardMut.mutate(id);
     if (currentDashboardId === id) {
@@ -39700,39 +40132,39 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
       setCurrentDashboardId(remaining[0]?.id || null);
     }
   }, [deleteDashboardMut, dashboards, currentDashboardId]);
-  const handleMonthChange = (0, import_react20.useCallback)((year, month) => {
+  const handleMonthChange = (0, import_react21.useCallback)((year, month) => {
     setGlobalYear(year);
     setGlobalMonth(month);
     if (currentDashboardId) {
       updateDashboardMut.mutate({ id: currentDashboardId, layout_config: { globalMonth: month, globalYear: year } });
     }
   }, [currentDashboardId, updateDashboardMut]);
-  const addWidget = (0, import_react20.useCallback)(async (type) => {
+  const addWidget = (0, import_react21.useCallback)(async (type) => {
     if (!currentDashboardId) return;
     const ct = CHART_TYPES.find((c) => c.type === type);
     if (!ct) return;
     await createWidgetMut.mutateAsync({ dashboardId: currentDashboardId, chart_type: type, title: ct.label });
   }, [currentDashboardId, createWidgetMut]);
-  const updateWidget = (0, import_react20.useCallback)((id, updates) => {
+  const updateWidget = (0, import_react21.useCallback)((id, updates) => {
     if (!currentDashboardId) return;
     updateWidgetMut.mutate({ id, dashboardId: currentDashboardId, ...updates });
   }, [currentDashboardId, updateWidgetMut]);
-  const deleteWidget = (0, import_react20.useCallback)((id) => {
+  const deleteWidget = (0, import_react21.useCallback)((id) => {
     if (!currentDashboardId) return;
     deleteWidgetMut.mutate({ id, dashboardId: currentDashboardId });
   }, [currentDashboardId, deleteWidgetMut]);
   const widgets = currentDashboard?.widgets || [];
   const isLoading = dashboardsLoading || dashboardLoading;
-  const handleDragStart = (0, import_react20.useCallback)((e, widgetId) => {
+  const handleDragStart = (0, import_react21.useCallback)((e, widgetId) => {
     setDraggedWidgetId(widgetId);
     e.dataTransfer.effectAllowed = "move";
   }, []);
-  const handleDragOver = (0, import_react20.useCallback)((e, widgetId) => {
+  const handleDragOver = (0, import_react21.useCallback)((e, widgetId) => {
     e.preventDefault();
     if (draggedWidgetId && widgetId !== draggedWidgetId) setDragOverWidgetId(widgetId);
   }, [draggedWidgetId]);
-  const handleDragLeave = (0, import_react20.useCallback)(() => setDragOverWidgetId(null), []);
-  const handleDrop = (0, import_react20.useCallback)((e, targetId) => {
+  const handleDragLeave = (0, import_react21.useCallback)(() => setDragOverWidgetId(null), []);
+  const handleDrop = (0, import_react21.useCallback)((e, targetId) => {
     e.preventDefault();
     if (!draggedWidgetId || !currentDashboardId || draggedWidgetId === targetId) {
       setDraggedWidgetId(null);
@@ -39750,23 +40182,23 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
     setDraggedWidgetId(null);
     setDragOverWidgetId(null);
   }, [draggedWidgetId, currentDashboardId, widgets, reorderWidgetsMut]);
-  const handleDragEnd = (0, import_react20.useCallback)(() => {
+  const handleDragEnd = (0, import_react21.useCallback)(() => {
     setDraggedWidgetId(null);
     setDragOverWidgetId(null);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "app-content", style: { padding: "28px 32px", maxWidth: 1400, margin: "0 auto" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { className: "page-header", style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("h1", { className: "page-title", children: "Financial Dashboard" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DashboardSelector, { dashboards, currentId: currentDashboardId || "", isLoading, onSelect: selectDashboard, onCreate: openCreateModal, onRename: renameDashboard, onDelete: deleteDashboard })
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "app-content", style: { padding: "28px 32px", maxWidth: 1400, margin: "0 auto" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "page-header", style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, flexWrap: "wrap", gap: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "page-title", children: "Financial Dashboard" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DashboardSelector, { dashboards, currentId: currentDashboardId || "", isLoading, onSelect: selectDashboard, onCreate: openCreateModal, onRename: renameDashboard, onDelete: deleteDashboard })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GlobalMonthSelector, { year: globalYear, month: globalMonth, onChange: handleMonthChange }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green btn-sm", children: "+ Add Widget" })
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", gap: 12, alignItems: "center" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(GlobalMonthSelector, { year: globalYear, month: globalMonth, onChange: handleMonthChange }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green btn-sm", children: "+ Add Widget" })
       ] })
     ] }),
-    isLoading ? /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", padding: 60, color: "var(--text-muted)" }, children: "Loading dashboard\u2026" }) : /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))", gap: 20 }, children: widgets.map((widget) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+    isLoading ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", padding: 60, color: "var(--text-muted)" }, children: "Loading dashboard\u2026" }) : /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))", gap: 20 }, children: widgets.map((widget) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
         WidgetCard,
         {
           widget,
@@ -39789,26 +40221,26 @@ function DashboardInner({ customerUuid, dashboardsApiUrl, costApiUrl, customerNa
         },
         widget.id
       )) }),
-      widgets.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { style: { textAlign: "center", padding: "60px 20px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { style: { fontSize: 48, color: "var(--text-muted)", marginBottom: 16 }, children: "\u{1F4CA}" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { style: { fontSize: 18, fontWeight: 600, color: "var(--text-primary)", marginBottom: 8 }, children: "No widgets yet" }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("p", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 16 }, children: "Add a widget to start tracking your cloud costs." }),
-        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green", children: "+ Add Your First Widget" })
+      widgets.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { textAlign: "center", padding: "60px 20px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: 48, color: "var(--text-muted)", marginBottom: 16 }, children: "\u{1F4CA}" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: { fontSize: 18, fontWeight: 600, color: "var(--text-primary)", marginBottom: 8 }, children: "No widgets yet" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 16 }, children: "Add a widget to start tracking your cloud costs." }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { onClick: () => setShowAddModal(true), disabled: !currentDashboardId, className: "btn btn-green", children: "+ Add Your First Widget" })
       ] })
     ] }),
-    showAddModal && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(AddWidgetModal, { onAdd: addWidget, onClose: () => setShowAddModal(false) }),
-    showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(CreateDashboardModal, { onConfirm: createDashboard, onClose: () => setShowCreateModal(false) })
+    showAddModal && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AddWidgetModal, { onAdd: addWidget, onClose: () => setShowAddModal(false) }),
+    showCreateModal && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(CreateDashboardModal, { onConfirm: createDashboard, onClose: () => setShowCreateModal(false) })
   ] });
 }
 function FinancialDashboard(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DashboardInner, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DashboardInner, { ...props }) });
 }
 
 // app/javascript/components/savings/SavingsPage.jsx
-var import_react23 = __toESM(require_react());
+var import_react24 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
-var import_react22 = __toESM(require_react());
+var import_react23 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/shared/src/utils/mergeClasses.js
 var mergeClasses = (...classes) => classes.filter((className, index, array) => {
@@ -39831,7 +40263,7 @@ var toPascalCase = (string) => {
 };
 
 // node_modules/lucide-react/dist/esm/Icon.js
-var import_react21 = __toESM(require_react());
+var import_react22 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/defaultAttributes.js
 var defaultAttributes = {
@@ -39857,7 +40289,7 @@ var hasA11yProp = (props) => {
 };
 
 // node_modules/lucide-react/dist/esm/Icon.js
-var Icon = (0, import_react21.forwardRef)(
+var Icon = (0, import_react22.forwardRef)(
   ({
     color = "currentColor",
     size = 24,
@@ -39867,7 +40299,7 @@ var Icon = (0, import_react21.forwardRef)(
     children,
     iconNode,
     ...rest
-  }, ref) => (0, import_react21.createElement)(
+  }, ref) => (0, import_react22.createElement)(
     "svg",
     {
       ref,
@@ -39881,7 +40313,7 @@ var Icon = (0, import_react21.forwardRef)(
       ...rest
     },
     [
-      ...iconNode.map(([tag, attrs]) => (0, import_react21.createElement)(tag, attrs)),
+      ...iconNode.map(([tag, attrs]) => (0, import_react22.createElement)(tag, attrs)),
       ...Array.isArray(children) ? children : [children]
     ]
   )
@@ -39889,8 +40321,8 @@ var Icon = (0, import_react21.forwardRef)(
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
 var createLucideIcon = (iconName, iconNode) => {
-  const Component = (0, import_react22.forwardRef)(
-    ({ className, ...props }, ref) => (0, import_react22.createElement)(Icon, {
+  const Component = (0, import_react23.forwardRef)(
+    ({ className, ...props }, ref) => (0, import_react23.createElement)(Icon, {
       ref,
       iconNode,
       className: mergeClasses(
@@ -40031,7 +40463,7 @@ var __iconNode13 = [
 var TriangleAlert = createLucideIcon("triangle-alert", __iconNode13);
 
 // app/javascript/components/savings/SavingsPage.jsx
-var import_jsx_runtime23 = __toESM(require_jsx_runtime());
+var import_jsx_runtime24 = __toESM(require_jsx_runtime());
 var queryClient2 = new QueryClient({
   defaultOptions: { queries: { staleTime: 5 * 6e4, retry: 1 } }
 });
@@ -40174,7 +40606,7 @@ function transformMetrics(rows) {
 }
 function KpiRow({ summary, isLoading }) {
   if (isLoading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-kpi-row", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-kpi-card", style: { gridColumn: "1/-1", textAlign: "center", color: "var(--text-muted)" }, children: "Loading summary\u2026" }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-kpi-row", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-kpi-card", style: { gridColumn: "1/-1", textAlign: "center", color: "var(--text-muted)" }, children: "Loading summary\u2026" }) });
   }
   const cards = [
     { label: "Total Savings", value: fmtUsd(summary.totalSavings), sub: summary.totalSavings === 0 ? "no active plan" : "all time", color: "" },
@@ -40182,19 +40614,19 @@ function KpiRow({ summary, isLoading }) {
     { label: "Expiring Soon", value: fmtUsd(summary.expiringSavings), sub: "within 30 days", color: "amber" },
     { label: "Coverage", value: `${summary.coverage.toFixed(1)}%`, sub: "of spend committed", color: summary.coverage >= 50 ? "green" : "amber" }
   ];
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-kpi-row", children: cards.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-kpi-card", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-kpi-label", children: c.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: `sv-kpi-value ${c.color}`, children: c.value }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-kpi-sub", children: c.sub })
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-kpi-row", children: cards.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-kpi-card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-kpi-label", children: c.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: `sv-kpi-value ${c.color}`, children: c.value }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-kpi-sub", children: c.sub })
   ] }, i)) });
 }
 function ProviderToggle({ value, onChange }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-cloud-filter", children: ["aws", "azure"].map((p) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: `sv-cloud-btn${value === p ? " active" : ""}`, onClick: () => onChange(p), children: p === "aws" ? "AWS" : "Azure" }, p)) });
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-cloud-filter", children: ["aws", "azure"].map((p) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: `sv-cloud-btn${value === p ? " active" : ""}`, onClick: () => onChange(p), children: p === "aws" ? "AWS" : "Azure" }, p)) });
 }
 function PlanSearch({ value, onChange, onSearch, isLoading }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-uuid-search", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Search, { size: 13 }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-uuid-search", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Search, { size: 13 }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
       "input",
       {
         type: "text",
@@ -40206,79 +40638,79 @@ function PlanSearch({ value, onChange, onSearch, isLoading }) {
     )
   ] });
 }
-function SavingsPlanCard({ plan }) {
+function SavingsPlanCard({ plan, onViewDetails }) {
   const isRecommended = plan.popular;
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: `sv-plan-card${isRecommended ? " recommended" : ""}`, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-plan-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-plan-header-top", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-plan-name", children: plan.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-plan-badges", children: [
-          plan.popular && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-badge blue", children: "Most Popular" }),
-          plan.automationEnabled && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-badge green", children: "Automation On" })
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: `sv-plan-card${isRecommended ? " recommended" : ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-plan-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-plan-header-top", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-plan-name", children: plan.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-plan-badges", children: [
+          plan.popular && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-badge blue", children: "Most Popular" }),
+          plan.automationEnabled && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-badge green", children: "Automation On" })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-plan-desc", children: plan.description })
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-plan-desc", children: plan.description })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-plan-body", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-savings-highlight", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-savings-label", children: "Monthly savings" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-savings-value", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-plan-body", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-savings-highlight", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-savings-label", children: "Monthly savings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-savings-value", children: [
             "$",
             plan.monthlySavings.toFixed(2)
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-savings-label", children: "Annual savings" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-savings-value secondary", children: fmtShort(plan.annualSavings) })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-savings-label", children: "Annual savings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-savings-value secondary", children: fmtShort(plan.annualSavings) })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-cost-section", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-cost-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-cost-label", children: "Without plan" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-cost-val", children: fmt2(plan.monthlyCostWithout) })
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-cost-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-cost-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-cost-label", children: "Without plan" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-cost-val", children: fmt2(plan.monthlyCostWithout) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-cost-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-cost-label", children: "With plan" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-cost-val highlight", children: fmt2(plan.monthlyCostWith) })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-cost-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-cost-label", children: "With plan" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-cost-val highlight", children: fmt2(plan.monthlyCostWith) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-cost-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-cost-label" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: "sv-cost-val green", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-cost-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-cost-label" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { className: "sv-cost-val green", children: [
             "\u2193 ",
             plan.discountPct.toFixed(2),
             "% off"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-cost-row", style: { marginTop: 4 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-cost-label", children: "Monthly savings" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: "sv-cost-val", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-cost-row", style: { marginTop: 4 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-cost-label", children: "Monthly savings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { className: "sv-cost-val", children: [
             "$",
             plan.netMonthlySavings.toFixed(2)
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-flex-section", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-flex-label", children: "Flexibility" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-flex-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: "Plan term" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-flex-val", children: plan.flexibility.term })
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-flex-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-flex-label", children: "Flexibility" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-flex-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { children: "Plan term" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-flex-val", children: plan.flexibility.term })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-flex-slider", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-flex-slider-fill", style: { width: `${plan.flexibility.sliderPct}%` } }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-flex-slider-thumb", style: { left: `${plan.flexibility.sliderPct}%` } })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-flex-slider", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-flex-slider-fill", style: { width: `${plan.flexibility.sliderPct}%` } }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-flex-slider-thumb", style: { left: `${plan.flexibility.sliderPct}%` } })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-flex-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: "Upfront spend" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-flex-val", children: plan.flexibility.upfront })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-flex-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { children: "Upfront spend" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-flex-val", children: plan.flexibility.upfront })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-flex-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { children: "Break-even" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-flex-val", children: plan.flexibility.breakeven })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-flex-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { children: "Break-even" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-flex-val", children: plan.flexibility.breakeven })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-plan-footer", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: `sv-btn-apply${isRecommended ? " primary" : " secondary"}`, children: "Apply Plan" }) })
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-plan-footer", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: `sv-btn-apply${isRecommended ? " primary" : " secondary"}`, onClick: () => onViewDetails(plan), children: "View Details" }) })
   ] });
 }
 var EXPORT_COLUMNS = [
@@ -40361,14 +40793,14 @@ function exportPdf(rows) {
   win.print();
 }
 function CommitmentInventory({ items, isLoading }) {
-  const [search, setSearch] = (0, import_react23.useState)("");
-  const [filterMode, setFilterMode] = (0, import_react23.useState)("AND");
-  const [filterType, setFilterType] = (0, import_react23.useState)("");
-  const [filterProvider, setFilterProvider] = (0, import_react23.useState)("");
-  const [filterStatus, setFilterStatus] = (0, import_react23.useState)("");
-  const uniqueTypes = (0, import_react23.useMemo)(() => [...new Set(items.map((i) => i.type).filter(Boolean))].sort(), [items]);
-  const uniqueProviders = (0, import_react23.useMemo)(() => [...new Set(items.map((i) => i.provider).filter(Boolean))].sort(), [items]);
-  const uniqueStatuses = (0, import_react23.useMemo)(() => [...new Set(items.map((i) => i.status).filter(Boolean))].sort(), [items]);
+  const [search, setSearch] = (0, import_react24.useState)("");
+  const [filterMode, setFilterMode] = (0, import_react24.useState)("AND");
+  const [filterType, setFilterType] = (0, import_react24.useState)("");
+  const [filterProvider, setFilterProvider] = (0, import_react24.useState)("");
+  const [filterStatus, setFilterStatus] = (0, import_react24.useState)("");
+  const uniqueTypes = (0, import_react24.useMemo)(() => [...new Set(items.map((i) => i.type).filter(Boolean))].sort(), [items]);
+  const uniqueProviders = (0, import_react24.useMemo)(() => [...new Set(items.map((i) => i.provider).filter(Boolean))].sort(), [items]);
+  const uniqueStatuses = (0, import_react24.useMemo)(() => [...new Set(items.map((i) => i.status).filter(Boolean))].sort(), [items]);
   const filtered = items.filter((item) => {
     const matchesSearch = !search || [item.type, item.instanceType, item.provider, item.leasedDisplayName].some((v) => v?.toLowerCase().includes(search.toLowerCase()));
     const checks = [];
@@ -40380,82 +40812,82 @@ function CommitmentInventory({ items, isLoading }) {
   });
   const fmtDays = (v) => v != null ? `${Math.abs(v)}d` : "\u2014";
   const fmtUtil = (v) => v != null ? Math.round(v) : 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-table-card", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-table-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-table-title", children: "Commitment Inventory" }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-table-actions", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "sv-btn-sm", onClick: () => exportCsv(filtered), children: "Export CSV" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "sv-btn-sm", onClick: () => exportPdf(filtered), children: "Export PDF" })
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-table-card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-table-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-table-title", children: "Commitment Inventory" }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-table-actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "sv-btn-sm", onClick: () => exportCsv(filtered), children: "Export CSV" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "sv-btn-sm", onClick: () => exportPdf(filtered), children: "Export PDF" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-table-filters", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-filter-search", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Search, { size: 13 }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("input", { type: "text", value: search, onChange: (e) => setSearch(e.target.value), placeholder: "Search commitments..." })
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-table-filters", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-filter-search", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Search, { size: 13 }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("input", { type: "text", value: search, onChange: (e) => setSearch(e.target.value), placeholder: "Search commitments..." })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-filter-select", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("select", { value: filterType, onChange: (e) => setFilterType(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: "", children: "Type" }),
-        uniqueTypes.map((t) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: t, children: t }, t))
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-filter-select", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("select", { value: filterType, onChange: (e) => setFilterType(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("option", { value: "", children: "Type" }),
+        uniqueTypes.map((t) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("option", { value: t, children: t }, t))
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-filter-select", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("select", { value: filterProvider, onChange: (e) => setFilterProvider(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: "", children: "Provider" }),
-        uniqueProviders.map((p) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: p, children: p }, p))
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-filter-select", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("select", { value: filterProvider, onChange: (e) => setFilterProvider(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("option", { value: "", children: "Provider" }),
+        uniqueProviders.map((p) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("option", { value: p, children: p }, p))
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-filter-select", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("select", { value: filterStatus, onChange: (e) => setFilterStatus(e.target.value), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: "", children: "Status" }),
-        uniqueStatuses.map((s) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("option", { value: s, children: s }, s))
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-filter-select", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("select", { value: filterStatus, onChange: (e) => setFilterStatus(e.target.value), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("option", { value: "", children: "Status" }),
+        uniqueStatuses.map((s) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("option", { value: s, children: s }, s))
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-filter-mode", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "sv-mode-label", children: "Mode" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: `sv-mode-btn${filterMode === "AND" ? " active" : ""}`, onClick: () => setFilterMode("AND"), children: "AND" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: `sv-mode-btn${filterMode === "OR" ? " active" : ""}`, onClick: () => setFilterMode("OR"), children: "OR" })
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-filter-mode", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "sv-mode-label", children: "Mode" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: `sv-mode-btn${filterMode === "AND" ? " active" : ""}`, onClick: () => setFilterMode("AND"), children: "AND" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: `sv-mode-btn${filterMode === "OR" ? " active" : ""}`, onClick: () => setFilterMode("OR"), children: "OR" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("table", { className: "sv-table", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Type" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Provider" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Instance Type" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Offering" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Qty" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Monthly Cost" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Monthly Savings" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Age" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Expires" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Utilization" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Status" })
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("table", { className: "sv-table", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Type" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Provider" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Instance Type" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Offering" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Qty" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Monthly Cost" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Monthly Savings" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Age" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Expires" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Utilization" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Status" })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("tbody", { children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { colSpan: 11, style: { textAlign: "center", padding: 32, color: "var(--text-muted)" }, children: "Loading commitments\u2026" }) }) : filtered.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { colSpan: 11, style: { textAlign: "center", padding: 32, color: "var(--text-muted)" }, children: "No commitments found" }) }) : filtered.map((row, i) => {
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("tbody", { children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { colSpan: 11, style: { textAlign: "center", padding: 32, color: "var(--text-muted)" }, children: "Loading commitments\u2026" }) }) : filtered.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { colSpan: 11, style: { textAlign: "center", padding: 32, color: "var(--text-muted)" }, children: "No commitments found" }) }) : filtered.map((row, i) => {
         const util = fmtUtil(row.utilization);
         const utilClass = util >= 80 ? "high" : util >= 50 ? "mid" : "low";
         const expWarn = row.expiresDays != null && row.expiresDays <= 30 && row.expiresDays > 0;
-        return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-primary", children: row.type }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono sv-td-muted", children: row.provider }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", children: row.instanceType || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-muted", children: row.offeringInfo || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", style: { textAlign: "center" }, children: row.amount ?? "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", children: row.monthlyCost != null ? /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: "sv-td-green", children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-primary", children: row.type }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono sv-td-muted", children: row.provider }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", children: row.instanceType || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-muted", children: row.offeringInfo || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", style: { textAlign: "center" }, children: row.amount ?? "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", children: row.monthlyCost != null ? /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { className: "sv-td-green", children: [
             "$",
             row.monthlyCost.toFixed(2)
           ] }) : "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", children: row.monthlySavings != null && row.monthlySavings > 0 ? /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: "sv-td-green", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", children: row.monthlySavings != null && row.monthlySavings > 0 ? /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { className: "sv-td-green", children: [
             "$",
             row.monthlySavings.toFixed(2)
           ] }) : "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono sv-td-muted", children: fmtDays(row.ageDays) }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: `sv-td-mono${expWarn ? " sv-td-amber" : " sv-td-muted"}`, children: fmtDays(row.expiresDays) }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-util-wrap", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-util-bar", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: `sv-util-fill ${utilClass}`, style: { width: `${util}%` } }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: `sv-util-pct ${utilClass}`, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono sv-td-muted", children: fmtDays(row.ageDays) }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: `sv-td-mono${expWarn ? " sv-td-amber" : " sv-td-muted"}`, children: fmtDays(row.expiresDays) }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-util-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-util-bar", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: `sv-util-fill ${utilClass}`, style: { width: `${util}%` } }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { className: `sv-util-pct ${utilClass}`, children: [
               util,
               "%"
             ] })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("span", { className: `sv-status-badge ${row.status === "unlocked" ? "unlocked" : "locked"}`, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "9", height: "9", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2" }),
-              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" })
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("span", { className: `sv-status-badge ${row.status === "unlocked" ? "unlocked" : "locked"}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "9", height: "9", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" })
             ] }),
             row.status
           ] }) })
@@ -40507,82 +40939,82 @@ function exportPlanPdf(summary, detailed_items) {
 function PlanDetailModal({ data, onClose, onApply }) {
   if (!data) return null;
   const { summary, detailed_items } = data;
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "modal-overlay open", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "modal-panel", style: { maxWidth: 960 }, onClick: (e) => e.stopPropagation(), children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "modal-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h3", { className: "modal-title", children: "Commitment Plan Details" }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "modal-close", onClick: onClose, children: "\xD7" })
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "modal-overlay open", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "modal-panel", style: { maxWidth: 960 }, onClick: (e) => e.stopPropagation(), children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "modal-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h3", { className: "modal-title", children: "Commitment Plan Details" }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "modal-close", onClick: onClose, children: "\xD7" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "modal-body", style: { overflowY: "auto", maxHeight: "60vh" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { background: "var(--bg-body)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 16 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginBottom: 8, fontWeight: 600, textTransform: "uppercase" }, children: "Before Plan" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { fontSize: 20, fontWeight: 700, fontFamily: "var(--font-mono)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "modal-body", style: { overflowY: "auto", maxHeight: "60vh" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { background: "var(--bg-body)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginBottom: 8, fontWeight: 600, textTransform: "uppercase" }, children: "Before Plan" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { fontSize: 20, fontWeight: 700, fontFamily: "var(--font-mono)" }, children: [
             "$",
             summary.total_monthly_before_cost?.toFixed(2) || "0.00",
             "/mo"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { background: "var(--bg-body)", border: "1px solid #4ade80", borderRadius: "var(--radius)", padding: 16 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: 11, color: "#4ade80", marginBottom: 8, fontWeight: 600, textTransform: "uppercase" }, children: "With Plan" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { fontSize: 20, fontWeight: 700, fontFamily: "var(--font-mono)", color: "#4ade80" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { background: "var(--bg-body)", border: "1px solid #4ade80", borderRadius: "var(--radius)", padding: 16 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { fontSize: 11, color: "#4ade80", marginBottom: 8, fontWeight: 600, textTransform: "uppercase" }, children: "With Plan" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { fontSize: 20, fontWeight: 700, fontFamily: "var(--font-mono)", color: "#4ade80" }, children: [
             "$",
             summary.after_cost_hourly ? (summary.after_cost_hourly * 730).toFixed(2) : "0.00",
             "/mo"
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { overflowX: "auto", border: "1px solid var(--border)", borderRadius: "var(--radius)" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("table", { className: "sv-table", style: { minWidth: 900 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Service" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Instance Type" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Region" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Payment" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Qty" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Monthly Cost" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Monthly Savings" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Total Savings" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Discount" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("th", { children: "Break-even" })
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { overflowX: "auto", border: "1px solid var(--border)", borderRadius: "var(--radius)" }, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("table", { className: "sv-table", style: { minWidth: 900 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Service" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Instance Type" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Region" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Payment" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Qty" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Monthly Cost" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Monthly Savings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Total Savings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Discount" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("th", { children: "Break-even" })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("tbody", { children: (detailed_items || []).map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-primary", children: item.offer?.display_name || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", children: item.offer?.instance_type || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { children: item.offer?.region || "Global" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-muted", children: item.payment_option || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", children: item.selected_quantity || item.recommended_quantity || "\u2014" }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("td", { className: "sv-td-mono", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("tbody", { children: (detailed_items || []).map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-primary", children: item.offer?.display_name || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", children: item.offer?.instance_type || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { children: item.offer?.region || "Global" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-muted", children: item.payment_option || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", children: item.selected_quantity || item.recommended_quantity || "\u2014" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("td", { className: "sv-td-mono", children: [
             "$",
             item.monthly_cost?.toFixed(2) || "0.00"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("td", { className: "sv-td-mono sv-td-green", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("td", { className: "sv-td-mono sv-td-green", children: [
             "$",
             item.monthly_savings?.toFixed(2) || "0.00"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("td", { className: "sv-td-mono", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("td", { className: "sv-td-mono", children: [
             "$",
             item.total_savings?.toFixed(2) || "0.00"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("td", { className: "sv-td-mono sv-td-green", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("td", { className: "sv-td-mono sv-td-green", children: [
             ((item.discount_rate || 0) * 100).toFixed(1),
             "%"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("td", { className: "sv-td-mono", children: item.breakeven_hours ? `${Math.round(item.breakeven_hours)}h` : "\u2014" })
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("td", { className: "sv-td-mono", children: item.breakeven_hours ? `${Math.round(item.breakeven_hours)}h` : "\u2014" })
         ] }, i)) })
       ] }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "modal-footer", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => exportPlanPdf(summary, detailed_items), children: "Export PDF" }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: onClose, children: "Close" }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "btn btn-green btn-sm", onClick: onApply, children: "Apply Plan" })
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "modal-footer", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: () => exportPlanPdf(summary, detailed_items), children: "Export PDF" }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "btn btn-ghost btn-sm", onClick: onClose, children: "Close" }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "btn btn-green btn-sm", onClick: onApply, children: "Apply Plan" })
     ] })
   ] }) });
 }
 function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
-  const [provider, setProvider] = (0, import_react23.useState)("aws");
-  const [planSearch, setPlanSearch] = (0, import_react23.useState)("");
-  const [planData, setPlanData] = (0, import_react23.useState)(null);
-  const [planLoading, setPlanLoading] = (0, import_react23.useState)(false);
-  const [planError, setPlanError] = (0, import_react23.useState)(null);
+  const [provider, setProvider] = (0, import_react24.useState)("aws");
+  const [planSearch, setPlanSearch] = (0, import_react24.useState)("");
+  const [planData, setPlanData] = (0, import_react24.useState)(null);
+  const [planLoading, setPlanLoading] = (0, import_react24.useState)(false);
+  const [planError, setPlanError] = (0, import_react24.useState)(null);
   const now2 = /* @__PURE__ */ new Date();
   const currentYear = now2.getFullYear();
   const currentMonth = now2.getMonth() + 1;
@@ -40593,7 +41025,7 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
     currentMonth,
     provider
   );
-  const inventory = (0, import_react23.useMemo)(
+  const inventory = (0, import_react24.useMemo)(
     () => commitmentsData?.rows ? transformCommitmentRows(commitmentsData.rows) : [],
     [commitmentsData]
   );
@@ -40604,7 +41036,7 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
     currentMonth,
     provider
   );
-  const summary = (0, import_react23.useMemo)(
+  const summary = (0, import_react24.useMemo)(
     () => transformMetrics(metricsData?.rows) || DEMO_SUMMARY,
     [metricsData]
   );
@@ -40645,43 +41077,66 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
     }
   };
   const plans = DEMO_PLANS;
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-page", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "sv-page-title", children: "Cost Optimization" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "sv-page-sub", children: [
+  const handleViewDetails = (plan) => {
+    setPlanData({
+      summary: {
+        plan_uuid: plan.id,
+        total_monthly_before_cost: plan.monthlyCostWithout,
+        after_cost_hourly: plan.monthlyCostWith / 730,
+        services: [],
+        regions: []
+      },
+      detailed_items: [
+        {
+          offer: { display_name: plan.name, instance_type: "\u2014", region: "Global" },
+          payment_option: plan.flexibility.upfront === "$0K" ? "No Upfront" : "Partial Upfront",
+          recommended_quantity: 1,
+          monthly_cost: plan.monthlyCostWith,
+          monthly_savings: plan.netMonthlySavings,
+          total_savings: plan.annualSavings,
+          discount_rate: plan.discountPct / 100,
+          breakeven_hours: parseFloat(plan.flexibility.breakeven.replace(/[^0-9.]/g, "")) || null
+        }
+      ]
+    });
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-page", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h1", { className: "sv-page-title", children: "Cost Optimization" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("p", { className: "sv-page-sub", children: [
           provider === "aws" ? "AWS" : "Azure",
           " \xB7 ",
           customerName,
           " \xB7 Savings plans & commitments"
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "sv-header-actions", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(PlanSearch, { value: planSearch, onChange: setPlanSearch, onSearch: handlePlanSearch, isLoading: planLoading }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { className: "sv-btn-sm", onClick: handlePlanSearch, disabled: planLoading, children: "Search" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ProviderToggle, { value: provider, onChange: setProvider })
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "sv-header-actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(PlanSearch, { value: planSearch, onChange: setPlanSearch, onSearch: handlePlanSearch, isLoading: planLoading }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { className: "sv-btn-sm", onClick: handlePlanSearch, disabled: planLoading, children: "Search" }),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ProviderToggle, { value: provider, onChange: setProvider })
       ] })
     ] }),
-    planError && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { background: "var(--red-dim)", border: "1px solid var(--red)", borderRadius: "var(--radius)", padding: "10px 16px", marginBottom: 16, fontSize: 12, color: "var(--red)" }, children: planError }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(KpiRow, { summary, isLoading: metricsLoading }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-section-title", children: "Savings Plans" }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "sv-plans-grid", children: plans.map((plan) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(SavingsPlanCard, { plan }, plan.id)) }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(CommitmentInventory, { items: inventory, isLoading: commitmentsLoading }),
-    planData && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(PlanDetailModal, { data: planData, onClose: () => setPlanData(null), onApply: handleApplyPlan })
+    planError && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { background: "var(--red-dim)", border: "1px solid var(--red)", borderRadius: "var(--radius)", padding: "10px 16px", marginBottom: 16, fontSize: 12, color: "var(--red)" }, children: planError }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(KpiRow, { summary, isLoading: metricsLoading }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-section-title", children: "Savings Plans" }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-plans-grid", children: plans.map((plan) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SavingsPlanCard, { plan, onViewDetails: handleViewDetails }, plan.id)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CommitmentInventory, { items: inventory, isLoading: commitmentsLoading }),
+    planData && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(PlanDetailModal, { data: planData, onClose: () => setPlanData(null), onApply: handleApplyPlan })
   ] });
 }
 function SavingsPage(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(QueryClientProvider, { client: queryClient2, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(SavingsInner, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(QueryClientProvider, { client: queryClient2, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SavingsInner, { ...props }) });
 }
 
 // app/javascript/components/rightsizing/RightsizingPage.jsx
-var import_react24 = __toESM(require_react());
+var import_react25 = __toESM(require_react());
 
 // app/javascript/components/shared/PageSidebar.jsx
-var import_jsx_runtime24 = __toESM(require_jsx_runtime());
+var import_jsx_runtime25 = __toESM(require_jsx_runtime());
 function PageSidebar({ sections, activeId, onNavigate }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("aside", { className: "page-sidebar", role: "navigation", "aria-label": "Page navigation", children: sections.map((section, si) => /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "page-sidebar-section", children: [
-    section.label && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "page-sidebar-section-label", children: section.label }),
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("aside", { className: "page-sidebar", role: "navigation", "aria-label": "Page navigation", children: sections.map((section, si) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "page-sidebar-section", children: [
+    section.label && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "page-sidebar-section-label", children: section.label }),
     section.items.map((item) => {
       const isActive = activeId === item.id;
       const cls = [
@@ -40689,16 +41144,16 @@ function PageSidebar({ sections, activeId, onNavigate }) {
         isActive ? "active" : "",
         item.alert ? "alert" : ""
       ].filter(Boolean).join(" ");
-      return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
         "button",
         {
           className: cls,
           onClick: () => onNavigate(item.id),
           "aria-current": isActive ? "page" : void 0,
           children: [
-            item.icon && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "page-sidebar-icon", children: item.icon }),
-            /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "page-sidebar-label", children: item.label }),
-            item.count != null && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "page-sidebar-count", children: item.count })
+            item.icon && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "page-sidebar-icon", children: item.icon }),
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "page-sidebar-label", children: item.label }),
+            item.count != null && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "page-sidebar-count", children: item.count })
           ]
         },
         item.id
@@ -40708,7 +41163,7 @@ function PageSidebar({ sections, activeId, onNavigate }) {
 }
 
 // app/javascript/components/rightsizing/RightsizingPage.jsx
-var import_jsx_runtime25 = __toESM(require_jsx_runtime());
+var import_jsx_runtime26 = __toESM(require_jsx_runtime());
 var queryClient3 = new QueryClient({
   defaultOptions: { queries: { staleTime: 5 * 6e4, retry: 1 } }
 });
@@ -40744,23 +41199,23 @@ var SIDEBAR_SECTIONS = [
   {
     label: "Overview",
     items: [
-      { id: "summary", label: "Summary", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ChartColumn, { size: 15 }) },
-      { id: "recommendations", label: "Recommendations", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(List, { size: 15 }), count: 24 }
+      { id: "summary", label: "Summary", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ChartColumn, { size: 15 }) },
+      { id: "recommendations", label: "Recommendations", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(List, { size: 15 }), count: 24 }
     ]
   },
   {
     label: "Resource Types",
     items: [
-      { id: "virtual-machines", label: "Virtual Machines", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Monitor, { size: 15 }) },
-      { id: "vm-scale-sets", label: "VM Scale Sets", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Layers, { size: 15 }) },
-      { id: "sql-databases", label: "SQL Databases", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Database, { size: 15 }) },
-      { id: "app-service-plans", label: "App Service Plans", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Server, { size: 15 }) }
+      { id: "virtual-machines", label: "Virtual Machines", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Monitor, { size: 15 }) },
+      { id: "vm-scale-sets", label: "VM Scale Sets", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Layers, { size: 15 }) },
+      { id: "sql-databases", label: "SQL Databases", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Database, { size: 15 }) },
+      { id: "app-service-plans", label: "App Service Plans", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Server, { size: 15 }) }
     ]
   },
   {
     label: "Cleanup",
     items: [
-      { id: "orphaned-resources", label: "Orphaned Resources", icon: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(TriangleAlert, { size: 15 }), count: 149, alert: true }
+      { id: "orphaned-resources", label: "Orphaned Resources", icon: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(TriangleAlert, { size: 15 }), count: 149, alert: true }
     ]
   }
 ];
@@ -40773,7 +41228,7 @@ function fmtEurShort(n) {
   return `\u20AC${n}`;
 }
 function TabBar({ tabs, active, onChange }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-tabs", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-tabs", children: tabs.map((tab) => /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
     "button",
     {
       className: `rs-tab${active === tab ? " active" : ""}`,
@@ -40790,28 +41245,28 @@ function KpiRow2({ summary }) {
     { label: "Potential Yearly Savings", value: fmtEur(summary.potentialYearlySavings), sub: `optimized to ${fmtEur(summary.optimizedCost)}/yr`, color: "green", highlight: true },
     { label: "Savings %", value: `${summary.savingsPercent}%`, sub: "efficiency potential", color: "green" }
   ];
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-kpi-row", children: cards.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: `rs-kpi-card${c.highlight ? " highlight" : ""}`, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-kpi-label", children: c.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: `rs-kpi-value ${c.color}`, children: c.value }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-kpi-sub", children: c.sub })
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-kpi-row", children: cards.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: `rs-kpi-card${c.highlight ? " highlight" : ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-kpi-label", children: c.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: `rs-kpi-value ${c.color}`, children: c.value }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-kpi-sub", children: c.sub })
   ] }, i)) });
 }
 function CostOptimizationCard({ items, savingsPercent }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-card", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-card-title", children: "Cost Optimization Potential" }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: { flex: 1 }, children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-resource-row", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "rs-resource-name", children: item.label }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "rs-resource-val", children: fmtEurShort(item.amount) })
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-card-title", children: "Cost Optimization Potential" }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { style: { flex: 1 }, children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-resource-row", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className: "rs-resource-name", children: item.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className: "rs-resource-val", children: fmtEurShort(item.amount) })
       ] }, i)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: { marginLeft: 20, marginTop: 8 }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-donut", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-donut-label", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("span", { className: "rs-donut-pct", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { style: { marginLeft: 20, marginTop: 8 }, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-donut", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-donut-label", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("span", { className: "rs-donut-pct", children: [
           savingsPercent,
           "%"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("span", { className: "rs-donut-sub", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("span", { className: "rs-donut-sub", children: [
           "potential",
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("br", {}),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("br", {}),
           "savings"
         ] })
       ] }) }) })
@@ -40820,57 +41275,57 @@ function CostOptimizationCard({ items, savingsPercent }) {
 }
 function TopSavingsCard({ items }) {
   const maxVal = Math.max(...items.map((i) => i.amount));
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-card", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-card-title", children: "Top Savings Opportunities" }),
-    items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-opp-row", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-opp-name", children: item.label }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-opp-bar-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-opp-bar", style: { width: `${item.amount / maxVal * 100}%` } }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-opp-val", children: fmtEurShort(item.amount) })
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-card-title", children: "Top Savings Opportunities" }),
+    items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-opp-row", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-opp-name", children: item.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-opp-bar-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-opp-bar", style: { width: `${item.amount / maxVal * 100}%` } }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-opp-val", children: fmtEurShort(item.amount) })
     ] }, i))
   ] });
 }
 function OrphanedAlert({ orphaned, summary, onViewDetails }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-banner", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-inner", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-left", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-header", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(TriangleAlert, { size: 16 }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "rs-alert-title", children: "Orphaned Resources Detected" })
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-banner", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-inner", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-left", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(TriangleAlert, { size: 16 }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className: "rs-alert-title", children: "Orphaned Resources Detected" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-count", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-count", children: [
         orphaned.count,
         " orphaned resources"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-detail", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-detail", children: [
         fmtEur(orphaned.yearlySavings),
         " / year in immediate, low-risk savings available"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-tags", children: orphaned.categories.map((cat, i) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("span", { className: "rs-alert-tag", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(CircleCheckBig, { size: 11 }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-tags", children: orphaned.categories.map((cat, i) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("span", { className: "rs-alert-tag", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CircleCheckBig, { size: 11 }),
         cat
       ] }, i)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("button", { className: "rs-btn-primary", onClick: onViewDetails, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(CircleCheckBig, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { className: "rs-btn-primary", onClick: onViewDetails, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CircleCheckBig, { size: 13 }),
         "View orphaned resources"
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-right", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-savings-big", children: fmtEur(summary.potentialYearlySavings) }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-savings-label", children: "total potential savings \xB7 10 recommendations to action" })
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-right", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-savings-big", children: fmtEur(summary.potentialYearlySavings) }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-savings-label", children: "total potential savings \xB7 10 recommendations to action" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-metrics", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-metric", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-metric-label", children: "Current cost" }),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-metric-val", children: fmtEur(summary.currentYearlyCost) })
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-metrics", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-metric", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-metric-label", children: "Current cost" }),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-metric-val", children: fmtEur(summary.currentYearlyCost) })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-metric", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-metric-label", children: "Optimized cost" }),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-alert-metric-val", children: fmtEur(summary.optimizedCost) })
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-metric", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-metric-label", children: "Optimized cost" }),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-alert-metric-val", children: fmtEur(summary.optimizedCost) })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-alert-efficiency", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-alert-efficiency", children: [
         "You are only using ",
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("strong", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("strong", { children: [
           (100 - summary.savingsPercent).toFixed(1),
           "%"
         ] }),
@@ -40880,14 +41335,14 @@ function OrphanedAlert({ orphaned, summary, onViewDetails }) {
   ] }) });
 }
 function DetailSection({ title, icon: Icon2, children, defaultOpen = false }) {
-  const [open, setOpen] = (0, import_react24.useState)(defaultOpen);
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-detail-section", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("button", { className: "rs-detail-trigger", onClick: () => setOpen(!open), children: [
-      open ? /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ChevronDown, { size: 16 }) : /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ChevronRight, { size: 16 }),
-      Icon2 && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Icon2, { size: 16, className: "rs-detail-icon" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { children: title })
+  const [open, setOpen] = (0, import_react25.useState)(defaultOpen);
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-detail-section", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { className: "rs-detail-trigger", onClick: () => setOpen(!open), children: [
+      open ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ChevronDown, { size: 16 }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ChevronRight, { size: 16 }),
+      Icon2 && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Icon2, { size: 16, className: "rs-detail-icon" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { children: title })
     ] }),
-    open && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-detail-body", children })
+    open && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-detail-body", children })
   ] });
 }
 var MOCK_VM_DETAILS = [
@@ -40909,51 +41364,51 @@ var MOCK_ORPHANED_DETAILS = [
   { name: "nic-detached-01", type: "Network Interface", region: "West Europe", currentCost: 0, optimizedCost: 0, savings: 0, action: "Delete" }
 ];
 function ResourceDetailTable({ resources }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "rs-table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("table", { className: "rs-table", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("tr", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { children: "Resource" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { children: "Type" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { children: "Region" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { style: { textAlign: "right" }, children: "Current Cost" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { style: { textAlign: "right" }, children: "Optimized Cost" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { style: { textAlign: "right" }, children: "Savings" }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("th", { children: "Action" })
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "rs-table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("table", { className: "rs-table", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("tr", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { children: "Resource" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { children: "Type" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { children: "Region" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { style: { textAlign: "right" }, children: "Current Cost" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { style: { textAlign: "right" }, children: "Optimized Cost" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { style: { textAlign: "right" }, children: "Savings" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("th", { children: "Action" })
     ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("tbody", { children: resources.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("tr", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { style: { fontWeight: 600 }, children: r.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { style: { fontFamily: "var(--font-mono)", fontSize: 11 }, children: r.type }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { children: r.region }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { style: { textAlign: "right", fontFamily: "var(--font-mono)" }, children: fmtEur(r.currentCost) }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { style: { textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--green)" }, children: fmtEur(r.optimizedCost) }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { style: { textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--green)", fontWeight: 600 }, children: fmtEur(r.savings) }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "badge badge-dev", children: r.action }) })
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("tbody", { children: resources.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("tr", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { style: { fontWeight: 600 }, children: r.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { style: { fontFamily: "var(--font-mono)", fontSize: 11 }, children: r.type }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { children: r.region }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { style: { textAlign: "right", fontFamily: "var(--font-mono)" }, children: fmtEur(r.currentCost) }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { style: { textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--green)" }, children: fmtEur(r.optimizedCost) }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { style: { textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--green)", fontWeight: 600 }, children: fmtEur(r.savings) }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { className: "badge badge-dev", children: r.action }) })
     ] }, i)) })
   ] }) });
 }
 function SummaryView({ onNavigate, customerName }) {
-  const [activeTab, setActiveTab] = (0, import_react24.useState)("Summary");
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-page-header", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h2", { className: "rs-page-title", children: "Rightsizing \u2014 Summary" }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("p", { className: "rs-page-sub", children: [
+  const [activeTab, setActiveTab] = (0, import_react25.useState)("Summary");
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h2", { className: "rs-page-title", children: "Rightsizing \u2014 Summary" }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("p", { className: "rs-page-sub", children: [
           "Azure \xB7 ",
           customerName,
           " \xB7 Last updated 2 hours ago"
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("button", { className: "rs-btn-export", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Download, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("button", { className: "rs-btn-export", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Download, { size: 13 }),
         " Export"
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(TabBar, { tabs: TABS, active: activeTab, onChange: setActiveTab }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(KpiRow2, { summary: MOCK_SUMMARY }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-two-col", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(CostOptimizationCard, { items: MOCK_COST_OPTIMIZATION, savingsPercent: 86 }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(TopSavingsCard, { items: MOCK_TOP_SAVINGS })
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(TabBar, { tabs: TABS, active: activeTab, onChange: setActiveTab }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(KpiRow2, { summary: MOCK_SUMMARY }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-two-col", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(CostOptimizationCard, { items: MOCK_COST_OPTIMIZATION, savingsPercent: 86 }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(TopSavingsCard, { items: MOCK_TOP_SAVINGS })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       OrphanedAlert,
       {
         orphaned: MOCK_ORPHANED,
@@ -40961,24 +41416,24 @@ function SummaryView({ onNavigate, customerName }) {
         onViewDetails: () => onNavigate("orphaned-resources")
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h3", { className: "rs-section-title", children: "Resource Details" }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DetailSection, { title: "Virtual Machines", icon: Monitor, defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ResourceDetailTable, { resources: MOCK_VM_DETAILS }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DetailSection, { title: "SQL Databases", icon: Database, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ResourceDetailTable, { resources: MOCK_SQL_DETAILS }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DetailSection, { title: "Orphaned Resources", icon: Trash2, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ResourceDetailTable, { resources: MOCK_ORPHANED_DETAILS }) })
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h3", { className: "rs-section-title", children: "Resource Details" }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DetailSection, { title: "Virtual Machines", icon: Monitor, defaultOpen: true, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ResourceDetailTable, { resources: MOCK_VM_DETAILS }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DetailSection, { title: "SQL Databases", icon: Database, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ResourceDetailTable, { resources: MOCK_SQL_DETAILS }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DetailSection, { title: "Orphaned Resources", icon: Trash2, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ResourceDetailTable, { resources: MOCK_ORPHANED_DETAILS }) })
   ] });
 }
 function PlaceholderView({ title, icon: Icon2 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: { textAlign: "center", padding: "60px 20px" }, children: [
-    Icon2 && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Icon2, { size: 48, style: { color: "var(--text-muted)", marginBottom: 16 } }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 8 }, children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: "Detailed view coming soon. Data will be populated once the API is in place." })
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { style: { textAlign: "center", padding: "60px 20px" }, children: [
+    Icon2 && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Icon2, { size: 48, style: { color: "var(--text-muted)", marginBottom: 16 } }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h2", { style: { fontSize: 18, fontWeight: 600, marginBottom: 8 }, children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: "Detailed view coming soon. Data will be populated once the API is in place." })
   ] });
 }
 function RightsizingInner({ customerUuid, customerName, rightsizingApiUrl }) {
-  const [activeNav, setActiveNav] = (0, import_react24.useState)("summary");
+  const [activeNav, setActiveNav] = (0, import_react25.useState)("summary");
   const navItem = SIDEBAR_SECTIONS.flatMap((s) => s.items).find((i) => i.id === activeNav);
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "rs-layout", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "rs-layout", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       PageSidebar,
       {
         sections: SIDEBAR_SECTIONS,
@@ -40986,11 +41441,1184 @@ function RightsizingInner({ customerUuid, customerName, rightsizingApiUrl }) {
         onNavigate: setActiveNav
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("main", { className: "rs-main", children: activeNav === "summary" ? /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(SummaryView, { onNavigate: setActiveNav, customerName }) : /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(PlaceholderView, { title: navItem?.label || activeNav, icon: navItem?.icon?.type }) })
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("main", { className: "rs-main", children: activeNav === "summary" ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(SummaryView, { onNavigate: setActiveNav, customerName }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(PlaceholderView, { title: navItem?.label || activeNav, icon: navItem?.icon?.type }) })
   ] });
 }
 function RightsizingPage(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(QueryClientProvider, { client: queryClient3, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(RightsizingInner, { ...props }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(QueryClientProvider, { client: queryClient3, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(RightsizingInner, { ...props }) });
+}
+
+// app/javascript/components/security/SecurityDashboard.jsx
+var import_react26 = __toESM(require_react());
+var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+var DEMO_SCORES = {
+  overall: 62,
+  grade: "C",
+  previous: 58,
+  delta: 4,
+  pillars: [
+    { key: "security", label: "Security", score: 44, color: "var(--red)" },
+    { key: "reliability", label: "Reliability", score: 78, color: "var(--green)" },
+    { key: "performance", label: "Performance", score: 71, color: "var(--azure)" },
+    { key: "cost", label: "Cost", score: 55, color: "var(--amber)" },
+    { key: "operations", label: "Operations", score: 68, color: "#a78bfa" },
+    { key: "sustainability", label: "Sustainability", score: 59, color: "#34d399" }
+  ]
+};
+var DEMO_SCAN = { lastScan: "2 hours ago", checksRun: 147, criticalFindings: 3, passed: 89, provider: "AWS", region: "eu-west-1" };
+var PILLAR_WIDGETS = [
+  {
+    key: "security",
+    num: "01",
+    label: "Security",
+    score: 44,
+    scoreClass: "low",
+    accent: "wa-security",
+    icon: "wi-red",
+    findings: [{ cls: "fc-crit", text: "3 Critical" }, { cls: "fc-high", text: "4 High" }, { cls: "fc-med", text: "2 Medium" }],
+    checks: [
+      { status: "fail", label: "IAM root account usage", count: "3 issues", color: "var(--red)" },
+      { status: "fail", label: "MFA not enforced", count: "5 users", color: "var(--red)" },
+      { status: "warn", label: "Security groups too open", count: "2 groups", color: "var(--amber)" },
+      { status: "pass", label: "CloudTrail enabled", count: "\u2713 Pass", color: "var(--green)" }
+    ]
+  },
+  {
+    key: "reliability",
+    num: "02",
+    label: "Reliability",
+    score: 78,
+    scoreClass: "high",
+    accent: "wa-reliability",
+    icon: "wi-green",
+    findings: [{ cls: "fc-high", text: "1 High" }, { cls: "fc-med", text: "2 Medium" }, { cls: "fc-low", text: "12 Passed" }],
+    checks: [
+      { status: "warn", label: "No multi-AZ on RDS", count: "1 instance", color: "var(--amber)" },
+      { status: "pass", label: "Auto scaling configured", count: "\u2713 Pass", color: "var(--green)" },
+      { status: "pass", label: "Health checks enabled", count: "\u2713 Pass", color: "var(--green)" },
+      { status: "pass", label: "Backup policies set", count: "\u2713 Pass", color: "var(--green)" }
+    ]
+  },
+  {
+    key: "performance",
+    num: "03",
+    label: "Performance",
+    score: 71,
+    scoreClass: "high",
+    accent: "wa-performance",
+    icon: "wi-blue",
+    findings: [{ cls: "fc-high", text: "2 High" }, { cls: "fc-med", text: "3 Medium" }, { cls: "fc-low", text: "9 Passed" }],
+    checks: [
+      { status: "warn", label: "Over-provisioned EC2 instances", count: "4 instances", color: "var(--amber)" },
+      { status: "warn", label: "No CDN for static assets", count: "2 buckets", color: "var(--amber)" },
+      { status: "pass", label: "Caching enabled on ALB", count: "\u2713 Pass", color: "var(--green)" },
+      { status: "pass", label: "ARM instances used where possible", count: "\u2713 Pass", color: "var(--green)" }
+    ]
+  },
+  {
+    key: "cost",
+    num: "04",
+    label: "Cost Optimization",
+    score: 55,
+    scoreClass: "med",
+    accent: "wa-cost",
+    icon: "wi-amber",
+    findings: [{ cls: "fc-high", text: "3 High" }, { cls: "fc-med", text: "5 Medium" }, { cls: "fc-low", text: "7 Passed" }],
+    checks: [
+      { status: "fail", label: "Unattached EBS volumes", count: "8 volumes", color: "var(--red)" },
+      { status: "warn", label: "No Reserved Instances", count: "~\u20AC340/mo", color: "var(--amber)" },
+      { status: "warn", label: "S3 lifecycle policies missing", count: "3 buckets", color: "var(--amber)" },
+      { status: "pass", label: "Cost allocation tags set", count: "\u2713 Pass", color: "var(--green)" }
+    ]
+  },
+  {
+    key: "operations",
+    num: "05",
+    label: "Operational Excellence",
+    score: 68,
+    scoreClass: "high",
+    accent: "wa-ops",
+    icon: "wi-purple",
+    findings: [{ cls: "fc-high", text: "2 High" }, { cls: "fc-med", text: "3 Medium" }, { cls: "fc-low", text: "10 Passed" }],
+    checks: [
+      { status: "warn", label: "No runbooks in Systems Manager", count: "Missing", color: "var(--amber)" },
+      { status: "warn", label: "CloudWatch alarms incomplete", count: "6 gaps", color: "var(--amber)" },
+      { status: "pass", label: "IaC deployed via pipeline", count: "\u2713 Pass", color: "var(--green)" },
+      { status: "pass", label: "Tagging strategy in place", count: "\u2713 Pass", color: "var(--green)" }
+    ]
+  },
+  {
+    key: "sustainability",
+    num: "06",
+    label: "Sustainability",
+    score: 59,
+    scoreClass: "med",
+    accent: "wa-sustain",
+    icon: "wi-teal",
+    findings: [{ cls: "fc-high", text: "1 High" }, { cls: "fc-med", text: "4 Medium" }, { cls: "fc-low", text: "8 Passed" }],
+    checks: [
+      { status: "warn", label: "No Graviton instances used", count: "7 eligible", color: "var(--amber)" },
+      { status: "warn", label: "Region not carbon-optimised", count: "eu-west-1", color: "var(--amber)" },
+      { status: "pass", label: "Serverless functions used", count: "\u2713 Pass", color: "var(--green)" },
+      { status: "pass", label: "S3 Intelligent-Tiering active", count: "\u2713 Pass", color: "var(--green)" }
+    ]
+  }
+];
+var DEMO_FINDINGS = [
+  {
+    severity: "critical",
+    pillar: "security",
+    pillarClass: "ft-security",
+    title: "Root account has active access keys",
+    desc: "The AWS root account has programmatic access keys enabled. This is a critical risk \u2014 if these keys are compromised the attacker gains unrestricted access to your entire AWS account.",
+    resource: "Account",
+    resourceId: "123456789012",
+    effort: "low",
+    steps: [
+      "Sign in to the AWS console as the root user and navigate to <strong>IAM \u2192 Security credentials</strong>.",
+      "Under <em>Access keys</em>, click <strong>Delete</strong> for all existing root access keys.",
+      "Enable MFA on the root account immediately. Use a hardware token (YubiKey) or virtual MFA app.",
+      "Create an IAM user with <code>AdministratorAccess</code> policy for day-to-day admin tasks."
+    ]
+  },
+  {
+    severity: "critical",
+    pillar: "security",
+    pillarClass: "ft-security",
+    title: "MFA not enabled for 5 IAM users",
+    desc: "5 IAM users with console access do not have multi-factor authentication enabled. Without MFA, a leaked password is enough to fully compromise these accounts.",
+    resource: "IAM",
+    resourceId: "5 users",
+    effort: "low",
+    steps: [
+      "Go to <strong>IAM \u2192 Users</strong> and filter by <em>MFA not enabled</em>. Affected: <code>deploy-ci</code>, <code>dev-john</code>, <code>dev-lisa</code>, <code>ops-mark</code>, <code>svc-backup</code>.",
+      "For human users, assign a virtual MFA device via your internal identity system.",
+      "For service accounts like <code>deploy-ci</code>, disable console access entirely.",
+      "Attach an IAM policy that denies all actions unless MFA is present using <code>aws:MultiFactorAuthPresent</code>."
+    ]
+  },
+  {
+    severity: "critical",
+    pillar: "security",
+    pillarClass: "ft-security",
+    title: "Security group allows 0.0.0.0/0 on port 22 (SSH)",
+    desc: "Security group sg-0abc123 attached to 3 EC2 instances exposes SSH (port 22) to the entire internet, allowing brute-force attacks.",
+    resource: "EC2",
+    resourceId: "sg-0abc123",
+    effort: "low",
+    steps: [
+      "In <strong>EC2 \u2192 Security Groups \u2192 sg-0abc123</strong>, edit inbound rules and remove the <code>0.0.0.0/0</code> rule on port 22.",
+      "Replace with your office/VPN IP range only, or use AWS Systems Manager Session Manager instead.",
+      "Enable <strong>AWS Config rule</strong> <code>restricted-ssh</code> to alert on future public SSH exposure.",
+      "Consider deploying a bastion host or AWS SSM for all future SSH needs."
+    ]
+  },
+  {
+    severity: "high",
+    pillar: "cost",
+    pillarClass: "ft-cost",
+    title: "8 unattached EBS volumes incurring cost",
+    desc: "8 EBS volumes are not attached to any EC2 instance and have not been used in over 30 days, costing approximately \u20AC68/month.",
+    resource: "EC2 / EBS",
+    resourceId: "8 volumes",
+    effort: "low",
+    steps: [
+      "In <strong>EC2 \u2192 Volumes</strong>, filter by state <code>available</code>. Review each volume.",
+      "Create a snapshot of each volume before deletion: <code>aws ec2 create-snapshot --volume-id vol-xxx</code>.",
+      "Delete the volumes once snapshots are confirmed.",
+      "Enable <strong>AWS Config rule</strong> <code>ec2-volume-inuse-check</code> to prevent future accumulation."
+    ]
+  },
+  {
+    severity: "high",
+    pillar: "reliability",
+    pillarClass: "ft-reliability",
+    title: "RDS instance not deployed in Multi-AZ",
+    desc: "The production RDS instance db-prod-postgres-01 is running in a single AZ. An AZ outage would cause 20\u201330 minutes of database downtime.",
+    resource: "RDS",
+    resourceId: "db-prod-postgres-01",
+    effort: "med",
+    steps: [
+      "In <strong>RDS \u2192 Databases \u2192 db-prod-postgres-01</strong>, click <strong>Modify</strong> and enable <em>Multi-AZ deployment</em>.",
+      "Schedule during a maintenance window \u2014 enabling Multi-AZ causes ~60 seconds of downtime.",
+      "After enabling, verify the standby replica is in a different AZ via the <em>Secondary AZ</em> field."
+    ]
+  },
+  {
+    severity: "high",
+    pillar: "performance",
+    pillarClass: "ft-performance",
+    title: "4 EC2 instances significantly over-provisioned",
+    desc: "4 EC2 instances (t3.2xlarge) are running at under 8% CPU and 12% memory. Rightsizing to t3.medium would save ~\u20AC340/month.",
+    resource: "EC2",
+    resourceId: "4 instances",
+    effort: "med",
+    extraPillar: { label: "Cost", cls: "ft-cost" },
+    steps: [
+      "Review the Rightsizing recommendations in the <strong>Factor Fifty Rightsizing</strong> dashboard.",
+      "Stop each instance and change type to <code>t3.medium</code> via <strong>EC2 \u2192 Actions \u2192 Instance settings</strong>.",
+      "Monitor CPU, memory and network for 48 hours after resize.",
+      "Consider purchasing Reserved Instances or Savings Plans for additional 30\u201340% savings."
+    ]
+  }
+];
+function exportSecurityPdf(scores, scan, pillars, findings, envName) {
+  const bars = [6, 8, 10, 12, 14, 16, 18, 20].map(
+    (h) => `<span style="display:inline-block;width:3px;height:${h}px;background:#2ecc71;border-radius:1px;margin-right:2px;vertical-align:bottom"></span>`
+  ).join("");
+  const gradeColor = scores.overall >= 70 ? "#4ade80" : scores.overall >= 50 ? "#fbbf24" : "#f87171";
+  const pillarRows = scores.pillars.map((p) => {
+    const barColor = p.color.startsWith("var(") ? p.color.includes("red") ? "#f87171" : p.color.includes("green") ? "#4ade80" : p.color.includes("azure") ? "#60a5fa" : p.color.includes("amber") ? "#fbbf24" : p.color.replace("var(--", "").replace(")", "") : p.color;
+    return `<tr>
+      <td style="padding:6px 10px;font-size:12px;font-weight:600">${p.label}</td>
+      <td style="padding:6px 10px;width:200px">
+        <div style="height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${p.score}%;background:${barColor};border-radius:3px"></div>
+        </div>
+      </td>
+      <td style="padding:6px 10px;font-family:monospace;font-size:12px;font-weight:700;color:${barColor}">${p.score}/100</td>
+    </tr>`;
+  }).join("");
+  const pillarChecks = pillars.map((p) => {
+    const checkRows = p.checks.map((c) => {
+      const dotColor = c.status === "pass" ? "#4ade80" : c.status === "fail" ? "#f87171" : "#fbbf24";
+      return `<tr>
+        <td style="padding:4px 10px;font-size:11px">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${dotColor};margin-right:6px;vertical-align:middle"></span>
+          ${c.label}
+        </td>
+        <td style="padding:4px 10px;font-size:11px;text-align:right;font-family:monospace;color:${dotColor === "#4ade80" ? "#16a34a" : dotColor === "#f87171" ? "#dc2626" : "#d97706"}">${c.count}</td>
+      </tr>`;
+    }).join("");
+    return `<div style="margin-bottom:16px">
+      <h3 style="font-size:13px;font-weight:700;margin:0 0 6px;color:#374151">Pillar ${p.num} \u2014 ${p.label} <span style="font-family:monospace;font-weight:400;color:#6b7280">(${p.score}/100)</span></h3>
+      <table style="width:100%;border-collapse:collapse">${checkRows}</table>
+    </div>`;
+  }).join("");
+  const findingRows = findings.map((f, i) => {
+    const sevColor = f.severity === "critical" ? "#dc2626" : f.severity === "high" ? "#ea580c" : f.severity === "medium" ? "#d97706" : "#16a34a";
+    const sevBg = f.severity === "critical" ? "#fef2f2" : f.severity === "high" ? "#fff7ed" : f.severity === "medium" ? "#fffbeb" : "#f0fdf4";
+    const stepsHtml = f.steps.map(
+      (s, j) => `<div style="display:flex;gap:8px;margin-bottom:4px;font-size:11px;color:#374151;line-height:1.5">
+        <span style="font-family:monospace;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:3px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">${j + 1}</span>
+        <span>${s}</span>
+      </div>`
+    ).join("");
+    return `<div style="padding:14px 0;border-bottom:1px solid #e5e7eb">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span style="font-family:monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:${sevBg};color:${sevColor};white-space:nowrap;border:1px solid ${sevColor}20">\u25CF ${f.severity.charAt(0).toUpperCase() + f.severity.slice(1)}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;margin-bottom:3px">${f.title} <span style="font-family:monospace;font-size:9px;padding:1px 5px;border-radius:3px;background:#f3f4f6;color:#6b7280">${f.pillar}</span></div>
+          <div style="font-size:11px;color:#6b7280;margin-bottom:8px">${f.desc}</div>
+          <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px 12px">
+            <div style="font-family:monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:6px">Remediation</div>
+            ${stepsHtml}
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;min-width:90px">
+          <div style="font-family:monospace;font-size:10px;color:#9ca3af">${f.resource}</div>
+          <div style="font-family:monospace;font-size:10px;color:#6b7280">${f.resourceId}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  const html2 = `<!DOCTYPE html><html><head><title>Security Dashboard \u2014 Factor Fifty</title>
+    <style>
+      body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:0;margin:0;color:#1a1a1a}
+      table{border-collapse:collapse;width:100%}
+      @media print{.no-print{display:none}}
+      @page{margin:16mm 12mm}
+    </style>
+  </head><body>
+    <div style="padding:24px 32px 16px;border-bottom:2px solid #2ecc71;display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:flex-end">${bars}</div>
+        <span style="font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1a1a1a">Factor Fifty</span>
+      </div>
+      <div style="text-align:right;font-size:11px;color:#888">
+        <div>Security Dashboard Report</div>
+        <div>${(/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</div>
+      </div>
+    </div>
+    <div style="padding:24px 32px">
+      <h1 style="font-size:20px;margin:0 0 4px;font-weight:700">Security Dashboard</h1>
+      <p style="color:#888;font-size:12px;margin:0 0 20px">${envName || "Environment"} \xB7 ${scan.provider} \xB7 ${scan.region} \xB7 ${scan.checksRun} checks</p>
+
+      <div style="display:flex;align-items:center;gap:24px;padding:16px 20px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:24px">
+        <div>
+          <div style="font-family:monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af;margin-bottom:4px">Overall WAF Score</div>
+          <div style="font-family:monospace;font-size:42px;font-weight:700;color:${gradeColor};line-height:1">${scores.overall}</div>
+          <div style="font-size:12px;color:#9ca3af;margin-top:2px">Grade ${scores.grade} \xB7 Previous: ${scores.previous}</div>
+        </div>
+        <div style="width:1px;height:50px;background:#e5e7eb"></div>
+        <table style="flex:1"><tbody>${pillarRows}</tbody></table>
+      </div>
+
+      <h2 style="font-size:15px;font-weight:700;margin:0 0 12px">Pillar Breakdown</h2>
+      ${pillarChecks}
+
+      <h2 style="font-size:15px;font-weight:700;margin:24px 0 12px">Findings & Remediation (${findings.length})</h2>
+      ${findingRows}
+    </div>
+    <div style="padding:16px 32px;border-top:1px solid #eee;font-size:10px;color:#aaa;display:flex;justify-content:space-between">
+      <span>Generated by Factor Fifty</span><span>Confidential</span>
+    </div>
+  </body></html>`;
+  const win = window.open("", "_blank");
+  win.document.write(html2);
+  win.document.close();
+  win.focus();
+  win.print();
+}
+var CIRC = 2 * Math.PI * 22;
+function ScoreRing({ score, size = 54 }) {
+  const cls = score >= 70 ? "high" : score >= 50 ? "med" : "low";
+  const offset = CIRC - score / 100 * CIRC;
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: `sec-score-ring-wrap score-${cls}`, style: { width: size, height: size }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { width: size, height: size, viewBox: "0 0 54 54", style: { transform: "rotate(-90deg)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("circle", { className: "sec-score-ring-bg", cx: "27", cy: "27", r: "22" }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        "circle",
+        {
+          className: "sec-score-ring-fill",
+          cx: "27",
+          cy: "27",
+          r: "22",
+          strokeDasharray: CIRC,
+          strokeDashoffset: offset
+        }
+      )
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-score-ring-text", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "sec-score-ring-val", children: score }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "sec-score-ring-pct", children: "/100" })
+    ] })
+  ] });
+}
+function PillarWidget({ pillar }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-waf-widget", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: `sec-widget-accent ${pillar.accent}` }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-widget-body", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-widget-header", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-widget-pillar", children: [
+            "Pillar ",
+            pillar.num
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-widget-name", children: pillar.label })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ScoreRing, { score: pillar.score })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-widget-findings", children: pillar.findings.map((f, i) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: `sec-finding-chip ${f.cls}`, children: f.text }, i)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-widget-checks", children: pillar.checks.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-wcheck", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: `sec-wcheck-dot ${c.status}` }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-wcheck-label", children: c.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-wcheck-count", style: { color: c.color }, children: c.count })
+      ] }, i)) })
+    ] })
+  ] });
+}
+function ScanBar({ scan }) {
+  const items = [
+    { icon: "clock", label: "Last scan:", value: scan.lastScan },
+    { icon: "activity", label: "Checks run:", value: scan.checksRun },
+    { icon: "alert", label: "Findings:", value: `${scan.criticalFindings} critical`, valueColor: "var(--red)" },
+    { icon: "check", label: "Passed:", value: `${scan.passed} checks`, valueColor: "var(--green)" },
+    { icon: "server", label: "Provider:", value: `${scan.provider} \xB7 ${scan.region}` }
+  ];
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-scan-bar", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-scan-meta", children: items.map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+    i > 0 && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-scan-divider" }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-scan-item", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: item.label }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { style: { color: item.valueColor || "var(--text-dim)", fontWeight: 500 }, children: item.value })
+    ] })
+  ] }, i)) }) });
+}
+function ScoreBanner({ scores }) {
+  const gradeColor = scores.overall >= 70 ? "var(--green)" : scores.overall >= 50 ? "var(--amber)" : "var(--red)";
+  const gradeBg = scores.overall >= 70 ? "var(--green-dim)" : scores.overall >= 50 ? "var(--amber-dim)" : "var(--red-dim)";
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-score-banner", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-score-banner-main", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-score-banner-label", children: "Overall WAF Score" }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-score-big", style: { color: gradeColor }, children: scores.overall }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-score-big-sub", children: "out of 100 \xB7 Needs improvement" }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-score-big-grade", style: { background: gradeBg, color: gradeColor, borderColor: gradeColor }, children: [
+          "Grade ",
+          scores.grade
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-score-divider" }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-score-breakdown", children: scores.pillars.map((p) => /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-sb-item", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-sb-label", children: p.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-sb-bar-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-sb-bar", style: { width: `${p.score}%`, background: p.color } }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-sb-val", style: { color: p.color }, children: p.score })
+      ] }, p.key)) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-score-banner-right", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-last-scan", children: [
+        "Previous score: ",
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: scores.previous })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: `sec-trend-pill ${scores.delta > 0 ? "trend-up" : "trend-down"}`, children: [
+        scores.delta > 0 ? "\u2191" : "\u2193",
+        " ",
+        Math.abs(scores.delta),
+        " pts since last scan"
+      ] })
+    ] })
+  ] });
+}
+function FindingRow({ finding }) {
+  const sevClass = `sev-${finding.severity}`;
+  const sevLabel = finding.severity.charAt(0).toUpperCase() + finding.severity.slice(1);
+  const effortClass = finding.effort === "low" ? "effort-low" : finding.effort === "med" ? "effort-med" : "effort-high";
+  const effortLabel = finding.effort === "low" ? "\u26A1 Low effort" : finding.effort === "med" ? "\u23F1 Medium effort" : "\u{1F527} High effort";
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("td", { colSpan: 3, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-finding-row", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-finding-sev", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { className: `sec-sev-badge ${sevClass}`, children: [
+      "\u25CF ",
+      sevLabel
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-finding-main", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-finding-title", children: [
+        finding.title,
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: `sec-finding-pillar-tag ${finding.pillarClass}`, children: finding.pillar.charAt(0).toUpperCase() + finding.pillar.slice(1) }),
+        finding.extraPillar && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: `sec-finding-pillar-tag ${finding.extraPillar.cls}`, children: finding.extraPillar.label })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-finding-desc", children: finding.desc }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-remediation", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-remediation-label", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "10", height: "10", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("polyline", { points: "9 11 12 14 22 4" }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { d: "M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" })
+          ] }),
+          "Remediation"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-remediation-steps", children: finding.steps.map((step, i) => /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-rem-step", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-rem-step-num", children: i + 1 }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { dangerouslySetInnerHTML: { __html: step } })
+        ] }, i)) })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-finding-meta", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-finding-resource", children: [
+        finding.resource,
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("br", {}),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { children: finding.resourceId })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: `sec-finding-effort ${effortClass}`, children: effortLabel })
+    ] })
+  ] }) }) });
+}
+function FindingsTable({ findings }) {
+  const [filter, setFilter] = (0, import_react26.useState)("critical");
+  const counts = (0, import_react26.useMemo)(() => {
+    const c = { critical: 0, high: 0, medium: 0, all: 0 };
+    findings.forEach((f) => {
+      c[f.severity] = (c[f.severity] || 0) + 1;
+      c.all++;
+    });
+    return c;
+  }, [findings]);
+  const filtered = filter === "all" ? findings : findings.filter((f) => f.severity === filter);
+  const pills = [
+    { key: "critical", label: `\u25CF Critical (${counts.critical})`, cls: "f-crit" },
+    { key: "high", label: `High (${counts.high})`, cls: "f-high" },
+    { key: "medium", label: `Medium (${counts.medium || 0})`, cls: "" },
+    { key: "all", label: "All", cls: "" }
+  ];
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-section-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-section-title-row", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-section-icon", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", width: "15", height: "15", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("circle", { cx: "12", cy: "12", r: "10" }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: "12", y1: "8", x2: "12", y2: "12" }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: "12", y1: "16", x2: "12.01", y2: "16" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-section-title", children: "Findings & Remediation Steps" }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-section-sub", children: "Prioritised issues with step-by-step remediation guidance" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-findings-filters", children: pills.map((p) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        "button",
+        {
+          className: `sec-filter-pill ${p.cls} ${filter === p.key ? "active" : ""}`,
+          onClick: () => setFilter(p.key),
+          children: p.label
+        },
+        p.key
+      )) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-table-card", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("table", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { style: { paddingLeft: 20 }, children: "Finding" }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { children: "Resource" }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("th", { children: "Effort" })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("tbody", { children: filtered.map((f, i) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(FindingRow, { finding: f }, i)) })
+    ] }) })
+  ] });
+}
+function SecurityDashboard({ environmentName, customerName, projectName }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-page", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-page-header", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-page-title", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-page-title-icon", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", width: "15", height: "15", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" }) }) }),
+          "Security Dashboard",
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "sec-beta-badge", children: "Beta" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "sec-page-sub", children: [
+          "AWS Well-Architected Framework assessment for environment ",
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("strong", { style: { color: "var(--text-dim)" }, children: environmentName || "Production" }),
+          " \xB7 ",
+          DEMO_SCAN.checksRun,
+          " checks across 6 pillars"
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "context-pill", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "context-dot" }),
+          projectName || "Project",
+          " \xB7 ",
+          environmentName || "Environment"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("button", { className: "btn btn-ghost btn-sm", onClick: () => exportSecurityPdf(DEMO_SCORES, DEMO_SCAN, PILLAR_WIDGETS, DEMO_FINDINGS, environmentName || "Production"), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", width: "13", height: "13", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("polyline", { points: "7 10 12 15 17 10" }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("line", { x1: "12", y1: "15", x2: "12", y2: "3" })
+          ] }),
+          "Export PDF"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("button", { className: "btn btn-green btn-sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", width: "13", height: "13", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("polyline", { points: "23 4 23 10 17 10" }),
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("path", { d: "M20.49 15a9 9 0 1 1-2.12-9.36L23 10" })
+          ] }),
+          "Re-scan"
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ScanBar, { scan: DEMO_SCAN }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ScoreBanner, { scores: DEMO_SCORES }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "sec-widgets-grid", children: PILLAR_WIDGETS.map((p) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(PillarWidget, { pillar: p }, p.key)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(FindingsTable, { findings: DEMO_FINDINGS })
+  ] });
+}
+
+// app/javascript/components/inventory/InventoryDashboard.jsx
+var import_react27 = __toESM(require_react());
+var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+var SERVICE_META = {
+  acm: { label: "ACM", abbr: "ACM", color: "#63b3ed" },
+  amazonmq: { label: "Amazon MQ", abbr: "MQ", color: "#fc814a" },
+  efs: { label: "EFS", abbr: "EFS", color: "#68d391" },
+  eks: { label: "EKS", abbr: "EKS", color: "#f59e0b" },
+  elasticloadbalancingv2: { label: "Load Balancing", abbr: "ELB", color: "#60a5fa" },
+  kms: { label: "KMS", abbr: "KMS", color: "#a78bfa" },
+  lambda: { label: "Lambda", abbr: "\u03BB", color: "#f87171" },
+  opensearch: { label: "OpenSearch", abbr: "ES", color: "#34d399" },
+  rds: { label: "RDS", abbr: "RDS", color: "#fbbf24" },
+  s3: { label: "S3", abbr: "S3", color: "#fcd34d" },
+  secretsmanager: { label: "Secrets Manager", abbr: "SM", color: "#f87171" },
+  sqs: { label: "SQS", abbr: "SQS", color: "#c4b5fd" },
+  ec2: { label: "EC2", abbr: "EC2", color: "#f59e0b" },
+  cloudfront: { label: "CloudFront", abbr: "CF", color: "#60a5fa" },
+  route53: { label: "Route 53", abbr: "R53", color: "#60a5fa" },
+  sns: { label: "SNS", abbr: "SNS", color: "#c4b5fd" },
+  dynamodb: { label: "DynamoDB", abbr: "DDB", color: "#60a5fa" },
+  elasticache: { label: "ElastiCache", abbr: "EC", color: "#f87171" },
+  wafv2: { label: "WAF", abbr: "WAF", color: "#fbbf24" }
+};
+function getMeta(cat) {
+  return SERVICE_META[cat] || { label: cat, abbr: cat.slice(0, 3).toUpperCase(), color: "#64748b" };
+}
+function getCsrfToken3() {
+  const el = document.querySelector('meta[name="csrf-token"]');
+  return el ? el.getAttribute("content") : "";
+}
+function esc(s) {
+  return String(s || "");
+}
+function deriveName(r) {
+  const c = r.configuration || {};
+  return c.Name || c.name || c.BrokerName || c.DomainName || c.functionName || c.AddonName || c.loadBalancerName || c.description || c.dBInstanceIdentifier || c.dBSubnetGroupName || r.resource_id.split("/").pop().split(":").pop().split("|").pop();
+}
+function flattenResources(data) {
+  const all = [];
+  for (const [accountId, categories] of Object.entries(data || {})) {
+    for (const [cat, resources] of Object.entries(categories || {})) {
+      for (const r of resources) {
+        all.push({ ...r, _name: deriveName(r), _account: accountId });
+      }
+    }
+  }
+  return all;
+}
+function ConfigValue({ value, depth = 0 }) {
+  if (depth > 3) return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-cfg-str", children: '"\u2026"' });
+  if (value === null) return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-cfg-null", children: "null" });
+  if (typeof value === "boolean") return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: value ? "inv-cfg-true" : "inv-cfg-false", children: String(value) });
+  if (typeof value === "number") return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-cfg-num", children: value });
+  if (typeof value === "string") {
+    const display = value.length > 80 ? value.slice(0, 80) + "\u2026" : value;
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("span", { className: "inv-cfg-str", children: [
+      '"',
+      display,
+      '"'
+    ] });
+  }
+  if (Array.isArray(value)) {
+    if (value.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-cfg-null", children: "[]" });
+    if (typeof value[0] === "string") return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("span", { className: "inv-cfg-str", children: [
+      "[",
+      value.map((v, i) => /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_react27.default.Fragment, { children: [
+        i > 0 && ", ",
+        '"',
+        v,
+        '"'
+      ] }, i)),
+      "]"
+    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-cfg-block", children: [
+      value.slice(0, 5).map((v, i) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ConfigValue, { value: v, depth: depth + 1 }) }, i)),
+      value.length > 5 && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-cfg-null", children: [
+        "\u2026",
+        value.length - 5,
+        " more"
+      ] })
+    ] });
+  }
+  if (typeof value === "object") {
+    const entries2 = Object.entries(value);
+    if (entries2.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-cfg-null", children: "{}" });
+    return entries2.map(([k, v]) => /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-cfg-key", children: k }),
+      ": ",
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ConfigValue, { value: v, depth: depth + 1 })
+    ] }, k));
+  }
+  return String(value);
+}
+function DetailPanel({ resource, onClose }) {
+  if (!resource) return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail inv-detail-empty", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-empty-icon", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.6", width: "20", height: "20", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("rect", { x: "2", y: "3", width: "20", height: "14", rx: "2" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "8", y1: "21", x2: "16", y2: "21" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "12", y1: "17", x2: "12", y2: "21" })
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-empty-title", children: "Select a resource" }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-empty-sub", children: "Click any row to inspect details" })
+  ] });
+  const meta = getMeta(resource.category);
+  const tags = resource.tags || [];
+  const cfg = resource.configuration || {};
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-head", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { style: { flex: 1, minWidth: 0, marginRight: 8 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-svc-icon", style: { background: `${meta.color}1a`, borderColor: `${meta.color}33`, color: meta.color }, children: meta.abbr }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-name", children: resource._name })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-type", children: resource.resource_type })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-close", onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "13", height: "13", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
+      ] }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-body", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-section-title", children: "Identity" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailRow, { label: "Resource ID", value: resource.resource_id, mono: true }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailRow, { label: "Type", value: resource.resource_type, mono: true }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailRow, { label: "Service", value: meta.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailRow, { label: "Region", value: resource.region }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailRow, { label: "Account", value: resource._account, mono: true })
+      ] }),
+      tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-section-title", children: [
+          "Tags (",
+          tags.length,
+          ")"
+        ] }),
+        tags.map((t, i) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailRow, { label: t.key, value: t.value, mono: true, green: true }, i))
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-section", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-section-title", children: "Configuration" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cfg-tree", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(ConfigValue, { value: cfg }) })
+      ] })
+    ] })
+  ] });
+}
+function DetailRow({ label, value, mono, green }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-detail-row", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-detail-key", children: label }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: `inv-detail-val${mono ? " mono" : ""}${green ? " inv-green" : ""}`, style: mono ? { wordBreak: "break-all", fontSize: "10.5px" } : void 0, children: esc(value) })
+  ] });
+}
+function Sidebar({ categories, activeCategory, onSelect, searchFilter, onSearchChange, accountId }) {
+  const filtered = searchFilter ? categories.filter((c) => c.label.toLowerCase().includes(searchFilter.toLowerCase()) || c.key.includes(searchFilter.toLowerCase())) : categories;
+  const total = categories.reduce((s, c) => s + c.count, 0);
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-sidebar", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-sidebar-head", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-sidebar-title", children: "Service Categories" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-sidebar-search", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "12", height: "12", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("circle", { cx: "11", cy: "11", r: "8" }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("input", { placeholder: "Filter categories\u2026", value: searchFilter, onChange: (e) => onSearchChange(e.target.value) })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-sidebar-body", children: [
+      (!searchFilter || "all resources".includes(searchFilter.toLowerCase())) && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: `inv-cat-item${activeCategory === "all" ? " active" : ""}`, onClick: () => onSelect("all"), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-cat-left", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cat-icon", style: { background: "rgba(255,255,255,0.06)", color: "var(--text-dim)" }, children: "ALL" }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cat-name", children: "All Resources" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cat-count", children: total })
+      ] }),
+      filtered.map((c) => {
+        const meta = getMeta(c.key);
+        return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: `inv-cat-item${activeCategory === c.key ? " active" : ""}`, onClick: () => onSelect(c.key), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-cat-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cat-icon", style: { background: `${meta.color}1a`, color: meta.color }, children: meta.abbr }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cat-name", children: meta.label })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-cat-count", children: c.count })
+        ] }, c.key);
+      })
+    ] }),
+    accountId && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-sidebar-footer", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }, children: "Account" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-account-chip", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-account-dot" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-account-id", children: accountId }) })
+      ] })
+    ] })
+  ] });
+}
+function StatsRow({ resources, categories }) {
+  const regions = [...new Set(resources.map((r) => r.region))].length;
+  const tagged = resources.filter((r) => r.tags && r.tags.length > 0).length;
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-stats-row", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(StatChip, { icon: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "var(--green)", strokeWidth: "1.8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("rect", { x: "2", y: "3", width: "20", height: "14", rx: "2" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "8", y1: "21", x2: "16", y2: "21" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "12", y1: "17", x2: "12", y2: "21" })
+    ] }), iconBg: "var(--green-dim)", iconBorder: "var(--border-active)", value: resources.length, label: "Total resources" }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(StatChip, { icon: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "var(--aws)", strokeWidth: "1.8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("rect", { x: "2", y: "3", width: "6", height: "6", rx: "1" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("rect", { x: "2", y: "15", width: "6", height: "6", rx: "1" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: "M8 6h8M8 18h8M16 3v18" })
+    ] }), iconBg: "var(--aws-dim)", iconBorder: "rgba(245,158,11,0.2)", value: categories.length, label: "Service categories" }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(StatChip, { icon: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "var(--azure)", strokeWidth: "1.8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("circle", { cx: "12", cy: "12", r: "10" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: "M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" })
+    ] }), iconBg: "var(--azure-dim)", iconBorder: "rgba(96,165,250,0.2)", value: regions, label: "Regions" }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(StatChip, { icon: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "var(--amber)", strokeWidth: "1.8", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: "M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" }) }), iconBg: "var(--amber-dim)", iconBorder: "rgba(251,191,36,0.2)", value: tagged, label: "Tagged resources" })
+  ] });
+}
+function StatChip({ icon, iconBg, iconBorder, value, label }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-stat-chip", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-stat-icon", style: { background: iconBg, border: `1px solid ${iconBorder}` }, children: icon }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-stat-val", children: value }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-stat-label", children: label })
+    ] })
+  ] });
+}
+function ResourceTable({ rows, sortKey, sortDir, onSort, selectedId, onSelect }) {
+  const sortIcon = (key) => sortKey === key ? sortDir === 1 ? "\u2191" : "\u2193" : "";
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-table-wrap", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("table", { className: "inv-table", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("th", { onClick: () => onSort("name"), className: sortKey === "name" ? "sorted" : "", children: [
+          "Resource ",
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-sort-icon", children: sortIcon("name") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("th", { onClick: () => onSort("category"), className: sortKey === "category" ? "sorted" : "", children: [
+          "Service ",
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-sort-icon", children: sortIcon("category") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("th", { onClick: () => onSort("resource_type"), className: sortKey === "resource_type" ? "sorted" : "", children: [
+          "Type ",
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-sort-icon", children: sortIcon("resource_type") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("th", { onClick: () => onSort("region"), className: sortKey === "region" ? "sorted" : "", children: [
+          "Region ",
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-sort-icon", children: sortIcon("region") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("th", { children: "Tags" })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("tbody", { children: rows.map((r, i) => {
+        const meta = getMeta(r.category);
+        const displayId = r.resource_id.length > 50 ? r.resource_id.slice(-40) : r.resource_id;
+        const shortType = r.resource_type.replace("AWS::", "").replace("::", "::");
+        const tags = (r.tags || []).filter((t) => t.key !== "factor-fifty" && t.key !== "monitor").slice(0, 3);
+        const isSelected = r.resource_id === selectedId;
+        return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("tr", { onClick: () => onSelect(r), className: isSelected ? "selected" : "", style: { animationDelay: `${Math.min(i * 0.02, 0.3)}s` }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("td", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontWeight: 600, color: "var(--text)" }, children: r._name }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "mono inv-truncate", style: { color: "var(--text-muted)", fontSize: 10, marginTop: 2 }, children: displayId })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: `inv-svc-badge inv-svc-${r.category}`, children: meta.label }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "mono", style: { fontSize: "10.5px", color: "var(--text-muted)" }, children: shortType }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-region-badge", children: r.region }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-tag-list", children: [
+            tags.map((t, j) => /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-tag-chip", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: t.key }),
+              "=",
+              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { style: { color: "var(--green)" }, children: t.value })
+            ] }, j)),
+            tags.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 11 }, children: "\u2014" })
+          ] }) })
+        ] }, r.resource_id + i);
+      }) })
+    ] }),
+    rows.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-no-results", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-no-results-title", children: "No resources found" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-no-results-sub", children: "Try a different search term or category filter" })
+    ] })
+  ] });
+}
+function exportInventoryPdf(resources, categories, environmentName, accountId) {
+  const bars = [6, 8, 10, 12, 14, 16, 18, 20].map(
+    (h) => `<span style="display:inline-block;width:3px;height:${h}px;background:#2ecc71;border-radius:1px;margin-right:2px;vertical-align:bottom"></span>`
+  ).join("");
+  const regions = [...new Set(resources.map((r) => r.region))].length;
+  const tagged = resources.filter((r) => r.tags && r.tags.length > 0).length;
+  const statBoxes = [
+    { label: "Total Resources", value: resources.length, color: "#4ade80" },
+    { label: "Services", value: categories.length, color: "#f59e0b" },
+    { label: "Regions", value: regions, color: "#60a5fa" },
+    { label: "Tagged", value: tagged, color: "#fbbf24" }
+  ].map((s) => `<div style="flex:1;padding:10px 14px;border-right:1px solid #e5e7eb">
+    <div style="font-family:monospace;font-size:20px;font-weight:700;color:${s.color}">${s.value}</div>
+    <div style="font-size:10px;color:#9ca3af;margin-top:2px">${s.label}</div>
+  </div>`).join("");
+  const catBadges = categories.map((c) => {
+    const m = getMeta(c.key);
+    return `<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:monospace;background:${m.color}1a;color:${m.color};border:1px solid ${m.color}33">${m.abbr} ${c.count}</span>`;
+  }).join(" ");
+  const thStyle2 = "padding:8px 10px;text-align:left;border-bottom:2px solid #e5e7eb;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;white-space:nowrap";
+  const tdStyle2 = "padding:7px 10px;border-bottom:1px solid #f1f5f9;font-size:11px;white-space:nowrap";
+  const bodyRows = resources.map((r) => {
+    const meta = getMeta(r.category);
+    const tags = (r.tags || []).filter((t) => t.key !== "factor-fifty" && t.key !== "monitor").slice(0, 3).map((t) => `${t.key}=${t.value}`).join(", ");
+    const shortType = r.resource_type.replace("AWS::", "");
+    return `<tr>
+      <td style="${tdStyle2};font-weight:600;color:#1a1a2e">${esc(r._name)}<div style="font-family:monospace;font-size:9px;color:#9ca3af;margin-top:1px">${esc(r.resource_id.length > 50 ? r.resource_id.slice(-40) : r.resource_id)}</div></td>
+      <td style="${tdStyle2}"><span style="font-family:monospace;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px;background:${meta.color}1a;color:${meta.color}">${meta.label}</span></td>
+      <td style="${tdStyle2};font-family:monospace;font-size:10px;color:#6b7280">${shortType}</td>
+      <td style="${tdStyle2};font-family:monospace;font-size:10px">${r.region}</td>
+      <td style="${tdStyle2};font-family:monospace;font-size:10px;color:#6b7280">${tags || "\u2014"}</td>
+    </tr>`;
+  }).join("");
+  const html2 = `<!DOCTYPE html><html><head><title>Resource Inventory \u2014 Factor Fifty</title>
+    <style>
+      body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:0;margin:0;color:#1a1a1a}
+      table{border-collapse:collapse;width:100%}
+      @media print{.no-print{display:none}}
+      @page{margin:14mm 12mm}
+    </style>
+  </head><body>
+    <div style="padding:24px 32px 16px;border-bottom:2px solid #2ecc71;display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="display:flex;align-items:flex-end">${bars}</div>
+        <span style="font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1a1a1a">Factor Fifty</span>
+      </div>
+      <div style="text-align:right;font-size:11px;color:#888">
+        <div>Resource Inventory Report</div>
+        <div>${(/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</div>
+      </div>
+    </div>
+    <div style="padding:24px 32px">
+      <h1 style="font-size:20px;margin:0 0 4px;font-weight:700">Resource Inventory</h1>
+      <p style="color:#888;font-size:12px;margin:0 0 16px">${esc(environmentName)} \xB7 ${resources.length} resources across ${categories.length} services${accountId ? ` \xB7 Account ${accountId}` : ""}</p>
+
+      <div style="display:flex;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:16px;overflow:hidden">${statBoxes}</div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">${catBadges}</div>
+
+      <table>
+        <thead><tr>
+          <th style="${thStyle2}">Resource</th>
+          <th style="${thStyle2}">Service</th>
+          <th style="${thStyle2}">Type</th>
+          <th style="${thStyle2}">Region</th>
+          <th style="${thStyle2}">Tags</th>
+        </tr></thead>
+        <tbody>${bodyRows}</tbody>
+      </table>
+    </div>
+    <div style="padding:16px 32px;border-top:1px solid #eee;font-size:10px;color:#aaa;display:flex;justify-content:space-between">
+      <span>Generated by Factor Fifty</span><span>Confidential</span>
+    </div>
+  </body></html>`;
+  const win = window.open("", "_blank");
+  win.document.write(html2);
+  win.document.close();
+  win.focus();
+  win.print();
+}
+function toDateStr(d) {
+  return d.toISOString().slice(0, 10);
+}
+function getYesterday() {
+  const d = /* @__PURE__ */ new Date();
+  d.setDate(d.getDate() - 1);
+  return d;
+}
+function getMinDate() {
+  const d = getYesterday();
+  d.setMonth(d.getMonth() - 2);
+  return d;
+}
+function daysAgo(n) {
+  const d = /* @__PURE__ */ new Date();
+  d.setDate(d.getDate() - n);
+  return d;
+}
+function formatLabel(dateStr) {
+  const d = /* @__PURE__ */ new Date(dateStr + "T12:00:00");
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+var QUICK_PRESETS = [
+  { label: "Yesterday", days: 1, kbd: "Y" },
+  { label: "2 days ago", days: 2, kbd: "2d" },
+  { label: "7 days ago", days: 7, kbd: "7d" },
+  { label: "30 days ago", days: 30, kbd: "30d" }
+];
+function DatePickerDropdown({ selectedDate, onChange }) {
+  const [open, setOpen] = (0, import_react27.useState)(false);
+  const [customDate, setCustomDate] = (0, import_react27.useState)(selectedDate);
+  const wrapRef = (0, import_react27.useRef)(null);
+  (0, import_react27.useEffect)(() => {
+    const handler = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+  const activePreset = QUICK_PRESETS.find((p) => toDateStr(daysAgo(p.days)) === selectedDate);
+  const pickPreset = (days) => {
+    const d = daysAgo(days);
+    const str = toDateStr(d);
+    if (str >= toDateStr(getMinDate())) {
+      onChange(str);
+      setCustomDate(str);
+    }
+    setOpen(false);
+  };
+  const applyCustom = () => {
+    if (customDate >= toDateStr(getMinDate()) && customDate <= toDateStr(getYesterday())) {
+      onChange(customDate);
+    }
+    setOpen(false);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-date-wrap", ref: wrapRef, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: `inv-date-btn${open ? " open" : ""}`, onClick: () => setOpen(!open), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { className: "inv-cal-icon", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("rect", { x: "3", y: "4", width: "18", height: "18", rx: "2" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "16", y1: "2", x2: "16", y2: "6" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "8", y1: "2", x2: "8", y2: "6" }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "3", y1: "10", x2: "21", y2: "10" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: activePreset ? activePreset.label : formatLabel(selectedDate) }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("svg", { className: "inv-date-caret", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("polyline", { points: "6 9 12 15 18 9" }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: `inv-date-dd${open ? " open" : ""}`, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-dd-label", children: "Quick select" }),
+      QUICK_PRESETS.map((p) => {
+        const dateStr = toDateStr(daysAgo(p.days));
+        const disabled = dateStr < toDateStr(getMinDate());
+        return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
+          "div",
+          {
+            className: `inv-dd-item${selectedDate === dateStr ? " active" : ""}`,
+            onClick: () => !disabled && pickPreset(p.days),
+            style: disabled ? { opacity: 0.35, cursor: "default" } : void 0,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("circle", { cx: "12", cy: "12", r: "10" }),
+                /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("polyline", { points: "12 6 12 12 16 14" })
+              ] }),
+              p.label,
+              /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "inv-dd-kbd", children: p.kbd })
+            ]
+          },
+          p.days
+        );
+      }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-dd-divider" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-dd-label", children: "Custom date" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-dd-custom", children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        "input",
+        {
+          type: "date",
+          value: customDate,
+          min: toDateStr(getMinDate()),
+          max: toDateStr(getYesterday()),
+          onChange: (e) => setCustomDate(e.target.value)
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("button", { className: "inv-dd-apply", onClick: applyCustom, children: "Apply" })
+    ] })
+  ] });
+}
+function InventoryDashboard({ customerUuid, customerName, environmentName, projectName, environmentUuid, accountId: propAccountId, inventoryApiUrl }) {
+  const [rawData, setRawData] = (0, import_react27.useState)(null);
+  const [loading, setLoading] = (0, import_react27.useState)(true);
+  const [error2, setError] = (0, import_react27.useState)(null);
+  const [activeCategory, setActiveCategory] = (0, import_react27.useState)("all");
+  const [searchQuery, setSearchQuery] = (0, import_react27.useState)("");
+  const [catSearch, setCatSearch] = (0, import_react27.useState)("");
+  const [sortKey, setSortKey] = (0, import_react27.useState)("name");
+  const [sortDir, setSortDir] = (0, import_react27.useState)(1);
+  const [selectedResource, setSelectedResource] = (0, import_react27.useState)(null);
+  const [selectedDate, setSelectedDate] = (0, import_react27.useState)(() => toDateStr(getYesterday()));
+  const accountId = propAccountId || new URLSearchParams(window.location.search).get("account_id");
+  (0, import_react27.useEffect)(() => {
+    setLoading(true);
+    setError(null);
+    setSelectedResource(null);
+    const [y, m, d] = selectedDate.split("-").map(Number);
+    const body = {
+      tag_key: "factor-fifty",
+      tag_value: "true",
+      year: y,
+      month: m,
+      day: d,
+      exclude_categories: ["iam"],
+      cloud_account_ids: accountId ? [accountId] : []
+    };
+    fetch(`${inventoryApiUrl}/resources`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfToken3() },
+      body: JSON.stringify(body)
+    }).then((r) => {
+      if (!r.ok) throw new Error(`${r.status}`);
+      return r.json();
+    }).then((data) => {
+      setRawData(data);
+      setLoading(false);
+    }).catch((e) => {
+      setError(e.message);
+      setLoading(false);
+    });
+  }, [inventoryApiUrl, selectedDate]);
+  const allResources = (0, import_react27.useMemo)(() => flattenResources(rawData), [rawData]);
+  const categories = (0, import_react27.useMemo)(() => {
+    const counts = {};
+    for (const r of allResources) {
+      counts[r.category] = (counts[r.category] || 0) + 1;
+    }
+    return Object.entries(counts).map(([key, count]) => ({ key, count, label: getMeta(key).label })).sort((a, b) => a.label.localeCompare(b.label));
+  }, [allResources]);
+  const filteredRows = (0, import_react27.useMemo)(() => {
+    let rows = allResources;
+    if (activeCategory !== "all") rows = rows.filter((r) => r.category === activeCategory);
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      rows = rows.filter((r) => {
+        const name = (r._name || "").toLowerCase();
+        const id = (r.resource_id || "").toLowerCase();
+        const type = (r.resource_type || "").toLowerCase();
+        const cat = (r.category || "").toLowerCase();
+        const tags = (r.tags || []).map((t) => `${t.key}=${t.value}`).join(" ").toLowerCase();
+        return name.includes(q) || id.includes(q) || type.includes(q) || cat.includes(q) || tags.includes(q);
+      });
+    }
+    rows = [...rows].sort((a, b) => {
+      const av = sortKey === "name" ? a._name : a[sortKey] || "";
+      const bv = sortKey === "name" ? b._name : b[sortKey] || "";
+      return String(av).localeCompare(String(bv)) * sortDir;
+    });
+    return rows;
+  }, [allResources, activeCategory, searchQuery, sortKey, sortDir]);
+  const handleSort = (0, import_react27.useCallback)((key) => {
+    if (sortKey === key) setSortDir((d) => d * -1);
+    else {
+      setSortKey(key);
+      setSortDir(1);
+    }
+  }, [sortKey]);
+  (0, import_react27.useEffect)(() => {
+    const handler = (e) => {
+      if (e.key === "Escape") setSelectedResource(null);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
+  if (loading) {
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-loading", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: "inv-loading-spinner" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontSize: 13, color: "var(--text-muted)", marginTop: 12 }, children: "Loading inventory\u2026" })
+    ] });
+  }
+  if (error2) {
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-loading", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontSize: 14, color: "var(--red)", marginBottom: 8 }, children: "Failed to load inventory" }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)" }, children: error2 })
+    ] });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-shell", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      Sidebar,
+      {
+        categories,
+        activeCategory,
+        onSelect: setActiveCategory,
+        searchFilter: catSearch,
+        onSearchChange: setCatSearch,
+        accountId
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-main", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-toolbar", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-toolbar-search", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", width: "14", height: "14", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("circle", { cx: "11", cy: "11", r: "8" }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("input", { placeholder: "Search resources \u2014 name, ID, type, tag\u2026", value: searchQuery, onChange: (e) => setSearchQuery(e.target.value) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DatePickerDropdown, { selectedDate, onChange: setSelectedDate }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "inv-toolbar-meta", children: [
+          "Showing ",
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("strong", { children: filteredRows.length }),
+          " of ",
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("strong", { children: allResources.length }),
+          " resources"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("button", { className: "btn btn-ghost btn-sm", onClick: () => exportInventoryPdf(filteredRows, categories, environmentName || "Environment", accountId), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", width: "13", height: "13", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("polyline", { points: "7 10 12 15 17 10" }),
+            /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("line", { x1: "12", y1: "15", x2: "12", y2: "3" })
+          ] }),
+          "Export PDF"
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(StatsRow, { resources: allResources, categories }),
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+        ResourceTable,
+        {
+          rows: filteredRows,
+          sortKey,
+          sortDir,
+          onSort: handleSort,
+          selectedId: selectedResource?.resource_id,
+          onSelect: setSelectedResource
+        }
+      )
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { className: `inv-detail-panel${selectedResource ? "" : " hidden"}`, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(DetailPanel, { resource: selectedResource, onClose: () => setSelectedResource(null) }) })
+  ] });
 }
 
 // app/javascript/components/index.ts
@@ -40999,7 +42627,9 @@ var componentRegistry = {
   CanvasApp,
   FinancialDashboard,
   SavingsPage,
-  RightsizingPage
+  RightsizingPage,
+  SecurityDashboard,
+  InventoryDashboard
 };
 var components_default = componentRegistry;
 
@@ -41039,7 +42669,7 @@ var ReactController = class extends Controller {
     if (!this.root) {
       this.root = (0, import_client.createRoot)(this.element);
     }
-    this.root.render((0, import_react25.createElement)(Component, this.propsValue));
+    this.root.render((0, import_react28.createElement)(Component, this.propsValue));
   }
 };
 
@@ -43349,6 +44979,59 @@ var documentation_controller_default = class extends Controller {
   }
 };
 
+// app/javascript/controllers/global_tag_delete_controller.js
+var global_tag_delete_controller_default = class extends Controller {
+  static targets = [
+    "deleteOverlay",
+    "deleteTagName",
+    "deleteForm",
+    "editOverlay",
+    "editForm",
+    "editKey",
+    "editValue",
+    "editDescription"
+  ];
+  // ── Delete ──
+  openDelete(event) {
+    const btn = event.currentTarget;
+    this.deleteTagNameTarget.textContent = btn.dataset.tagKey || "this tag";
+    this.deleteFormTarget.action = btn.dataset.deleteUrl;
+    this.deleteOverlayTarget.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  closeDelete() {
+    this.deleteOverlayTarget.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  backdropCloseDelete(event) {
+    if (event.target === this.deleteOverlayTarget) this.closeDelete();
+  }
+  // ── Edit ──
+  openEdit(event) {
+    const btn = event.currentTarget;
+    this.editFormTarget.action = btn.dataset.editUrl;
+    this.editKeyTarget.value = btn.dataset.tagKey || "";
+    this.editValueTarget.value = btn.dataset.tagValue || "";
+    this.editDescriptionTarget.value = btn.dataset.tagDescription || "";
+    this.editOverlayTarget.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  closeEdit() {
+    this.editOverlayTarget.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  backdropCloseEdit(event) {
+    if (event.target === this.editOverlayTarget) this.closeEdit();
+  }
+  // ── Shared ──
+  closeOnEscape(event) {
+    if (event.key === "Escape") {
+      this.closeDelete();
+      this.closeEdit();
+    }
+  }
+};
+
 // app/javascript/controllers/index.js
 application.register("hello", hello_controller_default);
 application.register("react", ReactController);
@@ -43373,6 +45056,7 @@ application.register("cmd-palette", cmd_palette_controller_default);
 application.register("cascading-select", cascading_select_controller_default);
 application.register("entity-filter", entity_filter_controller_default);
 application.register("documentation", documentation_controller_default);
+application.register("global-tag-delete", global_tag_delete_controller_default);
 /*! Bundled license information:
 
 react/cjs/react.development.js:

@@ -38,6 +38,7 @@
 </div>
 
 <%# Tags table %>
+<div data-controller="global-tag-delete" data-action="keydown@document->global-tag-delete#closeOnEscape">
 <div class="gt-table-card">
   <% if @tags.any? %>
     <table>
@@ -58,14 +59,24 @@
             <td>
               <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center;">
                 <div class="gt-row-actions">
+                  <button type="button" class="gt-row-btn"
+                          data-action="click->global-tag-delete#openEdit"
+                          data-edit-url="<%= global_tag_path(tag, scope_type: @scope_type, scope_id: @scope_id) %>"
+                          data-tag-key="<%= tag.key %>"
+                          data-tag-value="<%= tag.value %>"
+                          data-tag-description="<%= tag.description %>">
+                    Edit
+                  </button>
                   <%= button_to tag.enabled? ? "Disable" : "Enable",
                       toggle_global_tag_path(tag), method: :patch,
                       class: "gt-row-btn",
                       params: { scope_type: @scope_type, scope_id: @scope_id }.compact_blank %>
-                  <%= button_to "Delete", global_tag_path(tag),
-                      method: :delete, class: "gt-row-btn gt-row-btn--danger",
-                      data: { turbo_confirm: "Delete tag '#{tag.key}'?" },
-                      params: { scope_type: @scope_type, scope_id: @scope_id }.compact_blank %>
+                  <button type="button" class="gt-row-btn gt-row-btn--danger"
+                          data-action="click->global-tag-delete#openDelete"
+                          data-tag-key="<%= tag.key %>"
+                          data-delete-url="<%= global_tag_path(tag, scope_type: @scope_type, scope_id: @scope_id) %>">
+                    Delete
+                  </button>
                 </div>
                 <% if tag.enabled? %>
                   <span class="gt-status-badge gt-status-active"><span class="gt-status-dot"></span>Active</span>
@@ -81,6 +92,72 @@
   <% else %>
     <div class="gt-empty">No tags at this level. Add one below or select a different scope.</div>
   <% end %>
+</div>
+
+<%# Delete confirmation modal %>
+<div class="modal-overlay" data-global-tag-delete-target="deleteOverlay" data-action="click->global-tag-delete#backdropCloseDelete">
+  <div class="modal-panel" style="max-width:420px;">
+    <div class="modal-header">
+      <h3 class="modal-title" style="color:var(--red);">Delete Tag</h3>
+      <button class="modal-close" data-action="click->global-tag-delete#closeDelete" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:20px 24px;">
+      <p style="font-size:13px;color:var(--text-dim);">
+        Are you sure you want to delete the tag
+        <span style="font-family:var(--font-mono);font-weight:600;color:var(--text);" data-global-tag-delete-target="deleteTagName"></span>?
+      </p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer" style="padding:16px 24px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;">
+      <button type="button" class="btn btn-ghost" data-action="click->global-tag-delete#closeDelete">Cancel</button>
+      <%= form_tag "", method: :delete, data: { global_tag_delete_target: "deleteForm" }, style: "margin:0;" do %>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%# Edit tag modal %>
+<div class="modal-overlay" data-global-tag-delete-target="editOverlay" data-action="click->global-tag-delete#backdropCloseEdit">
+  <div class="modal-panel" style="max-width:520px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Tag</h3>
+      <button class="modal-close" data-action="click->global-tag-delete#closeEdit" aria-label="Close">&times;</button>
+    </div>
+    <%= form_tag "", method: :patch, data: { global_tag_delete_target: "editForm" } do %>
+      <div class="modal-body" style="padding:20px 24px;">
+        <% if @scope_type.present? %>
+          <input type="hidden" name="scope_type" value="<%= @scope_type %>">
+          <input type="hidden" name="scope_id" value="<%= @scope_id %>">
+        <% end %>
+        <div class="gt-form-row gt-form-row--halves">
+          <div class="gt-form-group">
+            <label class="gt-form-label">Key <span class="req">*</span></label>
+            <input type="text" name="key" class="gt-form-input gt-form-input--mono"
+                   required pattern="[a-zA-Z0-9_\-:\/\.]+"
+                   title="Only alphanumeric, hyphens, underscores, colons, slashes, and dots"
+                   data-global-tag-delete-target="editKey">
+          </div>
+          <div class="gt-form-group">
+            <label class="gt-form-label">Value <span class="req">*</span></label>
+            <input type="text" name="value" class="gt-form-input gt-form-input--mono"
+                   required data-global-tag-delete-target="editValue">
+          </div>
+        </div>
+        <div class="gt-form-group">
+          <label class="gt-form-label">Description</label>
+          <textarea name="description" class="gt-form-textarea"
+                    placeholder="Optional — why this tag exists"
+                    data-global-tag-delete-target="editDescription"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer" style="padding:16px 24px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn btn-ghost" data-action="click->global-tag-delete#closeEdit">Cancel</button>
+        <button type="submit" class="btn btn-green">Save Changes</button>
+      </div>
+    <% end %>
+  </div>
+</div>
 </div>
 
 <%# Add tag form panel %>

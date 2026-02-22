@@ -1,0 +1,18 @@
+<% content_for(:title) { "Inventory — #{@customer.name} — Factor Fifty" } %>
+
+<%
+  inventory_props = {
+    customerUuid: @customer.uuid,
+    customerName: @customer.name,
+    environmentName: @environment_name,
+    projectName: @project_name,
+    environmentUuid: @environment_uuid,
+    accountId: @account_id,
+    inventoryApiUrl: "/customers/#{@customer.uuid}/api/inventory",
+  }
+%>
+
+<div data-controller="react"
+     data-react-component-value="InventoryDashboard"
+     data-react-props-value="<%= inventory_props.to_json %>">
+</div>
