@@ -40592,6 +40592,75 @@ function useMetrics(savingsApiUrl, customerUuid, year, month, provider) {
     staleTime: 5 * 6e4
   });
 }
+function useCommitmentPlans(savingsApiUrl, customerUuid, year, month) {
+  return useQuery({
+    queryKey: ["commitment-plans", customerUuid, year, month],
+    queryFn: () => postApi(`${savingsApiUrl}/commitment-plans`, {
+      customer_uuid: customerUuid,
+      year: String(year),
+      month: `${year}-${String(month).padStart(2, "0")}`
+    }),
+    enabled: !!customerUuid,
+    staleTime: 5 * 6e4
+  });
+}
+function termLabel(maxTerm) {
+  switch (maxTerm) {
+    case "thirty_day_gris":
+      return "30 Days";
+    case "one_year":
+      return "1 Year";
+    case "three_year":
+      return "3 Years";
+    default:
+      return maxTerm || "\u2014";
+  }
+}
+function termSliderPct(maxTerm) {
+  switch (maxTerm) {
+    case "thirty_day_gris":
+      return 15;
+    case "one_year":
+      return 35;
+    case "three_year":
+      return 80;
+    default:
+      return 50;
+  }
+}
+function transformCommitmentPlans(rows) {
+  if (!rows || rows.length === 0) return DEMO_PLANS;
+  return rows.map((r) => {
+    const monthlySavings = parseFloat(r.monthly_savings || 0);
+    const totalSavings = parseFloat(r.total_savings || 0);
+    const beforeCost = parseFloat(r.total_monthly_before_cost || 0);
+    const afterCostHourly = parseFloat(r.after_cost_hourly || 0);
+    const monthlyCostWith = afterCostHourly * 730;
+    const discount = beforeCost > 0 ? (beforeCost - monthlyCostWith) / beforeCost * 100 : 0;
+    const upfrontHourly = parseFloat(r.upfront_cost_hourly || 0);
+    const upfrontMonthly = upfrontHourly * 730;
+    const minCommitment = parseFloat(r.minimum_commitment_cost || 0);
+    return {
+      id: r.plan_id,
+      name: r.plan_name || "\u2014",
+      description: r.description || "",
+      popular: (r.plan_name || "").toLowerCase() === "recommended",
+      automationEnabled: r.status === "active",
+      monthlySavings,
+      annualSavings: totalSavings,
+      monthlyCostWithout: beforeCost,
+      monthlyCostWith,
+      discountPct: discount,
+      netMonthlySavings: monthlySavings,
+      flexibility: {
+        term: termLabel(r.max_term),
+        upfront: upfrontMonthly > 0 ? `$${fmtShort(upfrontMonthly)}` : "$0K",
+        breakeven: `$${fmt2(parseFloat(r.breakeven_hours || 0))}`,
+        sliderPct: termSliderPct(r.max_term)
+      }
+    };
+  });
+}
 function transformMetrics(rows) {
   if (!rows || rows.length === 0) return null;
   const r = rows[0];
@@ -41040,6 +41109,16 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
     () => transformMetrics(metricsData?.rows) || DEMO_SUMMARY,
     [metricsData]
   );
+  const { data: plansData, isLoading: plansLoading } = useCommitmentPlans(
+    savingsApiUrl,
+    customerUuid,
+    currentYear,
+    currentMonth
+  );
+  const plans = (0, import_react24.useMemo)(
+    () => transformCommitmentPlans(plansData?.rows),
+    [plansData]
+  );
   const handleApplyPlan = async () => {
     if (!planData?.summary?.plan_uuid && !planSearch.trim()) return;
     const uuid2 = planData?.summary?.plan_uuid || planSearch.trim();
@@ -41076,7 +41155,6 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
       setPlanLoading(false);
     }
   };
-  const plans = DEMO_PLANS;
   const handleViewDetails = (plan) => {
     setPlanData({
       summary: {
@@ -41120,7 +41198,7 @@ function SavingsInner({ customerUuid, customerName, savingsApiUrl }) {
     planError && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { background: "var(--red-dim)", border: "1px solid var(--red)", borderRadius: "var(--radius)", padding: "10px 16px", marginBottom: 16, fontSize: 12, color: "var(--red)" }, children: planError }),
     /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(KpiRow, { summary, isLoading: metricsLoading }),
     /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-section-title", children: "Savings Plans" }),
-    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-plans-grid", children: plans.map((plan) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SavingsPlanCard, { plan, onViewDetails: handleViewDetails }, plan.id)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "sv-plans-grid", children: plansLoading ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 13, padding: "24px 0" }, children: "Loading plans\u2026" }) : plans.map((plan) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(SavingsPlanCard, { plan, onViewDetails: handleViewDetails }, plan.id)) }),
     /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(CommitmentInventory, { items: inventory, isLoading: commitmentsLoading }),
     planData && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(PlanDetailModal, { data: planData, onClose: () => setPlanData(null), onApply: handleApplyPlan })
   ] });
