@@ -3,8 +3,8 @@ default: &default
   encoding: unicode
   host: localhost
   port: 5433
-  username: postgres
-  password: postgres
+  username: postgresql
+  password: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -18,9 +18,11 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: factorfifty_production
-    username: factorfifty
-    password: <%= ENV["FACTORFIFTY_DATABASE_PASSWORD"] %>
+    host: <%= ENV["DATABASE_HOST"] %>
+    port: 5432
+    database: <%= ENV["DATABASE_NAME"] %>
+    username: <%= ENV["DATABASE_USERNAME"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: factorfifty_production_cache

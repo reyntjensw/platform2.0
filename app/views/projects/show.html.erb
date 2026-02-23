@@ -380,9 +380,13 @@
     <%# ══════════════════════════════════════════════
         CANVAS ENVIRONMENTS SECTION
         ══════════════════════════════════════════════ %>
-    <% canvas_envs = current_user.platform_admin? ?
-         LocalEnvironment.includes(local_project: :local_customer).order(:env_type) :
-         LocalEnvironment.active.includes(local_project: :local_customer).order(:env_type) %>
+    <% local_project = LocalProject.find_by(slug: @project.uuid) %>
+    <% canvas_envs = if local_project
+         scope = local_project.local_environments.includes(local_project: :local_customer).order(:env_type)
+         current_user.platform_admin? ? scope : scope.active
+       else
+         LocalEnvironment.none
+       end %>
     <div class="env-section">
       <div class="env-section-header">
         <div class="env-section-title-row">

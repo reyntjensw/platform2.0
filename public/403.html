@@ -4,186 +4,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>403 — Forbidden | Factor Fifty</title>
+    <meta name="robots" content="noindex, nofollow">
+    <title>403 — Factor Fifty</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet">
+    <link rel="icon" href="/icon.png" type="image/png">
     <style>
-        :root {
-            --bg-body: #0a0e1a;
-            --bg-surface: #111827;
-            --bg-card: #151d2e;
-            --border: #243049;
-            --text-primary: #e8ecf4;
-            --text-secondary: #8b99b5;
-            --text-muted: #5a6a8a;
-            --green: #2ecc71;
-            --green-hover: #27ae60;
-            --green-dim: rgba(46, 204, 113, 0.15);
-            --red: #e74c3c;
-            --red-dim: rgba(231, 76, 60, 0.12);
-        }
-
-        * {
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Outfit', -apple-system, sans-serif;
-            background: var(--bg-body);
-            color: var(--text-primary);
+            background: #0a0d13;
+            color: #e2e8f0;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            padding: 40px 24px;
+            text-align: center;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
         }
 
-        .container {
-            text-align: center;
-            max-width: 440px;
-            padding: 40px 24px;
+        .error-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .error-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #f87171;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .error-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            max-width: 360px;
+            line-height: 1.6;
+        }
+
+        .error-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            background: #4ade80;
+            color: #0a0d13;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+
+        .error-home:hover {
+            opacity: 0.88;
+        }
+
+        .error-home svg {
+            width: 14px;
+            height: 14px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            margin-bottom: 40px;
+            position: absolute;
+            top: 16px;
+            left: 20px;
         }
 
-        .logo-mark {
+        .logo-bars {
             display: flex;
-            gap: 2px;
+            align-items: flex-end;
+            gap: 3px;
         }
 
-        .logo-mark span {
+        .logo-bars span {
             width: 3px;
-            height: 18px;
-            background: var(--green);
-            border-radius: 2px;
-        }
-
-        .logo-mark span:nth-child(2) {
-            height: 22px;
-        }
-
-        .logo-mark span:nth-child(3) {
-            height: 26px;
-        }
-
-        .logo-mark span:nth-child(4) {
-            height: 22px;
-        }
-
-        .logo-mark span:nth-child(5) {
-            height: 18px;
+            background: #2ecc71;
+            border-radius: 1px;
         }
 
         .logo-text {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
             text-transform: uppercase;
-            color: var(--text-primary);
-        }
-
-        .error-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 36px 32px;
-        }
-
-        .code {
-            font-size: 64px;
-            font-weight: 800;
-            color: var(--red);
-            line-height: 1;
-            margin-bottom: 12px;
-        }
-
-        h1 {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 0 0 12px;
-            color: var(--text-primary);
-        }
-
-        p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin: 0 0 28px;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.15s;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--green);
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background: var(--green-hover);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            color: var(--text-primary);
-            border-color: var(--text-muted);
-            background: var(--bg-surface);
+            letter-spacing: 0.08em;
+            color: #e2e8f0;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="logo">
-            <div class="logo-mark">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="logo-text">Factor Fifty</div>
+    <div class="logo">
+        <div class="logo-bars">
+            <span style="height:7px"></span>
+            <span style="height:11px"></span>
+            <span style="height:15px"></span>
+            <span style="height:18px"></span>
+            <span style="height:12px"></span>
         </div>
+        <span class="logo-text">Factor Fifty</span>
+    </div>
 
-        <div class="error-card">
-            <div class="code">403</div>
-            <h1>Access Denied</h1>
-            <p>You don't have permission to view this page. If you believe this is a mistake, contact your
-                administrator.</p>
-            <div class="actions">
-                <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
-                <a href="/" class="btn btn-primary">Go Home</a>
-            </div>
+    <div class="error-container">
+        <div class="error-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="1.8">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
         </div>
+        <div class="error-code">403</div>
+        <div class="error-title">Access denied</div>
+        <div class="error-desc">You don't have permission to access this page. Contact your administrator if you think
+            this is a mistake.</div>
+        <a href="/" class="error-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            </svg>
+            Back to Home
+        </a>
     </div>
 </body>
 
