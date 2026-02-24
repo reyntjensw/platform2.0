@@ -21,7 +21,9 @@ module Auth
       session[:sub] = uid
       session[:user_email] = info["email"]
       session[:user_name] = info["name"]
-      session[:roles] = raw_info.dig("realm_access", "roles") || []
+      # Filter roles to only recognized Factor Fifty roles (ignore Keycloak system roles)
+      recognized_roles = %w[platform_admin reseller_admin customer_admin customer_viewer]
+      session[:roles] = (raw_info.dig("realm_access", "roles") || []) & recognized_roles
       session[:groups] = raw_info["groups"] || []
 
       # Derive reseller_uuid from Keycloak groups (e.g. "/resellers/cloudsisters/...")
@@ -29,6 +31,29 @@ module Auth
 
       # Extract customer_uuid from Keycloak user attribute (protocol mapper)
       session[:customer_uuid] = raw_info["customer_uuid"]
+
+      # Safeguard: reject login if user has no recognized role
+      if session[:roles].empty?
+        Rails.logger.warn("[AUTH] User #{info['email']} (#{uid}) logged in with no recognized roles — denying access")
+        reset_session
+        redirect_to root_path, alert: "Your account has not been assigned a role. Please contact an administrator."
+        return
+      end
+
+      # Safeguard: reject scoped roles (reseller/customer) that are missing their required UUIDs
+      if session[:roles].include?("reseller_admin") && session[:reseller_uuid].blank?
+        Rails.logger.warn("[AUTH] reseller_admin #{info['email']} has no reseller_uuid — denying access")
+        reset_session
+        redirect_to root_path, alert: "Your reseller account is not properly configured. Please contact an administrator."
+        return
+      end
+
+      if (session[:roles] & %w[customer_admin customer_viewer]).any? && session[:customer_uuid].blank?
+        Rails.logger.warn("[AUTH] customer-scoped user #{info['email']} has no customer_uuid — denying access")
+        reset_session
+        redirect_to root_path, alert: "Your customer account is not properly configured. Please contact an administrator."
+        return
+      end
 
       redirect_to after_login_path, notice: "Signed in successfully"
     end

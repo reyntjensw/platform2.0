@@ -223,6 +223,7 @@ Rails.application.routes.draw do
 
       # Savings proxy endpoints
       post   "savings/commitments",             to: "savings#commitments"
+      post   "savings/commitment-plans",        to: "savings#commitment_plans"
       post   "savings/metrics",                 to: "savings#metrics"
       get    "savings/plan/:plan_uuid",         to: "savings#plan"
       post   "savings/apply_plan",              to: "savings#apply_plan"

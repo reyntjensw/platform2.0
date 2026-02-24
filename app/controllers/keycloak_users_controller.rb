@@ -239,6 +239,42 @@ class KeycloakUsersController < AuthenticatedController
     errors << "Email is required" if @keycloak_user.email.blank?
     errors << "First name is required" if @keycloak_user.first_name.blank?
     errors << "Last name is required" if @keycloak_user.last_name.blank?
+    errors + validate_role_scope_consistency
+  end
+
+  # Ensure the assigned role matches the scope (UUIDs) being set.
+  # Prevents accidental privilege escalation (e.g. creating a platform_admin
+  # without explicit intent, or a scoped role without proper UUIDs).
+  def validate_role_scope_consistency
+    errors = []
+    role = params.dig(:keycloak_user, :role)
+    customer_uuid = resolve_customer_uuid
+    reseller_uuid = resolve_reseller_uuid
+
+    case role
+    when "platform_admin"
+      # Only platform admins can create other platform admins
+      unless current_user.platform_admin?
+        errors << "Only platform admins can assign the platform_admin role"
+      end
+      # Platform admins must not be scoped to a customer or reseller
+      if customer_uuid.present? || reseller_uuid.present?
+        errors << "Platform admins must not be scoped to a reseller or customer"
+      end
+    when "reseller_admin"
+      errors << "Reseller admin requires a reseller_uuid" if reseller_uuid.blank?
+      if customer_uuid.present?
+        errors << "Reseller admins must not be scoped to a customer"
+      end
+    when "customer_admin", "customer_viewer"
+      errors << "#{role.humanize} requires a reseller_uuid" if reseller_uuid.blank?
+      errors << "#{role.humanize} requires a customer_uuid" if customer_uuid.blank?
+    when nil, ""
+      errors << "A role must be assigned to the user"
+    else
+      errors << "Unknown role: #{role}"
+    end
+
     errors
   end
 

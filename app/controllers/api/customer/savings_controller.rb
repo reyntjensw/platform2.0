@@ -8,6 +8,11 @@ module Api
         forward_post(:commitments)
       end
 
+      # POST /customers/:customer_uuid/api/savings/commitment-plans
+      def commitment_plans
+        forward_post(:commitment_plans)
+      end
+
       # POST /customers/:customer_uuid/api/savings/metrics
       def metrics
         forward_post(:savings_metrics)

@@ -36,6 +36,10 @@ class CostApiClient < ApiClient::Base
     post("/cost-savings/commitments", params)
   end
 
+  def commitment_plans(params)
+    post("/cost-savings/commitment-plans", params)
+  end
+
   def savings_metrics(params)
     post("/cost-savings/metrics", params)
   end
