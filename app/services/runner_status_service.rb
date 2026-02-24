@@ -103,7 +103,7 @@ class RunnerStatusService
 
   # Fetches the current runner version manifest from S3.
   def fetch_manifest
-    bucket = ENV["S3_ARTIFACTS_BUCKET"]
+    bucket = ENV["S3_RUNNER_MANIFEST_BUCKET"] || ENV["S3_ARTIFACTS_BUCKET"]
     return nil unless bucket
 
     resp = s3_client.get_object(bucket: bucket, key: "runner/manifest.json")
